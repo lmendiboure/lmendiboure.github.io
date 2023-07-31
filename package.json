@@ -1,9 +1,9 @@
 {
-  "name": "Meyawo",
+  "name": "Léo Mendiboure",
   "version": "1.5.0",
-  "description": "An elegant responsive bootstrap 4.x theme.",
+  "description": "Personal Website",
   "main": "gulpfile.js",
-  "author": "DevCRUD",
+  "author": "Léo Mendiboure",
   "scripts": {
     "start": "gulp"
   },
