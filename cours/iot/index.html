@@ -31,21 +31,15 @@
     <div class="hero-grid">
       <div>
         <div class="eyebrow">IoT Systems Design · Session 1</div>
-        <h1>One label.<br/>Many worlds.</h1>
-        <p class="lead">IoT systems appear in homes, factories, farms, cities, vehicles, energy networks and far beyond. Your first task is to map that landscape before designing one system in depth.</p>
-        <div class="hero-rule"><span></span><p><strong>Question:</strong> what can such different systems actually have in common?</p></div>
+        <h1>Map first.<br/>Define later.</h1>
+        <p class="lead">Start with eight connected physical systems. Decide how you would classify them, where your categories overlap, and only then ask what belongs under the IoT label.</p>
+        <div class="hero-rule"><span></span><p><strong>Rule:</strong> use your current intuition first — no searching yet.</p></div>
       </div>
-      <div class="hero-landscape" role="img" aria-label="IoT systems spanning home, health, industry, agriculture, mobility, energy, cities and environment">
-        <span class="hero-world hw-home">⌂ <b>Home</b></span>
-        <span class="hero-world hw-industry">⚙ <b>Industry</b></span>
-        <span class="hero-world hw-health">♥ <b>Health</b></span>
-        <span class="hero-world hw-mobility">➜ <b>Mobility</b></span>
-        <span class="hero-world hw-agri">♧ <b>Agriculture</b></span>
-        <span class="hero-world hw-energy">ϟ <b>Energy</b></span>
-        <span class="hero-world hw-city">▦ <b>Cities</b></span>
-        <span class="hero-world hw-env">◌ <b>Environment</b></span>
-        <div class="hero-iot-core"><strong>IoT</strong><small>systems</small></div>
-        <div class="hero-visual-note">Different physical worlds. Shared systems questions.</div>
+      <div class="hero-landscape hero-unresolved" role="img" aria-label="Eight unclassified connected-system cases waiting to be mapped">
+        <span class="hero-case hc-a">A</span><span class="hero-case hc-b">B</span><span class="hero-case hc-c">C</span><span class="hero-case hc-d">D</span>
+        <span class="hero-case hc-e">E</span><span class="hero-case hc-f">F</span><span class="hero-case hc-g">G</span><span class="hero-case hc-h">H</span>
+        <div class="hero-iot-core unresolved"><strong>?</strong><small>same field?</small></div>
+        <div class="hero-visual-note">Eight cases. Your categories. No answer revealed yet.</div>
       </div>
     </div>
     <div class="stepper" id="stepper" aria-label="Session progression"></div>
@@ -58,7 +52,7 @@
       <div class="activity-label"><span>Activity 1</span><span class="pill-neutral">Map the IoT landscape</span></div>
       <div class="activity-intro landscape-intro">
         <h2>Which world does each system belong to?</h2>
-        <p>Choose one <strong>main domain</strong> for each case and, only when it adds something meaningful, one <strong>secondary domain</strong>. These cases are deliberately ambiguous. Use your current intuition — no searching yet.</p>
+        <p>Choose one <strong>main domain</strong> for each case and, when you can defend it, one <strong>secondary domain</strong>. Use your current intuition — no searching yet.</p>
       </div>
 
       <div class="landscape-summary card flat">
@@ -203,34 +197,51 @@
 
     <!-- ACTIVITY 4 -->
     <section class="activity-screen" data-screen="6" hidden>
-      <div class="activity-label"><span>Activity 4</span><span class="pill-neutral">Technology detective</span></div>
+      <div class="activity-label"><span>Activity 4</span><span class="pill-neutral">Discover communication patterns</span></div>
       <div class="activity-intro">
-        <h2>Can you identify a technology from its design choices?</h2>
-        <p>Each mystery starts with one clue. You may commit immediately or reveal more clues first. The objective is to infer from architecture and constraints, not to win by elimination.</p>
+        <h2>Start from the communication problem — not from a standard name.</h2>
+        <p>You are not expected to know Wi-Fi, Bluetooth LE, IEEE 802.15.4, LoRaWAN or NB-IoT yet. First learn the <strong>shape of the network</strong> each family is trying to build.</p>
       </div>
-      <div id="mysteryGrid" class="mystery-grid"></div>
-      <div class="score-panel"><span>Identified</span><strong id="mysteryScore" aria-live="polite">0 / 5</strong><small>Calibrate your confidence, not just your answer. A confident mistake is useful evidence.</small></div>
-      <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Layer trap</strong><small>Familiar terms — but are they even comparable?</small></span></summary><div id="layerTrap" class="go-further-body"></div></details>
-      <button class="btn primary next-activity" data-next="7" type="button">Open the technology library →</button>
+      <div class="decision-compass card flat">
+        <div class="decision-compass-head"><span class="eyebrow">Before naming a technology</span><strong>Ask four concrete questions</strong></div>
+        <div class="decision-question-grid">
+          <div><span>↔</span><strong>How far?</strong><small>Nearby, one site, wide area, isolated?</small></div>
+          <div><span>▥</span><strong>How much data?</strong><small>Tiny messages, regular sensing, images?</small></div>
+          <div><span>ϟ</span><strong>What can the device afford?</strong><small>Tight battery, normal battery, mains power?</small></div>
+          <div><span>⌂</span><strong>What infrastructure exists?</strong><small>Phone, local network, gateway, operator coverage, none?</small></div>
+        </div>
+      </div>
+      <div class="guided-tech-head"><div><span class="eyebrow">Guided discovery</span><h3>Five network shapes</h3><p class="section-copy">Read the plain-language description first. Then reveal the technology name and the minimum vocabulary attached to it.</p></div><span id="techDiscoveryProgress" class="guided-progress">0 / 5 revealed</span></div>
+      <div id="techDiscoveryGrid" class="tech-discovery-grid"></div>
+      <details class="term-shelf"><summary><strong>New words, in plain English</strong><span>Open this whenever a term blocks you.</span></summary><div id="plainGlossary" class="plain-glossary"></div></details>
+      <div class="satellite-primer card flat"><div class="eyebrow">Special path · Satellite / non-terrestrial network (NTN)</div><h3>Where can a satellite link fit?</h3><div class="satellite-primer-grid"><div><strong>Direct access</strong><span>device → non-terrestrial access → network</span></div><div><strong>Backhaul</strong><span>device → local gateway → satellite path → network</span></div></div><p class="section-copy">These are different architectures. Keep both in mind for later.</p></div>
+      <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Choose the shape first</strong><small>Solve three cases without using a technology name.</small></span></summary><div id="shapeChallenge" class="go-further-body"></div></details>
+      <button id="discoveryNext" class="btn primary next-activity" data-next="7" type="button" disabled>Five families revealed →</button>
     </section>
 
     <!-- ACTIVITY 5 -->
     <section class="activity-screen" data-screen="7" hidden>
-      <div class="activity-label"><span>Activity 5</span><span class="pill-neutral">Look behind the name</span></div>
+      <div class="activity-label"><span>Activity 5</span><span class="pill-neutral">Investigate the technologies</span></div>
       <div class="activity-intro">
-        <h2>A communication technology also implies an architecture.</h2>
-        <p>Open a card when you need it. On a laptop the detail stays beside the library; on a phone it opens as a focused sheet. Go deeper only when useful, and use the official links to verify claims.</p>
+        <h2>Now test the map you just built.</h2>
+        <p>The detective is now a consolidation exercise, not a prior-knowledge test. If a term is unfamiliar, use the reference map rather than guessing blindly.</p>
       </div>
+      <div class="family-map-strip" id="familyMapStrip"></div>
+      <div id="mysteryGrid" class="mystery-grid"></div>
+      <div class="score-panel"><span>Investigated</span><strong id="mysteryScore" aria-live="polite">0 / 5</strong><small>Calibrate your confidence, not just your answer. A confident mistake is useful evidence.</small></div>
+      <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Abstraction trap</strong><small>Now that the terms are defined, ask whether they even describe the same kind of thing.</small></span></summary><div id="layerTrap" class="go-further-body"></div></details>
+
+      <div class="library-section-head"><div><span class="eyebrow">Reference library</span><h3>Go from essential → architecture → technical vocabulary.</h3><p class="section-copy">The cards are grouped by the communication problem they usually address. Technical terms are deliberately one level deeper.</p></div></div>
       <div class="tech-workspace">
-        <div id="technologyLibrary" class="tech-grid rich-tech-grid"></div>
-        <div id="technologyPanel" class="card tech-panel"><div class="tech-empty-panel">Choose a technology card to inspect the network behind the name.</div></div>
+        <div id="technologyLibrary" class="rich-tech-grid"></div>
+        <div id="technologyPanel" class="card tech-panel"><div class="tech-empty-panel">Choose a technology card to inspect what the choice actually implies.</div></div>
       </div>
       <details class="go-further tech-compare-challenge"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Technology duel</strong><small>Force a side-by-side comparison, then inspect the satellite/NTN question.</small></span></summary><div id="technologyCompare" class="go-further-body"></div></details>
 
       <div class="concept-banner">
-        <div class="concept-icon">≠</div><div><strong>Do not put all these words at the same level.</strong><p>Wi-Fi, IEEE 802.15.4, LoRaWAN, NB-IoT and satellite do not all describe the same layer or type of system.</p></div>
+        <div class="concept-icon">≠</div><div><strong>Same decision table does not mean same abstraction level.</strong><p>Some names describe local radio/link rules, some a complete network architecture, and some an operator-provided access service. You can compare them for a deployment decision without pretending they are identical objects.</p></div>
       </div>
-      <button class="btn primary next-activity" data-next="8" type="button">Test the technologies on real situations →</button>
+      <button class="btn primary next-activity" data-next="8" type="button">Apply the map to deployment cases →</button>
     </section>
 
     <!-- ACTIVITY 6 -->
@@ -264,8 +275,8 @@
     <section class="activity-screen" data-screen="10" hidden>
       <div class="activity-label"><span>Activity 7</span><span class="pill-neutral">Break your design</span></div>
       <div class="activity-intro">
-        <h2>Your architecture was correct only under assumptions.</h2>
-        <p>Pick a change. Identify what breaks, which requirement moves, and what kind of architectural response becomes plausible.</p>
+        <h2>What happens when one assumption changes?</h2>
+        <p>Pick a change and follow its consequences: what stops working, which requirement becomes harder, and what architectural response would you try?</p>
       </div>
       <div id="stressGrid" class="event-grid rich-events"></div>
       <div id="stressResponse" class="stress-response card flat" hidden>
