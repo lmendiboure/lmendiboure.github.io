@@ -87,18 +87,27 @@
     <!-- ACTIVITY 2 -->
     <section class="activity-screen" data-screen="2" hidden>
       <div class="activity-label"><span>Activity 2</span><span class="pill-neutral">Design one system</span></div>
-      <div class="challenge-card">
-        <div>
-          <div class="eyebrow">Campus environmental monitoring</div>
-          <h2>What must exist for the service to work end to end?</h2>
-          <p class="section-copy">A university wants to observe environmental conditions across several buildings and outdoor areas. Measurements support historical analysis and alerts when abnormal conditions occur.</p>
+      <section class="mission-brief" aria-labelledby="campusMissionTitle">
+        <div class="mission-copy">
+          <div class="mission-meta"><span>Campus mission</span><span>Design brief</span></div>
+          <h2 id="campusMissionTitle">Keep a distributed campus observable.</h2>
+          <p>A university wants environmental measurements across several buildings and outdoor areas. The service must support <strong>historical analysis</strong> and <strong>alerts when conditions become abnormal</strong>.</p>
+          <div class="mission-role"><strong>Your role</strong><span>You are the systems-design team. Build something you can explain, challenge and revise — not a diagram copied from a textbook.</span></div>
         </div>
-        <div class="scenario-facts">
-          <div><span class="fact-icon">◉</span><strong>30</strong><small>measurement points</small></div>
-          <div><span class="fact-icon">≋</span><strong>4</strong><small>measurement types</small></div>
-          <div><span class="fact-icon">↯</span><strong>2</strong><small>uses: history + alerts</small></div>
+        <div class="campus-scene" role="img" aria-label="Physical campus context with several buildings, outdoor areas and distributed measurement points; no network architecture is shown">
+          <div class="campus-building building-a"><span>Building A</span><i></i><i></i><i></i></div>
+          <div class="campus-building building-b"><span>Building B</span><i></i><i></i></div>
+          <div class="campus-building building-c"><span>Library</span><i></i><i></i></div>
+          <div class="campus-outdoor"><span>Outdoor areas</span><i></i><i></i><i></i></div>
+          <div class="campus-scene-note">physical environment only · architecture still unknown</div>
         </div>
-      </div>
+        <div class="mission-fact-grid">
+          <div><strong>30</strong><span>measurement points</span></div>
+          <div><strong>4 signals</strong><span>temperature · humidity · CO₂ · noise</span></div>
+          <div><strong>mixed setting</strong><span>buildings + outdoor areas</span></div>
+          <div><strong>2 outcomes</strong><span>history + abnormal-condition alerts</span></div>
+        </div>
+      </section>
 
       <div class="activity-intro">
         <h3>Build architecture v1 from a blank canvas</h3>
@@ -162,6 +171,7 @@
     <!-- ACTIVITY 3 -->
     <section class="activity-screen" data-screen="4" hidden>
       <div class="activity-label"><span>Activity 3</span><span class="pill-neutral">Expose the constraints</span></div>
+      <div class="mission-context"><span class="mission-context-tag">Campus mission</span><strong>30 points · indoor + outdoor · 4 signals</strong><span>History and alerts are the service outcomes. Use your own architecture as evidence.</span></div>
       <div class="activity-intro">
         <h2>What actually matters for a communication link?</h2>
         <p>First select every dimension that could materially change your design. Then, as a separate decision, star the <strong>three that dominate this scenario</strong>. There is deliberately no technology list yet.</p>
@@ -198,6 +208,7 @@
     <!-- ACTIVITY 4 -->
     <section class="activity-screen" data-screen="6" hidden>
       <div class="activity-label"><span>Activity 4</span><span class="pill-neutral">Discover communication patterns</span></div>
+      <div class="mission-context"><span class="mission-context-tag">Campus mission</span><strong>Your flows now need communication paths.</strong><span>Do not choose a technology yet. First understand the shapes of networks that could carry those flows.</span></div>
       <div class="activity-intro">
         <h2>Start from the communication problem — not from a standard name.</h2>
         <p>You are not expected to know Wi-Fi, Bluetooth LE, IEEE 802.15.4, LoRaWAN or NB-IoT yet. First learn the <strong>shape of the network</strong> each family is trying to build.</p>
@@ -222,6 +233,7 @@
     <!-- ACTIVITY 5 -->
     <section class="activity-screen" data-screen="7" hidden>
       <div class="activity-label"><span>Activity 5</span><span class="pill-neutral">Investigate the technologies</span></div>
+      <div class="mission-context"><span class="mission-context-tag">Campus mission</span><strong>Keep your Top 3 requirements visible.</strong><span>As you inspect each family, ask which part of your campus design it could plausibly serve — and what infrastructure it would add.</span></div>
       <div class="activity-intro">
         <h2>Now test the map you just built.</h2>
         <p>The detective is now a consolidation exercise, not a prior-knowledge test. If a term is unfamiliar, use the reference map rather than guessing blindly.</p>
@@ -247,11 +259,17 @@
     <!-- ACTIVITY 6 -->
     <section class="activity-screen" data-screen="8" hidden>
       <div class="activity-label"><span>Activity 6</span><span class="pill-neutral">Choose under constraints</span></div>
+      <div class="mission-context transfer"><span class="mission-context-tag">Transfer test</span><strong>Leave campus briefly to test your reasoning.</strong><span>These cases look different on purpose. After them, you will return to the campus mission.</span></div>
       <div class="activity-intro">
         <h2>Which candidate is the best fit <em>given these assumptions</em>?</h2>
         <p>There may be several feasible solutions. Choose one, <strong>commit your answer</strong>, then reveal the reasoning. Afterwards, change one assumption and ask whether your decision survives.</p>
       </div>
       <div id="scenarioGrid" class="scenario-grid"></div>
+      <section class="campus-checkpoint card flat">
+        <div class="checkpoint-head"><div><span class="eyebrow">Mission checkpoint · back to campus</span><h3>Would you force one communication family onto every campus link?</h3></div><span class="checkpoint-mark">↩</span></div>
+        <p class="section-copy">Commit to a position, then identify the piece of information that would most change your answer. There is deliberately no single reference answer here.</p>
+        <div id="campusDecision" class="campus-decision"></div>
+      </section>
       <div class="reflection-strip"><strong>Important:</strong><span>“Best” only means best among these candidates under the stated requirements.</span><span>Change one assumption and the answer may change.</span></div>
       <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Refuse to guess</strong><small>Sometimes the correct engineering move is to refuse a premature choice.</small></span></summary><div id="missingInfoChallenge" class="go-further-body"></div></details>
       <button class="btn primary next-activity" data-next="9" type="button">Decisions ready → STOP</button>
@@ -274,6 +292,7 @@
     <!-- ACTIVITY 7 -->
     <section class="activity-screen" data-screen="10" hidden>
       <div class="activity-label"><span>Activity 7</span><span class="pill-neutral">Break your design</span></div>
+      <div class="mission-context danger-context"><span class="mission-context-tag">Back to campus</span><strong>Stress-test the system you designed.</strong><span>Every event below changes one fact in the original campus brief.</span></div>
       <div class="activity-intro">
         <h2>What happens when one assumption changes?</h2>
         <p>Pick a change and follow its consequences: what stops working, which requirement becomes harder, and what architectural response would you try?</p>
@@ -294,13 +313,18 @@
       <div class="finish-card">
         <div class="finish-mark">✓</div>
         <div class="eyebrow">Session complete</div>
-        <h2>The technology choice came last.</h2>
-        <p class="lead">Need → functions → architecture → flows → requirements → candidate technologies → challenge → revision.</p>
-        <div class="takeaway-grid">
-          <div><strong>Architecture</strong><span>is not a list of products.</span></div>
-          <div><strong>Requirements</strong><span>must be explicit before comparison.</span></div>
-          <div><strong>Technology</strong><span>implies infrastructure and trade-offs.</span></div>
-          <div><strong>Design</strong><span>changes when assumptions change.</span></div>
+        <h2>Before rereading anything, retrieve it.</h2>
+        <p class="lead">Four quick prompts. Think first, then reveal. This is not graded.</p>
+        <div id="memoryLock" class="memory-lock"></div>
+        <div id="sessionSynthesis" class="session-synthesis" hidden>
+          <div class="synthesis-rule"><span></span><strong>Session synthesis</strong><span></span></div>
+          <p class="lead">Need → functions → architecture → flows → requirements → candidate technologies → challenge → revision.</p>
+          <div class="takeaway-grid">
+            <div><strong>Architecture</strong><span>is not a list of products.</span></div>
+            <div><strong>Requirements</strong><span>must be explicit before comparison.</span></div>
+            <div><strong>Technology</strong><span>implies infrastructure and trade-offs.</span></div>
+            <div><strong>Design</strong><span>changes when assumptions change.</span></div>
+          </div>
         </div>
         <div id="expertFinish" class="expert-finish"></div><div class="finish-actions"><button id="finishExport" class="btn primary" type="button">Export my session</button><button id="reviewSession" class="btn" type="button">Review previous activities</button></div>
       </div>

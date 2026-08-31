@@ -2,9 +2,9 @@
   const root = document.querySelector('.student-page');
   if (!root) return;
 
-  const STORAGE_KEY = 'iot-systems-design-session1-v8';
+  const STORAGE_KEY = 'iot-systems-design-session1-v9';
   const defaultState = {
-    version: 8,
+    version: 9,
     screen: 0,
     landscape: {},
     borderline: {},
@@ -25,6 +25,8 @@
     requirements: {},
     mystery: {},
     scenarios: {},
+    campusDecision: {position:null, uncertainty:null},
+    recall: {},
     lastTechnology: null,
     selectedStress: null,
     stressRequirement: null,
@@ -526,7 +528,27 @@
     host.querySelectorAll('.scenario-option').forEach(b=>b.addEventListener('click',()=>{const prev=state.scenarios[b.dataset.sid]||{};state.scenarios[b.dataset.sid]={...prev,choice:b.dataset.choice,committed:false};saveState();renderScenarios();renderDesignDrawer();}));
     host.querySelectorAll('.commit-scenario').forEach(b=>b.addEventListener('click',()=>{const prev=state.scenarios[b.dataset.sid]||{};if(!prev.choice)return;state.scenarios[b.dataset.sid]={...prev,committed:true};saveState();renderScenarios();renderDesignDrawer();}));
     host.querySelectorAll('.twist-scenario').forEach(b=>b.addEventListener('click',()=>{const prev=state.scenarios[b.dataset.sid]||{};state.scenarios[b.dataset.sid]={...prev,twist:!prev.twist};saveState();renderScenarios();renderStopSnapshots();}));
-    renderMissingInfoChallenge(); renderStopSnapshots();
+    renderMissingInfoChallenge(); renderCampusDecision(); renderStopSnapshots();
+  }
+
+  const campusDecisionPositions = [
+    ['single','One family could be enough','If the relevant campus links share similar constraints and coverage, one access family may be a defensible simplification.'],
+    ['mixed','A mixed design is plausible','Indoor and outdoor links, power budgets or coverage conditions may justify different access choices.'],
+    ['unknown','Not enough information yet','Refusing to force a choice is valid when key deployment facts are still unknown.']
+  ];
+  const campusUncertainties = [
+    ['power','Power source / maintenance','Are nodes mains-powered, rechargeable, or expected to run for years?'],
+    ['coverage','Existing infrastructure / coverage','Where does campus Wi-Fi reach? Is operator coverage available outdoors?'],
+    ['traffic','Sampling rate / payload size','How often are the four measurements sent, and are alerts exceptional or frequent?'],
+    ['latency','Alert delay tolerance','Does an abnormal condition need action in seconds, minutes, or later?'],
+    ['layout','Physical layout / obstacles','How far apart are points, and what walls, floors or outdoor obstacles sit between them?']
+  ];
+  function renderCampusDecision(){
+    const host=$('#campusDecision'); if(!host)return;
+    const st=state.campusDecision||{position:null,uncertainty:null};
+    host.innerHTML=`<div class="campus-position-grid">${campusDecisionPositions.map(([id,title,desc])=>`<button type="button" class="campus-position ${st.position===id?'active':''}" data-campus-position="${id}"><strong>${title}</strong><small>${desc}</small></button>`).join('')}</div>${st.position?`<div class="campus-uncertainty"><strong>Which missing fact could most change your answer?</strong><div class="challenge-chip-row">${campusUncertainties.map(([id,title])=>`<button type="button" class="chip-button ${st.uncertainty===id?'active':''}" data-campus-uncertainty="${id}">${title}</button>`).join('')}</div>${st.uncertainty?`<div class="campus-feedback"><b>Good engineering habit:</b> state the assumption explicitly. ${campusUncertainties.find(x=>x[0]===st.uncertainty)?.[2]||''}</div>`:''}</div>`:''}`;
+    host.querySelectorAll('[data-campus-position]').forEach(b=>b.addEventListener('click',()=>{state.campusDecision={...(state.campusDecision||{}),position:b.dataset.campusPosition};saveState();renderCampusDecision();renderDesignDrawer();renderStopSnapshots();}));
+    host.querySelectorAll('[data-campus-uncertainty]').forEach(b=>b.addEventListener('click',()=>{state.campusDecision={...(state.campusDecision||{}),uncertainty:b.dataset.campusUncertainty};saveState();renderCampusDecision();renderDesignDrawer();renderStopSnapshots();}));
   }
 
   /* ---------- Stress test ---------- */
@@ -646,7 +668,7 @@
     const l=$('#stopLandscapeSnapshot');if(l){const cross=landscapeCases.filter(c=>landscapeSelection(c.id).secondary).length;l.innerHTML=`<div class="snapshot-head"><strong>Our IoT landscape</strong><span>${cross} cross-domain choices</span></div>${landscapeSnapshotMarkup()}<div class="snapshot-signal"><b>Discussion signal</b>${cross===0?'Your group used one domain for every case. Was the overlap genuinely negligible, or did the main/secondary framing hide useful ambiguity?':`${cross} of 8 cases crossed a boundary. Pick the hardest one to defend.`}</div>`;}
     const a=$('#stopArchitectureSnapshot');if(a){const degrees=state.components.map(c=>[c,state.flows.filter(f=>f.from===c.id||f.to===c.id).length]).sort((x,y)=>y[1]-x[1]);const hot=degrees[0];a.innerHTML=`<div class="snapshot-head"><strong>Our architecture v1</strong><span>${state.components.length} components · ${state.flows.length} flows</span></div>${miniGraphMarkup()}${state.flows.length?`<div class="snapshot-flow-list">${state.flows.slice(0,6).map(f=>{const x=state.components.find(c=>c.id===f.from),y=state.components.find(c=>c.id===f.to);return `<span>${esc(x?.name||'?')} → ${esc(y?.name||'?')}${f.label?' · '+esc(f.label):''}</span>`}).join('')}</div>`:''}${hot?`<div class="snapshot-signal"><b>Discussion signal</b>${esc(hot[0].name)} touches ${hot[1]} flow${hot[1]===1?'':'s'}. Is that architectural centrality intentional?</div>`:''}`;}
     const r=$('#stopRequirementsSnapshot');if(r){const sel=requirementDefs.filter(([id])=>state.requirements[id]);const top=sel.filter(([id])=>state.requirements[id]===2);r.innerHTML=`<div class="snapshot-head"><strong>Our communication requirements</strong><span>${sel.length} selected</span></div><div class="snapshot-requirements"><div><small>Selected</small><div class="chip-row">${sel.map(([id,,n])=>`<span class="chip">${esc(n)}</span>`).join('')||'<span class="empty-copy">None</span>'}</div></div><div><small>Top 3</small><div class="chip-row">${top.map(([id,,n])=>`<span class="chip priority">★ ${esc(n)}</span>`).join('')||'<span class="empty-copy">None starred</span>'}</div></div></div>${state.flowLens?.requirements?.length?`<div class="snapshot-insight">Flow lens completed: its priorities were ${state.flowLens.requirements.map(id=>requirementDefs.find(x=>x[0]===id)?.[2]).filter(Boolean).join(', ')}.</div>`:''}`;}
-    const t=$('#stopTechnologySnapshot');if(t){const mystery=mysteryTechs.map(m=>{const x=state.mystery[m.id];return `<span class="snapshot-tech ${x?.revealed?(x.choice===m.answer?'correct':'wrong'):''}">${x?.revealed?(x.choice===m.answer?'✓':'↺'):'·'} ${m.answer}</span>`}).join('');const dec=scenarioDefs.map(x=>{const st=state.scenarios[x.id]||{};return st.committed?`<div><strong>${esc(x.title)}</strong><span>${esc(st.choice||'')}</span>${st.twist?'<small>assumption challenged</small>':''}</div>`:''}).filter(Boolean).join('');t.innerHTML=`<div class="snapshot-head"><strong>Our technology reasoning</strong><span>${Object.values(state.scenarios||{}).filter(x=>x?.committed).length} decisions committed</span></div><div class="snapshot-tech-row">${mystery}</div><div class="snapshot-decisions">${dec||'<p class="empty-copy">No deployment decision committed yet.</p>'}</div>`;}
+    const t=$('#stopTechnologySnapshot');if(t){const mystery=mysteryTechs.map(m=>{const x=state.mystery[m.id];return `<span class="snapshot-tech ${x?.revealed?(x.choice===m.answer?'correct':'wrong'):''}">${x?.revealed?(x.choice===m.answer?'✓':'↺'):'·'} ${m.answer}</span>`}).join('');const dec=scenarioDefs.map(x=>{const st=state.scenarios[x.id]||{};return st.committed?`<div><strong>${esc(x.title)}</strong><span>${esc(st.choice||'')}</span>${st.twist?'<small>assumption challenged</small>':''}</div>`:''}).filter(Boolean).join('');const cp=state.campusDecision?.position?campusDecisionPositions.find(x=>x[0]===state.campusDecision.position):null;const cu=state.campusDecision?.uncertainty?campusUncertainties.find(x=>x[0]===state.campusDecision.uncertainty):null;t.innerHTML=`<div class="snapshot-head"><strong>Our technology reasoning</strong><span>${Object.values(state.scenarios||{}).filter(x=>x?.committed).length} transfer decisions</span></div><div class="snapshot-tech-row">${mystery}</div><div class="snapshot-decisions">${dec||'<p class="empty-copy">No deployment decision committed yet.</p>'}</div>${cp?`<div class="snapshot-campus-return"><small>Back to campus</small><strong>${esc(cp[1])}</strong>${cu?`<span>Most decision-sensitive missing fact: ${esc(cu[1])}</span>`:''}</div>`:''}`;}
   }
   $$('.review-activity').forEach(b=>b.addEventListener('click',()=>showScreen(b.dataset.reviewScreen)));
 
@@ -685,7 +707,8 @@
     const selected=requirementDefs.filter(([id])=>state.requirements[id]).map(([,icon,name])=>name);
     const tech=state.lastTechnology&&technologies[state.lastTechnology]?technologies[state.lastTechnology].name:null;
     const committed=Object.values(state.scenarios||{}).filter(v=>v&&v.committed).length;
-    host.innerHTML=`<section class="design-section"><div class="design-section-head"><strong>Architecture v1</strong><span class="design-stat">${state.components.length} components · ${state.flows.length} flows</span></div>${miniGraphMarkup()}</section><section class="design-section"><div class="design-section-head"><strong>Requirements</strong><span class="design-stat">${selected.length} selected</span></div>${priorities.length?`<div class="chip-row">${priorities.map(x=>`<span class="chip priority">★ ${esc(x)}</span>`).join('')}</div>`:'<p class="drawer-empty">No top-three priorities yet.</p>'}</section><section class="design-section"><div class="design-section-head"><strong>Current investigation</strong></div>${tech?`<div class="drawer-flow">Last technology opened: <strong>${esc(tech)}</strong></div>`:'<p class="drawer-empty">No technology card opened yet.</p>'}<div class="drawer-flow" style="margin-top:6px">Committed deployment decisions: <strong>${committed}</strong></div></section>`;
+    const cp=state.campusDecision?.position?campusDecisionPositions.find(x=>x[0]===state.campusDecision.position):null;
+    host.innerHTML=`<section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Campus mission</strong><span class="design-stat">30 points</span></div><div class="drawer-mission-facts"><span>Buildings + outdoor</span><span>Temperature · humidity · CO₂ · noise</span><span>History + alerts</span></div>${cp?`<div class="drawer-flow">Current connectivity stance: <strong>${esc(cp[1])}</strong></div>`:''}</section><section class="design-section"><div class="design-section-head"><strong>Architecture v1</strong><span class="design-stat">${state.components.length} components · ${state.flows.length} flows</span></div>${miniGraphMarkup()}</section><section class="design-section"><div class="design-section-head"><strong>Requirements</strong><span class="design-stat">${selected.length} selected</span></div>${priorities.length?`<div class="chip-row">${priorities.map(x=>`<span class="chip priority">★ ${esc(x)}</span>`).join('')}</div>`:'<p class="drawer-empty">No top-three priorities yet.</p>'}</section><section class="design-section"><div class="design-section-head"><strong>Current investigation</strong></div>${tech?`<div class="drawer-flow">Last technology opened: <strong>${esc(tech)}</strong></div>`:'<p class="drawer-empty">No technology card opened yet.</p>'}<div class="drawer-flow" style="margin-top:6px">Committed transfer decisions: <strong>${committed}</strong></div></section>`;
   }
 
   function openDesign(){renderDesignDrawer();$('#designDrawer').classList.add('open');$('#designDrawer').setAttribute('aria-hidden','false');$('#designScrim').hidden=false;}
@@ -697,6 +720,20 @@
     let sheet=document.querySelector('.mobile-tech-overlay');
     if(sheet)sheet.remove();
     sheet=document.createElement('div');sheet.className='mobile-tech-overlay';sheet.innerHTML=`<div class="mobile-tech-sheet"><button type="button" class="icon-button mobile-tech-close" aria-label="Close">×</button>${html}</div>`;document.body.appendChild(sheet);sheet.querySelector('.mobile-tech-close').addEventListener('click',()=>sheet.remove());sheet.addEventListener('click',e=>{if(e.target===sheet)sheet.remove();});
+  }
+
+  /* ---------- Retrieval checkpoint ---------- */
+  const recallPrompts = [
+    {id:'beforetech', q:'Before choosing a communication technology, what should you make explicit first?', a:'The application need, architecture/flows, and the requirements or constraints that matter for those flows.'},
+    {id:'operator', q:'Which network shape makes operator coverage an explicit design assumption?', a:'Operator-managed wide-area / cellular IoT: the device relies on cellular base stations and an operator network.'},
+    {id:'scope', q:'Why is IEEE 802.15.4 not the same kind of object as LoRaWAN?', a:'802.15.4 provides lower-level local radio/link building blocks; LoRaWAN defines a wider network architecture around devices, gateways and network services.'},
+    {id:'revision', q:'Name one reason your original campus architecture might need to change.', a:'Any changed assumption can force revision: scale, energy target, traffic volume, infrastructure availability, coverage, latency needs, failures, and more.'}
+  ];
+  function renderMemoryLock(){
+    const host=$('#memoryLock'); if(!host)return;
+    host.innerHTML=`<div class="memory-head"><span class="memory-icon">↺</span><div><strong>30-second memory lock</strong><small>Say the answer to your group before revealing it.</small></div></div><div class="memory-grid">${recallPrompts.map((x,i)=>{const shown=!!state.recall?.[x.id];return `<article class="memory-card ${shown?'revealed':''}"><span class="memory-number">${i+1}</span><strong>${x.q}</strong>${shown?`<p>${x.a}</p>`:`<button type="button" class="text-button recall-reveal" data-recall="${x.id}">Reveal after answering</button>`}</article>`}).join('')}</div><div class="memory-progress">${recallPrompts.filter(x=>state.recall?.[x.id]).length} / ${recallPrompts.length} revealed</div>`;
+    host.querySelectorAll('[data-recall]').forEach(b=>b.addEventListener('click',()=>{state.recall={...(state.recall||{}),[b.dataset.recall]:true};saveState();renderMemoryLock();}));
+    const synth=$('#sessionSynthesis'); if(synth) synth.hidden=recallPrompts.some(x=>!state.recall?.[x.id]);
   }
 
   /* ---------- Export / import ---------- */
@@ -731,8 +768,9 @@
     renderMysteries();
     renderTechnologyLibrary();
     renderScenarios();
+    renderCampusDecision();
     renderStress();
-    renderBorderlineChallenge(); renderArchitectureChallenge(); renderFlowLens(); renderLayerTrap(); renderTechnologyCompare(); renderMissingInfoChallenge(); renderDoubleFailure(); renderStopSnapshots(); renderExpertProgress();
+    renderBorderlineChallenge(); renderArchitectureChallenge(); renderFlowLens(); renderLayerTrap(); renderTechnologyCompare(); renderMissingInfoChallenge(); renderDoubleFailure(); renderStopSnapshots(); renderExpertProgress(); renderMemoryLock();
     renderStepper();
   }
 
