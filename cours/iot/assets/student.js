@@ -1,0 +1,694 @@
+(() => {
+  const root = document.querySelector('.student-page');
+  if (!root) return;
+
+  const STORAGE_KEY = 'iot-systems-design-session1-v6';
+  const defaultState = {
+    version: 6,
+    screen: 0,
+    landscape: {},
+    borderline: {},
+    challengeProgress: {},
+    architectureChallenge: null,
+    architectureResilience: null,
+    flowLens: {flowIndex:null, requirements:[]},
+    mythLab: {},
+    layerTrap: {},
+    technologyCompare: {a:'lorawan', b:'cellular'},
+    missingInfo: {},
+    doubleStress: null,
+    doubleResponse: null,
+    components: [],
+    flows: [],
+    requirements: {},
+    mystery: {},
+    scenarios: {},
+    lastTechnology: null,
+    selectedStress: null,
+    stressRequirement: null,
+    stressResponse: null,
+    revisionNote: ''
+  };
+  let state = structuredClone(defaultState);
+  let nextComponentId = 1;
+  let hintLevel = 0;
+
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => [...document.querySelectorAll(s)];
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+
+  const challengeIds=['landscape','architecture','requirements','detect','explore','choose','stress'];
+  function markChallenge(id){ if(!id)return; state.challengeProgress={...(state.challengeProgress||{}),[id]:true}; saveState(); renderExpertProgress(); }
+  function renderExpertProgress(){
+    const n=challengeIds.filter(id=>state.challengeProgress?.[id]).length;
+    const pill=$('#expertProgress'); if(pill){pill.textContent=`Expert trail ${n}/7`;pill.classList.toggle('active',n>0);}
+    const finish=$('#expertFinish'); if(finish) finish.innerHTML=`<span>Optional expert trail</span><strong>${n} / 7 explored</strong><small>These rounds are not graded; they are there to test how far your reasoning survives.</small>`;
+  }
+
+  function loadState() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) state = {...structuredClone(defaultState), ...JSON.parse(saved)};
+      nextComponentId = Math.max(1, ...state.components.map(c => Number(c.id) || 0)) + 1;
+    } catch (_) {}
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      const pill = $('#saveState');
+      if (pill) {
+        pill.textContent = 'Saved on this device';
+        pill.classList.add('saved-flash');
+        setTimeout(() => pill.classList.remove('saved-flash'), 240);
+      }
+    } catch (_) {
+      const pill = $('#saveState');
+      if (pill) pill.textContent = 'Local save unavailable';
+    }
+  }
+
+  /* ---------- Navigation ---------- */
+  const stepLabels = [
+    ['1','Landscape'], ['2','Architecture'], ['3','Requirements'], ['4','Detect'], ['5','Explore'], ['6','Choose'], ['7','Stress-test']
+  ];
+  const screenToStep = [0,0,1,1,2,2,3,4,5,5,6,6];
+
+  function renderStepper() {
+    const host = $('#stepper');
+    if (!host) return;
+    const active = screenToStep[state.screen] ?? 0;
+    host.innerHTML = stepLabels.map(([n,label], i) => `
+      <div class="step-dot ${i < active ? 'done' : ''} ${i === active ? 'active' : ''}">
+        <span>${i < active ? '✓' : n}</span><small>${label}</small>
+      </div>`).join('');
+  }
+
+  function showScreen(index, {scroll = true} = {}) {
+    index = Math.max(0, Math.min(11, Number(index) || 0));
+    state.screen = index;
+    $$('.activity-screen').forEach(s => { s.hidden = Number(s.dataset.screen) !== index; });
+    renderStepper();
+    document.body.classList.toggle('past-intro', index > 0);
+    const designButton = $('#designBtn');
+    if (designButton) designButton.hidden = index < 2;
+    renderDesignDrawer(); renderStopSnapshots();
+    saveState();
+    if (scroll) window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  $$('.next-activity').forEach(btn => btn.addEventListener('click', () => showScreen(btn.dataset.next)));
+
+  /* ---------- IoT landscape ---------- */
+  const landscapeDomains = [
+    ['home','⌂','Home'],
+    ['health','♥','Health'],
+    ['industry','⚙','Industry'],
+    ['agriculture','♧','Agriculture'],
+    ['mobility','➜','Mobility'],
+    ['energy','ϟ','Energy'],
+    ['cities','▦','Smart cities'],
+    ['logistics','▣','Logistics'],
+    ['environment','◌','Environment']
+  ];
+
+  const landscapeCases = [
+    {id:'vaccine', icon:'A', title:'Refrigerated vaccine shipment', clue:'Reports temperature and location while travelling between a hospital supplier and care sites.'},
+    {id:'worker', icon:'B', title:'Connected worker safety badge', clue:'Detects falls and hazardous gases on an industrial site and can raise an alert.'},
+    {id:'ev', icon:'C', title:'Adaptive EV charging point', clue:'Publishes availability and changes charging power according to electricity-grid conditions.'},
+    {id:'bridge', icon:'D', title:'Railway bridge condition monitor', clue:'Measures structural vibration on infrastructure used by a transport network.'},
+    {id:'irrigation', icon:'E', title:'Weather-aware irrigation controller', clue:'Combines soil and weather measurements to decide when agricultural watering is useful.'},
+    {id:'battery', icon:'F', title:'Grid-responsive home battery', clue:'Stores household energy but can also react to requests from the electricity system.'},
+    {id:'schoolair', icon:'G', title:'Air-quality sensing around schools', clue:'Measures pollution in public space where environmental conditions can affect people.'},
+    {id:'warehouse', icon:'H', title:'Autonomous warehouse robot fleet', clue:'Moves goods, senses its surroundings and coordinates operations inside a logistics facility.'}
+  ];
+  let activeLandscapeCase = null;
+
+  function landscapeSelection(caseId){
+    const v=state.landscape?.[caseId];
+    if(v && !Array.isArray(v) && typeof v==='object') return {primary:v.primary||null,secondary:v.secondary||null};
+    if(Array.isArray(v)) return {primary:v[0]||null,secondary:v[1]||null};
+    return {primary:null,secondary:null};
+  }
+  function selectedDomainsFor(caseId){const x=landscapeSelection(caseId);return [x.primary,x.secondary].filter(Boolean);}
+
+  function domainName(id){const d=landscapeDomains.find(x=>x[0]===id);return d?d[2]:id||'';}
+  function domainIcon(id){const d=landscapeDomains.find(x=>x[0]===id);return d?d[1]:'';}
+
+  function renderLandscape(){
+    const host=$('#useCaseGrid'); if(!host)return;
+    host.innerHTML=landscapeCases.map(c=>{
+      const sel=landscapeSelection(c.id), selected=selectedDomainsFor(c.id);
+      const chips=sel.primary?`<span class="domain-chip primary"><b>Main</b> ${domainIcon(sel.primary)} ${domainName(sel.primary)}</span>${sel.secondary?`<span class="domain-chip secondary"><b>Also</b> ${domainIcon(sel.secondary)} ${domainName(sel.secondary)}</span>`:''}`:'<span class="domain-unlinked">No main domain chosen yet</span>';
+      return `<button type="button" class="usecase-card ${sel.primary?'linked':''}" data-case="${c.id}"><span class="usecase-icon">${c.icon}</span><span class="usecase-copy"><span class="usecase-case">Case ${c.icon}</span><strong>${c.title}</strong><small>${c.clue}</small><span class="usecase-domains">${chips}</span></span><span class="usecase-action">${selected.length?'Edit':'Map it'} →</span></button>`;
+    }).join('');
+    host.querySelectorAll('.usecase-card').forEach(b=>b.addEventListener('click',()=>openDomainPicker(b.dataset.case)));
+    const linked=landscapeCases.filter(c=>landscapeSelection(c.id).primary).length;
+    const progress=$('#landscapeProgress'); if(progress)progress.textContent=`${linked} / ${landscapeCases.length} systems mapped`;
+    const preview=$('#landscapeDomainPreview');
+    if(preview){preview.innerHTML=landscapeDomains.map(([id,icon,name])=>{const count=landscapeCases.filter(c=>selectedDomainsFor(c.id).includes(id)).length;return `<span class="landscape-domain-count ${count?'used':''}"><b>${icon}</b>${name}<small>${count}</small></span>`;}).join('');}
+    const next=$('#landscapeNext'); if(next)next.disabled=linked<landscapeCases.length;
+    renderBorderlineChallenge(); renderStopSnapshots();
+  }
+
+  function openDomainPicker(caseId){
+    activeLandscapeCase=caseId;
+    const c=landscapeCases.find(x=>x.id===caseId); if(!c)return;
+    $('#domainPickerTitle').textContent=c.title;
+    $('#domainPickerCopy').textContent='First choice = main domain. Add one secondary domain only if it genuinely captures another side of the system.';
+    renderDomainPickerChoices();
+    $('#domainPicker').classList.add('open'); $('#domainPicker').setAttribute('aria-hidden','false'); $('#domainPickerScrim').hidden=false;
+  }
+
+  function renderDomainPickerChoices(){
+    if(!activeLandscapeCase)return;
+    const sel=landscapeSelection(activeLandscapeCase), host=$('#domainPickerChoices');
+    host.innerHTML=landscapeDomains.map(([id,icon,name])=>{
+      const role=sel.primary===id?'primary':sel.secondary===id?'secondary':'';
+      return `<button type="button" class="domain-choice ${role?'selected '+role:''}" data-domain="${id}"><span>${icon}</span><strong>${name}</strong><small>${role==='primary'?'MAIN DOMAIN':role==='secondary'?'SECONDARY':'Choose'}</small></button>`;
+    }).join('');
+    host.querySelectorAll('.domain-choice').forEach(b=>b.addEventListener('click',()=>{
+      const id=b.dataset.domain, current=landscapeSelection(activeLandscapeCase);
+      if(current.primary===id){current.primary=current.secondary;current.secondary=null;}
+      else if(current.secondary===id){current.secondary=null;}
+      else if(!current.primary){current.primary=id;}
+      else if(!current.secondary){current.secondary=id;}
+      else {flashMessage('Two domains are enough: one main and one secondary.');return;}
+      state.landscape[activeLandscapeCase]=current; saveState(); renderDomainPickerChoices(); renderLandscape();
+    }));
+    const n=[sel.primary,sel.secondary].filter(Boolean).length;
+    $('#domainPickerHint').textContent=!sel.primary?'Choose a main domain.':sel.secondary?'Main + secondary selected.':'Main selected. A secondary domain is optional.';
+    $('#doneDomainPicker').disabled=!sel.primary;
+  }
+
+  function closeDomainPicker(){
+    if(activeLandscapeCase && !landscapeSelection(activeLandscapeCase).primary){flashMessage('Choose a main domain first.');return;}
+    $('#domainPicker').classList.remove('open'); $('#domainPicker').setAttribute('aria-hidden','true'); $('#domainPickerScrim').hidden=true; activeLandscapeCase=null;
+  }
+  $('#closeDomainPicker')?.addEventListener('click',()=>{if(activeLandscapeCase && !landscapeSelection(activeLandscapeCase).primary){state.landscape[activeLandscapeCase]={primary:null,secondary:null};}$('#domainPicker').classList.remove('open');$('#domainPicker').setAttribute('aria-hidden','true');$('#domainPickerScrim').hidden=true;activeLandscapeCase=null;renderLandscape();});
+  $('#doneDomainPicker')?.addEventListener('click',closeDomainPicker);
+  $('#domainPickerScrim')?.addEventListener('click',()=>$('#closeDomainPicker')?.click());
+
+  const borderlineCases=[
+    {id:'webpi',title:'A Raspberry Pi only hosts a website',copy:'It is networked, but it does not sense or act on a physical process.',prompt:'Connected computer ≠ automatically IoT. What extra relationship with the physical world would change your answer?'},
+    {id:'localnet',title:'Sensors report only to a local gateway',copy:'There is no public Internet connection, but physical measurements are networked and used locally.',prompt:'“Internet of Things” does not require every thing to talk directly to the public Internet. Where would you draw the boundary?'},
+    {id:'robot',title:'An autonomous robot senses and acts, but never communicates',copy:'It interacts richly with the physical world but has no network interface.',prompt:'This overlaps with robotics and cyber-physical systems. Is networking essential to your working definition of IoT?'}
+  ];
+  function renderBorderlineChallenge(){
+    const host=$('#borderlineChallenge');if(!host)return;
+    host.innerHTML=`<p class="challenge-copy">These cases are deliberately awkward. There is no need to agree with the website — commit to a position and prepare an argument.</p><div class="micro-game-grid">${borderlineCases.map(c=>{const choice=state.borderline[c.id];return `<div class="micro-game-card"><strong>${c.title}</strong><small>${c.copy}</small><div class="micro-options">${['IoT','Not necessarily','Depends'].map(o=>`<button type="button" class="micro-option ${choice===o?'active':''}" data-borderline="${c.id}" data-choice="${o}">${o}</button>`).join('')}</div>${choice?`<div class="micro-feedback"><b>Discussion fuel</b>${c.prompt}</div>`:''}</div>`}).join('')}</div>`;
+    host.querySelectorAll('[data-borderline]').forEach(b=>b.addEventListener('click',()=>{state.borderline[b.dataset.borderline]=b.dataset.choice;markChallenge('landscape');renderBorderlineChallenge();}));
+  }
+
+
+  /* ---------- Architecture ---------- */
+  const canvas = $('#canvas');
+  const flowSvg = $('#flowSvg');
+  const componentInput = $('#componentInput');
+  const flowFrom = $('#flowFrom');
+  const flowTo = $('#flowTo');
+
+  function addComponent(name) {
+    name = name.trim();
+    if (!name) return;
+    const i = state.components.length;
+    state.components.push({id: nextComponentId++, name, x: 30 + (i % 4) * 190, y: 35 + Math.floor(i / 4) * 120});
+    saveState();
+    renderArchitecture();
+  }
+
+  function removeComponent(id) {
+    state.components = state.components.filter(c => c.id !== id);
+    state.flows = state.flows.filter(f => f.from !== id && f.to !== id);
+    saveState();
+    renderArchitecture();
+  }
+
+  function renderArchitecture() {
+    if (!canvas) return;
+    canvas.querySelectorAll('.arch-node').forEach(n => n.remove());
+    $('#canvasEmpty').hidden = state.components.length > 0;
+
+    state.components.forEach((c, index) => {
+      const node = document.createElement('div');
+      node.className = 'arch-node';
+      node.dataset.id = c.id;
+      node.style.left = `${Number.isFinite(c.x) ? c.x : 30 + (index % 4) * 190}px`;
+      node.style.top = `${Number.isFinite(c.y) ? c.y : 35 + Math.floor(index / 4) * 120}px`;
+      node.innerHTML = `<div class="arch-node-top"><span class="node-type-dot"></span><span class="arch-node-name">${esc(c.name)}</span><button class="icon-button remove-node" type="button" aria-label="Remove ${esc(c.name)}">×</button></div>`;
+      canvas.appendChild(node);
+      node.querySelector('.remove-node').addEventListener('click', e => { e.stopPropagation(); removeComponent(c.id); });
+
+      let drag = null;
+      node.addEventListener('pointerdown', e => {
+        if (e.target.closest('button')) return;
+        const nr = node.getBoundingClientRect();
+        const cr = canvas.getBoundingClientRect();
+        drag = {dx: e.clientX - nr.left, dy: e.clientY - nr.top, cr};
+        node.setPointerCapture(e.pointerId);
+      });
+      node.addEventListener('pointermove', e => {
+        if (!drag) return;
+        const nr = node.getBoundingClientRect();
+        let x = e.clientX - drag.cr.left - drag.dx;
+        let y = e.clientY - drag.cr.top - drag.dy;
+        x = Math.max(8, Math.min(drag.cr.width - nr.width - 8, x));
+        y = Math.max(8, Math.min(drag.cr.height - nr.height - 8, y));
+        node.style.left = `${x}px`; node.style.top = `${y}px`;
+        drawFlows();
+      });
+      function stop(e) {
+        if (!drag) return;
+        c.x = parseFloat(node.style.left) || 0;
+        c.y = parseFloat(node.style.top) || 0;
+        drag = null;
+        if (node.hasPointerCapture(e.pointerId)) node.releasePointerCapture(e.pointerId);
+        saveState(); drawFlows();
+      }
+      node.addEventListener('pointerup', stop);
+      node.addEventListener('pointercancel', stop);
+    });
+
+    renderMobileComponents();
+    renderMobileGraph();
+    renderFlowSelectors();
+    renderFlowList();
+    requestAnimationFrame(drawFlows);
+    renderDesignDrawer();
+    renderArchitectureChallenge(); renderFlowLens(); renderStopSnapshots();
+  }
+
+  function renderMobileComponents() {
+    const host = $('#mobileComponents');
+    if (!host) return;
+    if (!state.components.length) { host.innerHTML = '<p class="empty-copy">No components yet.</p>'; return; }
+    host.innerHTML = state.components.map((c,i) => `<div class="mobile-node"><span>${esc(c.name)}</span><div class="mobile-tools"><button class="icon-button mobile-up" data-i="${i}" type="button">↑</button><button class="icon-button mobile-down" data-i="${i}" type="button">↓</button><button class="icon-button mobile-remove" data-id="${c.id}" type="button">×</button></div></div>`).join('');
+    host.querySelectorAll('.mobile-up').forEach(b => b.addEventListener('click', () => { const i=+b.dataset.i; if(i>0){[state.components[i-1],state.components[i]]=[state.components[i],state.components[i-1]]; saveState(); renderArchitecture();}}));
+    host.querySelectorAll('.mobile-down').forEach(b => b.addEventListener('click', () => { const i=+b.dataset.i; if(i<state.components.length-1){[state.components[i+1],state.components[i]]=[state.components[i],state.components[i+1]]; saveState(); renderArchitecture();}}));
+    host.querySelectorAll('.mobile-remove').forEach(b => b.addEventListener('click', () => removeComponent(+b.dataset.id)));
+  }
+
+  function renderFlowSelectors() {
+    const options = '<option value="">Select…</option>' + state.components.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('');
+    flowFrom.innerHTML = options; flowTo.innerHTML = options;
+  }
+
+  function renderFlowList() {
+    const host = $('#flowList');
+    if (!host) return;
+    if (!state.flows.length) { host.innerHTML = '<p class="empty-copy">No information flows yet.</p>'; return; }
+    host.innerHTML = state.flows.map((f,i) => {
+      const a = state.components.find(c => c.id === f.from), b = state.components.find(c => c.id === f.to);
+      if (!a || !b) return '';
+      return `<div class="list-item"><span><strong>${esc(a.name)}</strong> <span class="flow-arrow-inline">→</span> <strong>${esc(b.name)}</strong><small>${f.label ? esc(f.label) : 'unlabelled flow'}</small></span><button class="icon-button remove-flow" data-i="${i}" type="button">×</button></div>`;
+    }).join('');
+    host.querySelectorAll('.remove-flow').forEach(b => b.addEventListener('click', () => {state.flows.splice(+b.dataset.i,1); saveState(); renderArchitecture();}));
+  }
+
+  function drawFlows() {
+    if (!flowSvg || !canvas) return;
+    flowSvg.innerHTML = `<defs><marker id="arrowHead" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L8,3 z" class="arrowhead"/></marker></defs>`;
+    const cr = canvas.getBoundingClientRect();
+    state.flows.forEach(f => {
+      const from = canvas.querySelector(`[data-id="${f.from}"]`), to = canvas.querySelector(`[data-id="${f.to}"]`);
+      if (!from || !to) return;
+      const a = from.getBoundingClientRect(), b = to.getBoundingClientRect();
+      const x1 = a.left - cr.left + a.width/2, y1 = a.top - cr.top + a.height/2;
+      const x2 = b.left - cr.left + b.width/2, y2 = b.top - cr.top + b.height/2;
+      const dx = x2 - x1, dy = y2 - y1;
+      const bend = Math.max(34, Math.min(110, Math.abs(dx)*.28));
+      const c1x = x1 + (dx >= 0 ? bend : -bend), c2x = x2 - (dx >= 0 ? bend : -bend);
+      const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+      path.setAttribute('d',`M ${x1} ${y1} C ${c1x} ${y1}, ${c2x} ${y2}, ${x2} ${y2}`);
+      path.setAttribute('marker-end','url(#arrowHead)');
+      flowSvg.appendChild(path);
+      if (f.label) {
+        const text = document.createElementNS('http://www.w3.org/2000/svg','text');
+        text.setAttribute('x',(x1+x2)/2); text.setAttribute('y',(y1+y2)/2-8); text.setAttribute('text-anchor','middle'); text.textContent=f.label;
+        flowSvg.appendChild(text);
+      }
+    });
+  }
+
+  $('#componentForm').addEventListener('submit', e => {e.preventDefault(); addComponent(componentInput.value); componentInput.value=''; componentInput.focus();});
+  $('#addFlow').addEventListener('click', () => {
+    const from=+flowFrom.value, to=+flowTo.value, label=$('#flowLabel').value.trim();
+    if (!from || !to || from===to) return;
+    state.flows.push({from,to,label}); $('#flowLabel').value=''; saveState(); renderArchitecture();
+  });
+  $('#clearArchitecture').addEventListener('click', () => { if(confirm('Clear the current architecture?')){state.components=[];state.flows=[];saveState();renderArchitecture();}});
+  window.addEventListener('resize', drawFlows);
+
+  const componentHints = [
+    'Trace the service backwards: what must the final user receive, and where does that information originate?',
+    'Think in verbs: sense, communicate, compute, store, display, alert, act. Which verbs exist in this scenario?',
+    'Your drawing may need things that interact with the physical world, communication paths, places that process or store data, and something that exposes the service. These do not have to be separate machines.'
+  ];
+  $('#componentHintBtn').addEventListener('click', () => {
+    const box=$('#componentHint'); box.hidden=false; box.textContent=`Hint ${Math.min(hintLevel+1,3)}/3 · ${componentHints[Math.min(hintLevel,2)]}`; hintLevel=Math.min(hintLevel+1,2);
+  });
+
+  /* ---------- Requirement choices ---------- */
+  const requirementDefs = [
+    ['range','↔','Distance / range','How far must a specific link work?'],
+    ['volume','▥','Data volume','How much data, how often, bursty or continuous?'],
+    ['latency','◷','Latency','How long can the application wait?'],
+    ['reliability','◆','Reliability','What is the consequence of loss, delay or duplication?'],
+    ['energy','ϟ','Energy','How constrained is the sender and its radio activity?'],
+    ['scale','⋮','Scale','How many devices and flows share resources?'],
+    ['mobility','➜','Mobility','Does the device move or change attachment point?'],
+    ['infra','⌂','Infrastructure','What access points, gateways or operator networks can be assumed?'],
+    ['cost','€','Cost','Device, subscription, deployment or maintenance cost?']
+  ];
+
+  function renderRequirements() {
+    const host=$('#requirementCards');
+    host.innerHTML=requirementDefs.map(([id,icon,name,desc])=>{
+      const v=state.requirements[id]||0;
+      const selected=v>0, priority=v===2;
+      return `<div class="requirement-card ${selected?'selected':''}"><button type="button" class="req-select" data-req="${id}"><span class="choice-icon">${icon}</span><span><strong>${name}</strong><small>${desc}</small></span></button><button type="button" class="req-priority ${priority?'priority':''}" data-priority="${id}" aria-label="${priority?'Remove '+name+' from top three':'Add '+name+' to top three'}" ${selected?'':'disabled'}>${priority?'★':'☆'}</button></div>`;
+    }).join('');
+    host.querySelectorAll('.req-select').forEach(b=>b.addEventListener('click',()=>toggleRequirement(b.dataset.req)));
+    host.querySelectorAll('.req-priority').forEach(b=>b.addEventListener('click',()=>togglePriority(b.dataset.priority)));
+    renderRequirementSummary();
+    renderFlowLens(); renderStopSnapshots();
+  }
+
+  function toggleRequirement(id) {
+    const current=state.requirements[id]||0;
+    if(current){ delete state.requirements[id]; }
+    else { state.requirements[id]=1; }
+    saveState(); renderRequirements(); renderDesignDrawer();
+  }
+
+  function togglePriority(id) {
+    const current=state.requirements[id]||0;
+    if(!current) return;
+    if(current===2){ state.requirements[id]=1; }
+    else {
+      const priorities=Object.values(state.requirements).filter(v=>v===2).length;
+      if(priorities>=3){ flashMessage('You already have three priorities. Remove one star first.'); return; }
+      state.requirements[id]=2;
+    }
+    saveState(); renderRequirements(); renderDesignDrawer();
+  }
+
+  function renderRequirementSummary() {
+    const host=$('#requirementSummary');
+    const selected=requirementDefs.filter(([id])=>state.requirements[id]);
+    if(!selected.length){host.innerHTML='<span class="empty-copy">Nothing selected yet.</span>';return;}
+    const priorities=selected.filter(([id])=>state.requirements[id]===2);
+    host.innerHTML=selected.map(([id,,name])=>`<span class="chip ${state.requirements[id]===2?'priority':''}">${state.requirements[id]===2?'★ ':''}${name}</span>`).join('') + `<span class="priority-help">${priorities.length}/3 priorities starred</span>`;
+    const next=$('#toStop2'); if(next) next.disabled=priorities.length!==3;
+  }
+
+  const referenceReqs = requirementDefs.map(([id,icon,name,desc])=>[name,desc]);
+  $('#revealRequirementVocabulary').addEventListener('click', e => {
+    const g=$('#referenceRequirementGrid'); g.innerHTML=referenceReqs.map(([n,d])=>`<div><strong>${n}</strong><small>${d}</small></div>`).join(''); g.hidden=false; e.currentTarget.hidden=true;
+  });
+
+  /* ---------- Mystery technology ---------- */
+  const mysteryTechs = [
+    {id:'wifi', answer:'Wi-Fi', clues:['It usually relies on locally operated access infrastructure.','Direct IP connectivity is common.','Relatively high data rates are possible compared with the other families here.'], explain:'The access-point model and direct IP integration are strong architectural clues.'},
+    {id:'ble', answer:'Bluetooth LE', clues:['It was designed around very low-power short/local communication.','It supports point-to-point and broadcast, and can also participate in mesh solutions.','Its PHY options explicitly trade data rate for achievable range.'], explain:'Several PHYs and topologies make “Bluetooth range” a poor single-number description.'},
+    {id:'dot154', answer:'IEEE 802.15.4', clues:['It defines low-rate wireless functions below the application layer.','It commonly sits underneath higher-layer IoT stacks.','Treating it as a complete application protocol would be a category error.'], explain:'The key clue is abstraction level: IEEE 802.15.4 is primarily PHY/MAC, not the whole IoT stack.'},
+    {id:'lorawan', answer:'LoRaWAN', clues:['End devices do not simply join a conventional IP access point.','Gateways relay radio packets toward a network server.','Small, infrequent traffic and battery-oriented long-range sensing are common targets.'], explain:'The gateway + network-server architecture distinguishes LoRaWAN from simply saying “long-range radio”.'},
+    {id:'cellular', answer:'Cellular IoT', clues:['It usually depends on wide-area infrastructure you do not operate yourself.','Licensed spectrum and a mobile-network core are part of the picture.','NB-IoT and LTE-M are complementary LPWA technologies in this family.'], explain:'Operator RAN/core infrastructure and licensed spectrum are the strongest clues.'}
+  ];
+  const mysteryOptions = ['Wi-Fi','Bluetooth LE','IEEE 802.15.4','LoRaWAN','Cellular IoT'];
+
+  function renderMysteries() {
+    const host=$('#mysteryGrid');
+    host.innerHTML=mysteryTechs.map((m,i)=>{
+      const s=state.mystery[m.id]||{clues:1};
+      const clueCount=Math.max(1,Math.min(3,s.clues||1));
+      return `<article class="mystery-card ${s.revealed?'revealed':''}"><div class="mystery-number">Mystery ${String.fromCharCode(65+i)}</div><div>${m.clues.slice(0,clueCount).map((c,idx)=>`<div class="mystery-clue ${idx===clueCount-1?'new':''}"><strong>Clue ${idx+1}</strong><br>${c}</div>`).join('')}</div><div class="mystery-options">${mysteryOptions.map(o=>`<button type="button" data-mid="${m.id}" data-answer="${esc(o)}" class="mystery-option ${s.choice===o?'chosen':''}" ${s.revealed?'disabled':''}>${o}</button>`).join('')}</div>${!s.revealed&&s.choice?`<div class="confidence-row"><span>How confident are you?</span>${['Low','Medium','High'].map(x=>`<button type="button" class="confidence-button ${s.confidence===x?'active':''}" data-confidence="${x}" data-mid="${m.id}">${x}</button>`).join('')}</div>`:''}${s.revealed?`<div class="mystery-result visible"><strong>${s.choice===m.answer?'Good inference.':'Not quite.'}</strong> This is <b>${m.answer}</b>.<span class="clue-score">${s.confidence||'Unknown'} confidence · ${clueCount} clue${clueCount>1?'s':''}. ${m.explain}${s.confidence==='High'&&s.choice!==m.answer?' High confidence + wrong answer is especially useful: identify which clue you over-weighted.':''}</span></div>`:''}<div class="mystery-actions">${!s.revealed&&clueCount<3?`<button type="button" class="btn ghost more-clue" data-mid="${m.id}">Reveal another clue</button>`:''}${!s.revealed?`<button type="button" class="btn soft commit-mystery" data-mid="${m.id}" ${(s.choice&&s.confidence)?'':'disabled'}>Commit inference</button>`:''}</div></article>`;
+    }).join('');
+    host.querySelectorAll('.mystery-option').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.mid; const prev=state.mystery[id]||{clues:1}; state.mystery[id]={...prev,choice:b.dataset.answer};saveState();renderMysteries();}));
+    host.querySelectorAll('[data-confidence]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.mid;const prev=state.mystery[id]||{clues:1};state.mystery[id]={...prev,confidence:b.dataset.confidence};saveState();renderMysteries();}));
+    host.querySelectorAll('.more-clue').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.mid; const prev=state.mystery[id]||{clues:1}; state.mystery[id]={...prev,clues:Math.min(3,(prev.clues||1)+1)};saveState();renderMysteries();}));
+    host.querySelectorAll('.commit-mystery').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.mid; const prev=state.mystery[id]||{clues:1}; if(!prev.choice)return; state.mystery[id]={...prev,revealed:true};saveState();renderMysteries();}));
+    const count=mysteryTechs.filter(m=>state.mystery[m.id]?.revealed).length; $('#mysteryScore').textContent=`${count} / 5`;
+    renderLayerTrap(); renderStopSnapshots();
+  }
+
+  /* ---------- Technology library ---------- */
+  const technologies = {
+    wifi:{name:'Wi-Fi', family:'local', icon:'⌁', strap:'Wireless LAN access', brief:'A family of IEEE 802.11 wireless LAN technologies. The useful engineering questions are not “is Wi-Fi good?” but which variant/band, who owns the access points, and what traffic and energy budget exist.', good:['Existing managed WLAN infrastructure','Moderate to high traffic','Straightforward IP integration'], care:['Battery-only operation without careful duty cycling','Coverage assumed without a site design','Contention and shared airtime'], architecture:['Device','Access point','IP network','Application'], compare:{layer:'WLAN PHY/MAC family',spectrum:'Typically unlicensed WLAN bands',infra:'Local access point(s)',traffic:'Can support substantially richer traffic than LPWA families',mobility:'Local WLAN mobility mechanisms; deployment-dependent',power:'Very implementation/workload dependent'}, deeper:[['Abstraction','IEEE 802.11 is a WLAN PHY/MAC family, not one fixed radio profile.'],['Variant matters','Sub-1 GHz 802.11ah / Wi-Fi HaLow illustrates why “Wi-Fi = one range/power profile” is a poor rule.'],['Shared medium','Capacity depends on airtime, contention, channel conditions and the number/behaviour of stations.'],['Discussion','If two Wi-Fi variants have different frequency bands and power/range trade-offs, how useful is a generic “Wi-Fi vs IoT” statement?']], links:[['IEEE 802.11 standard family','https://standards.ieee.org/ieee/802.11/10548/']]},
+    ble:{name:'Bluetooth LE', family:'local', icon:'ᛒ', strap:'Low-energy local connectivity', brief:'Bluetooth LE is designed for low-power operation and supports several communication topologies. Multiple PHY choices make range, robustness and data rate explicit trade-offs rather than fixed properties.', good:['Constrained nearby devices','Phone/gateway-mediated applications','Point-to-point, broadcast or mesh use cases'], care:['Assuming direct Internet reachability','Treating BLE as one topology','Ignoring PHY and transmit-power trade-offs'], architecture:['Device','Peer / gateway','Application'], compare:{layer:'Bluetooth LE radio + protocol stack',spectrum:'2.4 GHz unlicensed ISM',infra:'Peer, phone, gateway or mesh depending on design',traffic:'Low-energy local traffic; PHYs include 2M, 1M and coded modes',mobility:'Good fit for devices interacting with nearby phones/gateways',power:'Explicitly designed for low-energy operation'}, deeper:[['PHY trade-off','LE 2M increases data rate; LE Coded adds coding and trades data rate for achievable range/robustness.'],['Topologies','Bluetooth LE supports point-to-point, broadcast and mesh architectures.'],['Range is emergent','Transmit power, receiver sensitivity, PHY, antenna and environment all matter.'],['Discussion','If LE Coded extends achievable range by lowering effective data rate, are “range” and “throughput” independent requirements?']], links:[['Bluetooth technology overview','https://www.bluetooth.com/learn-about-bluetooth/tech-overview/'],['Bluetooth feature enhancements','https://www.bluetooth.com/learn-about-bluetooth/feature-enhancements/']]},
+    dot154:{name:'IEEE 802.15.4', family:'local', icon:'⌬', strap:'Low-rate PHY + MAC foundation', brief:'IEEE 802.15.4 defines PHY and MAC functions for low-rate wireless networks. It is a foundation used by higher-layer stacks, so comparing it directly with a complete network architecture can be a category error.', good:['Low-rate constrained networks','Stacks needing a low-power MAC/PHY foundation','Local sensing/actuation networks'], care:['High-volume traffic','Confusing it with Zigbee/Thread/6LoWPAN','Expecting an application protocol from the standard'], architecture:['Device','802.15.4 PHY/MAC','Higher-layer stack','Application'], compare:{layer:'PHY + MAC standard family',spectrum:'Several PHYs/frequency bands exist',infra:'Depends on the higher-layer stack/topology',traffic:'Low-rate / low-complexity design target',mobility:'Not a single end-to-end mobility architecture',power:'Low-power/low-complexity target'}, deeper:[['Layer','The standard specifies low-rate PHY/MAC functions; higher layers provide networking/application semantics.'],['Not just one PHY','The standard family has included PHYs for different bands and specialised contexts.'],['Stack question','Thread, Zigbee and 6LoWPAN-based systems may all build on 802.15.4 while behaving differently above the MAC.'],['Discussion','Is “802.15.4 vs LoRaWAN” a fair comparison if one names a PHY/MAC foundation and the other names a network protocol/architecture?']], links:[['IEEE 802.15.4 standard family','https://standards.ieee.org/ieee/802.15.4/5788/']]},
+    lorawan:{name:'LoRaWAN', family:'lpwan', icon:'◜', strap:'LPWA network architecture', brief:'LoRaWAN defines an LPWA network architecture in which gateways relay radio packets between end devices and network servers. It can be deployed privately, publicly or in shared models.', good:['Small/infrequent sensor payloads','Battery-oriented long-range sensing','Private or public LPWA deployments'], care:['Large payloads','Heavy/frequent downlink control','Assuming one universal regional data-rate rule'], architecture:['End device','Gateway(s)','Network server','Application server'], compare:{layer:'LPWA MAC/network protocol + architecture',spectrum:'Region-dependent unlicensed ISM bands',infra:'Gateway(s) + network server; private/public/shared',traffic:'Small/infrequent traffic is a common fit',mobility:'Possible use cases, but design differs from cellular mobility',power:'Battery-oriented, especially Class A patterns'}, deeper:[['LoRa ≠ LoRaWAN','LoRa names the radio modulation/PHY technology; LoRaWAN defines the networking protocol and architecture above it.'],['Device classes','Class A minimises receive windows; Classes B/C change downlink availability and energy behaviour.'],['ADR','Adaptive Data Rate can let the network optimise data rate/RF settings for suitable devices.'],['Regional parameters','Channel plans, allowed data rates and regulatory constraints vary by region.'],['Discussion','If downlink availability is increased, what do you expect to happen to device energy consumption?']], links:[['LoRaWAN for developers','https://lora-alliance.org/lorawan-for-developers/'],['LoRaWAN regional parameters','https://resources.lora-alliance.org/technical-specifications/rp002-1-0-4-regional-parameters']]},
+    cellular:{name:'Cellular IoT', family:'lpwan', icon:'▥', strap:'Operator-managed LPWA access', brief:'NB-IoT and LTE-M are complementary 3GPP LPWA radio access technologies. They reuse cellular infrastructure but target different performance envelopes, so “cellular IoT” is itself a family decision.', good:['Wide-area operator coverage','Large fleets without local access infrastructure','Use cases benefiting from managed cellular connectivity'], care:['Assuming coverage/service availability','Ignoring subscriptions/modules/operator dependencies','Treating NB-IoT and LTE-M as identical'], architecture:['Device','Operator RAN','Mobile core','Application'], compare:{layer:'3GPP cellular radio access family',spectrum:'Licensed operator spectrum',infra:'Operator RAN + mobile core',traffic:'LPWA; NB-IoT and LTE-M provide different envelopes',mobility:'LTE-M generally serves more mobility/richer interaction profiles; NB-IoT emphasises lower-complexity LPWA profiles',power:'Power-saving mechanisms are central to both families'}, deeper:[['NB-IoT vs LTE-M','They are complementary rather than interchangeable labels; LTE-M supports a richer performance/mobility envelope while NB-IoT targets narrower-band low-complexity operation.'],['Coverage is an assumption','Operator infrastructure removes local gateway deployment only where the required service is actually available.'],['NTN','3GPP Release 17 studied/specified support for NB-IoT/eMTC over non-terrestrial networks.'],['Discussion','If NB-IoT can be supported over NTN, does “satellite vs NB-IoT” even describe mutually exclusive choices?']], links:[['GSMA Mobile IoT Deployment Guide','https://www.gsma.com/solutions-and-impact/technologies/internet-of-things/wp-content/uploads/2026/02/Mobile-IoT-Deployment-Guide-digital-1.pdf'],['3GPP NB-IoT/eMTC NTN study','https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=3747']]}
+  };
+
+  function renderTechnologyLibrary() {
+    const host=$('#technologyLibrary');
+    host.innerHTML=Object.entries(technologies).map(([id,t])=>`<button type="button" class="tech-card family-${t.family}" data-tech="${id}"><span class="tech-icon">${t.icon}</span><span class="tech-family">${t.family==='lpwan'?'LPWAN / wide area':'local / access'}</span><strong>${t.name}</strong><small>${t.strap}</small><span class="open">Open card →</span></button>`).join('');
+    host.querySelectorAll('.tech-card').forEach(b=>b.addEventListener('click',()=>showTechnology(b.dataset.tech)));
+    renderTechnologyCompare();
+  }
+
+  function showTechnology(id) {
+    const t=technologies[id], panel=$('#technologyPanel');
+    state.lastTechnology=id; saveState(); renderDesignDrawer();
+    panel.className=`card tech-panel visible family-panel-${t.family}`;
+    panel.innerHTML=`
+      <div class="tech-title-row"><div><div class="eyebrow">Decision card</div><h2>${t.name}</h2><p class="section-copy">${t.brief}</p></div><span class="tech-icon large">${t.icon}</span></div>
+      <div class="tech-columns"><div><h4>Often credible when…</h4><ul class="clean">${t.good.map(x=>`<li>${x}</li>`).join('')}</ul></div><div><h4>Be careful when…</h4><ul class="clean">${t.care.map(x=>`<li>${x}</li>`).join('')}</ul></div><div><h4>Network behind the name</h4><div class="arch-chain mini-chain">${t.architecture.map((x,i)=>`${i?'<span class="arch-arrow">→</span>':''}<span class="arch-box">${x}</span>`).join('')}</div></div></div>
+      <details class="tech-deep"><summary>Go deeper technically</summary><div class="deep-fact-grid">${t.deeper.map(([a,b])=>`<div><strong>${a}</strong><span>${b}</span></div>`).join('')}</div></details>
+      <div class="source-list"><strong>Verify / learn more:</strong> ${t.links.map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n} ↗</a>`).join(' · ')}</div>`;
+    if(window.matchMedia('(max-width:650px)').matches){ openMobileTechSheet(panel.innerHTML); } else { panel.scrollIntoView({behavior:'smooth', block:'nearest'}); }
+  }
+
+  /* ---------- Scenario choices ---------- */
+  const scenarioDefs = [
+    {id:'wearable', icon:'⌚', title:'A wearable talks to a nearby phone', facts:['small periodic data','battery-powered device','phone is normally nearby'], options:['Bluetooth LE','Wi-Fi','LoRaWAN'], best:'Bluetooth LE', driver:2, why:'Among these candidates, Bluetooth LE aligns naturally with low-energy nearby device-to-phone communication. Wi-Fi can be feasible but adds different energy/infrastructure assumptions; LoRaWAN targets a very different network model.', twist:'Now the phone may be hundreds of metres away for long periods.', twistImpact:'The assumption that made nearby BLE connectivity natural has disappeared. You would need a different architecture or an intermediary.'},
+    {id:'farm', icon:'♧', title:'Sparse sensors across a private rural site', facts:['tiny payload every 15 min','battery autonomy matters','gateway infrastructure can be installed','hundreds of metres to kilometres'], options:['LoRaWAN','Wi-Fi','Bluetooth LE'], best:'LoRaWAN', driver:2, why:'Given a private gateway can be installed and traffic is small/infrequent, LoRaWAN is the strongest fit among these options. The result would change for high-volume or tight-latency traffic.', twist:'Each node now transmits an image every 10 seconds.', twistImpact:'The traffic model has changed radically. Long-range low-data-rate LPWA is no longer an obvious fit.'},
+    {id:'camera', icon:'◉', title:'A powered camera inside a connected building', facts:['frequent images','mains power available','managed WLAN already exists'], options:['Wi-Fi','LoRaWAN','NB-IoT'], best:'Wi-Fi', driver:2, why:'The stated workload favours the higher data-rate local WLAN already present. LPWA technologies are not designed for this traffic model.', twist:'The managed WLAN is removed from the deployment assumptions.', twistImpact:'The original answer depended heavily on existing local infrastructure. Re-evaluate access options rather than treating Wi-Fi as intrinsically best.'},
+    {id:'meter', icon:'▤', title:'Meters distributed across a city', facts:['small messages','no local gateways to maintain','operator LPWA coverage confirmed','long device lifetime'], options:['NB-IoT','Bluetooth LE','IEEE 802.15.4'], best:'NB-IoT', driver:2, why:'The crucial assumption is confirmed operator LPWA coverage and no desire to deploy local access infrastructure. NB-IoT is therefore the strongest candidate among these choices.', twist:'Operator LPWA coverage is no longer available in part of the city.', twistImpact:'The strongest argument for NB-IoT has vanished. You may need local infrastructure, another operator technology, or a heterogeneous design.'},
+    {id:'mesh', icon:'⌬', title:'Many low-rate devices inside one building', facts:['local control/monitoring','constrained nodes','multi-hop higher-layer stack is acceptable'], options:['IEEE 802.15.4','LoRaWAN','NB-IoT'], best:'IEEE 802.15.4', driver:1, why:'A low-rate local network built on a suitable higher-layer stack is a natural domain for IEEE 802.15.4. The important point is that 802.15.4 alone is only the PHY/MAC foundation.', twist:'Several devices become high-volume video sources.', twistImpact:'The low-rate premise no longer holds. A single access technology may no longer be appropriate for all device classes.'}
+  ];
+
+  function renderScenarios() {
+    const host=$('#scenarioGrid');
+    host.innerHTML=scenarioDefs.map(s=>{
+      const st=state.scenarios[s.id]||{};
+      const choice=st.choice||null, committed=!!st.committed, twist=!!st.twist;
+      return `<article class="scenario-card"><div class="scenario-top"><span class="scenario-icon">${s.icon}</span><div><div class="eyebrow">Deployment case</div><h3>${s.title}</h3></div></div><div class="fact-chip-row decision-driver">${s.facts.map((f,i)=>`<button type="button" class="fact-chip ${st.driver===i?'driver':''}" data-driver="${i}" data-sid="${s.id}" ${committed?'disabled':''}>${f}${st.driver===i?' · decisive':''}</button>`).join('')}</div><div class="scenario-options ${committed?'locked':''}">${s.options.map(o=>`<button type="button" class="scenario-option ${choice===o?'selected':''}" data-sid="${s.id}" data-choice="${esc(o)}" ${committed?'disabled':''}>${o}</button>`).join('')}</div>${!committed?`<p class="driver-hint">Choose a technology <b>and</b> the assumption doing most of the work in your decision.</p>`:''}<div class="scenario-action-row">${!committed?`<button type="button" class="btn soft commit-scenario" data-sid="${s.id}" ${(choice&&Number.isInteger(st.driver))?'':'disabled'}>Commit decision</button>`:`<button type="button" class="btn ghost twist-scenario" data-sid="${s.id}">${twist?'Hide changed assumption':'Change one assumption'}</button>`}</div>${committed?`<div class="scenario-rationale ${choice===s.best?'good':'challenge'}"><strong>${choice===s.best?'Strongest fit among these options.':'Worth discussing, but not the strongest fit here.'}</strong><span>${s.why}</span><small class="driver-feedback">You treated “${esc(s.facts[st.driver])}” as decisive. ${st.driver===s.driver?'That is also one of the assumptions carrying most weight in the reference reasoning.':`One plausible reference reading gives especially high weight to “${esc(s.facts[s.driver])}”. Your choice may still be defensible if you can explain the trade-off.`}</small></div>`:''}${twist?`<div class="scenario-twist"><strong>New assumption</strong><span>${s.twist}</span><strong style="margin-top:7px">What changes?</strong><span>${s.twistImpact}</span></div>`:''}</article>`;
+    }).join('');
+    host.querySelectorAll('[data-driver]').forEach(b=>b.addEventListener('click',()=>{const prev=state.scenarios[b.dataset.sid]||{};state.scenarios[b.dataset.sid]={...prev,driver:+b.dataset.driver};saveState();renderScenarios();}));
+    host.querySelectorAll('.scenario-option').forEach(b=>b.addEventListener('click',()=>{const prev=state.scenarios[b.dataset.sid]||{};state.scenarios[b.dataset.sid]={...prev,choice:b.dataset.choice,committed:false};saveState();renderScenarios();renderDesignDrawer();}));
+    host.querySelectorAll('.commit-scenario').forEach(b=>b.addEventListener('click',()=>{const prev=state.scenarios[b.dataset.sid]||{};if(!prev.choice)return;state.scenarios[b.dataset.sid]={...prev,committed:true};saveState();renderScenarios();renderDesignDrawer();}));
+    host.querySelectorAll('.twist-scenario').forEach(b=>b.addEventListener('click',()=>{const prev=state.scenarios[b.dataset.sid]||{};state.scenarios[b.dataset.sid]={...prev,twist:!prev.twist};saveState();renderScenarios();renderStopSnapshots();}));
+    renderMissingInfoChallenge(); renderStopSnapshots();
+  }
+
+  /* ---------- Stress test ---------- */
+  const stressDefs = [
+    {id:'outage', icon:'⊘', title:'Internet outage', short:'Campus Internet disappears for 30 minutes.', broken:'Your original design may have assumed continuous reachability of remote services.'},
+    {id:'battery', icon:'ϟ', title:'Two-year battery target', short:'Outdoor nodes cannot be regularly maintained.', broken:'Your original design may have treated radio activity and energy as cheap.'},
+    {id:'scale', icon:'×20', title:'Scale explosion', short:'30 measurement points become 600.', broken:'Your original design may have assumed that shared network, processing and storage resources scale linearly.'},
+    {id:'camera', icon:'▣', title:'High-volume sensor', short:'A camera now sends an image every 10 seconds.', broken:'Your original design may have assumed that all sensors have a similar traffic profile.'},
+    {id:'remote', icon:'◌', title:'No terrestrial coverage', short:'Some sensors move to isolated mountain sites.', broken:'Your original design may have assumed terrestrial access infrastructure is available everywhere.'}
+  ];
+  const responseChoices = [
+    ['local-buffer','Add local buffering','Keep data locally while a remote path is unavailable.'],
+    ['gateway','Introduce / change a gateway','Aggregate, translate or bridge between access and upstream networks.'],
+    ['heterogeneous','Use heterogeneous access','Different device classes do not have to use the same connectivity.'],
+    ['edge','Move processing closer','Filter or decide locally instead of sending every raw datum remotely.'],
+    ['operator','Use managed wide-area access','Rely on operator infrastructure where local deployment is impractical.'],
+    ['satellite','Consider satellite access or backhaul','First decide whether satellite replaces the device access link or only the upstream/backhaul link.']
+  ];
+
+  function renderStress() {
+    const host=$('#stressGrid');
+    host.innerHTML=stressDefs.map(s=>`<button type="button" class="event ${state.selectedStress===s.id?'selected':''}" data-stress="${s.id}"><span class="event-icon">${s.icon}</span><span><strong>${s.title}</strong><small>${s.short}</small></span></button>`).join('');
+    host.querySelectorAll('.event').forEach(b=>b.addEventListener('click',()=>{state.selectedStress=b.dataset.stress;state.stressRequirement=null;state.stressResponse=null;state.doubleStress=null;saveState();renderStress();renderStressResponse();renderDoubleFailure();}));
+    renderStressResponse(); renderDoubleFailure();
+  }
+
+  function renderStressResponse() {
+    const box=$('#stressResponse');
+    if(!state.selectedStress){box.hidden=true;return;}
+    box.hidden=false;
+    const s=stressDefs.find(x=>x.id===state.selectedStress);
+    $('#brokenPrompt').textContent=s.broken;
+    $('#stressRequirementChoices').innerHTML=requirementDefs.map(([id,,name])=>`<button type="button" class="chip-button ${state.stressRequirement===id?'active':''}" data-stress-req="${id}">${name}</button>`).join('');
+    $('#stressRequirementChoices').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state.stressRequirement=b.dataset.stressReq;saveState();renderStressResponse();}));
+    $('#architectureResponseChoices').innerHTML=responseChoices.map(([id,name,desc])=>`<button type="button" class="choice-card compact ${state.stressResponse===id?'state-2':''}" data-response="${id}"><span><strong>${name}</strong><small>${desc}</small></span></button>`).join('');
+    $('#architectureResponseChoices').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state.stressResponse=b.dataset.response;saveState();renderStressResponse();}));
+    $('#revisionNote').value=state.revisionNote||'';
+  }
+  $('#revisionNote').addEventListener('input', e=>{state.revisionNote=e.target.value;saveState();});
+
+
+  /* ---------- Optional challenge modes + STOP snapshots ---------- */
+  function renderArchitectureChallenge(){
+    const host=$('#architectureChallenge');if(!host)return;
+    if(!state.components.length){host.innerHTML='<p class="challenge-copy">Build the architecture first. This challenge uses your own components.</p>';return;}
+    const selected=Number(state.architectureChallenge)||null;
+    const c=state.components.find(x=>x.id===selected);
+    const affected=c?state.flows.filter(f=>f.from===c.id||f.to===c.id):[];
+    const resilienceChoices=[['replicate','Replicate the responsibility'],['buffer','Buffer through the outage'],['bypass','Create an alternate path'],['degrade','Accept degraded service']];
+    host.innerHTML=`<p class="challenge-copy">Temporarily remove one component. Nothing is deleted from your real architecture. Then choose the <b>single response</b> you would try first.</p><div class="challenge-chip-row">${state.components.map(x=>`<button type="button" class="chip-button ${selected===x.id?'active':''}" data-remove-test="${x.id}">${esc(x.name)}</button>`).join('')}</div>${c?`<div class="impact-card"><span class="impact-number">${affected.length}</span><div><strong>information flow${affected.length===1?'':'s'} directly affected</strong><p>${affected.length?affected.map(f=>{const a=state.components.find(x=>x.id===f.from),b=state.components.find(x=>x.id===f.to);return `${esc(a?.name||'?')} → ${esc(b?.name||'?')}${f.label?' ('+esc(f.label)+')':''}`}).join('<br>'):'No labelled flow touches this component — is that itself suspicious?'}</p></div></div><div class="expert-decision"><strong>One move only. What would you try first?</strong><div class="challenge-chip-row">${resilienceChoices.map(([id,label])=>`<button type="button" class="chip-button ${state.architectureResilience===id?'active':''}" data-resilience="${id}">${label}</button>`).join('')}</div>${state.architectureResilience?`<p>Now defend the trade-off: what failure does this response <em>not</em> solve?</p>`:''}</div>`:''}`;
+    host.querySelectorAll('[data-remove-test]').forEach(b=>b.addEventListener('click',()=>{state.architectureChallenge=+b.dataset.removeTest;state.architectureResilience=null;saveState();renderArchitectureChallenge();}));
+    host.querySelectorAll('[data-resilience]').forEach(b=>b.addEventListener('click',()=>{state.architectureResilience=b.dataset.resilience;markChallenge('architecture');renderArchitectureChallenge();}));
+  }
+
+  function renderFlowLens(){
+    const host=$('#flowLens');if(!host)return;
+    if(!state.flows.length){host.innerHTML='<p class="challenge-copy">Add at least one information flow first.</p>';return;}
+    const idx=Number.isInteger(state.flowLens?.flowIndex)?state.flowLens.flowIndex:0;
+    if(idx>=state.flows.length) state.flowLens={flowIndex:0,requirements:[]};
+    const current=state.flows[state.flowLens.flowIndex??0];
+    const reqs=Array.isArray(state.flowLens.requirements)?state.flowLens.requirements:[];
+    const globalTop=requirementDefs.filter(([id])=>state.requirements[id]===2).map(([id])=>id);
+    const overlap=reqs.filter(x=>globalTop.includes(x)).length;
+    host.innerHTML=`<p class="challenge-copy">Pick one arrow, then choose up to three constraints specifically for that flow — not for the whole system.</p><label class="challenge-select"><span>Flow</span><select id="flowLensSelect">${state.flows.map((f,i)=>{const a=state.components.find(x=>x.id===f.from),b=state.components.find(x=>x.id===f.to);return `<option value="${i}" ${i===(state.flowLens.flowIndex??0)?'selected':''}>${esc(a?.name||'?')} → ${esc(b?.name||'?')}${f.label?' · '+esc(f.label):''}</option>`}).join('')}</select></label><div class="challenge-chip-row">${requirementDefs.map(([id,,name])=>`<button type="button" class="chip-button ${reqs.includes(id)?'active':''}" data-flow-req="${id}">${name}</button>`).join('')}</div>${reqs.length?`<div class="micro-feedback"><b>Compare with your system-wide Top 3</b>${globalTop.length?`${overlap} of your ${reqs.length} flow-specific choices overlap with the global priorities. ${overlap===reqs.length?'Maybe this flow dominates your overall thinking.':'That difference is exactly the point: flows can have distinct requirements.'}`:'You have not starred a global Top 3 yet.'}</div>`:''}`;
+    $('#flowLensSelect')?.addEventListener('change',e=>{state.flowLens={flowIndex:+e.target.value,requirements:[]};saveState();renderFlowLens();});
+    host.querySelectorAll('[data-flow-req]').forEach(b=>b.addEventListener('click',()=>{let a=[...(state.flowLens.requirements||[])],id=b.dataset.flowReq;if(a.includes(id))a=a.filter(x=>x!==id);else if(a.length<3)a.push(id);else{flashMessage('Choose up to three for this flow.');return;}state.flowLens.requirements=a;if(a.length)markChallenge('requirements');else saveState();renderFlowLens();renderStopSnapshots();}));
+  }
+
+  const layerPairs=[
+    {id:'lora',left:'LoRa',right:'LoRaWAN',answer:'No',why:'LoRa names the radio modulation/PHY technology; LoRaWAN defines the network protocol and architecture using LoRa radios.'},
+    {id:'154',left:'IEEE 802.15.4',right:'LoRaWAN',answer:'Not really',why:'802.15.4 is a PHY/MAC foundation; LoRaWAN names a broader network protocol/architecture. They can still compete in a design decision, but not at identical abstraction levels.'},
+    {id:'ntn',left:'NB-IoT',right:'Satellite',answer:'No',why:'NB-IoT is a cellular radio-access technology. Satellite/NTN describes a non-terrestrial transmission/access path; Release 17 work explicitly connects these concepts.'},
+    {id:'backhaul',left:'LoRaWAN',right:'Satellite',answer:'Depends',why:'A LoRaWAN gateway could use satellite only as backhaul, while other designs may use a satellite-facing device link. “Satellite” does not tell you which architectural link it replaces.'}
+  ];
+  function renderLayerTrap(){const host=$('#layerTrap');if(!host)return;host.innerHTML=`<p class="challenge-copy">For each pair, answer the question: <b>are these two names describing comparable things at the same architectural level?</b></p><div class="micro-game-grid">${layerPairs.map(x=>{const c=state.layerTrap[x.id];return `<div class="micro-game-card"><div class="pair-title"><strong>${x.left}</strong><span>vs</span><strong>${x.right}</strong></div><div class="micro-options">${['Yes','No','Not really','Depends'].map(o=>`<button class="micro-option ${c===o?'active':''}" type="button" data-layer="${x.id}" data-choice="${o}">${o}</button>`).join('')}</div>${c?`<div class="micro-feedback"><b>${c===x.answer?'Useful distinction.':'Compare your answer with this framing.'}</b>${x.why}</div>`:''}</div>`}).join('')}</div>`;host.querySelectorAll('[data-layer]').forEach(b=>b.addEventListener('click',()=>{state.layerTrap[b.dataset.layer]=b.dataset.choice;markChallenge('detect');renderLayerTrap();}));}
+
+  function renderTechnologyCompare(){
+    const host=$('#technologyCompare');if(!host)return;
+    let a=state.technologyCompare?.a||'lorawan',b=state.technologyCompare?.b||'cellular'; if(a===b)b=a==='wifi'?'ble':'wifi';
+    const ta=technologies[a],tb=technologies[b];
+    const rows=[['What level?',ta.compare.layer,tb.compare.layer],['Spectrum',ta.compare.spectrum,tb.compare.spectrum],['Infrastructure',ta.compare.infra,tb.compare.infra],['Traffic profile',ta.compare.traffic,tb.compare.traffic],['Mobility',ta.compare.mobility,tb.compare.mobility],['Energy angle',ta.compare.power,tb.compare.power]];
+    host.innerHTML=`<div class="compare-controls"><label><span>Technology A</span><select id="compareA">${Object.entries(technologies).map(([id,t])=>`<option value="${id}" ${id===a?'selected':''}>${t.name}</option>`).join('')}</select></label><span class="compare-vs">VS</span><label><span>Technology B</span><select id="compareB">${Object.entries(technologies).map(([id,t])=>`<option value="${id}" ${id===b?'selected':''}>${t.name}</option>`).join('')}</select></label></div><div class="compare-table">${rows.map(([k,x,y])=>`<div class="compare-row"><strong>${k}</strong><span>${x}</span><span>${y}</span></div>`).join('')}</div><div class="ntn-lens"><div class="eyebrow">Satellite / NTN lens</div><h4>Satellite is not automatically a sixth equivalent access technology.</h4><div class="ntn-diagrams"><div><b>Direct / NTN access</b><span>Device → satellite / NTN access → network → application</span></div><div><b>Backhaul</b><span>Device → local gateway → satellite backhaul → application/network</span></div></div><p>3GPP Release 17 includes NB-IoT/eMTC NTN work. That is why “NB-IoT or satellite?” can be the wrong question: the two concepts can coexist in one architecture.</p></div><div id="mythLabInner" class="myth-lab"></div>`;
+    $('#compareA')?.addEventListener('change',e=>{state.technologyCompare.a=e.target.value;if(state.technologyCompare.a===state.technologyCompare.b)state.technologyCompare.b=state.technologyCompare.a==='wifi'?'ble':'wifi';markChallenge('explore');renderTechnologyCompare();});
+    $('#compareB')?.addEventListener('change',e=>{state.technologyCompare.b=e.target.value;if(state.technologyCompare.a===state.technologyCompare.b)state.technologyCompare.a=state.technologyCompare.b==='wifi'?'ble':'wifi';markChallenge('explore');renderTechnologyCompare();});
+    renderMythLab();
+  }
+
+  const mythCards=[
+    {id:'lora',text:'LoRa and LoRaWAN are interchangeable names.',answer:'False',why:'LoRa names the radio modulation/PHY technology; LoRaWAN defines a network protocol and architecture above it.'},
+    {id:'wifi-battery',text:'Wi-Fi is a poor choice for battery-powered sensors.',answer:'Depends',why:'It can be a poor fit, but duty cycle, traffic, sleep behaviour, Wi-Fi variant, coverage and lifetime target all matter. “Battery-powered” alone is not enough to reject it.'},
+    {id:'mesh',text:'An IEEE 802.15.4-based system can use a mesh topology if higher layers implement it.',answer:'True',why:'802.15.4 supplies PHY/MAC functions; a higher-layer stack can add mesh networking. The important distinction is that mesh is not implied by 802.15.4 itself.'},
+    {id:'ntn',text:'NB-IoT and satellite are mutually exclusive connectivity choices.',answer:'False',why:'3GPP Release 17 work supports NB-IoT/eMTC over NTN, so the concepts can coexist in one architecture.'},
+    {id:'lorawan-private',text:'A LoRaWAN deployment can be private rather than operator-managed.',answer:'True',why:'LoRaWAN networks can be deployed under different ownership models. Choosing LoRaWAN does not by itself imply a mobile-network operator.'},
+    {id:'spectrum-cost',text:'Using unlicensed spectrum is cheaper than using licensed operator connectivity.',answer:'Depends',why:'Spectrum access is only one cost dimension. Gateways, site deployment, maintenance, subscriptions, operations and scale can reverse the comparison.'}
+  ];
+  function renderMythLab(){const host=$('#mythLabInner');if(!host)return;host.innerHTML=`<div class="eyebrow">Expert mini-game · Claim lab</div><h4>Myth, fact, or “it depends”?</h4><p class="challenge-copy">Some claims are true, some are false, and some cannot be judged without additional assumptions.</p><div class="myth-grid">${mythCards.map(m=>{const st=state.mythLab?.[m.id]||{};return `<div class="myth-card"><strong>${m.text}</strong><div class="micro-options">${['True','False','Depends'].map(x=>`<button type="button" class="micro-option ${st.choice===x?'active':''}" data-myth="${m.id}" data-choice="${x}" ${st.locked?'disabled':''}>${x}</button>`).join('')}</div>${!st.locked?`<button type="button" class="text-button lock-myth" data-myth="${m.id}" ${st.choice?'':'disabled'}>Lock answer</button>`:`<div class="micro-feedback"><b>${st.choice===m.answer?'Good distinction.':'Compare the assumptions.'}</b>${m.why}</div>`}</div>`}).join('')}</div>`;host.querySelectorAll('[data-myth]').forEach(b=>b.addEventListener('click',()=>{const prev=state.mythLab[b.dataset.myth]||{};state.mythLab[b.dataset.myth]={...prev,choice:b.dataset.choice};saveState();renderMythLab();}));host.querySelectorAll('.lock-myth').forEach(b=>b.addEventListener('click',()=>{const prev=state.mythLab[b.dataset.myth]||{};state.mythLab[b.dataset.myth]={...prev,locked:true};markChallenge('explore');renderMythLab();}));}
+
+
+  const missingInfoCases=[
+    {id:'wildlife',title:'A wildlife tracker in a remote region',given:'It must send location to researchers.',options:['Expected update frequency','Terrestrial/operator coverage','Battery/size budget','Whether the animal moves'],key:['Expected update frequency','Terrestrial/operator coverage','Battery/size budget'],why:'“Remote tracker” is not enough to choose a radio. Traffic frequency, coverage and energy budget can completely change the architecture; mobility also matters but is already implicit here.'},
+    {id:'factory',title:'A factory alarm sensor',given:'It must be reliable.',options:['Maximum acceptable alarm delay','Consequence of a missed alarm','Existing local infrastructure','Colour of the enclosure'],key:['Maximum acceptable alarm delay','Consequence of a missed alarm','Existing local infrastructure'],why:'“Reliable” is underspecified. Latency target, failure consequence and available infrastructure are engineering inputs; enclosure colour is deliberately irrelevant here.'}
+  ];
+  function renderMissingInfoChallenge(){const host=$('#missingInfoChallenge');if(!host)return;host.innerHTML=`<p class="challenge-copy">Select the information you would demand <b>before</b> naming a technology. Then lock the case.</p><div class="micro-game-grid">${missingInfoCases.map(c=>{const st=state.missingInfo[c.id]||{choices:[],locked:false};return `<div class="micro-game-card"><strong>${c.title}</strong><small>${c.given}</small><div class="missing-options">${c.options.map(o=>`<button type="button" class="missing-option ${st.choices.includes(o)?'active':''}" data-missing="${c.id}" data-info="${esc(o)}" ${st.locked?'disabled':''}>${o}</button>`).join('')}</div>${!st.locked?`<button class="btn soft lock-missing" data-missing="${c.id}" type="button" ${st.choices.length?'':'disabled'}>Lock what we need to know</button>`:`<div class="micro-feedback"><b>Engineering answer: do not guess yet.</b>${c.why}</div>`}</div>`}).join('')}</div>`;host.querySelectorAll('[data-info]').forEach(b=>b.addEventListener('click',()=>{let st=state.missingInfo[b.dataset.missing]||{choices:[],locked:false};let a=[...st.choices],x=b.dataset.info;a=a.includes(x)?a.filter(y=>y!==x):[...a,x];state.missingInfo[b.dataset.missing]={...st,choices:a};saveState();renderMissingInfoChallenge();}));host.querySelectorAll('.lock-missing').forEach(b=>b.addEventListener('click',()=>{let st=state.missingInfo[b.dataset.missing]||{choices:[],locked:false};state.missingInfo[b.dataset.missing]={...st,locked:true};markChallenge('choose');renderMissingInfoChallenge();}));}
+
+  const compoundInsights={
+    'outage|scale':'Buffering may preserve data during the outage, but 600 devices can create a reconnection burst. Local aggregation/back-pressure now matter too.',
+    'battery|camera':'High-volume sensing and a two-year battery target pull in opposite directions. Local filtering, duty cycling or heterogeneous powered nodes become central.',
+    'camera|scale':'A ×20 fleet plus image traffic is a capacity problem, not just a range problem. One homogeneous access technology becomes increasingly questionable.',
+    'battery|remote':'Remote access and strict battery autonomy force an explicit link-budget and duty-cycle discussion. Satellite/NTN does not remove the energy constraint.',
+    'camera|remote':'A remote high-volume sensor raises both upstream-capacity and energy questions. Direct satellite access and satellite backhaul are very different designs.',
+    'outage|remote':'When remote sites also lose upstream connectivity, local autonomy and store-and-forward become first-class architectural responsibilities.'
+  };
+  function renderDoubleFailure(){const host=$('#doubleFailureChallenge');if(!host)return;if(!state.selectedStress){host.innerHTML='<p class="challenge-copy">Complete the main stress test first, then add a second event.</p>';return;}const first=stressDefs.find(x=>x.id===state.selectedStress);const others=stressDefs.filter(x=>x.id!==state.selectedStress);const second=state.doubleStress?stressDefs.find(x=>x.id===state.doubleStress):null;const key=second?[first.id,second.id].sort().join('|'):null;host.innerHTML=`<p class="challenge-copy">Your first event is <b>${first.title}</b>. Add one more. Then assume you are allowed <b>one architectural change only</b>.</p><div class="challenge-chip-row">${others.map(x=>`<button type="button" class="chip-button ${second?.id===x.id?'active':''}" data-double="${x.id}">${x.title}</button>`).join('')}</div>${second?`<div class="impact-card compound"><span class="impact-number">2×</span><div><strong>${first.title} + ${second.title}</strong><p>${compoundInsights[key]||'The two events change more than one design dimension at once. Revisit which assumption, requirement and component becomes the actual bottleneck.'}</p></div></div><div class="expert-decision"><strong>One-change budget</strong><div class="challenge-chip-row">${responseChoices.map(([id,name])=>`<button type="button" class="chip-button ${state.doubleResponse===id?'active':''}" data-double-response="${id}">${name}</button>`).join('')}</div>${state.doubleResponse?`<p>Now attack your own answer: which of the two failures is still only partially handled?</p>`:''}</div>`:''}`;host.querySelectorAll('[data-double]').forEach(b=>b.addEventListener('click',()=>{state.doubleStress=state.doubleStress===b.dataset.double?null:b.dataset.double;state.doubleResponse=null;saveState();renderDoubleFailure();}));host.querySelectorAll('[data-double-response]').forEach(b=>b.addEventListener('click',()=>{state.doubleResponse=b.dataset.doubleResponse;markChallenge('stress');renderDoubleFailure();}));}
+
+  function landscapeSnapshotMarkup(){return `<div class="snapshot-landscape">${landscapeCases.map(c=>{const x=landscapeSelection(c.id);return `<div><span class="snapshot-case">${c.icon}</span><span><strong>${esc(c.title)}</strong><small>${x.primary?`${domainName(x.primary)}${x.secondary?' + '+domainName(x.secondary):''}`:'Not mapped'}</small></span></div>`}).join('')}</div>`;}
+  function renderStopSnapshots(){
+    const l=$('#stopLandscapeSnapshot');if(l){const cross=landscapeCases.filter(c=>landscapeSelection(c.id).secondary).length;l.innerHTML=`<div class="snapshot-head"><strong>Our IoT landscape</strong><span>${cross} cross-domain choices</span></div>${landscapeSnapshotMarkup()}<div class="snapshot-signal"><b>Discussion signal</b>${cross===0?'Your group used one domain for every case. Was the overlap genuinely negligible, or did the main/secondary framing hide useful ambiguity?':`${cross} of 8 cases crossed a boundary. Pick the hardest one to defend.`}</div>`;}
+    const a=$('#stopArchitectureSnapshot');if(a){const degrees=state.components.map(c=>[c,state.flows.filter(f=>f.from===c.id||f.to===c.id).length]).sort((x,y)=>y[1]-x[1]);const hot=degrees[0];a.innerHTML=`<div class="snapshot-head"><strong>Our architecture v1</strong><span>${state.components.length} components · ${state.flows.length} flows</span></div>${miniGraphMarkup()}${state.flows.length?`<div class="snapshot-flow-list">${state.flows.slice(0,6).map(f=>{const x=state.components.find(c=>c.id===f.from),y=state.components.find(c=>c.id===f.to);return `<span>${esc(x?.name||'?')} → ${esc(y?.name||'?')}${f.label?' · '+esc(f.label):''}</span>`}).join('')}</div>`:''}${hot?`<div class="snapshot-signal"><b>Discussion signal</b>${esc(hot[0].name)} touches ${hot[1]} flow${hot[1]===1?'':'s'}. Is that architectural centrality intentional?</div>`:''}`;}
+    const r=$('#stopRequirementsSnapshot');if(r){const sel=requirementDefs.filter(([id])=>state.requirements[id]);const top=sel.filter(([id])=>state.requirements[id]===2);r.innerHTML=`<div class="snapshot-head"><strong>Our communication requirements</strong><span>${sel.length} selected</span></div><div class="snapshot-requirements"><div><small>Selected</small><div class="chip-row">${sel.map(([id,,n])=>`<span class="chip">${esc(n)}</span>`).join('')||'<span class="empty-copy">None</span>'}</div></div><div><small>Top 3</small><div class="chip-row">${top.map(([id,,n])=>`<span class="chip priority">★ ${esc(n)}</span>`).join('')||'<span class="empty-copy">None starred</span>'}</div></div></div>${state.flowLens?.requirements?.length?`<div class="snapshot-insight">Flow lens completed: its priorities were ${state.flowLens.requirements.map(id=>requirementDefs.find(x=>x[0]===id)?.[2]).filter(Boolean).join(', ')}.</div>`:''}`;}
+    const t=$('#stopTechnologySnapshot');if(t){const mystery=mysteryTechs.map(m=>{const x=state.mystery[m.id];return `<span class="snapshot-tech ${x?.revealed?(x.choice===m.answer?'correct':'wrong'):''}">${x?.revealed?(x.choice===m.answer?'✓':'↺'):'·'} ${m.answer}</span>`}).join('');const dec=scenarioDefs.map(x=>{const st=state.scenarios[x.id]||{};return st.committed?`<div><strong>${esc(x.title)}</strong><span>${esc(st.choice||'')}</span>${st.twist?'<small>assumption challenged</small>':''}</div>`:''}).filter(Boolean).join('');t.innerHTML=`<div class="snapshot-head"><strong>Our technology reasoning</strong><span>${Object.values(state.scenarios||{}).filter(x=>x?.committed).length} decisions committed</span></div><div class="snapshot-tech-row">${mystery}</div><div class="snapshot-decisions">${dec||'<p class="empty-copy">No deployment decision committed yet.</p>'}</div>`;}
+  }
+  $$('.review-activity').forEach(b=>b.addEventListener('click',()=>showScreen(b.dataset.reviewScreen)));
+
+
+  /* ---------- Persistent design summary + mobile graph ---------- */
+  function graphLayout() {
+    const nodes=state.components.map(c=>({id:c.id,name:c.name}));
+    const ids=new Set(nodes.map(n=>n.id));
+    const incoming=Object.fromEntries(nodes.map(n=>[n.id,0]));
+    const out=Object.fromEntries(nodes.map(n=>[n.id,[]]));
+    state.flows.forEach(f=>{if(ids.has(f.from)&&ids.has(f.to)){incoming[f.to]=(incoming[f.to]||0)+1;out[f.from].push(f.to);}});
+    const level=Object.fromEntries(nodes.map(n=>[n.id,0]));
+    const q=nodes.filter(n=>incoming[n.id]===0).map(n=>n.id);
+    const indeg={...incoming}; let seen=0;
+    while(q.length){const id=q.shift();seen++;(out[id]||[]).forEach(to=>{level[to]=Math.max(level[to]||0,(level[id]||0)+1);indeg[to]--;if(indeg[to]===0)q.push(to);});}
+    if(seen<nodes.length){nodes.forEach((n,i)=>{if(indeg[n.id]>0)level[n.id]=Math.max(level[n.id]||0,i);});}
+    const groups={}; nodes.forEach(n=>(groups[level[n.id]]??=[]).push(n));
+    const positions={}; let y=28; const width=330, boxW=132, boxH=42;
+    Object.keys(groups).map(Number).sort((a,b)=>a-b).forEach(l=>{const arr=groups[l];for(let i=0;i<arr.length;i+=2){const row=arr.slice(i,i+2);row.forEach((n,j)=>{const x=row.length===1?(width-boxW)/2:(j===0?18:width-boxW-18);positions[n.id]={x,y,w:boxW,h:boxH};});y+=72;}y+=10;});
+    return {nodes,positions,width,height:Math.max(170,y+18)};
+  }
+
+  function miniGraphMarkup() {
+    if(!state.components.length) return '<p class="drawer-empty">No architecture yet.</p>';
+    const {nodes,positions,width,height}=graphLayout();
+    const edges=state.flows.map(f=>{const a=positions[f.from],b=positions[f.to];if(!a||!b)return'';const x1=a.x+a.w/2,y1=a.y+a.h,x2=b.x+b.w/2,y2=b.y;const mid=(y1+y2)/2;return `<path class="mini-edge" marker-end="url(#miniArrow)" d="M${x1},${y1} C${x1},${mid} ${x2},${mid} ${x2},${y2}"/>${f.label?`<text class="mini-flow-label" x="${(x1+x2)/2}" y="${mid-3}" text-anchor="middle">${esc(f.label.slice(0,22))}</text>`:''}`;}).join('');
+    const boxes=nodes.map(n=>{const p=positions[n.id];const label=n.name.length>20?n.name.slice(0,19)+'…':n.name;return `<rect class="mini-node" x="${p.x}" y="${p.y}" width="${p.w}" height="${p.h}" rx="9"/><text class="mini-label" x="${p.x+p.w/2}" y="${p.y+p.h/2+3}" text-anchor="middle">${esc(label)}</text>`;}).join('');
+    return `<div class="mini-architecture"><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Automatically generated architecture graph"><defs><marker id="miniArrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#72849a"/></marker></defs>${edges}${boxes}</svg></div>`;
+  }
+
+  function renderMobileGraph(){const host=$('#mobileGraph');if(host)host.innerHTML=miniGraphMarkup();}
+
+  function renderDesignDrawer(){
+    const host=$('#designDrawerContent'); if(!host)return;
+    const priorities=requirementDefs.filter(([id])=>state.requirements[id]===2).map(([,icon,name])=>name);
+    const selected=requirementDefs.filter(([id])=>state.requirements[id]).map(([,icon,name])=>name);
+    const tech=state.lastTechnology&&technologies[state.lastTechnology]?technologies[state.lastTechnology].name:null;
+    const committed=Object.values(state.scenarios||{}).filter(v=>v&&v.committed).length;
+    host.innerHTML=`<section class="design-section"><div class="design-section-head"><strong>Architecture v1</strong><span class="design-stat">${state.components.length} components · ${state.flows.length} flows</span></div>${miniGraphMarkup()}</section><section class="design-section"><div class="design-section-head"><strong>Requirements</strong><span class="design-stat">${selected.length} selected</span></div>${priorities.length?`<div class="chip-row">${priorities.map(x=>`<span class="chip priority">★ ${esc(x)}</span>`).join('')}</div>`:'<p class="drawer-empty">No top-three priorities yet.</p>'}</section><section class="design-section"><div class="design-section-head"><strong>Current investigation</strong></div>${tech?`<div class="drawer-flow">Last technology opened: <strong>${esc(tech)}</strong></div>`:'<p class="drawer-empty">No technology card opened yet.</p>'}<div class="drawer-flow" style="margin-top:6px">Committed deployment decisions: <strong>${committed}</strong></div></section>`;
+  }
+
+  function openDesign(){renderDesignDrawer();$('#designDrawer').classList.add('open');$('#designDrawer').setAttribute('aria-hidden','false');$('#designScrim').hidden=false;}
+  function closeDesign(){$('#designDrawer').classList.remove('open');$('#designDrawer').setAttribute('aria-hidden','true');$('#designScrim').hidden=true;}
+  $('#designBtn').addEventListener('click',openDesign); $('#closeDesign').addEventListener('click',closeDesign); $('#designScrim').addEventListener('click',closeDesign);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDesign();closeDomainPicker();}});
+
+  function openMobileTechSheet(html){
+    let sheet=document.querySelector('.mobile-tech-overlay');
+    if(sheet)sheet.remove();
+    sheet=document.createElement('div');sheet.className='mobile-tech-overlay';sheet.innerHTML=`<div class="mobile-tech-sheet"><button type="button" class="icon-button mobile-tech-close" aria-label="Close">×</button>${html}</div>`;document.body.appendChild(sheet);sheet.querySelector('.mobile-tech-close').addEventListener('click',()=>sheet.remove());sheet.addEventListener('click',e=>{if(e.target===sheet)sheet.remove();});
+  }
+
+  /* ---------- Export / import ---------- */
+  function exportSession() {
+    const output = {course:'IoT Systems Design', session:'Session 1', exportedAt:new Date().toISOString(), data:state};
+    const blob=new Blob([JSON.stringify(output,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob), a=document.createElement('a');
+    a.href=url; a.download='iot-systems-design-session1.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1200);
+  }
+  $('#exportBtn').addEventListener('click',exportSession);
+  $('#finishExport').addEventListener('click',exportSession);
+  $('#importInput').addEventListener('change', e=>{
+    const file=e.target.files?.[0]; if(!file)return;
+    const reader=new FileReader();
+    reader.onload=()=>{try{const parsed=JSON.parse(reader.result);const candidate=parsed.data||parsed;if(!Array.isArray(candidate.components)||!Array.isArray(candidate.flows))throw new Error();state={...structuredClone(defaultState),...candidate};nextComponentId=Math.max(1,...state.components.map(c=>+c.id||0))+1;saveState();renderAll();showScreen(state.screen,{scroll:false});}catch(_){alert('This is not a valid Session 1 export.');}};
+    reader.readAsText(file); e.target.value='';
+  });
+  $('#resetBtn').addEventListener('click',()=>{if(!confirm('Reset all work stored for this session on this device?'))return;state=structuredClone(defaultState);nextComponentId=1;saveState();renderAll();showScreen(0);});
+  $('#reviewSession').addEventListener('click',()=>showScreen(0));
+
+  function flashMessage(text) {
+    let el=document.querySelector('.toast');
+    if(!el){el=document.createElement('div');el.className='toast';document.body.appendChild(el);} el.textContent=text;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800);
+  }
+
+  function renderAll() {
+    renderLandscape();
+    renderArchitecture();
+    renderRequirements();
+    renderMysteries();
+    renderTechnologyLibrary();
+    renderScenarios();
+    renderStress();
+    renderBorderlineChallenge(); renderArchitectureChallenge(); renderFlowLens(); renderLayerTrap(); renderTechnologyCompare(); renderMissingInfoChallenge(); renderDoubleFailure(); renderStopSnapshots(); renderExpertProgress();
+    renderStepper();
+  }
+
+  loadState();
+  renderAll();
+  showScreen(state.screen, {scroll:false});
+})();
