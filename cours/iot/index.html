@@ -3,387 +3,59 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Interactive student workspace for IoT Systems Design — Session 1" />
-  <title>Student Workspace — IoT Systems Design</title>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <meta name="description" content="IoT Systems Design — interactive course hub" />
+  <title>IoT Systems Design — Course Hub</title>
+  <link rel="stylesheet" href="assets/course.css" />
 </head>
-<body class="student-page">
+<body>
 <a class="skip-link" href="#mainContent">Skip to main content</a>
-<header class="topbar no-print">
+<header class="topbar">
   <div class="shell topbar-inner">
-    <div class="brand">
-      <div class="brand-mark">IoT</div>
-      <div><div class="brand-title">Systems Design</div><div class="brand-sub">Session 1 · Student workspace</div></div>
-    </div>
-    <div class="actions">
-      <button id="designBtn" class="btn design-btn" type="button">Our design</button>
-      <button id="fieldGuideBtn" class="btn field-guide-btn" type="button" hidden>Field guide <span id="fieldGuideCount">0/4</span></button><span id="expertProgress" class="expert-progress" title="Optional expert rounds explored" role="status" aria-live="polite">Expert trail 0/7</span>
-      <span id="saveState" class="save-pill" role="status" aria-live="polite">Saved on this device</span>
-      <button id="exportBtn" class="btn optional" type="button">Export</button>
-      <label class="btn optional" for="importInput" style="cursor:pointer">Import</label>
-      <input id="importInput" type="file" accept="application/json,.json" hidden />
-      <button id="resetBtn" class="btn optional danger" type="button">Reset</button>
-    </div>
+    <a class="brand" href="./" aria-label="IoT Systems Design course home"><div class="brand-mark">IoT</div><div><div class="brand-title">Systems Design</div><div class="brand-sub">Course hub · 4 guided missions</div></div></a>
+    <span class="top-note">Your session work stays in this browser</span>
   </div>
 </header>
 
-<main id="mainContent" class="activity-app">
-  <section class="shell hero activity-hero">
+<main id="mainContent">
+  <section class="shell hero">
     <div class="hero-grid">
-      <div>
-        <div class="eyebrow">IoT Systems Design · Session 1</div>
-        <h1>Map first.<br/>Define later.</h1>
-        <p class="lead">Start with eight connected physical systems. Decide how you would classify them, where your categories overlap, and only then ask what belongs under the IoT label.</p>
-        <div class="hero-rule"><span></span><p><strong>Rule:</strong> use your current intuition first — no searching yet.</p></div>
+      <div class="hero-copy">
+        <div class="eyebrow">IoT Systems Design · Course map</div>
+        <h1>Design connected systems,<br/>one decision at a time.</h1>
+        <p class="lead">This course is organised as four missions. You will build, explain, challenge and revise IoT designs rather than memorise a catalogue of technologies.</p>
+        <div class="course-principle"><strong>Course rule:</strong> make the need, assumptions and constraints explicit before defending a technology.</div>
       </div>
-      <div class="hero-landscape hero-unresolved" role="img" aria-label="Eight unclassified connected-system cases waiting to be mapped">
-        <span class="hero-case hc-a">A</span><span class="hero-case hc-b">B</span><span class="hero-case hc-c">C</span><span class="hero-case hc-d">D</span>
-        <span class="hero-case hc-e">E</span><span class="hero-case hc-f">F</span><span class="hero-case hc-g">G</span><span class="hero-case hc-h">H</span>
-        <div class="hero-iot-core unresolved"><strong>?</strong><small>same field?</small></div>
-        <div class="hero-visual-note">Eight cases. Your categories. No answer revealed yet.</div>
+      <div class="course-map-visual" role="img" aria-label="Four mission course path from foundations to robustness">
+        <div class="course-path">
+          <div class="path-node current"><div class="path-dot">01</div><strong>Connect</strong><small>foundations</small></div>
+          <div class="path-node"><div class="path-dot">02</div><strong>Communicate</strong><small>information</small></div>
+          <div class="path-node"><div class="path-dot">03</div><strong>Place</strong><small>device · edge · cloud</small></div>
+          <div class="path-node"><div class="path-dot">04</div><strong>Harden</strong><small>robustness</small></div>
+        </div>
+        <div class="visual-caption">Each mission reuses the same design habit: produce → compare → challenge → formalise → transfer → revise.</div>
       </div>
     </div>
-    <div class="stepper" id="stepper" aria-label="Session progression"></div>
-    <nav id="historyNav" class="history-nav" aria-label="Review navigation" hidden></nav>
   </section>
 
-  <div class="shell activity-stage">
+  <section class="shell course-outcomes" aria-labelledby="outcomeTitle">
+    <div class="section-head"><div><div class="eyebrow">By the end of the course</div><h2 id="outcomeTitle">Four capabilities, not four technology lists.</h2></div></div>
+    <div class="outcome-grid">
+      <div class="outcome"><span>1</span><strong>Model the system</strong><small>Translate a physical-world need into functions, components and information flows.</small></div>
+      <div class="outcome"><span>2</span><strong>Defend communication</strong><small>Compare communication choices from explicit requirements and infrastructure assumptions.</small></div>
+      <div class="outcome"><span>3</span><strong>Place computation</strong><small>Reason about device, edge and cloud roles instead of treating “the cloud” as a default.</small></div>
+      <div class="outcome"><span>4</span><strong>Challenge the design</strong><small>Revise an architecture when scale, failures, mobility or dependencies change.</small></div>
+    </div>
+  </section>
 
-    <!-- ACTIVITY 1 -->
-    <section class="activity-screen" data-screen="0">
-      <div class="activity-label"><span>Activity 1</span><span class="pill-neutral">Map the IoT landscape</span></div>
-      <div class="activity-intro landscape-intro">
-        <h2>Which world does each system belong to?</h2>
-        <p>Choose one <strong>main domain</strong> for each case and, when you can defend it, one <strong>secondary domain</strong>. Use your current intuition — no searching yet.</p>
-      </div>
-
-      <div class="landscape-summary card flat">
-        <div><span class="landscape-kicker">Your map</span><strong id="landscapeProgress" aria-live="polite">0 / 8 systems mapped</strong></div>
-        <div class="landscape-domain-preview" id="landscapeDomainPreview"></div>
-      </div>
-
-      <div id="useCaseGrid" class="usecase-grid" aria-label="Potential IoT systems"></div>
-
-      <div class="reflection-strip">
-        <strong>Look for boundaries:</strong>
-        <span>Why did you choose one domain as primary?</span><span>Where did your group hesitate?</span><span>Would these systems really have the same constraints?</span>
-      </div>
-      <details class="go-further" id="goFurtherLandscape"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Borderline IoT</strong><small>Where does “IoT” stop?</small></span></summary><div id="borderlineChallenge" class="go-further-body"></div></details>
-      <button id="landscapeNext" class="btn primary next-activity" data-next="1" type="button" disabled>Map complete → STOP</button>
-    </section>
-
-    <!-- STOP 1 -->
-    <section class="activity-screen" data-screen="1" hidden>
-      <div class="stop-screen">
-        <div class="stop-orbit">STOP</div>
-        <div class="eyebrow">Class discussion</div>
-        <h2>Use your map to discuss.</h2>
-        <p>Use your own map below during the discussion. Your teacher will then compare it with a broader landscape.</p>
-        <div class="stop-rhythm" aria-label="Discussion rhythm"><span class="active">1 · LOOK</span><span>2 · COMPARE</span><span>3 · CHALLENGE</span><span>4 · UNLOCK</span></div>
-        <div id="stopLandscapeSnapshot" class="stop-snapshot"></div>
-        <button class="text-button review-activity" data-review-screen="0" type="button">← Review / edit our map</button>
-        <div class="student-stop-question"><span>2 · Compare</span><strong>If these systems live in such different environments, what could possibly make them part of the same field?</strong></div>
-        <div class="teacher-challenge-slot" data-stop-challenge="landscape"></div>
-        <div class="concept-unlock-slot" data-concept="iot"></div>
-        <button class="btn primary next-activity stop-next" data-next="2" data-requires-unlock="iot" type="button" disabled>Concept unlocked → continue</button>
-      </div>
-    </section>
-
-    <!-- ACTIVITY 2 -->
-    <section class="activity-screen" data-screen="2" hidden>
-      <div class="activity-label"><span>Activity 2</span><span class="pill-neutral">Design one system</span></div>
-      <section class="mission-brief" aria-labelledby="campusMissionTitle">
-        <div class="mission-copy">
-          <div class="mission-meta"><span>Campus mission</span><span>Design dossier</span></div>
-          <h2 id="campusMissionTitle">Keep a distributed campus observable.</h2>
-          <p>A university wants environmental measurements across several buildings and outdoor areas. The service must support <strong>historical analysis</strong> and <strong>alerts when conditions become abnormal</strong>.</p>
-          <div class="mission-role"><strong>Your role</strong><span>You are the systems-design team. Build a design you can justify, challenge and revise. Some information is intentionally missing: recognising what you still need to know is part of the mission.</span></div>
-        </div>
-        <div class="campus-scene" role="img" aria-label="Physical campus context with several buildings, outdoor areas and distributed measurement points; no network architecture is shown">
-          <div class="campus-building building-a"><span>Building A</span><i></i><i></i><i></i></div>
-          <div class="campus-building building-b"><span>Building B</span><i></i><i></i></div>
-          <div class="campus-building building-c"><span>Library</span><i></i><i></i></div>
-          <div class="campus-outdoor"><span>Outdoor areas</span><i></i><i></i><i></i></div>
-          <div class="campus-scene-note">physical environment only · architecture still unknown</div>
-        </div>
-        <div class="mission-dossier-grid">
-          <section class="dossier-panel known"><span class="dossier-kicker">What we know</span><strong>Mission facts</strong><div class="dossier-list"><span><b>30</b> measurement points</span><span><b>4</b> signals: temperature · humidity · CO₂ · noise</span><span><b>Mixed</b> buildings + outdoor areas</span><span><b>2</b> outcomes: history + alerts</span></div></section>
-          <section class="dossier-panel unknown"><span class="dossier-kicker">Intentionally unknown</span><strong>Assumptions to uncover</strong><div class="dossier-list"><span>Exact placement and physical conditions</span><span>Available communication infrastructure</span><span>Device operating constraints</span><span>Detailed service timing and maintenance conditions</span></div></section>
-          <section class="dossier-panel job"><span class="dossier-kicker">Your job</span><strong>Design → justify → revise</strong><div class="dossier-list"><span>Build functions and information flows</span><span>Make requirements explicit</span><span>Choose communication solutions only when justified</span><span>Revise the design when assumptions change</span></div></section>
-        </div>
-      </section>
-
-      <div id="architectureFrozenNotice" class="frozen-notice" hidden>
-        <span class="frozen-icon">◇</span><div><strong>Architecture v1 is frozen.</strong><p>You can review the design your group defended at STOP 2, but you cannot silently rewrite it. If later evidence changes your reasoning, that change will be recorded as Architecture v2.</p></div>
-      </div>
-
-      <div class="activity-intro">
-        <h3>Build architecture v1 from a blank canvas</h3>
-        <p>Invent the components yourself. Name <strong>roles or functions</strong>, not products or protocols. Then describe what information flows between them.</p>
-      </div>
-
-      <div class="card flat component-entry">
-        <form id="componentForm" class="form-row">
-          <label><span class="label">Add a component</span><input id="componentInput" maxlength="70" autocomplete="off" placeholder="What does the system need?" /></label>
-          <button class="btn primary" type="submit">Add component</button>
-        </form>
-        <div class="quick-prompts"><span>Examples are intentionally hidden.</span><button id="componentHintBtn" class="text-button" type="button">Need a hint</button></div>
-        <div id="componentHint" class="micro-hint" hidden></div>
-      </div>
-
-      <div class="card desktop-only architecture-card">
-        <div class="section-head"><div><h3>Architecture canvas</h3><p class="section-copy">Drag components. Arrows appear when you add information flows.</p></div><button id="clearArchitecture" class="btn ghost" type="button">Clear canvas</button></div>
-        <div class="canvas-wrap"><div id="canvas" class="canvas"><svg id="flowSvg" class="flow-svg" aria-hidden="true"></svg><div id="canvasEmpty" class="canvas-empty">Blank on purpose.<br/>You decide what belongs here.</div></div></div>
-      </div>
-
-      <div class="card phone-only architecture-card">
-        <h3>Architecture · phone view</h3>
-        <p class="section-copy">The graph is generated automatically from your components and information flows. You do not need precise drag-and-drop on a phone.</p>
-        <div id="mobileGraph" class="mobile-graph"><p class="empty-copy">Add components and flows to generate the graph.</p></div>
-        <details class="mobile-edit"><summary>Edit / reorder components</summary><div id="mobileComponents" class="mobile-components"></div></details>
-      </div>
-
-      <div class="card flat flow-builder">
-        <div class="flow-heading"><div><h3>Connect the components</h3><p class="section-copy">Write <em>what</em> is exchanged, not the protocol used.</p></div><span class="mini-example">measurement · alert · command · configuration</span></div>
-        <div class="flow-form">
-          <select id="flowFrom" aria-label="Flow source"><option value="">From…</option></select>
-          <select id="flowTo" aria-label="Flow destination"><option value="">To…</option></select>
-          <input id="flowLabel" class="flow-label" maxlength="70" placeholder="What is exchanged?" />
-          <button id="addFlow" class="btn flow-button" type="button">Add flow</button>
-        </div>
-        <div id="flowList" class="list"></div>
-      </div>
-
-      <div class="reflection-strip">
-        <strong>Before you stop:</strong>
-        <span>Can you point to where data is created?</span><span>Where can it be stored?</span><span>Who ultimately uses it?</span>
-      </div>
-      <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Red-team the architecture</strong><small>Remove one component and inspect the damage.</small></span></summary><div id="architectureChallenge" class="go-further-body"></div></details>
-      <button class="btn primary next-activity" data-next="3" type="button">Architecture ready → STOP</button>
-    </section>
-
-    <!-- STOP 2 -->
-    <section class="activity-screen" data-screen="3" hidden>
-      <div class="stop-screen">
-        <div class="stop-orbit">STOP</div>
-        <div class="eyebrow">Class discussion</div>
-        <h2>Use your architecture to discuss.</h2>
-        <p>Your architecture is reproduced below so the group can point to concrete choices during discussion.</p>
-        <div class="stop-rhythm" aria-label="Discussion rhythm"><span class="active">1 · LOOK</span><span>2 · COMPARE</span><span>3 · CHALLENGE</span><span>4 · UNLOCK</span></div>
-        <div id="stopArchitectureSnapshot" class="stop-snapshot"></div>
-        <button class="text-button review-activity" data-review-screen="2" type="button">← Review / edit our architecture</button>
-        <div class="student-stop-question"><span>2 · Compare</span><strong>Did you draw components, functions, technologies — or a mixture of all three?</strong></div>
-        <div class="teacher-challenge-slot" data-stop-challenge="architecture"></div>
-        <div class="concept-unlock-slot" data-concept="architecture"></div>
-        <button class="btn primary next-activity stop-next" data-next="4" data-requires-unlock="architecture" type="button" disabled>Concept unlocked → continue</button>
-      </div>
-    </section>
-
-    <!-- ACTIVITY 3 -->
-    <section class="activity-screen" data-screen="4" hidden>
-      <div class="activity-label"><span>Activity 3</span><span class="pill-neutral">Expose the constraints</span></div>
-      <div class="mission-context"><span class="mission-context-tag">Campus mission</span><strong>30 points · indoor + outdoor · 4 signals</strong><span>History and alerts are the service outcomes. Use your own architecture as evidence.</span></div>
-      <div class="activity-intro">
-        <h2>What actually matters for a communication link?</h2>
-        <p>First select every dimension that could materially change your design. Then, as a separate decision, star the <strong>three that dominate this scenario</strong>. There is deliberately no technology list yet.</p>
-      </div>
-      <div id="requirementCards" class="choice-grid requirement-choice-grid"></div>
-      <div class="selection-summary card flat">
-        <div><strong>Your shortlist</strong><p class="section-copy">Step 1: select relevant dimensions. Step 2: use the stars below to choose exactly three priorities.</p></div>
-        <div id="requirementSummary" class="chip-row"></div>
-      </div>
-      <details class="help-compact"><summary>We are not sure what a “requirement” means here</summary><p>Choose one arrow in your architecture. Ask what would make that communication fail to satisfy the application: too far, too slow, too much data, too much energy, too many devices, no infrastructure, and so on.</p></details>
-      <div class="reflection-strip"><strong>Before you stop:</strong><span>Look back at one arrow in your architecture. Would the same top three requirements apply to every other arrow?</span></div>
-      <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Flow lens</strong><small>Do two arrows in your architecture really have the same constraints?</small></span></summary><div id="flowLens" class="go-further-body"></div></details>
-      <button id="toStop2" class="btn primary next-activity" data-next="5" type="button">Requirements ready → STOP</button>
-    </section>
-
-    <!-- STOP 3 -->
-    <section class="activity-screen" data-screen="5" hidden>
-      <div class="stop-screen">
-        <div class="stop-orbit">STOP</div>
-        <div class="eyebrow">Class discussion</div>
-        <h2>Use your priorities to discuss.</h2>
-        <p>Your selected dimensions and priorities are shown below. Use them as evidence rather than relying on memory.</p>
-        <div class="stop-rhythm" aria-label="Discussion rhythm"><span class="active">1 · LOOK</span><span>2 · COMPARE</span><span>3 · CHALLENGE</span><span>4 · UNLOCK</span></div>
-        <div id="stopRequirementsSnapshot" class="stop-snapshot"></div>
-        <button class="text-button review-activity" data-review-screen="4" type="button">← Review / edit our requirements</button>
-        <div class="student-stop-question"><span>2 · Compare</span><strong>Can two communication flows in the same IoT system legitimately have different requirements?</strong></div>
-        <div class="teacher-challenge-slot" data-stop-challenge="requirements"></div>
-        <div class="concept-unlock-slot" data-concept="requirements"></div>
-        <button class="btn primary next-activity stop-next" data-next="6" data-requires-unlock="requirements" type="button" disabled>Concept unlocked → continue</button>
-      </div>
-    </section>
-
-    <!-- ACTIVITY 4 -->
-    <section class="activity-screen" data-screen="6" hidden>
-      <div class="activity-label"><span>Activity 4</span><span class="pill-neutral">Discover communication patterns</span></div>
-      <div class="mission-context"><span class="mission-context-tag">Campus mission</span><strong>Your flows now need communication paths.</strong><span>Do not choose a technology yet. First understand the shapes of networks that could carry those flows.</span></div>
-      <div class="activity-intro">
-        <h2>Start from the communication problem — not from a standard name.</h2>
-        <p>You are not expected to know Wi-Fi, Bluetooth LE, IEEE 802.15.4, LoRaWAN or NB-IoT yet. First learn the <strong>shape of the network</strong> each family is trying to build.</p>
-      </div>
-      <div class="decision-compass card flat">
-        <div class="decision-compass-head"><span class="eyebrow">Before naming a technology</span><strong>Ask four concrete questions</strong></div>
-        <div class="decision-question-grid">
-          <div><span>↔</span><strong>How far?</strong><small>Nearby, one site, wide area, isolated?</small></div>
-          <div><span>▥</span><strong>How much data?</strong><small>Tiny messages, regular sensing, images?</small></div>
-          <div><span>ϟ</span><strong>What can the device afford?</strong><small>Tight battery, normal battery, mains power?</small></div>
-          <div><span>⌂</span><strong>What infrastructure exists?</strong><small>Phone, local network, gateway, operator coverage, none?</small></div>
-        </div>
-      </div>
-      <div class="guided-tech-head"><div><span class="eyebrow">Guided discovery</span><h3>Five network shapes</h3><p class="section-copy">Read the plain-language description first. Then reveal the technology name and the minimum vocabulary attached to it.</p></div><span id="techDiscoveryProgress" class="guided-progress">0 / 5 revealed</span></div>
-      <div id="techDiscoveryGrid" class="tech-discovery-grid"></div>
-      <details class="term-shelf"><summary><strong>New words, in plain English</strong><span>Open this whenever a term blocks you.</span></summary><div id="plainGlossary" class="plain-glossary"></div></details>
-      <div class="satellite-primer card flat"><div class="eyebrow">Special path · Satellite / non-terrestrial network (NTN)</div><h3>Where can a satellite link fit?</h3><div class="satellite-primer-grid"><div><strong>Direct access</strong><span>device → non-terrestrial access → network</span></div><div><strong>Backhaul</strong><span>device → local gateway → satellite path → network</span></div></div><p class="section-copy">These are different architectures. Keep both in mind for later.</p></div>
-      <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Choose the shape first</strong><small>Solve three cases without using a technology name.</small></span></summary><div id="shapeChallenge" class="go-further-body"></div></details>
-      <button id="discoveryNext" class="btn primary next-activity" data-next="7" type="button" disabled>Five families revealed →</button>
-    </section>
-
-    <!-- ACTIVITY 5 -->
-    <section class="activity-screen" data-screen="7" hidden>
-      <div class="activity-label"><span>Activity 5</span><span class="pill-neutral">Investigate the technologies</span></div>
-      <div class="mission-context"><span class="mission-context-tag">Campus mission</span><strong>Keep your Top 3 requirements visible.</strong><span>As you inspect each family, ask which part of your campus design it could plausibly serve — and what infrastructure it would add.</span></div>
-      <div class="activity-intro">
-        <h2>Now test the map you just built.</h2>
-        <p>The detective is now a consolidation exercise, not a prior-knowledge test. If a term is unfamiliar, use the reference map rather than guessing blindly.</p>
-      </div>
-      <div class="family-map-strip" id="familyMapStrip"></div>
-      <div id="mysteryGrid" class="mystery-grid"></div>
-      <div class="score-panel"><span>Investigated</span><strong id="mysteryScore" aria-live="polite">0 / 5</strong><small>Calibrate your confidence, not just your answer. A confident mistake is useful evidence.</small></div>
-      <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Abstraction trap</strong><small>Now that the terms are defined, ask whether they even describe the same kind of thing.</small></span></summary><div id="layerTrap" class="go-further-body"></div></details>
-
-      <div class="library-section-head"><div><span class="eyebrow">Reference library</span><h3>Go from essential → architecture → technical vocabulary.</h3><p class="section-copy">The cards are grouped by the communication problem they usually address. Technical terms are deliberately one level deeper.</p></div></div>
-      <div class="tech-workspace">
-        <div id="technologyLibrary" class="rich-tech-grid"></div>
-        <div id="technologyPanel" class="card tech-panel"><div class="tech-empty-panel">Choose a technology card to inspect what the choice actually implies.</div></div>
-      </div>
-      <details class="go-further tech-compare-challenge"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Technology duel</strong><small>Force a side-by-side comparison, then inspect the satellite/NTN question.</small></span></summary><div id="technologyCompare" class="go-further-body"></div></details>
-
-      <div class="concept-banner">
-        <div class="concept-icon">≠</div><div><strong>Same decision table does not mean same abstraction level.</strong><p>Some names describe local radio/link rules, some a complete network architecture, and some an operator-provided access service. You can compare them for a deployment decision without pretending they are identical objects.</p></div>
-      </div>
-      <button class="btn primary next-activity" data-next="8" type="button">Apply the map to deployment cases →</button>
-    </section>
-
-    <!-- ACTIVITY 6 -->
-    <section class="activity-screen" data-screen="8" hidden>
-      <div class="activity-label"><span>Activity 6</span><span class="pill-neutral">Choose under constraints</span></div>
-      <div class="mission-context transfer"><span class="mission-context-tag">Transfer test</span><strong>Leave campus briefly to test your reasoning.</strong><span>These cases look different on purpose. After them, you will return to the campus mission.</span></div>
-      <div class="activity-intro">
-        <h2>Which candidate is the best fit <em>given these assumptions</em>?</h2>
-        <p>There may be several feasible solutions. Choose one, <strong>commit your answer</strong>, then reveal the reasoning. Afterwards, change one assumption and ask whether your decision survives.</p>
-      </div>
-      <div id="scenarioGrid" class="scenario-grid"></div>
-      <section class="campus-checkpoint card flat">
-        <div class="checkpoint-head"><div><span class="eyebrow">Mission checkpoint · back to campus</span><h3>Would you force one communication family onto every campus link?</h3></div><span class="checkpoint-mark">↩</span></div>
-        <p class="section-copy">Commit to a position, then identify the piece of information that would most change your answer. There is deliberately no single reference answer here.</p>
-        <div id="campusDecision" class="campus-decision"></div>
-      </section>
-      <div class="reflection-strip"><strong>Important:</strong><span>“Best” only means best among these candidates under the stated requirements.</span><span>Change one assumption and the answer may change.</span></div>
-      <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Refuse to guess</strong><small>Sometimes the correct engineering move is to refuse a premature choice.</small></span></summary><div id="missingInfoChallenge" class="go-further-body"></div></details>
-      <button class="btn primary next-activity" data-next="9" type="button">Decisions ready → STOP</button>
-    </section>
-
-    <!-- STOP 4 -->
-    <section class="activity-screen" data-screen="9" hidden>
-      <div class="stop-screen">
-        <div class="stop-orbit">STOP</div>
-        <div class="eyebrow">Technology hearing</div>
-        <h2>Use your decisions to defend a validity domain.</h2>
-        <p>Your detective results and deployment decisions are summarised below. Use them when defending your reasoning.</p>
-        <div class="stop-rhythm" aria-label="Discussion rhythm"><span class="active">1 · LOOK</span><span>2 · COMPARE</span><span>3 · CHALLENGE</span><span>4 · UNLOCK</span></div>
-        <div id="stopTechnologySnapshot" class="stop-snapshot"></div>
-        <button class="text-button review-activity" data-review-screen="8" type="button">← Review our deployment decisions</button>
-        <div class="student-stop-question"><span>2 · Compare</span><strong>When you choose a communication technology, what else have you implicitly chosen about the network?</strong></div>
-        <div class="teacher-challenge-slot" data-stop-challenge="technology"></div>
-        <div class="concept-unlock-slot" data-concept="technology"></div>
-        <button class="btn primary next-activity stop-next" data-next="10" data-requires-unlock="technology" type="button" disabled>Concept unlocked → continue</button>
-      </div>
-    </section>
-
-    <!-- ACTIVITY 7 -->
-    <section class="activity-screen" data-screen="10" hidden>
-      <div class="activity-label"><span>Activity 7</span><span class="pill-neutral">Break your design</span></div>
-      <div class="mission-context danger-context"><span class="mission-context-tag">Back to campus</span><strong>Stress-test the system you designed.</strong><span>Every event below changes one fact in the original campus brief.</span></div>
-      <div class="activity-intro">
-        <h2>What happens when one assumption changes?</h2>
-        <p>Pick a change and follow its consequences: what stops working, which requirement becomes harder, and what architectural response would you try?</p>
-      </div>
-      <div id="stressGrid" class="event-grid rich-events"></div>
-      <div id="stressResponse" class="stress-response card flat" hidden>
-        <div class="stress-prompt"><span class="stress-number">1</span><div><strong>Broken assumption</strong><p id="brokenPrompt"></p></div></div>
-        <div class="stress-prompt"><span class="stress-number">2</span><div><strong>Requirement that changes</strong><div id="stressRequirementChoices" class="chip-row"></div></div></div>
-        <div class="stress-prompt"><span class="stress-number">3</span><div><strong>Architectural response</strong><div id="architectureResponseChoices" class="choice-grid compact-choice-grid"></div></div></div>
-        <label class="optional-note"><span>Optional note — explain your first instinct</span><textarea id="revisionNote" maxlength="300" placeholder="One short sentence is enough."></textarea></label>
-      </div>
-      <section id="revisionStudio" class="revision-studio card flat" hidden>
-        <div class="revision-head"><div><span class="eyebrow">Core mission · architecture v2</span><h3>Make one concrete structural revision.</h3><p class="section-copy">Architecture v1 was frozen after STOP 2. Now edit a copy so the final debrief can show what changed — not only what you said would change.</p></div><span id="revisionStatus" class="revision-status">No change yet</span></div>
-        <div class="revision-compare">
-          <div><span class="revision-label">Frozen v1</span><div id="revisionV1Graph"></div></div>
-          <div><span class="revision-label">Working v2</span><div id="revisionV2Graph"></div></div>
-        </div>
-        <div class="revision-tools">
-          <form id="v2ComponentForm" class="revision-tool"><label><span class="label">Add component</span><input id="v2ComponentInput" maxlength="70" placeholder="e.g. local buffer" /></label><button class="btn soft" type="submit">Add</button></form>
-          <div class="revision-tool"><label><span class="label">Remove component</span><select id="v2RemoveComponent"><option value="">Choose…</option></select></label><button id="v2RemoveComponentBtn" class="btn ghost" type="button">Remove</button></div>
-          <form id="v2FlowForm" class="revision-tool flow"><select id="v2FlowFrom" aria-label="Revision flow source"><option value="">From…</option></select><select id="v2FlowTo" aria-label="Revision flow destination"><option value="">To…</option></select><input id="v2FlowLabel" maxlength="70" placeholder="What is exchanged?" /><button class="btn soft" type="submit">Add flow</button></form>
-        </div>
-        <div id="v2FlowList" class="list"></div>
-        <div class="revision-foot"><span>One real edit is enough. The point is to make the consequence visible.</span><button id="resetV2" class="text-button" type="button">Reset v2 to v1</button></div>
-      </section>
-      <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Compound failure</strong><small>Your system rarely gets only one surprise at a time.</small></span></summary><div id="doubleFailureChallenge" class="go-further-body"></div></details>
-      <button id="finishSessionBtn" class="btn primary next-activity" data-next="11" type="button" disabled>Record a v2 revision to finish →</button>
-    </section>
-
-    <!-- FINISH -->
-    <section class="activity-screen" data-screen="11" hidden>
-      <div class="finish-card">
-        <div class="finish-mark">✓</div>
-        <div class="eyebrow">Session complete</div>
-        <h2>Before rereading anything, retrieve it.</h2>
-        <p class="lead">Four quick prompts. Think first, then reveal. This is not graded.</p>
-        <div id="memoryLock" class="memory-lock"></div>
-        <div id="sessionSynthesis" class="session-synthesis" hidden>
-          <div class="synthesis-rule"><span></span><strong>Session synthesis</strong><span></span></div>
-          <p class="lead">Need → functions → architecture → flows → requirements → candidate technologies → challenge → revision.</p>
-          <div id="designEvolution" class="design-evolution"></div>
-          <div class="takeaway-grid">
-            <div><strong>Architecture</strong><span>is not a list of products.</span></div>
-            <div><strong>Requirements</strong><span>must be explicit before comparison.</span></div>
-            <div><strong>Technology</strong><span>implies infrastructure and trade-offs.</span></div>
-            <div><strong>Design</strong><span>changes when assumptions change.</span></div>
-          </div>
-        </div>
-        <div id="expertFinish" class="expert-finish"></div><div class="finish-actions"><button id="finishExport" class="btn primary" type="button">Export my session</button><button id="reviewSession" class="btn" type="button">Review previous activities</button></div>
-      </div>
-    </section>
-  </div>
+  <section class="shell mission-section" aria-labelledby="missionTitle">
+    <div class="section-head"><div><div class="eyebrow">Course progression</div><h2 id="missionTitle">Choose the mission currently open.</h2><p>Past missions remain reviewable. Future missions stay visible on the map but are not published until they are released.</p></div><span id="courseProgress" class="course-progress">Course status</span></div>
+    <div id="missionGrid" class="mission-grid"></div><noscript><div class="course-note"><strong>JavaScript is required for the interactive course map.</strong> Session 1 is currently available at <a href="session-1/">session-1/</a>.</div></noscript>
+    <div class="course-note"><strong>Why are future missions visible?</strong> You should know the direction of the course without seeing the material that is meant to be discovered later. A locked card shows the destination; the session page itself is not published yet.</div>
+  </section>
 </main>
 
-<div id="domainPickerScrim" class="domain-picker-scrim" hidden></div>
-<div id="domainPicker" class="domain-picker" role="dialog" aria-modal="true" aria-labelledby="domainPickerTitle" aria-hidden="true">
-  <div class="domain-picker-head">
-    <div><div class="eyebrow">Map the system</div><h2 id="domainPickerTitle">Choose domains</h2></div>
-    <button id="closeDomainPicker" class="icon-button drawer-close" type="button" aria-label="Close domain picker">×</button>
-  </div>
-  <p id="domainPickerCopy" class="section-copy"></p>
-  <div id="domainPickerChoices" class="domain-picker-grid"></div>
-  <div class="domain-picker-foot"><span id="domainPickerHint">Choose a primary domain.</span><button id="doneDomainPicker" class="btn primary" type="button">Done</button></div>
-</div>
-
-<div id="designScrim" class="design-scrim" hidden></div>
-<aside id="designDrawer" class="design-drawer" aria-hidden="true" aria-label="Our design summary">
-  <div class="design-drawer-head"><div><div class="eyebrow">Persistent workspace</div><h2>Our design</h2></div><button id="closeDesign" class="icon-button drawer-close" type="button" aria-label="Close design panel">×</button></div>
-  <div id="designDrawerContent" class="design-drawer-content"></div>
-</aside>
-
-<div id="fieldGuideScrim" class="design-scrim" hidden></div>
-<aside id="fieldGuideDrawer" class="field-guide-drawer" aria-hidden="true" aria-label="Field guide">
-  <div class="design-drawer-head"><div><div class="eyebrow">Concepts kept after discussion</div><h2>Field guide</h2></div><button id="closeFieldGuide" class="icon-button drawer-close" type="button" aria-label="Close field guide">×</button></div>
-  <div id="fieldGuideContent" class="design-drawer-content"></div>
-</aside>
-
-<footer class="shell footer">Your work is stored only in this browser unless you export it. No account and no database are used.</footer>
-<script src="assets/student.js"></script>
+<footer class="shell footer"><span>IoT Systems Design · interactive course workspace</span><span>No account · no database · progress is local to this browser</span></footer>
+<script src="course-config.js"></script>
+<script src="assets/course.js"></script>
 </body>
 </html>

@@ -354,3 +354,19 @@ Collect lightweight evidence across iterations:
 - **Accessibility failures:** mobile interaction, keyboard navigation, readability and external-network dependencies.
 
 For a more rigorous comparison across cohorts, keep the learning outcomes and assessment items stable while changing one instructional mechanism at a time.
+
+---
+
+# Course-level extension
+
+A reusable interactive session should sit inside a lightweight course layer:
+
+**ORIENT → MISSION → RECONNECT**
+
+- **ORIENT:** show the sequence of major design questions and which mission is available, without pre-teaching future answers.
+- **MISSION:** run the session-level MACU cycle.
+- **RECONNECT:** end by locating the newly formalised capability in the wider course story and expose the next unresolved question.
+
+For multi-session courses, use **soft release** at the course level as well: previous missions remain reviewable, the current mission is open, and future missions are visible as destinations but should not be published until release.
+
+See `COURSE-HUB-AUTHORING.md` for the implementation contract.

@@ -151,3 +151,15 @@ Every game mechanic must have a learning function.
 - [ ] Core interactions work on phone without drag-and-drop.
 - [ ] Color is not the only state indicator.
 - [ ] External network assets are non-essential.
+
+---
+
+## Course-hub metadata for this session
+
+Before implementation, write the three short strings that will appear on the course map:
+
+- **Mission question:**
+- **One-sentence summary:**
+- **2–3 capability tags:**
+
+Audit rule: these strings should orient students without revealing the concept or answer the session is designed to make them discover.
