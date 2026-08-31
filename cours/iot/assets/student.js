@@ -2,10 +2,14 @@
   const root = document.querySelector('.student-page');
   if (!root) return;
 
-  const STORAGE_KEY = 'iot-systems-design-session1-v9';
+  const STORAGE_KEY = 'iot-systems-design-session1-v10';
   const defaultState = {
-    version: 9,
+    version: 10,
     screen: 0,
+    conceptUnlocks: {},
+    stopChallenges: {},
+    architectureV1: null,
+    architectureV2: null,
     landscape: {},
     borderline: {},
     challengeProgress: {},
@@ -40,6 +44,62 @@
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => [...document.querySelectorAll(s)];
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+
+
+  const conceptDefs = {
+    iot:{
+      title:'Working view of IoT',
+      summary:'IoT is a broad systems field in which physical entities are observed or acted upon and connected to digital services through communication and computation.',
+      keep:'“Connected” alone is not the useful distinction. Look at the physical-world role and the end-to-end service.',
+      tags:['physical world','sense / act','communicate','digital service']
+    },
+    architecture:{
+      title:'Architecture lens',
+      summary:'Separate responsibilities before products: Sense / Act · Communicate · Compute · Store · Use.',
+      keep:'These are responsibilities, not mandatory boxes. One physical machine can implement several of them.',
+      tags:['responsibility ≠ device','flows matter','end to end']
+    },
+    requirements:{
+      title:'Engineering vocabulary',
+      summary:'Turn vague needs into explicit dimensions that can actually change a design decision.',
+      keep:'How far? → Range · How much data? → Data volume / throughput · How soon? → Latency · How dependable? → Reliability · Limited energy? → Energy budget · How many? → Scale · Does it move? → Mobility · What exists? → Infrastructure · What can we afford? → Cost.',
+      tags:['name the constraint','prioritise','per-flow reasoning']
+    },
+    technology:{
+      title:'Technology decision rule',
+      summary:'Choose the communication problem and network shape first; attach a technology family second.',
+      keep:'A technology choice can also imply infrastructure ownership, gateways, operator coverage, spectrum, topology and service dependencies. Comparable choices need not be the same abstraction level.',
+      tags:['problem → shape → family','implicit infrastructure','validity domain']
+    }
+  };
+  const conceptOrder=['iot','architecture','requirements','technology'];
+  const stopChallengeDefs={
+    landscape:{title:'Connected is not enough',prompt:'A Raspberry Pi hosts a normal web page but senses or controls nothing in the physical world. Would you call that IoT? Defend the boundary you are using.'},
+    architecture:{title:'One box, many responsibilities',prompt:'Suppose one Raspberry Pi senses, stores, computes and serves the dashboard. How many architectural responsibilities exist — and how many physical boxes?'},
+    requirements:{title:'Same system, different flow',prompt:'Now make the indoor sensor mains-powered while the outdoor node remains battery-powered. Should Energy still have the same importance for every communication flow?'},
+    technology:{title:'Access is not the whole system',prompt:'A LoRaWAN sensor can still reach its gateway, but the gateway loses its upstream Internet path. Which part of the architecture failed — and what does that tell you about “choosing a technology”?' }
+  };
+
+  function renderStopRitual(){
+    document.querySelectorAll('[data-stop-challenge]').forEach(host=>{
+      const id=host.dataset.stopChallenge,d=stopChallengeDefs[id],shown=!!state.stopChallenges?.[id]; if(!d)return;
+      host.innerHTML=`<div class="ritual-card challenge"><span class="ritual-kicker">3 · Challenge</span><strong>${d.title}</strong>${shown?`<p>${d.prompt}</p>`:`<p>When your teacher asks, reveal one counterexample that tests the class rule.</p><button type="button" class="btn soft reveal-stop-challenge" data-id="${id}">Reveal teacher challenge</button>`}</div>`;
+    });
+    document.querySelectorAll('.reveal-stop-challenge').forEach(b=>b.addEventListener('click',()=>{state.stopChallenges={...(state.stopChallenges||{}),[b.dataset.id]:true};saveState();renderStopRitual();}));
+    document.querySelectorAll('[data-concept]').forEach(host=>{
+      const id=host.dataset.concept,d=conceptDefs[id],unlocked=!!state.conceptUnlocks?.[id]; if(!d)return;
+      host.innerHTML=`<div class="ritual-card unlock ${unlocked?'unlocked':''}"><span class="ritual-kicker">4 · Unlock</span>${unlocked?`<strong>${d.title}</strong><p>${d.summary}</p><div class="unlock-keep">${d.keep}</div><div class="chip-row">${d.tags.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:`<strong>Keep the formal idea after discussion.</strong><p>Do not unlock until the teacher has finished the comparison and challenge.</p><button type="button" class="btn primary unlock-concept" data-id="${id}">Unlock what we keep</button>`}</div>`;
+    });
+    document.querySelectorAll('.unlock-concept').forEach(b=>b.addEventListener('click',()=>{state.conceptUnlocks={...(state.conceptUnlocks||{}),[b.dataset.id]:true};saveState();renderStopRitual();renderFieldGuide();updateStopNextButtons();}));
+    updateStopNextButtons();
+  }
+  function updateStopNextButtons(){document.querySelectorAll('[data-requires-unlock]').forEach(b=>{b.disabled=!state.conceptUnlocks?.[b.dataset.requiresUnlock];});}
+  function renderFieldGuide(){
+    const count=conceptOrder.filter(id=>state.conceptUnlocks?.[id]).length;
+    const btn=$('#fieldGuideBtn'),counter=$('#fieldGuideCount'); if(btn)btn.hidden=count===0;if(counter)counter.textContent=`${count}/4`;
+    const host=$('#fieldGuideContent');if(!host)return;
+    host.innerHTML=`<div class="field-guide-progress"><strong>${count} / 4 concepts unlocked</strong><span>The guide only contains ideas formalised after class discussion.</span></div>${conceptOrder.map((id,i)=>{const d=conceptDefs[id],on=!!state.conceptUnlocks?.[id];return `<section class="guide-entry ${on?'':'locked'}"><span class="guide-number">${i+1}</span><div>${on?`<strong>${d.title}</strong><p>${d.summary}</p><div class="guide-keep">${d.keep}</div><div class="chip-row">${d.tags.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:`<strong>Concept locked</strong><p>Complete the corresponding STOP discussion first.</p>`}</div></section>`}).join('')}`;
+  }
 
   const challengeIds=['landscape','architecture','requirements','discover','investigate','choose','stress'];
   function markChallenge(id){ if(!id)return; state.challengeProgress={...(state.challengeProgress||{}),[id]:true}; saveState(); renderExpertProgress(); }
@@ -90,13 +150,15 @@
 
   function showScreen(index, {scroll = true} = {}) {
     index = Math.max(0, Math.min(11, Number(index) || 0));
+    const previousScreen=state.screen;
+    if(previousScreen===3 && index===4 && !state.architectureV1){captureArchitectureV1();}
     state.screen = index;
     $$('.activity-screen').forEach(s => { s.hidden = Number(s.dataset.screen) !== index; });
     renderStepper();
     document.body.classList.toggle('past-intro', index > 0);
     const designButton = $('#designBtn');
     if (designButton) designButton.hidden = index < 2;
-    renderDesignDrawer(); renderStopSnapshots();
+    renderDesignDrawer(); renderStopSnapshots(); renderStopRitual(); renderFieldGuide(); renderRevisionStudio(); renderDesignEvolution();
     saveState();
     if (scroll) window.scrollTo({top: 0, behavior: 'smooth'});
   }
@@ -407,8 +469,8 @@
   }
 
   const referenceReqs = requirementDefs.map(([id,icon,name,desc,term])=>[term,name,desc]);
-  $('#revealRequirementVocabulary').addEventListener('click', e => {
-    const g=$('#referenceRequirementGrid'); g.innerHTML=referenceReqs.map(([term,plain,d])=>`<div><strong>${term}</strong><small><b>${plain}</b> · ${d}</small></div>`).join(''); g.hidden=false; e.currentTarget.hidden=true;
+  const revealReqBtn=$('#revealRequirementVocabulary'); if(revealReqBtn) revealReqBtn.addEventListener('click', e => {
+    const g=$('#referenceRequirementGrid'); if(!g)return; g.innerHTML=referenceReqs.map(([term,plain,d])=>`<div><strong>${term}</strong><small><b>${plain}</b> · ${d}</small></div>`).join(''); g.hidden=false; e.currentTarget.hidden=true;
   });
 
   /* ---------- Guided technology discovery ---------- */
@@ -571,7 +633,7 @@
   function renderStress() {
     const host=$('#stressGrid');
     host.innerHTML=stressDefs.map(s=>`<button type="button" class="event ${state.selectedStress===s.id?'selected':''}" data-stress="${s.id}"><span class="event-icon">${s.icon}</span><span><strong>${s.title}</strong><small>${s.short}</small></span></button>`).join('');
-    host.querySelectorAll('.event').forEach(b=>b.addEventListener('click',()=>{state.selectedStress=b.dataset.stress;state.stressRequirement=null;state.stressResponse=null;state.doubleStress=null;saveState();renderStress();renderStressResponse();renderDoubleFailure();}));
+    host.querySelectorAll('.event').forEach(b=>b.addEventListener('click',()=>{state.selectedStress=b.dataset.stress;state.stressRequirement=null;state.stressResponse=null;state.doubleStress=null;saveState();renderStress();renderStressResponse();renderRevisionStudio();renderDoubleFailure();}));
     renderStressResponse(); renderDoubleFailure();
   }
 
@@ -582,9 +644,9 @@
     const s=stressDefs.find(x=>x.id===state.selectedStress);
     $('#brokenPrompt').textContent=s.broken;
     $('#stressRequirementChoices').innerHTML=requirementDefs.map(([id,,name])=>`<button type="button" class="chip-button ${state.stressRequirement===id?'active':''}" data-stress-req="${id}">${name}</button>`).join('');
-    $('#stressRequirementChoices').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state.stressRequirement=b.dataset.stressReq;saveState();renderStressResponse();}));
+    $('#stressRequirementChoices').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state.stressRequirement=b.dataset.stressReq;saveState();renderStressResponse();renderRevisionStudio();}));
     $('#architectureResponseChoices').innerHTML=responseChoices.map(([id,name,desc])=>`<button type="button" class="choice-card compact ${state.stressResponse===id?'state-2':''}" data-response="${id}"><span><strong>${name}</strong><small>${desc}</small></span></button>`).join('');
-    $('#architectureResponseChoices').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state.stressResponse=b.dataset.response;saveState();renderStressResponse();}));
+    $('#architectureResponseChoices').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state.stressResponse=b.dataset.response;saveState();renderStressResponse();renderRevisionStudio();}));
     $('#revisionNote').value=state.revisionNote||'';
   }
   $('#revisionNote').addEventListener('input', e=>{state.revisionNote=e.target.value;saveState();});
@@ -674,12 +736,13 @@
 
 
   /* ---------- Persistent design summary + mobile graph ---------- */
-  function graphLayout() {
-    const nodes=state.components.map(c=>({id:c.id,name:c.name}));
+  function graphLayoutFor(model) {
+    const components=model?.components||[], flows=model?.flows||[];
+    const nodes=components.map(c=>({id:c.id,name:c.name}));
     const ids=new Set(nodes.map(n=>n.id));
     const incoming=Object.fromEntries(nodes.map(n=>[n.id,0]));
     const out=Object.fromEntries(nodes.map(n=>[n.id,[]]));
-    state.flows.forEach(f=>{if(ids.has(f.from)&&ids.has(f.to)){incoming[f.to]=(incoming[f.to]||0)+1;out[f.from].push(f.to);}});
+    flows.forEach(f=>{if(ids.has(f.from)&&ids.has(f.to)){incoming[f.to]=(incoming[f.to]||0)+1;out[f.from].push(f.to);}});
     const level=Object.fromEntries(nodes.map(n=>[n.id,0]));
     const q=nodes.filter(n=>incoming[n.id]===0).map(n=>n.id);
     const indeg={...incoming}; let seen=0;
@@ -688,17 +751,23 @@
     const groups={}; nodes.forEach(n=>(groups[level[n.id]]??=[]).push(n));
     const positions={}; let y=28; const width=330, boxW=132, boxH=42;
     Object.keys(groups).map(Number).sort((a,b)=>a-b).forEach(l=>{const arr=groups[l];for(let i=0;i<arr.length;i+=2){const row=arr.slice(i,i+2);row.forEach((n,j)=>{const x=row.length===1?(width-boxW)/2:(j===0?18:width-boxW-18);positions[n.id]={x,y,w:boxW,h:boxH};});y+=72;}y+=10;});
-    return {nodes,positions,width,height:Math.max(170,y+18)};
+    return {nodes,positions,width,height:Math.max(170,y+18),flows};
   }
 
-  function miniGraphMarkup() {
-    if(!state.components.length) return '<p class="drawer-empty">No architecture yet.</p>';
-    const {nodes,positions,width,height}=graphLayout();
-    const edges=state.flows.map(f=>{const a=positions[f.from],b=positions[f.to];if(!a||!b)return'';const x1=a.x+a.w/2,y1=a.y+a.h,x2=b.x+b.w/2,y2=b.y;const mid=(y1+y2)/2;return `<path class="mini-edge" marker-end="url(#miniArrow)" d="M${x1},${y1} C${x1},${mid} ${x2},${mid} ${x2},${y2}"/>${f.label?`<text class="mini-flow-label" x="${(x1+x2)/2}" y="${mid-3}" text-anchor="middle">${esc(f.label.slice(0,22))}</text>`:''}`;}).join('');
+  function miniGraphMarkupFor(model) {
+    const components=model?.components||[], flows=model?.flows||[];
+    if(!components.length) return '<p class="drawer-empty">No architecture yet.</p>';
+    const {nodes,positions,width,height}=graphLayoutFor({components,flows});
+    const marker='miniArrow'+Math.random().toString(36).slice(2,7);
+    const edges=flows.map(f=>{const a=positions[f.from],b=positions[f.to];if(!a||!b)return'';const x1=a.x+a.w/2,y1=a.y+a.h,x2=b.x+b.w/2,y2=b.y;const mid=(y1+y2)/2;return `<path class="mini-edge" marker-end="url(#${marker})" d="M${x1},${y1} C${x1},${mid} ${x2},${mid} ${x2},${y2}"/>${f.label?`<text class="mini-flow-label" x="${(x1+x2)/2}" y="${mid-3}" text-anchor="middle">${esc(f.label.slice(0,22))}</text>`:''}`;}).join('');
     const boxes=nodes.map(n=>{const p=positions[n.id];const label=n.name.length>20?n.name.slice(0,19)+'…':n.name;return `<rect class="mini-node" x="${p.x}" y="${p.y}" width="${p.w}" height="${p.h}" rx="9"/><text class="mini-label" x="${p.x+p.w/2}" y="${p.y+p.h/2+3}" text-anchor="middle">${esc(label)}</text>`;}).join('');
-    return `<div class="mini-architecture"><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Automatically generated architecture graph"><defs><marker id="miniArrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#72849a"/></marker></defs>${edges}${boxes}</svg></div>`;
+    return `<div class="mini-architecture"><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Automatically generated architecture graph"><defs><marker id="${marker}" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#72849a"/></marker></defs>${edges}${boxes}</svg></div>`;
   }
-
+  function currentArchitectureModel(){return {components:state.components,flows:state.flows};}
+  function miniGraphMarkup(){return miniGraphMarkupFor(currentArchitectureModel());}
+  function cloneArchitecture(model){return JSON.parse(JSON.stringify(model));}
+  function captureArchitectureV1(){state.architectureV1=cloneArchitecture(currentArchitectureModel());state.architectureV2=cloneArchitecture(state.architectureV1);saveState();}
+  function ensureArchitectureV2(){if(!state.architectureV1)captureArchitectureV1();if(!state.architectureV2)state.architectureV2=cloneArchitecture(state.architectureV1);return state.architectureV2;}
   function renderMobileGraph(){const host=$('#mobileGraph');if(host)host.innerHTML=miniGraphMarkup();}
 
   function renderDesignDrawer(){
@@ -708,13 +777,17 @@
     const tech=state.lastTechnology&&technologies[state.lastTechnology]?technologies[state.lastTechnology].name:null;
     const committed=Object.values(state.scenarios||{}).filter(v=>v&&v.committed).length;
     const cp=state.campusDecision?.position?campusDecisionPositions.find(x=>x[0]===state.campusDecision.position):null;
-    host.innerHTML=`<section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Campus mission</strong><span class="design-stat">30 points</span></div><div class="drawer-mission-facts"><span>Buildings + outdoor</span><span>Temperature · humidity · CO₂ · noise</span><span>History + alerts</span></div>${cp?`<div class="drawer-flow">Current connectivity stance: <strong>${esc(cp[1])}</strong></div>`:''}</section><section class="design-section"><div class="design-section-head"><strong>Architecture v1</strong><span class="design-stat">${state.components.length} components · ${state.flows.length} flows</span></div>${miniGraphMarkup()}</section><section class="design-section"><div class="design-section-head"><strong>Requirements</strong><span class="design-stat">${selected.length} selected</span></div>${priorities.length?`<div class="chip-row">${priorities.map(x=>`<span class="chip priority">★ ${esc(x)}</span>`).join('')}</div>`:'<p class="drawer-empty">No top-three priorities yet.</p>'}</section><section class="design-section"><div class="design-section-head"><strong>Current investigation</strong></div>${tech?`<div class="drawer-flow">Last technology opened: <strong>${esc(tech)}</strong></div>`:'<p class="drawer-empty">No technology card opened yet.</p>'}<div class="drawer-flow" style="margin-top:6px">Committed transfer decisions: <strong>${committed}</strong></div></section>`;
+    const v1=state.architectureV1||currentArchitectureModel(), v2=state.architectureV2;
+    host.innerHTML=`<section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Campus mission</strong><span class="design-stat">30 points</span></div><div class="drawer-mission-facts"><span>Buildings + outdoor</span><span>Temperature · humidity · CO₂ · noise</span><span>History + alerts</span></div>${cp?`<div class="drawer-flow">Current connectivity stance: <strong>${esc(cp[1])}</strong></div>`:''}</section><section class="design-section"><div class="design-section-head"><strong>Architecture ${state.architectureV1?'v1 · frozen':'working'}</strong><span class="design-stat">${v1.components.length} components · ${v1.flows.length} flows</span></div>${miniGraphMarkupFor(v1)}</section>${v2&&architectureChanged()?`<section class="design-section design-v2-section"><div class="design-section-head"><strong>Architecture v2 · revised</strong><span class="design-stat">after incident</span></div>${miniGraphMarkupFor(v2)}</section>`:''}<section class="design-section"><div class="design-section-head"><strong>Requirements</strong><span class="design-stat">${selected.length} selected</span></div>${priorities.length?`<div class="chip-row">${priorities.map(x=>`<span class="chip priority">★ ${esc(x)}</span>`).join('')}</div>`:'<p class="drawer-empty">No top-three priorities yet.</p>'}</section><section class="design-section"><div class="design-section-head"><strong>Current investigation</strong></div>${tech?`<div class="drawer-flow">Last technology opened: <strong>${esc(tech)}</strong></div>`:'<p class="drawer-empty">No technology card opened yet.</p>'}<div class="drawer-flow" style="margin-top:6px">Committed transfer decisions: <strong>${committed}</strong></div></section>`;
   }
 
   function openDesign(){renderDesignDrawer();$('#designDrawer').classList.add('open');$('#designDrawer').setAttribute('aria-hidden','false');$('#designScrim').hidden=false;}
   function closeDesign(){$('#designDrawer').classList.remove('open');$('#designDrawer').setAttribute('aria-hidden','true');$('#designScrim').hidden=true;}
   $('#designBtn').addEventListener('click',openDesign); $('#closeDesign').addEventListener('click',closeDesign); $('#designScrim').addEventListener('click',closeDesign);
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDesign();closeDomainPicker();}});
+  function openFieldGuide(){renderFieldGuide();$('#fieldGuideDrawer').classList.add('open');$('#fieldGuideDrawer').setAttribute('aria-hidden','false');$('#fieldGuideScrim').hidden=false;}
+  function closeFieldGuide(){$('#fieldGuideDrawer').classList.remove('open');$('#fieldGuideDrawer').setAttribute('aria-hidden','true');$('#fieldGuideScrim').hidden=true;}
+  $('#fieldGuideBtn').addEventListener('click',openFieldGuide); $('#closeFieldGuide').addEventListener('click',closeFieldGuide); $('#fieldGuideScrim').addEventListener('click',closeFieldGuide);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDesign();closeFieldGuide();closeDomainPicker();}});
 
   function openMobileTechSheet(html){
     let sheet=document.querySelector('.mobile-tech-overlay');
@@ -722,12 +795,55 @@
     sheet=document.createElement('div');sheet.className='mobile-tech-overlay';sheet.innerHTML=`<div class="mobile-tech-sheet"><button type="button" class="icon-button mobile-tech-close" aria-label="Close">×</button>${html}</div>`;document.body.appendChild(sheet);sheet.querySelector('.mobile-tech-close').addEventListener('click',()=>sheet.remove());sheet.addEventListener('click',e=>{if(e.target===sheet)sheet.remove();});
   }
 
+
+  /* ---------- Architecture v1 → v2 revision studio ---------- */
+  function architectureChanged(){
+    if(!state.architectureV1||!state.architectureV2)return false;
+    return JSON.stringify(state.architectureV1)!==JSON.stringify(state.architectureV2);
+  }
+  function renderRevisionStudio(){
+    const studio=$('#revisionStudio'); if(!studio)return;
+    const ready=!!(state.selectedStress&&state.stressRequirement&&state.stressResponse);
+    studio.hidden=!ready;
+    const finish=$('#finishSessionBtn');
+    if(!ready){if(finish){finish.disabled=true;finish.textContent='Complete the incident analysis first →';}return;}
+    const v2=ensureArchitectureV2(),v1=state.architectureV1;
+    $('#revisionV1Graph').innerHTML=miniGraphMarkupFor(v1);
+    $('#revisionV2Graph').innerHTML=miniGraphMarkupFor(v2);
+    const status=$('#revisionStatus'); const changed=architectureChanged(); if(status){status.textContent=changed?'v2 changed':'No change yet';status.classList.toggle('changed',changed);}
+    const opts='<option value="">Choose…</option>'+v2.components.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');
+    $('#v2RemoveComponent').innerHTML=opts; $('#v2FlowFrom').innerHTML=opts.replace('Choose…','From…'); $('#v2FlowTo').innerHTML=opts.replace('Choose…','To…');
+    const list=$('#v2FlowList');
+    list.innerHTML=v2.flows.length?v2.flows.map((f,i)=>{const a=v2.components.find(c=>String(c.id)===String(f.from)),b=v2.components.find(c=>String(c.id)===String(f.to));return `<div class="list-item"><span><strong>${esc(a?.name||'?')}</strong> <span class="flow-arrow-inline">→</span> <strong>${esc(b?.name||'?')}</strong><small>${esc(f.label||'unlabelled flow')}</small></span><button class="icon-button v2-remove-flow" data-i="${i}" type="button" aria-label="Remove revision flow">×</button></div>`}).join(''):'<p class="empty-copy">No flows in v2.</p>';
+    list.querySelectorAll('.v2-remove-flow').forEach(b=>b.addEventListener('click',()=>{v2.flows.splice(+b.dataset.i,1);saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();}));
+    if(finish){finish.disabled=!changed;finish.textContent=changed?'Architecture v2 recorded → finish':'Record a v2 revision to finish →';}
+  }
+  $('#v2ComponentForm')?.addEventListener('submit',e=>{e.preventDefault();const inp=$('#v2ComponentInput'),name=inp.value.trim();if(!name)return;const v2=ensureArchitectureV2();const ids=v2.components.map(c=>Number(c.id)).filter(Number.isFinite);const id=(ids.length?Math.max(...ids):0)+1;v2.components.push({id,name,x:0,y:0});inp.value='';saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();});
+  $('#v2RemoveComponentBtn')?.addEventListener('click',()=>{const id=+$('#v2RemoveComponent').value;if(!id)return;const v2=ensureArchitectureV2();v2.components=v2.components.filter(c=>c.id!==id);v2.flows=v2.flows.filter(f=>f.from!==id&&f.to!==id);saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();});
+  $('#v2FlowForm')?.addEventListener('submit',e=>{e.preventDefault();const from=+$('#v2FlowFrom').value,to=+$('#v2FlowTo').value,label=$('#v2FlowLabel').value.trim();if(!from||!to||from===to){flashMessage('Choose two different components.');return;}const v2=ensureArchitectureV2();v2.flows.push({from,to,label});$('#v2FlowLabel').value='';saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();});
+  $('#resetV2')?.addEventListener('click',()=>{if(!state.architectureV1)return;state.architectureV2=cloneArchitecture(state.architectureV1);saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();});
+  function architectureDelta(){
+    const v1=state.architectureV1,v2=state.architectureV2;if(!v1||!v2)return {added:[],removed:[],addedFlows:0,removedFlows:0};
+    const m1=new Map(v1.components.map(c=>[String(c.id),c.name])),m2=new Map(v2.components.map(c=>[String(c.id),c.name]));
+    const added=[...m2].filter(([id])=>!m1.has(id)).map(([,n])=>n),removed=[...m1].filter(([id])=>!m2.has(id)).map(([,n])=>n);
+    const sig=f=>`${f.from}|${f.to}|${f.label||''}`,s1=new Set(v1.flows.map(sig)),s2=new Set(v2.flows.map(sig));
+    return {added,removed,addedFlows:[...s2].filter(x=>!s1.has(x)).length,removedFlows:[...s1].filter(x=>!s2.has(x)).length};
+  }
+  function renderDesignEvolution(){
+    const host=$('#designEvolution');if(!host)return;
+    if(!state.architectureV1){host.innerHTML='';return;}
+    const v2=state.architectureV2||state.architectureV1,d=architectureDelta(),changed=architectureChanged();
+    const deltas=[...d.added.map(x=>`+ ${esc(x)}`),...d.removed.map(x=>`− ${esc(x)}`),d.addedFlows?`+ ${d.addedFlows} flow${d.addedFlows>1?'s':''}`:'',d.removedFlows?`− ${d.removedFlows} flow${d.removedFlows>1?'s':''}`:''].filter(Boolean);
+    const incident=stressDefs.find(x=>x.id===state.selectedStress), req=requirementDefs.find(x=>x[0]===state.stressRequirement), response=responseChoices.find(x=>x[0]===state.stressResponse);
+    host.innerHTML=`<div class="evolution-head"><span class="eyebrow">Visible learning artifact</span><h3>Architecture v1 → v2</h3><p>${changed?'Your final design is not the same object you started with. The incident forced a structural revision.':'No structural revision was recorded; compare your verbal response with the frozen v1.'}</p></div>${incident&&req&&response?`<div class="evolution-cause"><span>Changed assumption</span><strong>${esc(incident.title)}</strong><b>→</b><span>Requirement under pressure</span><strong>${esc(req[2])}</strong><b>→</b><span>Response</span><strong>${esc(response[1])}</strong></div>`:''}<div class="evolution-grid"><div><span>V1 · before requirements and incident</span>${miniGraphMarkupFor(state.architectureV1)}</div><div><span>V2 · after the incident</span>${miniGraphMarkupFor(v2)}</div></div><div class="evolution-delta">${deltas.length?deltas.map(x=>`<span>${x}</span>`).join(''):'<span>No structural delta recorded</span>'}</div>`;
+  }
+
   /* ---------- Retrieval checkpoint ---------- */
   const recallPrompts = [
     {id:'beforetech', q:'Before choosing a communication technology, what should you make explicit first?', a:'The application need, architecture/flows, and the requirements or constraints that matter for those flows.'},
     {id:'operator', q:'Which network shape makes operator coverage an explicit design assumption?', a:'Operator-managed wide-area / cellular IoT: the device relies on cellular base stations and an operator network.'},
     {id:'scope', q:'Why is IEEE 802.15.4 not the same kind of object as LoRaWAN?', a:'802.15.4 provides lower-level local radio/link building blocks; LoRaWAN defines a wider network architecture around devices, gateways and network services.'},
-    {id:'revision', q:'Name one reason your original campus architecture might need to change.', a:'Any changed assumption can force revision: scale, energy target, traffic volume, infrastructure availability, coverage, latency needs, failures, and more.'}
+    {id:'transfer', q:'Tomorrow one CO₂ sensor is replaced by a camera sending frequent images. Which part of your reasoning should you revisit first?', a:'Revisit the requirements of that flow first — especially data volume/throughput, and potentially energy/latency — then re-evaluate the communication path and technology choice.'}
   ];
   function renderMemoryLock(){
     const host=$('#memoryLock'); if(!host)return;
@@ -770,7 +886,7 @@
     renderScenarios();
     renderCampusDecision();
     renderStress();
-    renderBorderlineChallenge(); renderArchitectureChallenge(); renderFlowLens(); renderLayerTrap(); renderTechnologyCompare(); renderMissingInfoChallenge(); renderDoubleFailure(); renderStopSnapshots(); renderExpertProgress(); renderMemoryLock();
+    renderBorderlineChallenge(); renderArchitectureChallenge(); renderFlowLens(); renderLayerTrap(); renderTechnologyCompare(); renderMissingInfoChallenge(); renderDoubleFailure(); renderStopSnapshots(); renderExpertProgress(); renderMemoryLock(); renderStopRitual(); renderFieldGuide(); renderRevisionStudio(); renderDesignEvolution();
     renderStepper();
   }
 

@@ -16,7 +16,7 @@ The teacher guide is intentionally stored outside the student folder at `cours/i
 
 The student site uses no backend or database. Work is saved in browser localStorage and can be exported/imported as JSON.
 
-## Pedagogical flow (V9)
+## Pedagogical flow (V10)
 
 The student path is discovery-first:
 
@@ -26,6 +26,8 @@ The student path is discovery-first:
 4. discover communication network shapes before seeing technology names;
 5. consolidate the technology map with the detective and guided reference cards;
 6. choose technologies under explicit assumptions, use transfer cases, then return to the campus mission;
-7. stress-test the original design and finish with a short retrieval checkpoint before the synthesis.
+7. stress-test the frozen architecture v1, make a concrete architecture v2 revision, and finish with retrieval before synthesis.
+
+At each classroom STOP, the interface follows **LOOK → COMPARE → CHALLENGE → UNLOCK**. Formal concepts are collected in a persistent Field Guide only after discussion.
 
 There is deliberately **no class STOP between technology discovery and the detective**. The page provides the minimum scaffold itself, so a teacher-led correction cannot reveal answers to the next activity.

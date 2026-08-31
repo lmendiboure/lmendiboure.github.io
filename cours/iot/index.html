@@ -16,7 +16,8 @@
       <div><div class="brand-title">Systems Design</div><div class="brand-sub">Session 1 · Student workspace</div></div>
     </div>
     <div class="actions">
-      <button id="designBtn" class="btn design-btn" type="button">Our design</button><span id="expertProgress" class="expert-progress" title="Optional expert rounds explored" role="status" aria-live="polite">Expert trail 0/7</span>
+      <button id="designBtn" class="btn design-btn" type="button">Our design</button>
+      <button id="fieldGuideBtn" class="btn field-guide-btn" type="button" hidden>Field guide <span id="fieldGuideCount">0/4</span></button><span id="expertProgress" class="expert-progress" title="Optional expert rounds explored" role="status" aria-live="polite">Expert trail 0/7</span>
       <span id="saveState" class="save-pill" role="status" aria-live="polite">Saved on this device</span>
       <button id="exportBtn" class="btn optional" type="button">Export</button>
       <label class="btn optional" for="importInput" style="cursor:pointer">Import</label>
@@ -77,10 +78,13 @@
         <div class="eyebrow">Class discussion</div>
         <h2>Use your map to discuss.</h2>
         <p>Use your own map below during the discussion. Your teacher will then compare it with a broader landscape.</p>
+        <div class="stop-rhythm" aria-label="Discussion rhythm"><span class="active">1 · LOOK</span><span>2 · COMPARE</span><span>3 · CHALLENGE</span><span>4 · UNLOCK</span></div>
         <div id="stopLandscapeSnapshot" class="stop-snapshot"></div>
         <button class="text-button review-activity" data-review-screen="0" type="button">← Review / edit our map</button>
-        <div class="student-stop-question"><span>Discuss this:</span><strong>If these systems live in such different environments, what could possibly make them part of the same field?</strong></div>
-        <button class="btn primary next-activity" data-next="2" type="button">Teacher says continue →</button>
+        <div class="student-stop-question"><span>2 · Compare</span><strong>If these systems live in such different environments, what could possibly make them part of the same field?</strong></div>
+        <div class="teacher-challenge-slot" data-stop-challenge="landscape"></div>
+        <div class="concept-unlock-slot" data-concept="iot"></div>
+        <button class="btn primary next-activity stop-next" data-next="2" data-requires-unlock="iot" type="button" disabled>Concept unlocked → continue</button>
       </div>
     </section>
 
@@ -89,10 +93,10 @@
       <div class="activity-label"><span>Activity 2</span><span class="pill-neutral">Design one system</span></div>
       <section class="mission-brief" aria-labelledby="campusMissionTitle">
         <div class="mission-copy">
-          <div class="mission-meta"><span>Campus mission</span><span>Design brief</span></div>
+          <div class="mission-meta"><span>Campus mission</span><span>Design dossier</span></div>
           <h2 id="campusMissionTitle">Keep a distributed campus observable.</h2>
           <p>A university wants environmental measurements across several buildings and outdoor areas. The service must support <strong>historical analysis</strong> and <strong>alerts when conditions become abnormal</strong>.</p>
-          <div class="mission-role"><strong>Your role</strong><span>You are the systems-design team. Build something you can explain, challenge and revise — not a diagram copied from a textbook.</span></div>
+          <div class="mission-role"><strong>Your role</strong><span>You are the systems-design team. Build a design you can justify, challenge and revise. Some information is intentionally missing: recognising what you still need to know is part of the mission.</span></div>
         </div>
         <div class="campus-scene" role="img" aria-label="Physical campus context with several buildings, outdoor areas and distributed measurement points; no network architecture is shown">
           <div class="campus-building building-a"><span>Building A</span><i></i><i></i><i></i></div>
@@ -101,11 +105,10 @@
           <div class="campus-outdoor"><span>Outdoor areas</span><i></i><i></i><i></i></div>
           <div class="campus-scene-note">physical environment only · architecture still unknown</div>
         </div>
-        <div class="mission-fact-grid">
-          <div><strong>30</strong><span>measurement points</span></div>
-          <div><strong>4 signals</strong><span>temperature · humidity · CO₂ · noise</span></div>
-          <div><strong>mixed setting</strong><span>buildings + outdoor areas</span></div>
-          <div><strong>2 outcomes</strong><span>history + abnormal-condition alerts</span></div>
+        <div class="mission-dossier-grid">
+          <section class="dossier-panel known"><span class="dossier-kicker">What we know</span><strong>Mission facts</strong><div class="dossier-list"><span><b>30</b> measurement points</span><span><b>4</b> signals: temperature · humidity · CO₂ · noise</span><span><b>Mixed</b> buildings + outdoor areas</span><span><b>2</b> outcomes: history + alerts</span></div></section>
+          <section class="dossier-panel unknown"><span class="dossier-kicker">Intentionally unknown</span><strong>Assumptions to uncover</strong><div class="dossier-list"><span>Exact placement and physical conditions</span><span>Available communication infrastructure</span><span>Device operating constraints</span><span>Detailed service timing and maintenance conditions</span></div></section>
+          <section class="dossier-panel job"><span class="dossier-kicker">Your job</span><strong>Design → justify → revise</strong><div class="dossier-list"><span>Build functions and information flows</span><span>Make requirements explicit</span><span>Choose communication solutions only when justified</span><span>Revise the design when assumptions change</span></div></section>
         </div>
       </section>
 
@@ -161,10 +164,13 @@
         <div class="eyebrow">Class discussion</div>
         <h2>Use your architecture to discuss.</h2>
         <p>Your architecture is reproduced below so the group can point to concrete choices during discussion.</p>
+        <div class="stop-rhythm" aria-label="Discussion rhythm"><span class="active">1 · LOOK</span><span>2 · COMPARE</span><span>3 · CHALLENGE</span><span>4 · UNLOCK</span></div>
         <div id="stopArchitectureSnapshot" class="stop-snapshot"></div>
         <button class="text-button review-activity" data-review-screen="2" type="button">← Review / edit our architecture</button>
-        <div class="student-stop-question"><span>Discuss this:</span><strong>Did you draw components, functions, technologies — or a mixture of all three?</strong></div>
-        <button class="btn primary next-activity" data-next="4" type="button">Teacher says continue →</button>
+        <div class="student-stop-question"><span>2 · Compare</span><strong>Did you draw components, functions, technologies — or a mixture of all three?</strong></div>
+        <div class="teacher-challenge-slot" data-stop-challenge="architecture"></div>
+        <div class="concept-unlock-slot" data-concept="architecture"></div>
+        <button class="btn primary next-activity stop-next" data-next="4" data-requires-unlock="architecture" type="button" disabled>Concept unlocked → continue</button>
       </div>
     </section>
 
@@ -194,14 +200,13 @@
         <div class="eyebrow">Class discussion</div>
         <h2>Use your priorities to discuss.</h2>
         <p>Your selected dimensions and priorities are shown below. Use them as evidence rather than relying on memory.</p>
+        <div class="stop-rhythm" aria-label="Discussion rhythm"><span class="active">1 · LOOK</span><span>2 · COMPARE</span><span>3 · CHALLENGE</span><span>4 · UNLOCK</span></div>
         <div id="stopRequirementsSnapshot" class="stop-snapshot"></div>
         <button class="text-button review-activity" data-review-screen="4" type="button">← Review / edit our requirements</button>
-        <div class="student-stop-question"><span>Discuss this:</span><strong>Can two communication flows in the same IoT system legitimately have different requirements?</strong></div>
-        <div class="concept-reveal" id="referenceRequirementReveal">
-          <button id="revealRequirementVocabulary" class="btn soft" type="button">After the discussion: reveal the reference dimensions</button>
-          <div id="referenceRequirementGrid" class="reference-grid" hidden></div>
-        </div>
-        <button class="btn primary next-activity" data-next="6" type="button">Teacher says continue →</button>
+        <div class="student-stop-question"><span>2 · Compare</span><strong>Can two communication flows in the same IoT system legitimately have different requirements?</strong></div>
+        <div class="teacher-challenge-slot" data-stop-challenge="requirements"></div>
+        <div class="concept-unlock-slot" data-concept="requirements"></div>
+        <button class="btn primary next-activity stop-next" data-next="6" data-requires-unlock="requirements" type="button" disabled>Concept unlocked → continue</button>
       </div>
     </section>
 
@@ -282,10 +287,13 @@
         <div class="eyebrow">Technology hearing</div>
         <h2>Use your decisions to defend a validity domain.</h2>
         <p>Your detective results and deployment decisions are summarised below. Use them when defending your reasoning.</p>
+        <div class="stop-rhythm" aria-label="Discussion rhythm"><span class="active">1 · LOOK</span><span>2 · COMPARE</span><span>3 · CHALLENGE</span><span>4 · UNLOCK</span></div>
         <div id="stopTechnologySnapshot" class="stop-snapshot"></div>
         <button class="text-button review-activity" data-review-screen="8" type="button">← Review our deployment decisions</button>
-        <div class="student-stop-question"><span>Discuss this:</span><strong>When you choose a communication technology, what else have you implicitly chosen about the network?</strong></div>
-        <button class="btn primary next-activity" data-next="10" type="button">Teacher says continue →</button>
+        <div class="student-stop-question"><span>2 · Compare</span><strong>When you choose a communication technology, what else have you implicitly chosen about the network?</strong></div>
+        <div class="teacher-challenge-slot" data-stop-challenge="technology"></div>
+        <div class="concept-unlock-slot" data-concept="technology"></div>
+        <button class="btn primary next-activity stop-next" data-next="10" data-requires-unlock="technology" type="button" disabled>Concept unlocked → continue</button>
       </div>
     </section>
 
@@ -302,10 +310,24 @@
         <div class="stress-prompt"><span class="stress-number">1</span><div><strong>Broken assumption</strong><p id="brokenPrompt"></p></div></div>
         <div class="stress-prompt"><span class="stress-number">2</span><div><strong>Requirement that changes</strong><div id="stressRequirementChoices" class="chip-row"></div></div></div>
         <div class="stress-prompt"><span class="stress-number">3</span><div><strong>Architectural response</strong><div id="architectureResponseChoices" class="choice-grid compact-choice-grid"></div></div></div>
-        <label class="optional-note"><span>Optional note — what would you redraw?</span><textarea id="revisionNote" maxlength="300" placeholder="One short sentence is enough."></textarea></label>
+        <label class="optional-note"><span>Optional note — explain your first instinct</span><textarea id="revisionNote" maxlength="300" placeholder="One short sentence is enough."></textarea></label>
       </div>
+      <section id="revisionStudio" class="revision-studio card flat" hidden>
+        <div class="revision-head"><div><span class="eyebrow">Core mission · architecture v2</span><h3>Make one concrete structural revision.</h3><p class="section-copy">Architecture v1 was frozen after STOP 2. Now edit a copy so the final debrief can show what changed — not only what you said would change.</p></div><span id="revisionStatus" class="revision-status">No change yet</span></div>
+        <div class="revision-compare">
+          <div><span class="revision-label">Frozen v1</span><div id="revisionV1Graph"></div></div>
+          <div><span class="revision-label">Working v2</span><div id="revisionV2Graph"></div></div>
+        </div>
+        <div class="revision-tools">
+          <form id="v2ComponentForm" class="revision-tool"><label><span class="label">Add component</span><input id="v2ComponentInput" maxlength="70" placeholder="e.g. local buffer" /></label><button class="btn soft" type="submit">Add</button></form>
+          <div class="revision-tool"><label><span class="label">Remove component</span><select id="v2RemoveComponent"><option value="">Choose…</option></select></label><button id="v2RemoveComponentBtn" class="btn ghost" type="button">Remove</button></div>
+          <form id="v2FlowForm" class="revision-tool flow"><select id="v2FlowFrom" aria-label="Revision flow source"><option value="">From…</option></select><select id="v2FlowTo" aria-label="Revision flow destination"><option value="">To…</option></select><input id="v2FlowLabel" maxlength="70" placeholder="What is exchanged?" /><button class="btn soft" type="submit">Add flow</button></form>
+        </div>
+        <div id="v2FlowList" class="list"></div>
+        <div class="revision-foot"><span>One real edit is enough. The point is to make the consequence visible.</span><button id="resetV2" class="text-button" type="button">Reset v2 to v1</button></div>
+      </section>
       <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Compound failure</strong><small>Your system rarely gets only one surprise at a time.</small></span></summary><div id="doubleFailureChallenge" class="go-further-body"></div></details>
-      <button class="btn primary next-activity" data-next="11" type="button">Finish session →</button>
+      <button id="finishSessionBtn" class="btn primary next-activity" data-next="11" type="button" disabled>Record a v2 revision to finish →</button>
     </section>
 
     <!-- FINISH -->
@@ -319,6 +341,7 @@
         <div id="sessionSynthesis" class="session-synthesis" hidden>
           <div class="synthesis-rule"><span></span><strong>Session synthesis</strong><span></span></div>
           <p class="lead">Need → functions → architecture → flows → requirements → candidate technologies → challenge → revision.</p>
+          <div id="designEvolution" class="design-evolution"></div>
           <div class="takeaway-grid">
             <div><strong>Architecture</strong><span>is not a list of products.</span></div>
             <div><strong>Requirements</strong><span>must be explicit before comparison.</span></div>
@@ -347,6 +370,12 @@
 <aside id="designDrawer" class="design-drawer" aria-hidden="true" aria-label="Our design summary">
   <div class="design-drawer-head"><div><div class="eyebrow">Persistent workspace</div><h2>Our design</h2></div><button id="closeDesign" class="icon-button drawer-close" type="button" aria-label="Close design panel">×</button></div>
   <div id="designDrawerContent" class="design-drawer-content"></div>
+</aside>
+
+<div id="fieldGuideScrim" class="design-scrim" hidden></div>
+<aside id="fieldGuideDrawer" class="field-guide-drawer" aria-hidden="true" aria-label="Field guide">
+  <div class="design-drawer-head"><div><div class="eyebrow">Concepts kept after discussion</div><h2>Field guide</h2></div><button id="closeFieldGuide" class="icon-button drawer-close" type="button" aria-label="Close field guide">×</button></div>
+  <div id="fieldGuideContent" class="design-drawer-content"></div>
 </aside>
 
 <footer class="shell footer">Your work is stored only in this browser unless you export it. No account and no database are used.</footer>
