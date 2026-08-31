@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Teacher guide for IoT Systems Design — Session 1" />
+  <title>Teacher Guide — IoT Systems Design</title>
+  <link rel="stylesheet" href="../../../iot/session-1/assets/styles.css" />
+</head>
+<body class="teacher-page">
+<a class="skip-link" href="#mainContent">Skip to main content</a>
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <a class="brand" href="../" style="text-decoration:none;color:inherit" aria-label="Back to instructor course hub"><div class="brand-mark">IoT</div><div><div class="brand-title">Systems Design</div><div class="brand-sub">Session 1 · Teacher guide</div></div></a>
+    <div class="actions"><a class="btn" href="../../../iot/session-1/">Open student view</a><a class="btn" href="../LEARNING-DESIGN-PATTERN.md">Pattern</a><a class="btn" href="../EVIDENCE-MAP.md">Evidence</a></div>
+  </div>
+</header>
+
+<main id="mainContent">
+  <section class="shell teacher-hero">
+    <div class="eyebrow">Teacher guide</div>
+    <h1>Session 1<br/>activity flow</h1>
+    <p class="lead">For each block: what students do, what should be visible at the next STOP, and the exact discussion move that turns discovery into formal knowledge.</p>
+    <div class="teacher-pattern"><span class="eyebrow">Operating pattern · every STOP</span><div class="teacher-pattern-flow"><b>1 · LOOK</b><span>student artifact</span><b>2 · COMPARE</b><span>differences between groups</span><b>3 · CHALLENGE</b><span>one counterexample</span><b>4 · UNLOCK</b><span>formal concept added to Field Guide</span></div><p>Do not lecture before the activity when the concept can emerge from the task. Do not stop at discovery either: after discussion, formalise the idea explicitly.</p><p><strong>Navigation rule:</strong> the future stays gated, but every already-unlocked stage can be revisited. Students see an explicit Review mode and can return to the current mission in one click. Meaningful commitments are not silently overwritten: architecture v1 is frozen after STOP 2 and later change is recorded as v2.</p></div>
+  </section>
+
+  <section class="shell teacher-flow">
+    <article class="teacher-activity">
+      <div class="teacher-index">01</div>
+      <div><div class="eyebrow">Student activity until STOP 1</div><h2>Map potential IoT systems to application domains</h2><p>Students receive eight connected physical systems. For each one they choose a main application domain and, when useful, one secondary domain. They do not search for definitions or examples. Do not tell them in advance that the point is to demonstrate the breadth of IoT; let the overlaps and disagreements create that conclusion at STOP 1.</p>
+      <div class="expected"><strong>Expected before STOP</strong><span>Every system has a main domain and several should also have a defensible secondary domain. The interesting output is disagreement between groups, not a perfect classification.</span></div>
+      <div class="discussion-box"><strong>Useful for the discussion</strong><ul><li>Start from disagreements rather than correcting every card.</li><li>Useful ambiguous cases: vaccine shipment = Health / Logistics / Mobility; EV charging = Energy / Mobility / Smart city; school air quality = Environment / Health / Smart city.</li><li>Expert round: ask a fast group to defend one borderline case. “Connected”, “Internet-connected” and “interacts with the physical world” are not equivalent criteria.</li><li><strong>CHALLENGE:</strong> a Raspberry Pi hosts a normal web page but senses/controls nothing. Is “connected” alone enough to call it IoT?</li><li><strong>UNLOCK:</strong> working view of IoT = physical entities observed/acted upon + communication/computation + a digital service. Treat it as a useful systems lens, not a boundary-policing definition.</li><li>The important observation is the breadth of physical environments, actors, infrastructure and constraints covered by IoT.</li><li>Close with: if these applications are so different, should they all use the same architecture and communication technology?</li></ul></div>
+      <details class="teacher-landscape"><summary>Show reference landscape for the class</summary><div class="teacher-landscape-map"><div class="landscape-map-center">IoT systems<br/><small>across domains</small></div><div class="landscape-map-grid">
+        <div class="landscape-map-domain"><strong>⌂ Home</strong><span>grid-responsive home battery</span><em class="cross-domain">↔ Energy</em></div>
+        <div class="landscape-map-domain"><strong>♥ Health</strong><span>vaccine shipment · worker safety · school air quality</span><em class="cross-domain">↔ Logistics · Industry · Environment</em></div>
+        <div class="landscape-map-domain"><strong>⚙ Industry</strong><span>worker safety badge · bridge monitoring · warehouse robots</span><em class="cross-domain">↔ Health · Mobility · Logistics</em></div>
+        <div class="landscape-map-domain"><strong>♧ Agriculture</strong><span>weather-aware irrigation</span><em class="cross-domain">↔ Environment</em></div>
+        <div class="landscape-map-domain"><strong>➜ Mobility</strong><span>vaccine shipment · EV charging · railway bridge · warehouse robots</span><em class="cross-domain">↔ Logistics · Energy · Industry</em></div>
+        <div class="landscape-map-domain"><strong>ϟ Energy</strong><span>EV charging · home battery</span><em class="cross-domain">↔ Mobility · Home</em></div>
+        <div class="landscape-map-domain"><strong>▦ Smart cities</strong><span>EV charging availability · school air quality</span><em class="cross-domain">↔ Mobility · Environment · Health</em></div>
+        <div class="landscape-map-domain"><strong>▣ Logistics</strong><span>vaccine shipment · warehouse robots</span><em class="cross-domain">↔ Health · Mobility · Industry</em></div>
+        <div class="landscape-map-domain"><strong>◌ Environment</strong><span>irrigation inputs · school air quality</span><em class="cross-domain">↔ Agriculture · Health · Cities</em></div>
+      </div><p class="landscape-map-note"><strong>Message to leave visible:</strong> IoT is not one application domain. Similar system concerns reappear across very different physical environments.</p></div></details></div>
+    </article>
+
+    <article class="teacher-activity">
+      <div class="teacher-index">02</div>
+      <div><div class="eyebrow">Student activity until STOP 2</div><h2>Enter the campus mission and build architecture v1</h2><p>The campus case is now presented as a full design brief: physical setting, 30 distributed measurement points, four signals, and two service outcomes. The visual shows only the physical environment — never a network solution. Students are positioned as the systems-design team, then invent their own components and information flows. Product and protocol names should not be used as architectural answers.</p>
+      <div class="expected"><strong>Expected before STOP</strong><span>A readable end-to-end architecture with several functional components and labelled information flows.</span></div>
+      <div class="discussion-box"><strong>Useful for the discussion</strong><ul><li>Keep the mission brief visible when introducing the activity: students should know <em>why</em> they are drawing before deciding <em>what</em> to draw.</li><li>What did they treat as a component?</li><li>Separate function, physical component, technology and data flow.</li><li>One physical node can implement several functions.</li><li><strong>CHALLENGE:</strong> one Raspberry Pi senses, stores, computes and serves the dashboard. Ask “how many responsibilities, how many physical boxes?”</li><li><strong>UNLOCK:</strong> Sense/Act · Communicate · Compute · Store · Use are responsibilities, not mandatory boxes.</li><li>Use contrasting student architectures rather than presenting a reference architecture immediately.</li><li>Expert round: after removing a component, students get one architectural move only. Ask what their chosen response fails to solve. This is a useful entry into redundancy, buffering, graceful degradation and alternate paths without teaching those as a catalogue.</li></ul></div></div>
+    </article>
+
+    <article class="teacher-activity">
+      <div class="teacher-index">03</div>
+      <div><div class="eyebrow">Student activity until STOP 3</div><h2>Reason about constraints in plain language, then name them</h2><p>Students first work with questions such as “How far?”, “How much data?”, “How soon?” and “What can we rely on?”. They select the dimensions that matter and star three priorities. The formal vocabulary is intentionally revealed only during/after the STOP discussion.</p>
+      <div class="expected"><strong>Expected before STOP</strong><span>A defensible set of relevant constraints plus a clearly identified top three, expressed without requiring prior networking jargon.</span></div>
+      <div class="discussion-box"><strong>Useful for the discussion</strong><ul><li>Use the groups’ plain-language answers first; only then attach the technical labels.</li><li>Map “How soon?” to latency, “How much data?” to data volume/throughput, “How far?” to range, and so on.</li><li>Different flows in the same architecture can legitimately have different priorities.</li><li><strong>CHALLENGE:</strong> make the indoor sensor mains-powered while the outdoor one stays battery-powered. Does Energy still have the same importance for every flow?</li><li><strong>UNLOCK:</strong> reveal the vocabulary: range, data volume/throughput, latency, reliability, energy, scale, mobility, infrastructure, cost. Students add this mapping to their Field Guide.</li><li>Expert round: compare one concrete arrow with the system-wide Top 3. If they differ, ask whether the global ranking is hiding an important flow.</li></ul></div></div>
+    </article>
+
+    <article class="teacher-activity">
+      <div class="teacher-index">04</div>
+      <div><div class="eyebrow">Student activities 4–6 until STOP 4</div><h2>Discover network shapes, attach technology names, then decide</h2><p>This is the core scaffold of the session. The campus mission remains visible as a compact context strip. Activity 4 does <strong>not</strong> test prior knowledge: students start from four concrete questions (distance, data, energy, infrastructure), inspect five plain-language network shapes, and reveal the associated technology families. Activity 5 consolidates that map through the detective and a guided reference library. Activity 6 deliberately leaves campus for transfer cases, then returns to a campus checkpoint so students must state whether one family, a mixed design, or additional information is more defensible.</p>
+      <div class="expected"><strong>Expected before STOP</strong><span>Students can explain the essential network shape behind Wi-Fi, Bluetooth LE, IEEE 802.15.4, LoRaWAN and cellular IoT, and can justify a deployment choice relative to explicit assumptions.</span></div>
+      <div class="discussion-box"><strong>Useful for the discussion</strong><ul><li><strong>No whole-class correction between Activities 4 and 5.</strong> The student page itself supplies the minimum information needed for the next phase, so teacher discussion does not spoil the detective.</li><li>Expert round in Activity 4: students must choose a network shape for new cases <em>without naming a technology</em>. This tests whether they can separate problem structure from product/standard recall.</li><li>Lead with plain concepts: nearby peer, local access point, low-power local building block, gateway-based wide area, operator-managed wide area. Attach jargon only after the shape is understood.</li><li>For IEEE 802.15.4, first say “basic local radio-transmission and channel-sharing rules”. Only then introduce PHY and MAC as the technical names for those responsibilities.</li><li>For cellular IoT, first use “base station + operator network”; RAN/core/licensed spectrum belong in the deeper layer, not the first explanation.</li><li>LoRaWAN and cellular IoT can both solve low-rate wide-area problems while implying very different infrastructure ownership.</li><li>Satellite/NTN is introduced as a path that may provide direct access or backhaul, not as a sixth interchangeable card.</li><li>Use the optional abstraction trap only after the guided discovery: LoRa ≠ LoRaWAN; IEEE 802.15.4 and LoRaWAN can be compared for a design decision without being the same abstraction level.</li><li>The side-by-side comparison and Claim Lab are for fast groups: Bluetooth LE radio-mode trade-offs, LoRaWAN classes/ADR, NB-IoT vs LTE-M, private vs operator infrastructure, NTN and spectrum-cost claims.</li><li>In deployment cases, the reference driver is a discussion anchor rather than a unique justification. Compare groups that chose the same technology for different reasons.</li><li><strong>Campus checkpoint:</strong> do not force consensus on “one family” versus “mixed”. Ask instead which missing fact — power, coverage, traffic, latency or physical layout — could most change the answer. This is the transfer back from generic technology knowledge to the main case.</li><li><strong>CHALLENGE at STOP 4:</strong> LoRaWAN access still works to the gateway, but the gateway loses its upstream path. Ask which part of the architecture actually failed.</li><li><strong>UNLOCK:</strong> communication problem → network shape → technology family. A technology choice also implies infrastructure and dependencies; comparable candidates need not be the same abstraction level.</li><li>The “refuse to guess” challenge is important: missing requirements should block a premature technology choice.</li></ul></div></div>
+    </article>
+
+    <article class="teacher-activity">
+      <div class="teacher-index">05</div>
+      <div><div class="eyebrow">Final student activity</div><h2>Stress-test the original architecture</h2><p>Students change one assumption, identify the requirement affected, and select a plausible architectural response. The free-text redesign note remains optional.</p>
+      <div class="expected"><strong>Expected at the end</strong><span>Students can articulate broken assumption → changed requirement → architectural response, and they have made at least one concrete edit from frozen architecture v1 to architecture v2.</span></div>
+      <div class="discussion-box"><strong>Useful closing point</strong><p>Freeze architecture v1 after STOP 2. In the final activity, require one concrete structural edit to the copy (add/remove a component or flow). The final screen shows v1 beside v2 so students can see learning as a design delta. An architecture is defensible only relative to assumptions and requirements. If groups tried the compound-failure challenge, they were allowed one architectural change for two failures. Use one answer to show why a response solving one failure may become insufficient when constraints combine. The final screen then asks four short retrieval questions <em>before</em> showing the session synthesis; let groups answer aloud before revealing. Converge on: <b>Need → functions → architecture → flows → requirements → technology → challenge → revision.</b></p></div></div>
+    </article>
+  </section>
+
+</main>
+<footer class="shell footer">The student site runs locally in the browser. No student accounts, database, or live classroom backend are required.</footer>
+</body>
+</html>

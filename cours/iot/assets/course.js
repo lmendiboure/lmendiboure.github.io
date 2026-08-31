@@ -32,7 +32,7 @@
     const progress = localProgress(s);
     const actionLabel = state === 'review' ? 'Review mission' : (progress?.action || 'Enter mission');
     const progressHtml = available && progress ? `<div class="local-progress"><div class="local-progress-head"><span>${progress.label}</span><span>${progress.pct}%</span></div><div class="progress-track" aria-hidden="true"><div class="progress-fill" style="width:${progress.pct}%"></div></div></div>` : '';
-    const action = available ? `<div class="mission-action"><a class="btn primary" href="${href}">${actionLabel} →</a></div>` : `<div class="locked-note"><b aria-hidden="true">○</b><span>Not published yet</span></div>`;
+    const action = available ? `<div class="mission-action"><a class="btn primary" href="${href}">${actionLabel} →</a></div>` : `<div class="locked-note"><b aria-hidden="true">○</b><span>Unlocks later</span></div>`;
     return `<article class="mission-card ${classes[i]||''}">
       <div class="mission-top"><span class="mission-number">${s.number}</span><span class="state-badge ${state==='locked'?'locked':''}">${stateLabels[state]}</span></div>
       <div class="mission-kicker">${s.kicker}</div>
@@ -44,8 +44,7 @@
     </article>`;
   }).join('');
 
-  const open = releasedThrough > 0 ? 1 : 0;
-  const published = releasedThrough;
+  const available = releasedThrough;
   const pill = document.querySelector('#courseProgress');
-  if(pill) pill.textContent = `${published} / ${cfg.sessions.length} mission${published===1?'':'s'} published · ${open} current`;
+  if(pill) pill.textContent = available > 0 ? `${available} / ${cfg.sessions.length} mission${available===1?'':'s'} available · Mission ${available} current` : `No mission open yet`;
 })();

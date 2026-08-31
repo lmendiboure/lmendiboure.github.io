@@ -97,7 +97,7 @@
           <div class="mission-meta"><span>Campus mission</span><span>Design dossier</span></div>
           <h2 id="campusMissionTitle">Keep a distributed campus observable.</h2>
           <p>A university wants environmental measurements across several buildings and outdoor areas. The service must support <strong>historical analysis</strong> and <strong>alerts when conditions become abnormal</strong>.</p>
-          <div class="mission-role"><strong>Your role</strong><span>You are the systems-design team. Build a design you can justify, challenge and revise. Some information is intentionally missing: recognising what you still need to know is part of the mission.</span></div>
+          <div class="mission-role"><strong>Your role</strong><span>You are the systems-design team. Build a design you can justify, challenge and revise. Some information is still unknown: recognising what you need to know is part of the mission.</span></div>
         </div>
         <div class="campus-scene" role="img" aria-label="Physical campus context with several buildings, outdoor areas and distributed measurement points; no network architecture is shown">
           <div class="campus-building building-a"><span>Building A</span><i></i><i></i><i></i></div>
@@ -108,7 +108,7 @@
         </div>
         <div class="mission-dossier-grid">
           <section class="dossier-panel known"><span class="dossier-kicker">What we know</span><strong>Mission facts</strong><div class="dossier-list"><span><b>30</b> measurement points</span><span><b>4</b> signals: temperature · humidity · CO₂ · noise</span><span><b>Mixed</b> buildings + outdoor areas</span><span><b>2</b> outcomes: history + alerts</span></div></section>
-          <section class="dossier-panel unknown"><span class="dossier-kicker">Intentionally unknown</span><strong>Assumptions to uncover</strong><div class="dossier-list"><span>Exact placement and physical conditions</span><span>Available communication infrastructure</span><span>Device operating constraints</span><span>Detailed service timing and maintenance conditions</span></div></section>
+          <section class="dossier-panel unknown"><span class="dossier-kicker">Still unknown</span><strong>Assumptions to uncover</strong><div class="dossier-list"><span>Exact placement and physical conditions</span><span>Available communication infrastructure</span><span>Device operating constraints</span><span>Detailed service timing and maintenance conditions</span></div></section>
           <section class="dossier-panel job"><span class="dossier-kicker">Your job</span><strong>Design → justify → revise</strong><div class="dossier-list"><span>Build functions and information flows</span><span>Make requirements explicit</span><span>Choose communication solutions only when justified</span><span>Revise the design when assumptions change</span></div></section>
         </div>
       </section>
@@ -127,7 +127,7 @@
           <label><span class="label">Add a component</span><input id="componentInput" maxlength="70" autocomplete="off" placeholder="What does the system need?" /></label>
           <button class="btn primary" type="submit">Add component</button>
         </form>
-        <div class="quick-prompts"><span>Examples are intentionally hidden.</span><button id="componentHintBtn" class="text-button" type="button">Need a hint</button></div>
+        <div class="quick-prompts"><span>Start from the mission before opening examples.</span><button id="componentHintBtn" class="text-button" type="button">Need a hint</button></div>
         <div id="componentHint" class="micro-hint" hidden></div>
       </div>
 
@@ -185,7 +185,7 @@
       <div class="mission-context"><span class="mission-context-tag">Campus mission</span><strong>30 points · indoor + outdoor · 4 signals</strong><span>History and alerts are the service outcomes. Use your own architecture as evidence.</span></div>
       <div class="activity-intro">
         <h2>What actually matters for a communication link?</h2>
-        <p>First select every dimension that could materially change your design. Then, as a separate decision, star the <strong>three that dominate this scenario</strong>. There is deliberately no technology list yet.</p>
+        <p>First select every dimension that could materially change your design. Then, as a separate decision, star the <strong>three that dominate this scenario</strong>. Describe what matters before choosing any technology.</p>
       </div>
       <div id="requirementCards" class="choice-grid requirement-choice-grid"></div>
       <div class="selection-summary card flat">
@@ -253,7 +253,7 @@
       <div class="score-panel"><span>Investigated</span><strong id="mysteryScore" aria-live="polite">0 / 5</strong><small>Calibrate your confidence, not just your answer. A confident mistake is useful evidence.</small></div>
       <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Abstraction trap</strong><small>Now that the terms are defined, ask whether they even describe the same kind of thing.</small></span></summary><div id="layerTrap" class="go-further-body"></div></details>
 
-      <div class="library-section-head"><div><span class="eyebrow">Reference library</span><h3>Go from essential → architecture → technical vocabulary.</h3><p class="section-copy">The cards are grouped by the communication problem they usually address. Technical terms are deliberately one level deeper.</p></div></div>
+      <div class="library-section-head"><div><span class="eyebrow">Reference library</span><h3>Go from essential → architecture → technical vocabulary.</h3><p class="section-copy">The cards are grouped by the communication problem they usually address. Start with the essential idea; open the technical vocabulary when you need more precision.</p></div></div>
       <div class="tech-workspace">
         <div id="technologyLibrary" class="rich-tech-grid"></div>
         <div id="technologyPanel" class="card tech-panel"><div class="tech-empty-panel">Choose a technology card to inspect what the choice actually implies.</div></div>
@@ -277,7 +277,7 @@
       <div id="scenarioGrid" class="scenario-grid"></div>
       <section class="campus-checkpoint card flat">
         <div class="checkpoint-head"><div><span class="eyebrow">Mission checkpoint · back to campus</span><h3>Would you force one communication family onto every campus link?</h3></div><span class="checkpoint-mark">↩</span></div>
-        <p class="section-copy">Commit to a position, then identify the piece of information that would most change your answer. There is deliberately no single reference answer here.</p>
+        <p class="section-copy">Commit to a position, then identify the piece of information that would most change your answer. More than one position can be defensible if the assumptions and argument are explicit.</p>
         <div id="campusDecision" class="campus-decision"></div>
       </section>
       <div class="reflection-strip"><strong>Important:</strong><span>“Best” only means best among these candidates under the stated requirements.</span><span>Change one assumption and the answer may change.</span></div>
@@ -383,7 +383,7 @@
   <div id="fieldGuideContent" class="design-drawer-content"></div>
 </aside>
 
-<footer class="shell footer">Your work is stored only in this browser unless you export it. No account and no database are used.</footer>
+<footer class="shell footer">Progress is saved in this browser. Export it if you want to keep it or move it to another device.</footer>
 <script src="assets/student.js"></script>
 </body>
 </html>
