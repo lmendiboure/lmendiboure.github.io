@@ -79,7 +79,7 @@
     if (!host) return;
     const active = screenToStep[state.screen] ?? 0;
     host.innerHTML = stepLabels.map(([n,label], i) => `
-      <div class="step-dot ${i < active ? 'done' : ''} ${i === active ? 'active' : ''}">
+      <div class="step-dot ${i < active ? 'done' : ''} ${i === active ? 'active' : ''}" ${i === active ? 'aria-current="step"' : ''}>
         <span>${i < active ? '✓' : n}</span><small>${label}</small>
       </div>`).join('');
   }

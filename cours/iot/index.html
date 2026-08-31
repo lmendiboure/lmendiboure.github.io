@@ -3,21 +3,318 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IoT Systems Design — Session 1</title>
+  <meta name="description" content="Interactive student workspace for IoT Systems Design — Session 1" />
+  <title>Student Workspace — IoT Systems Design</title>
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
-<body>
-<main>
-  <section class="shell teacher-hero">
-    <div class="brand" style="margin-bottom:28px"><div class="brand-mark">IoT</div><div><div class="brand-title">Systems Design</div><div class="brand-sub">Session 1</div></div></div>
-    <div class="eyebrow">Interactive course workspace</div>
-    <h1>From the IoT landscape<br/>to one architecture</h1>
-    <p class="lead">Explore the domain, design one system, expose its requirements, then choose and challenge technologies.</p>
-    <div class="deep-question-grid" style="margin-top:28px">
-      <a class="card" href="student.html" style="text-decoration:none"><div class="eyebrow">Student</div><h2 style="margin-top:4px">Open workspace →</h2><p class="section-copy">Cross-domain mapping, architecture canvas, seven optional Expert rounds, discussion snapshots, local autosave, and a mobile-generated design view.</p></a>
-      <a class="card" href="teacher.html" style="text-decoration:none"><div class="eyebrow">Teacher</div><h2 style="margin-top:4px">Open guide →</h2><p class="section-copy">Student task, expected output, and discussion points for each stop.</p></a>
+<body class="student-page">
+<a class="skip-link" href="#mainContent">Skip to main content</a>
+<header class="topbar no-print">
+  <div class="shell topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">IoT</div>
+      <div><div class="brand-title">Systems Design</div><div class="brand-sub">Session 1 · Student workspace</div></div>
     </div>
+    <div class="actions">
+      <button id="designBtn" class="btn design-btn" type="button">Our design</button><span id="expertProgress" class="expert-progress" title="Optional expert rounds explored" role="status" aria-live="polite">Expert trail 0/7</span>
+      <span id="saveState" class="save-pill" role="status" aria-live="polite">Saved on this device</span>
+      <button id="exportBtn" class="btn optional" type="button">Export</button>
+      <label class="btn optional" for="importInput" style="cursor:pointer">Import</label>
+      <input id="importInput" type="file" accept="application/json,.json" hidden />
+      <button id="resetBtn" class="btn optional danger" type="button">Reset</button>
+    </div>
+  </div>
+</header>
+
+<main id="mainContent" class="activity-app">
+  <section class="shell hero activity-hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">IoT Systems Design · Session 1</div>
+        <h1>One label.<br/>Many worlds.</h1>
+        <p class="lead">IoT systems appear in homes, factories, farms, cities, vehicles, energy networks and far beyond. Your first task is to map that landscape before designing one system in depth.</p>
+        <div class="hero-rule"><span></span><p><strong>Question:</strong> what can such different systems actually have in common?</p></div>
+      </div>
+      <div class="hero-landscape" role="img" aria-label="IoT systems spanning home, health, industry, agriculture, mobility, energy, cities and environment">
+        <span class="hero-world hw-home">⌂ <b>Home</b></span>
+        <span class="hero-world hw-industry">⚙ <b>Industry</b></span>
+        <span class="hero-world hw-health">♥ <b>Health</b></span>
+        <span class="hero-world hw-mobility">➜ <b>Mobility</b></span>
+        <span class="hero-world hw-agri">♧ <b>Agriculture</b></span>
+        <span class="hero-world hw-energy">ϟ <b>Energy</b></span>
+        <span class="hero-world hw-city">▦ <b>Cities</b></span>
+        <span class="hero-world hw-env">◌ <b>Environment</b></span>
+        <div class="hero-iot-core"><strong>IoT</strong><small>systems</small></div>
+        <div class="hero-visual-note">Different physical worlds. Shared systems questions.</div>
+      </div>
+    </div>
+    <div class="stepper" id="stepper" aria-label="Session progression"></div>
   </section>
+
+  <div class="shell activity-stage">
+
+    <!-- ACTIVITY 1 -->
+    <section class="activity-screen" data-screen="0">
+      <div class="activity-label"><span>Activity 1</span><span class="pill-neutral">Map the IoT landscape</span></div>
+      <div class="activity-intro landscape-intro">
+        <h2>Which world does each system belong to?</h2>
+        <p>Choose one <strong>main domain</strong> for each case and, only when it adds something meaningful, one <strong>secondary domain</strong>. These cases are deliberately ambiguous. Use your current intuition — no searching yet.</p>
+      </div>
+
+      <div class="landscape-summary card flat">
+        <div><span class="landscape-kicker">Your map</span><strong id="landscapeProgress" aria-live="polite">0 / 8 systems mapped</strong></div>
+        <div class="landscape-domain-preview" id="landscapeDomainPreview"></div>
+      </div>
+
+      <div id="useCaseGrid" class="usecase-grid" aria-label="Potential IoT systems"></div>
+
+      <div class="reflection-strip">
+        <strong>Look for boundaries:</strong>
+        <span>Why did you choose one domain as primary?</span><span>Where did your group hesitate?</span><span>Would these systems really have the same constraints?</span>
+      </div>
+      <details class="go-further" id="goFurtherLandscape"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Borderline IoT</strong><small>Where does “IoT” stop?</small></span></summary><div id="borderlineChallenge" class="go-further-body"></div></details>
+      <button id="landscapeNext" class="btn primary next-activity" data-next="1" type="button" disabled>Map complete → STOP</button>
+    </section>
+
+    <!-- STOP 1 -->
+    <section class="activity-screen" data-screen="1" hidden>
+      <div class="stop-screen">
+        <div class="stop-orbit">STOP</div>
+        <div class="eyebrow">Class discussion</div>
+        <h2>Use your map to discuss.</h2>
+        <p>Use your own map below during the discussion. Your teacher will then compare it with a broader landscape.</p>
+        <div id="stopLandscapeSnapshot" class="stop-snapshot"></div>
+        <button class="text-button review-activity" data-review-screen="0" type="button">← Review / edit our map</button>
+        <div class="student-stop-question"><span>Discuss this:</span><strong>If these systems live in such different environments, what could possibly make them part of the same field?</strong></div>
+        <button class="btn primary next-activity" data-next="2" type="button">Teacher says continue →</button>
+      </div>
+    </section>
+
+    <!-- ACTIVITY 2 -->
+    <section class="activity-screen" data-screen="2" hidden>
+      <div class="activity-label"><span>Activity 2</span><span class="pill-neutral">Design one system</span></div>
+      <div class="challenge-card">
+        <div>
+          <div class="eyebrow">Campus environmental monitoring</div>
+          <h2>What must exist for the service to work end to end?</h2>
+          <p class="section-copy">A university wants to observe environmental conditions across several buildings and outdoor areas. Measurements support historical analysis and alerts when abnormal conditions occur.</p>
+        </div>
+        <div class="scenario-facts">
+          <div><span class="fact-icon">◉</span><strong>30</strong><small>measurement points</small></div>
+          <div><span class="fact-icon">≋</span><strong>4</strong><small>measurement types</small></div>
+          <div><span class="fact-icon">↯</span><strong>2</strong><small>uses: history + alerts</small></div>
+        </div>
+      </div>
+
+      <div class="activity-intro">
+        <h3>Build architecture v1 from a blank canvas</h3>
+        <p>Invent the components yourself. Name <strong>roles or functions</strong>, not products or protocols. Then describe what information flows between them.</p>
+      </div>
+
+      <div class="card flat component-entry">
+        <form id="componentForm" class="form-row">
+          <label><span class="label">Add a component</span><input id="componentInput" maxlength="70" autocomplete="off" placeholder="What does the system need?" /></label>
+          <button class="btn primary" type="submit">Add component</button>
+        </form>
+        <div class="quick-prompts"><span>Examples are intentionally hidden.</span><button id="componentHintBtn" class="text-button" type="button">Need a hint</button></div>
+        <div id="componentHint" class="micro-hint" hidden></div>
+      </div>
+
+      <div class="card desktop-only architecture-card">
+        <div class="section-head"><div><h3>Architecture canvas</h3><p class="section-copy">Drag components. Arrows appear when you add information flows.</p></div><button id="clearArchitecture" class="btn ghost" type="button">Clear canvas</button></div>
+        <div class="canvas-wrap"><div id="canvas" class="canvas"><svg id="flowSvg" class="flow-svg" aria-hidden="true"></svg><div id="canvasEmpty" class="canvas-empty">Blank on purpose.<br/>You decide what belongs here.</div></div></div>
+      </div>
+
+      <div class="card phone-only architecture-card">
+        <h3>Architecture · phone view</h3>
+        <p class="section-copy">The graph is generated automatically from your components and information flows. You do not need precise drag-and-drop on a phone.</p>
+        <div id="mobileGraph" class="mobile-graph"><p class="empty-copy">Add components and flows to generate the graph.</p></div>
+        <details class="mobile-edit"><summary>Edit / reorder components</summary><div id="mobileComponents" class="mobile-components"></div></details>
+      </div>
+
+      <div class="card flat flow-builder">
+        <div class="flow-heading"><div><h3>Connect the components</h3><p class="section-copy">Write <em>what</em> is exchanged, not the protocol used.</p></div><span class="mini-example">measurement · alert · command · configuration</span></div>
+        <div class="flow-form">
+          <select id="flowFrom" aria-label="Flow source"><option value="">From…</option></select>
+          <select id="flowTo" aria-label="Flow destination"><option value="">To…</option></select>
+          <input id="flowLabel" class="flow-label" maxlength="70" placeholder="What is exchanged?" />
+          <button id="addFlow" class="btn flow-button" type="button">Add flow</button>
+        </div>
+        <div id="flowList" class="list"></div>
+      </div>
+
+      <div class="reflection-strip">
+        <strong>Before you stop:</strong>
+        <span>Can you point to where data is created?</span><span>Where can it be stored?</span><span>Who ultimately uses it?</span>
+      </div>
+      <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Red-team the architecture</strong><small>Remove one component and inspect the damage.</small></span></summary><div id="architectureChallenge" class="go-further-body"></div></details>
+      <button class="btn primary next-activity" data-next="3" type="button">Architecture ready → STOP</button>
+    </section>
+
+    <!-- STOP 2 -->
+    <section class="activity-screen" data-screen="3" hidden>
+      <div class="stop-screen">
+        <div class="stop-orbit">STOP</div>
+        <div class="eyebrow">Class discussion</div>
+        <h2>Use your architecture to discuss.</h2>
+        <p>Your architecture is reproduced below so the group can point to concrete choices during discussion.</p>
+        <div id="stopArchitectureSnapshot" class="stop-snapshot"></div>
+        <button class="text-button review-activity" data-review-screen="2" type="button">← Review / edit our architecture</button>
+        <div class="student-stop-question"><span>Discuss this:</span><strong>Did you draw components, functions, technologies — or a mixture of all three?</strong></div>
+        <button class="btn primary next-activity" data-next="4" type="button">Teacher says continue →</button>
+      </div>
+    </section>
+
+    <!-- ACTIVITY 3 -->
+    <section class="activity-screen" data-screen="4" hidden>
+      <div class="activity-label"><span>Activity 3</span><span class="pill-neutral">Expose the constraints</span></div>
+      <div class="activity-intro">
+        <h2>What actually matters for a communication link?</h2>
+        <p>First select every dimension that could materially change your design. Then, as a separate decision, star the <strong>three that dominate this scenario</strong>. There is deliberately no technology list yet.</p>
+      </div>
+      <div id="requirementCards" class="choice-grid requirement-choice-grid"></div>
+      <div class="selection-summary card flat">
+        <div><strong>Your shortlist</strong><p class="section-copy">Step 1: select relevant dimensions. Step 2: use the stars below to choose exactly three priorities.</p></div>
+        <div id="requirementSummary" class="chip-row"></div>
+      </div>
+      <details class="help-compact"><summary>We are not sure what a “requirement” means here</summary><p>Choose one arrow in your architecture. Ask what would make that communication fail to satisfy the application: too far, too slow, too much data, too much energy, too many devices, no infrastructure, and so on.</p></details>
+      <div class="reflection-strip"><strong>Before you stop:</strong><span>Look back at one arrow in your architecture. Would the same top three requirements apply to every other arrow?</span></div>
+      <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Flow lens</strong><small>Do two arrows in your architecture really have the same constraints?</small></span></summary><div id="flowLens" class="go-further-body"></div></details>
+      <button id="toStop2" class="btn primary next-activity" data-next="5" type="button">Requirements ready → STOP</button>
+    </section>
+
+    <!-- STOP 3 -->
+    <section class="activity-screen" data-screen="5" hidden>
+      <div class="stop-screen">
+        <div class="stop-orbit">STOP</div>
+        <div class="eyebrow">Class discussion</div>
+        <h2>Use your priorities to discuss.</h2>
+        <p>Your selected dimensions and priorities are shown below. Use them as evidence rather than relying on memory.</p>
+        <div id="stopRequirementsSnapshot" class="stop-snapshot"></div>
+        <button class="text-button review-activity" data-review-screen="4" type="button">← Review / edit our requirements</button>
+        <div class="student-stop-question"><span>Discuss this:</span><strong>Can two communication flows in the same IoT system legitimately have different requirements?</strong></div>
+        <div class="concept-reveal" id="referenceRequirementReveal">
+          <button id="revealRequirementVocabulary" class="btn soft" type="button">After the discussion: reveal the reference dimensions</button>
+          <div id="referenceRequirementGrid" class="reference-grid" hidden></div>
+        </div>
+        <button class="btn primary next-activity" data-next="6" type="button">Teacher says continue →</button>
+      </div>
+    </section>
+
+    <!-- ACTIVITY 4 -->
+    <section class="activity-screen" data-screen="6" hidden>
+      <div class="activity-label"><span>Activity 4</span><span class="pill-neutral">Technology detective</span></div>
+      <div class="activity-intro">
+        <h2>Can you identify a technology from its design choices?</h2>
+        <p>Each mystery starts with one clue. You may commit immediately or reveal more clues first. The objective is to infer from architecture and constraints, not to win by elimination.</p>
+      </div>
+      <div id="mysteryGrid" class="mystery-grid"></div>
+      <div class="score-panel"><span>Identified</span><strong id="mysteryScore" aria-live="polite">0 / 5</strong><small>Calibrate your confidence, not just your answer. A confident mistake is useful evidence.</small></div>
+      <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Layer trap</strong><small>Familiar terms — but are they even comparable?</small></span></summary><div id="layerTrap" class="go-further-body"></div></details>
+      <button class="btn primary next-activity" data-next="7" type="button">Open the technology library →</button>
+    </section>
+
+    <!-- ACTIVITY 5 -->
+    <section class="activity-screen" data-screen="7" hidden>
+      <div class="activity-label"><span>Activity 5</span><span class="pill-neutral">Look behind the name</span></div>
+      <div class="activity-intro">
+        <h2>A communication technology also implies an architecture.</h2>
+        <p>Open a card when you need it. On a laptop the detail stays beside the library; on a phone it opens as a focused sheet. Go deeper only when useful, and use the official links to verify claims.</p>
+      </div>
+      <div class="tech-workspace">
+        <div id="technologyLibrary" class="tech-grid rich-tech-grid"></div>
+        <div id="technologyPanel" class="card tech-panel"><div class="tech-empty-panel">Choose a technology card to inspect the network behind the name.</div></div>
+      </div>
+      <details class="go-further tech-compare-challenge"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Technology duel</strong><small>Force a side-by-side comparison, then inspect the satellite/NTN question.</small></span></summary><div id="technologyCompare" class="go-further-body"></div></details>
+
+      <div class="concept-banner">
+        <div class="concept-icon">≠</div><div><strong>Do not put all these words at the same level.</strong><p>Wi-Fi, IEEE 802.15.4, LoRaWAN, NB-IoT and satellite do not all describe the same layer or type of system.</p></div>
+      </div>
+      <button class="btn primary next-activity" data-next="8" type="button">Test the technologies on real situations →</button>
+    </section>
+
+    <!-- ACTIVITY 6 -->
+    <section class="activity-screen" data-screen="8" hidden>
+      <div class="activity-label"><span>Activity 6</span><span class="pill-neutral">Choose under constraints</span></div>
+      <div class="activity-intro">
+        <h2>Which candidate is the best fit <em>given these assumptions</em>?</h2>
+        <p>There may be several feasible solutions. Choose one, <strong>commit your answer</strong>, then reveal the reasoning. Afterwards, change one assumption and ask whether your decision survives.</p>
+      </div>
+      <div id="scenarioGrid" class="scenario-grid"></div>
+      <div class="reflection-strip"><strong>Important:</strong><span>“Best” only means best among these candidates under the stated requirements.</span><span>Change one assumption and the answer may change.</span></div>
+      <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Refuse to guess</strong><small>Sometimes the correct engineering move is to refuse a premature choice.</small></span></summary><div id="missingInfoChallenge" class="go-further-body"></div></details>
+      <button class="btn primary next-activity" data-next="9" type="button">Decisions ready → STOP</button>
+    </section>
+
+    <!-- STOP 4 -->
+    <section class="activity-screen" data-screen="9" hidden>
+      <div class="stop-screen">
+        <div class="stop-orbit">STOP</div>
+        <div class="eyebrow">Technology hearing</div>
+        <h2>Use your decisions to defend a validity domain.</h2>
+        <p>Your detective results and deployment decisions are summarised below. Use them when defending your reasoning.</p>
+        <div id="stopTechnologySnapshot" class="stop-snapshot"></div>
+        <button class="text-button review-activity" data-review-screen="8" type="button">← Review our deployment decisions</button>
+        <div class="student-stop-question"><span>Discuss this:</span><strong>When you choose a communication technology, what else have you implicitly chosen about the network?</strong></div>
+        <button class="btn primary next-activity" data-next="10" type="button">Teacher says continue →</button>
+      </div>
+    </section>
+
+    <!-- ACTIVITY 7 -->
+    <section class="activity-screen" data-screen="10" hidden>
+      <div class="activity-label"><span>Activity 7</span><span class="pill-neutral">Break your design</span></div>
+      <div class="activity-intro">
+        <h2>Your architecture was correct only under assumptions.</h2>
+        <p>Pick a change. Identify what breaks, which requirement moves, and what kind of architectural response becomes plausible.</p>
+      </div>
+      <div id="stressGrid" class="event-grid rich-events"></div>
+      <div id="stressResponse" class="stress-response card flat" hidden>
+        <div class="stress-prompt"><span class="stress-number">1</span><div><strong>Broken assumption</strong><p id="brokenPrompt"></p></div></div>
+        <div class="stress-prompt"><span class="stress-number">2</span><div><strong>Requirement that changes</strong><div id="stressRequirementChoices" class="chip-row"></div></div></div>
+        <div class="stress-prompt"><span class="stress-number">3</span><div><strong>Architectural response</strong><div id="architectureResponseChoices" class="choice-grid compact-choice-grid"></div></div></div>
+        <label class="optional-note"><span>Optional note — what would you redraw?</span><textarea id="revisionNote" maxlength="300" placeholder="One short sentence is enough."></textarea></label>
+      </div>
+      <details class="go-further"><summary><span class="challenge-mark">＋</span><span><strong>Expert round · Compound failure</strong><small>Your system rarely gets only one surprise at a time.</small></span></summary><div id="doubleFailureChallenge" class="go-further-body"></div></details>
+      <button class="btn primary next-activity" data-next="11" type="button">Finish session →</button>
+    </section>
+
+    <!-- FINISH -->
+    <section class="activity-screen" data-screen="11" hidden>
+      <div class="finish-card">
+        <div class="finish-mark">✓</div>
+        <div class="eyebrow">Session complete</div>
+        <h2>The technology choice came last.</h2>
+        <p class="lead">Need → functions → architecture → flows → requirements → candidate technologies → challenge → revision.</p>
+        <div class="takeaway-grid">
+          <div><strong>Architecture</strong><span>is not a list of products.</span></div>
+          <div><strong>Requirements</strong><span>must be explicit before comparison.</span></div>
+          <div><strong>Technology</strong><span>implies infrastructure and trade-offs.</span></div>
+          <div><strong>Design</strong><span>changes when assumptions change.</span></div>
+        </div>
+        <div id="expertFinish" class="expert-finish"></div><div class="finish-actions"><button id="finishExport" class="btn primary" type="button">Export my session</button><button id="reviewSession" class="btn" type="button">Review previous activities</button></div>
+      </div>
+    </section>
+  </div>
 </main>
+
+<div id="domainPickerScrim" class="domain-picker-scrim" hidden></div>
+<div id="domainPicker" class="domain-picker" role="dialog" aria-modal="true" aria-labelledby="domainPickerTitle" aria-hidden="true">
+  <div class="domain-picker-head">
+    <div><div class="eyebrow">Map the system</div><h2 id="domainPickerTitle">Choose domains</h2></div>
+    <button id="closeDomainPicker" class="icon-button drawer-close" type="button" aria-label="Close domain picker">×</button>
+  </div>
+  <p id="domainPickerCopy" class="section-copy"></p>
+  <div id="domainPickerChoices" class="domain-picker-grid"></div>
+  <div class="domain-picker-foot"><span id="domainPickerHint">Choose a primary domain.</span><button id="doneDomainPicker" class="btn primary" type="button">Done</button></div>
+</div>
+
+<div id="designScrim" class="design-scrim" hidden></div>
+<aside id="designDrawer" class="design-drawer" aria-hidden="true" aria-label="Our design summary">
+  <div class="design-drawer-head"><div><div class="eyebrow">Persistent workspace</div><h2>Our design</h2></div><button id="closeDesign" class="icon-button drawer-close" type="button" aria-label="Close design panel">×</button></div>
+  <div id="designDrawerContent" class="design-drawer-content"></div>
+</aside>
+
+<footer class="shell footer">Your work is stored only in this browser unless you export it. No account and no database are used.</footer>
+<script src="assets/student.js"></script>
 </body>
 </html>
