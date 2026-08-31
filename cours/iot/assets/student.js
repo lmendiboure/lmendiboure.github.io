@@ -6,6 +6,7 @@
   const defaultState = {
     version: 10,
     screen: 0,
+    maxUnlockedScreen: 0,
     conceptUnlocks: {},
     stopChallenges: {},
     architectureV1: null,
@@ -113,6 +114,7 @@
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) state = {...structuredClone(defaultState), ...JSON.parse(saved)};
+      state.maxUnlockedScreen = Math.max(Number(state.maxUnlockedScreen)||0, Number(state.screen)||0);
       nextComponentId = Math.max(1, ...state.components.map(c => Number(c.id) || 0)) + 1;
     } catch (_) {}
   }
@@ -137,33 +139,66 @@
     ['1','Landscape'], ['2','Architecture'], ['3','Requirements'], ['4','Discover'], ['5','Investigate'], ['6','Choose'], ['7','Stress-test']
   ];
   const screenToStep = [0,0,1,1,2,2,3,4,5,5,6,6];
+  const stepEntryScreens = [0,2,4,6,7,8,10];
 
   function renderStepper() {
     const host = $('#stepper');
     if (!host) return;
-    const active = screenToStep[state.screen] ?? 0;
-    host.innerHTML = stepLabels.map(([n,label], i) => `
-      <div class="step-dot ${i < active ? 'done' : ''} ${i === active ? 'active' : ''}" ${i === active ? 'aria-current="step"' : ''}>
-        <span>${i < active ? '✓' : n}</span><small>${label}</small>
-      </div>`).join('');
+    const viewedStep = screenToStep[state.screen] ?? 0;
+    const frontierScreen = Math.max(Number(state.maxUnlockedScreen)||0, Number(state.screen)||0);
+    const frontierStep = screenToStep[frontierScreen] ?? 0;
+    host.innerHTML = stepLabels.map(([n,label], i) => {
+      const unlocked = stepEntryScreens[i] <= frontierScreen;
+      const isViewed = i === viewedStep;
+      const isFrontier = i === frontierStep;
+      const cls = [
+        'step-dot',
+        !unlocked ? 'locked' : '',
+        unlocked && i < frontierStep && !isViewed ? 'done' : '',
+        isViewed && state.screen < frontierScreen ? 'reviewing' : '',
+        isViewed && state.screen === frontierScreen ? 'active' : '',
+        isFrontier && state.screen < frontierScreen ? 'frontier' : ''
+      ].filter(Boolean).join(' ');
+      const status = !unlocked ? 'locked' : (isViewed && state.screen < frontierScreen ? 'reviewing' : (isFrontier ? 'current mission' : 'completed'));
+      return `<button type="button" class="${cls}" data-step-target="${stepEntryScreens[i]}" ${unlocked?'':'disabled'} ${isViewed?'aria-current="step"':''} aria-label="${label}: ${status}">
+        <span>${unlocked && i < frontierStep ? '✓' : n}</span><small>${label}</small>
+      </button>`;
+    }).join('');
+    host.querySelectorAll('[data-step-target]:not(:disabled)').forEach(b=>b.addEventListener('click',()=>showScreen(+b.dataset.stepTarget)));
   }
 
-  function showScreen(index, {scroll = true} = {}) {
+  function renderHistoryNav(){
+    const host=$('#historyNav'); if(!host)return;
+    const frontier=Math.max(Number(state.maxUnlockedScreen)||0,Number(state.screen)||0);
+    const reviewing=state.screen<frontier;
+    if(state.screen===0 && frontier===0){host.hidden=true;host.innerHTML='';return;}
+    host.hidden=false;
+    const previous=state.screen>0?`<button type="button" class="btn ghost history-previous" data-history-target="${state.screen-1}">← Previous</button>`:'<span></span>';
+    host.innerHTML=`${previous}<div class="history-status ${reviewing?'reviewing':''}"><strong>${reviewing?'Review mode':'Current mission'}</strong><span>${reviewing?'You are revisiting work already completed. Future information stays gated.':'You are at the furthest point currently unlocked.'}</span></div>${reviewing?`<button type="button" class="btn soft history-return" data-history-target="${frontier}">Return to current mission →</button>`:'<span></span>'}`;
+    host.querySelectorAll('[data-history-target]').forEach(b=>b.addEventListener('click',()=>showScreen(+b.dataset.historyTarget)));
+  }
+
+  function showScreen(index, {scroll = true, unlock = false} = {}) {
     index = Math.max(0, Math.min(11, Number(index) || 0));
+    const frontier=Math.max(Number(state.maxUnlockedScreen)||0,Number(state.screen)||0);
+    if(index>frontier && !unlock){flashMessage('That stage is still locked. Continue from your current mission first.');return false;}
     const previousScreen=state.screen;
     if(previousScreen===3 && index===4 && !state.architectureV1){captureArchitectureV1();}
+    if(unlock && index>frontier) state.maxUnlockedScreen=index;
+    else state.maxUnlockedScreen=frontier;
     state.screen = index;
     $$('.activity-screen').forEach(s => { s.hidden = Number(s.dataset.screen) !== index; });
-    renderStepper();
+    renderStepper(); renderHistoryNav();
     document.body.classList.toggle('past-intro', index > 0);
     const designButton = $('#designBtn');
     if (designButton) designButton.hidden = index < 2;
-    renderDesignDrawer(); renderStopSnapshots(); renderStopRitual(); renderFieldGuide(); renderRevisionStudio(); renderDesignEvolution();
+    renderArchitecture(); renderDesignDrawer(); renderStopSnapshots(); renderStopRitual(); renderFieldGuide(); renderRevisionStudio(); renderDesignEvolution();
     saveState();
     if (scroll) window.scrollTo({top: 0, behavior: 'smooth'});
+    return true;
   }
 
-  $$('.next-activity').forEach(btn => btn.addEventListener('click', () => showScreen(btn.dataset.next)));
+  $$('.next-activity').forEach(btn => btn.addEventListener('click', () => showScreen(btn.dataset.next,{unlock:true})));
 
   /* ---------- IoT landscape ---------- */
   const landscapeDomains = [
@@ -274,7 +309,11 @@
   const flowFrom = $('#flowFrom');
   const flowTo = $('#flowTo');
 
+  function architectureIsFrozen(){ return !!state.architectureV1; }
+
   function addComponent(name) {
+    if(architectureIsFrozen()){flashMessage('Architecture v1 is frozen. Revisions belong in Architecture v2 after the incident.');return;}
+
     name = name.trim();
     if (!name) return;
     const i = state.components.length;
@@ -284,6 +323,7 @@
   }
 
   function removeComponent(id) {
+    if(architectureIsFrozen()){flashMessage('Architecture v1 is frozen. Review it here; revise it later as v2.');return;}
     state.components = state.components.filter(c => c.id !== id);
     state.flows = state.flows.filter(f => f.from !== id && f.to !== id);
     saveState();
@@ -292,6 +332,9 @@
 
   function renderArchitecture() {
     if (!canvas) return;
+    const frozen=architectureIsFrozen();
+    const frozenNotice=$('#architectureFrozenNotice'); if(frozenNotice) frozenNotice.hidden=!frozen;
+    const activity=$('[data-screen="2"]'); if(activity) activity.classList.toggle('architecture-frozen',frozen);
     canvas.querySelectorAll('.arch-node').forEach(n => n.remove());
     $('#canvasEmpty').hidden = state.components.length > 0;
 
@@ -301,12 +344,13 @@
       node.dataset.id = c.id;
       node.style.left = `${Number.isFinite(c.x) ? c.x : 30 + (index % 4) * 190}px`;
       node.style.top = `${Number.isFinite(c.y) ? c.y : 35 + Math.floor(index / 4) * 120}px`;
-      node.innerHTML = `<div class="arch-node-top"><span class="node-type-dot"></span><span class="arch-node-name">${esc(c.name)}</span><button class="icon-button remove-node" type="button" aria-label="Remove ${esc(c.name)}">×</button></div>`;
+      node.innerHTML = `<div class="arch-node-top"><span class="node-type-dot"></span><span class="arch-node-name">${esc(c.name)}</span>${frozen?'':'<button class="icon-button remove-node" type="button" aria-label="Remove '+esc(c.name)+'">×</button>'}</div>`;
       canvas.appendChild(node);
-      node.querySelector('.remove-node').addEventListener('click', e => { e.stopPropagation(); removeComponent(c.id); });
+      node.querySelector('.remove-node')?.addEventListener('click', e => { e.stopPropagation(); removeComponent(c.id); });
 
       let drag = null;
       node.addEventListener('pointerdown', e => {
+        if (frozen) return;
         if (e.target.closest('button')) return;
         const nr = node.getBoundingClientRect();
         const cr = canvas.getBoundingClientRect();
@@ -339,6 +383,9 @@
     renderMobileGraph();
     renderFlowSelectors();
     renderFlowList();
+    const lockIds=['componentInput','flowFrom','flowTo','flowLabel','addFlow','clearArchitecture'];
+    lockIds.forEach(id=>{const el=$('#'+id);if(el)el.disabled=frozen;});
+    const componentSubmit=$('#componentForm button[type="submit"]');if(componentSubmit)componentSubmit.disabled=frozen;
     requestAnimationFrame(drawFlows);
     renderDesignDrawer();
     renderArchitectureChallenge(); renderFlowLens(); renderStopSnapshots();
@@ -348,6 +395,7 @@
     const host = $('#mobileComponents');
     if (!host) return;
     if (!state.components.length) { host.innerHTML = '<p class="empty-copy">No components yet.</p>'; return; }
+    if(architectureIsFrozen()){host.innerHTML=state.components.map(c=>`<div class="mobile-node frozen"><span>${esc(c.name)}</span><small>v1</small></div>`).join('');return;}
     host.innerHTML = state.components.map((c,i) => `<div class="mobile-node"><span>${esc(c.name)}</span><div class="mobile-tools"><button class="icon-button mobile-up" data-i="${i}" type="button">↑</button><button class="icon-button mobile-down" data-i="${i}" type="button">↓</button><button class="icon-button mobile-remove" data-id="${c.id}" type="button">×</button></div></div>`).join('');
     host.querySelectorAll('.mobile-up').forEach(b => b.addEventListener('click', () => { const i=+b.dataset.i; if(i>0){[state.components[i-1],state.components[i]]=[state.components[i],state.components[i-1]]; saveState(); renderArchitecture();}}));
     host.querySelectorAll('.mobile-down').forEach(b => b.addEventListener('click', () => { const i=+b.dataset.i; if(i<state.components.length-1){[state.components[i+1],state.components[i]]=[state.components[i],state.components[i+1]]; saveState(); renderArchitecture();}}));
@@ -398,11 +446,12 @@
 
   $('#componentForm').addEventListener('submit', e => {e.preventDefault(); addComponent(componentInput.value); componentInput.value=''; componentInput.focus();});
   $('#addFlow').addEventListener('click', () => {
+    if(architectureIsFrozen()){flashMessage('Architecture v1 is frozen. Revisions belong in v2.');return;}
     const from=+flowFrom.value, to=+flowTo.value, label=$('#flowLabel').value.trim();
     if (!from || !to || from===to) return;
     state.flows.push({from,to,label}); $('#flowLabel').value=''; saveState(); renderArchitecture();
   });
-  $('#clearArchitecture').addEventListener('click', () => { if(confirm('Clear the current architecture?')){state.components=[];state.flows=[];saveState();renderArchitecture();}});
+  $('#clearArchitecture').addEventListener('click', () => { if(architectureIsFrozen()){flashMessage('Architecture v1 is frozen.');return;} if(confirm('Clear the current architecture?')){state.components=[];state.flows=[];saveState();renderArchitecture();}});
   window.addEventListener('resize', drawFlows);
 
   const componentHints = [
@@ -864,7 +913,7 @@
   $('#importInput').addEventListener('change', e=>{
     const file=e.target.files?.[0]; if(!file)return;
     const reader=new FileReader();
-    reader.onload=()=>{try{const parsed=JSON.parse(reader.result);const candidate=parsed.data||parsed;if(!Array.isArray(candidate.components)||!Array.isArray(candidate.flows))throw new Error();state={...structuredClone(defaultState),...candidate};nextComponentId=Math.max(1,...state.components.map(c=>+c.id||0))+1;saveState();renderAll();showScreen(state.screen,{scroll:false});}catch(_){alert('This is not a valid Session 1 export.');}};
+    reader.onload=()=>{try{const parsed=JSON.parse(reader.result);const candidate=parsed.data||parsed;if(!Array.isArray(candidate.components)||!Array.isArray(candidate.flows))throw new Error();state={...structuredClone(defaultState),...candidate};state.maxUnlockedScreen=Math.max(Number(state.maxUnlockedScreen)||0,Number(state.screen)||0);nextComponentId=Math.max(1,...state.components.map(c=>+c.id||0))+1;saveState();renderAll();showScreen(state.screen,{scroll:false});}catch(_){alert('This is not a valid Session 1 export.');}};
     reader.readAsText(file); e.target.value='';
   });
   $('#resetBtn').addEventListener('click',()=>{if(!confirm('Reset all work stored for this session on this device?'))return;state=structuredClone(defaultState);nextComponentId=1;saveState();renderAll();showScreen(0);});
@@ -887,7 +936,7 @@
     renderCampusDecision();
     renderStress();
     renderBorderlineChallenge(); renderArchitectureChallenge(); renderFlowLens(); renderLayerTrap(); renderTechnologyCompare(); renderMissingInfoChallenge(); renderDoubleFailure(); renderStopSnapshots(); renderExpertProgress(); renderMemoryLock(); renderStopRitual(); renderFieldGuide(); renderRevisionStudio(); renderDesignEvolution();
-    renderStepper();
+    renderStepper(); renderHistoryNav();
   }
 
   loadState();

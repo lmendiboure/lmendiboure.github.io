@@ -44,3 +44,11 @@ This makes the central learning claim observable:
 ## Research basis
 
 See `LEARNING-DESIGN-PATTERN.md` for the evidence synthesis and reusable authoring checklist.
+
+## Navigation rule added in V10.1
+
+The session now separates the **learning frontier** from the **screen currently viewed**. Students may revisit any already unlocked stage, while future stages remain gated. A visible Review mode and one-click return to the current mission reduce disorientation. Historically meaningful commitments are preserved: architecture v1 becomes read-only after STOP 2, while later changes are represented as v2.
+
+This is intentionally **structured learner control**, not unrestricted hypermedia navigation. Reviews of learner control report mixed or near-zero average effects and warn that additional navigation choices can increase metacognitive/cognitive demands, especially when learners lack prior knowledge. The design therefore gives students review freedom but not freedom to expose future concepts or silently rewrite committed artifacts.
+
+Relevant sources: Scheiter & Gerjets (2007), *Educational Psychology Review*; Karich, Burns & Maki (2014), *Review of Educational Research*.

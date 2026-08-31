@@ -31,3 +31,13 @@ The student path is discovery-first:
 At each classroom STOP, the interface follows **LOOK → COMPARE → CHALLENGE → UNLOCK**. Formal concepts are collected in a persistent Field Guide only after discussion.
 
 There is deliberately **no class STOP between technology discovery and the detective**. The page provides the minimum scaffold itself, so a teacher-led correction cannot reveal answers to the next activity.
+
+## Navigation model
+
+The session uses **soft linearity**:
+
+- future stages remain locked until reached normally;
+- every already-unlocked stage can be revisited from the progression bar;
+- review mode is explicit and provides a one-click return to the current mission;
+- meaningful commitments are preserved rather than silently rewritten;
+- in particular, Architecture v1 becomes read-only after STOP 2 and later structural change is recorded as Architecture v2.

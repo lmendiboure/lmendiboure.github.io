@@ -138,10 +138,30 @@ An Expert round should add a harder decision, contradiction or edge case.
 
 Avoid “read this longer technical paragraph” as the main differentiation mechanism.
 
-### H. Learning should alter an artifact
+### H. Navigation should be softly linear
+
+Use **progressive disclosure forward, open review backward**. Students should not be able to jump to future information before it is earned, but they should always be able to revisit already unlocked work.
+
+Operational rule:
+
+> **Future is gated. Past is reviewable. Meaningful commitments are versioned rather than silently overwritten.**
+
+Implementation implications:
+
+- keep a `max unlocked` frontier distinct from the screen currently being viewed;
+- make completed stages clickable;
+- show an explicit `Review mode` when the learner is behind the frontier;
+- provide a one-click `Return to current mission`;
+- never reveal a future STOP, answer or concept through backward navigation;
+- freeze historically meaningful artifacts or decisions after commitment/reveal;
+- if later evidence changes the learner's view, record a revision (`v1 → v2`, `initial → revised`) rather than replacing the original trace.
+
+This supports reflection and self-regulation without destroying the evidential value of commit-before-reveal activities. It is a design synthesis rather than a claim that this exact navigation pattern has been experimentally isolated as a unit.
+
+### I. Learning should alter an artifact
 Freeze an early version (v1), then require a later revision (v2). This creates a concrete before/after representation of conceptual change.
 
-### I. Retrieve before summarising
+### J. Retrieve before summarising
 Do not finish by displaying the takeaway immediately.
 
 Use:
@@ -301,6 +321,10 @@ Evidence of learning / revision:
 
 ### At the STOP
 - [ ] Is the group’s own artifact visible?
+- [ ] Can students revisit every already unlocked stage?
+- [ ] Are future stages still inaccessible from review mode?
+- [ ] Are committed/revealed answers preserved rather than silently rewritten?
+- [ ] Is there a clear route back to the current mission?
 - [ ] Is there a compare question with genuine room for disagreement?
 - [ ] Is there one counterexample that tests overgeneralisation?
 - [ ] Is there an explicit formalisation after discussion?

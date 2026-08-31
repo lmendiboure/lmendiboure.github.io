@@ -89,7 +89,25 @@ Repeat for each STOP.
 
 **Final comparison shown to students:** ...
 
-## H. Retrieval before synthesis
+## H. Navigation and commitment history
+
+**Forward gating rule:** ...
+
+**What learners may revisit freely:** ...
+
+**What becomes frozen/versioned after commitment:** ...
+
+**How revised understanding is represented:** ...
+
+Checklist:
+- [ ] Completed stages are reviewable.
+- [ ] Future stages remain locked.
+- [ ] Review mode is visually explicit.
+- [ ] There is a one-click return to the current frontier.
+- [ ] Commit-before-reveal answers are preserved.
+- [ ] Important artifacts use v1 → v2 rather than overwrite.
+
+## I. Retrieval before synthesis
 
 ### Recall prompts
 1. ...
@@ -101,7 +119,7 @@ Repeat for each STOP.
 
 Only after these are attempted, reveal the session synthesis.
 
-## I. Gamification audit
+## J. Gamification audit
 
 Every game mechanic must have a learning function.
 
@@ -114,7 +132,7 @@ Every game mechanic must have a learning function.
 | Score | | |
 | Badge | | |
 
-## J. Final pre-release audit
+## K. Final pre-release audit
 
 - [ ] No conclusion is revealed before the task meant to elicit it.
 - [ ] No unexplained jargon is required to begin.
@@ -128,6 +146,8 @@ Every game mechanic must have a learning function.
 - [ ] At least one transfer task changes surface features.
 - [ ] A changed assumption forces revision of an earlier artifact.
 - [ ] Retrieval occurs before the final summary.
+- [ ] Students can revisit previously unlocked stages without exposing future content.
+- [ ] Historically meaningful commitments are frozen or versioned rather than overwritten.
 - [ ] Core interactions work on phone without drag-and-drop.
 - [ ] Color is not the only state indicator.
 - [ ] External network assets are non-essential.

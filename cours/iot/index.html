@@ -44,6 +44,7 @@
       </div>
     </div>
     <div class="stepper" id="stepper" aria-label="Session progression"></div>
+    <nav id="historyNav" class="history-nav" aria-label="Review navigation" hidden></nav>
   </section>
 
   <div class="shell activity-stage">
@@ -111,6 +112,10 @@
           <section class="dossier-panel job"><span class="dossier-kicker">Your job</span><strong>Design → justify → revise</strong><div class="dossier-list"><span>Build functions and information flows</span><span>Make requirements explicit</span><span>Choose communication solutions only when justified</span><span>Revise the design when assumptions change</span></div></section>
         </div>
       </section>
+
+      <div id="architectureFrozenNotice" class="frozen-notice" hidden>
+        <span class="frozen-icon">◇</span><div><strong>Architecture v1 is frozen.</strong><p>You can review the design your group defended at STOP 2, but you cannot silently rewrite it. If later evidence changes your reasoning, that change will be recorded as Architecture v2.</p></div>
+      </div>
 
       <div class="activity-intro">
         <h3>Build architecture v1 from a blank canvas</h3>
