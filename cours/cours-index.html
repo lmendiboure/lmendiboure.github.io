@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Cours disponibles">
+  <title>Cours</title>
+
+  <style>
+    :root{
+      --paper:#f2f0e8;
+      --surface:#fbfaf5;
+      --ink:#13191f;
+      --muted:#626b70;
+      --line:#c8c6bd;
+      --signal:#1555d9;
+      --signal-soft:#e5ebf9;
+    }
+
+    *{box-sizing:border-box}
+
+    html,body{
+      margin:0;
+      min-height:100%;
+      background:var(--paper);
+      color:var(--ink);
+      font-family:Arial,"Helvetica Neue",Helvetica,ui-sans-serif,system-ui,sans-serif;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      opacity:.30;
+      background-image:linear-gradient(rgba(19,25,31,.035) 1px,transparent 1px);
+      background-size:100% 42px;
+    }
+
+    a{color:inherit}
+
+    .skip-link{
+      position:fixed;
+      left:12px;
+      top:8px;
+      z-index:100;
+      transform:translateY(-160%);
+      background:var(--ink);
+      color:#fff;
+      padding:8px 12px;
+      text-decoration:none;
+      font:700 .72rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    }
+
+    .skip-link:focus{transform:none}
+
+    .shell{
+      width:min(1160px,calc(100% - 34px));
+      margin:0 auto;
+    }
+
+    .topbar{
+      border-bottom:2px solid var(--ink);
+      background:rgba(242,240,232,.97);
+      backdrop-filter:blur(8px);
+    }
+
+    .topbar-inner{
+      min-height:64px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      text-decoration:none;
+    }
+
+    .brand-mark{
+      width:38px;
+      height:38px;
+      display:grid;
+      place-items:center;
+      background:var(--signal);
+      color:#fff;
+      font:800 .73rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      letter-spacing:.03em;
+    }
+
+    .brand-copy strong,
+    .brand-copy span{
+      display:block;
+    }
+
+    .brand-copy strong{
+      font-size:.84rem;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    .brand-copy span{
+      margin-top:2px;
+      color:var(--muted);
+      font:600 .67rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    }
+
+    .top-note{
+      color:var(--muted);
+      font:700 .67rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+    }
+
+    main{
+      min-height:calc(100vh - 65px);
+      display:flex;
+      align-items:center;
+    }
+
+    .catalogue{
+      width:100%;
+      padding:64px 0 82px;
+    }
+
+    .eyebrow{
+      color:var(--signal);
+      font:850 .68rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      text-transform:uppercase;
+      letter-spacing:.11em;
+    }
+
+    h1{
+      max-width:780px;
+      margin:10px 0 14px;
+      font-size:clamp(2.7rem,6.5vw,5.7rem);
+      line-height:.94;
+      letter-spacing:-.06em;
+      text-wrap:balance;
+    }
+
+    .lead{
+      margin:0;
+      max-width:620px;
+      color:var(--muted);
+      font-size:1rem;
+      line-height:1.55;
+    }
+
+    .course-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      margin-top:46px;
+      border-top:2px solid var(--ink);
+      border-left:1px solid var(--ink);
+    }
+
+    .course{
+      position:relative;
+      min-height:290px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      padding:26px 28px 24px;
+      background:var(--surface);
+      border-right:1px solid var(--ink);
+      border-bottom:2px solid var(--ink);
+      text-decoration:none;
+      overflow:hidden;
+      transition:background .16s ease,color .16s ease;
+    }
+
+    .course::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:7px;
+      background:var(--signal);
+      transform:scaleY(0);
+      transform-origin:bottom;
+      transition:transform .16s ease;
+    }
+
+    .course:hover,
+    .course:focus-visible{
+      background:var(--signal-soft);
+      outline:none;
+    }
+
+    .course:hover::before,
+    .course:focus-visible::before{
+      transform:scaleY(1);
+    }
+
+    .course-meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:20px;
+      font:800 .66rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+    }
+
+    .course-number{
+      color:var(--signal);
+    }
+
+    .course-title{
+      margin:48px 0 8px;
+      max-width:11ch;
+      font-size:clamp(2rem,3.4vw,3.15rem);
+      line-height:.98;
+      letter-spacing:-.05em;
+      text-wrap:balance;
+    }
+
+    .course-subtitle{
+      margin:0;
+      max-width:42ch;
+      color:var(--muted);
+      font-size:.91rem;
+      line-height:1.5;
+    }
+
+    .course-enter{
+      margin-top:34px;
+      padding-top:15px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      border-top:1px solid var(--line);
+      color:var(--ink);
+      font:850 .69rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+    }
+
+    .course-enter .arrow{
+      color:var(--signal);
+      font-size:1.25rem;
+      line-height:1;
+      transition:transform .16s ease;
+    }
+
+    .course:hover .arrow,
+    .course:focus-visible .arrow{
+      transform:translateX(5px);
+    }
+
+    .footer{
+      margin-top:22px;
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font:600 .64rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    @media(max-width:760px){
+      main{display:block}
+      .catalogue{padding:46px 0 64px}
+      .course-grid{grid-template-columns:1fr}
+      .course{min-height:235px}
+      .course-title{margin-top:36px}
+      .top-note{display:none}
+    }
+
+    @media(max-width:480px){
+      .shell{width:min(100% - 22px,1160px)}
+      .course{padding:22px 20px 20px}
+      h1{font-size:clamp(2.55rem,14vw,4rem)}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{
+        transition:none!important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#cours">Aller aux cours</a>
+
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="brand" href="./" aria-label="Accueil des cours">
+        <div class="brand-mark">UPPA</div>
+        <div class="brand-copy">
+          <strong>Cours</strong>
+          <span>Espace étudiant</span>
+        </div>
+      </a>
+      <span class="top-note">Choisir un enseignement</span>
+    </div>
+  </header>
+
+  <main id="cours">
+    <section class="shell catalogue" aria-labelledby="catalogue-title">
+      <div class="eyebrow">Cours disponibles</div>
+      <h1 id="catalogue-title">Quel cours voulez-vous ouvrir&nbsp;?</h1>
+      <p class="lead">
+        Sélectionnez un enseignement pour accéder directement à son espace de cours.
+      </p>
+
+      <div class="course-grid">
+        <a class="course" href="iot/" aria-label="Ouvrir le cours IoT Systems Design">
+          <div>
+            <div class="course-meta">
+              <span class="course-number">Cours 01</span>
+              <span>IoT</span>
+            </div>
+            <h2 class="course-title">IoT Systems Design</h2>
+            <p class="course-subtitle">Conception de systèmes connectés et Internet des objets.</p>
+          </div>
+          <div class="course-enter">
+            <span>Ouvrir le cours</span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+
+        <a class="course" href="environnements_connectes/" aria-label="Ouvrir le cours Environnements connectés">
+          <div>
+            <div class="course-meta">
+              <span class="course-number">Cours 02</span>
+              <span>BTP</span>
+            </div>
+            <h2 class="course-title">Environnements connectés</h2>
+            <p class="course-subtitle">Systèmes connectés appliqués au bâtiment et à son environnement.</p>
+          </div>
+          <div class="course-enter">
+            <span>Ouvrir le cours</span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="footer">
+        <span>/cours/</span>
+        <span>Deux enseignements disponibles</span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
