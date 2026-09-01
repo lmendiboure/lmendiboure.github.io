@@ -2,6 +2,10 @@
 
 The session-level learning pattern is most useful when it is nested inside a stable course-level structure.
 
+## Cross-surface activity identity
+
+Within every released session, define one canonical ordered activity list. Student, Projector and Instructor Notes must preserve the same activity count, numbering, order and short titles. Publication/navigation surfaces may differ in depth, but never in activity identity. A Projector may omit a RESTITUTION screen for an activity; it may not omit, merge or renumber the activity itself.
+
 ## Course layer
 
 Use the following sequence:

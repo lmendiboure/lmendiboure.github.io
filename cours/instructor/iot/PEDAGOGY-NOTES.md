@@ -2,6 +2,10 @@
 
 This session is the reference implementation of the **Mission–Artifact–Challenge–Unlock (MACU)** pattern documented in `LEARNING-DESIGN-PATTERN.md`.
 
+## Cross-surface coherence rule
+
+Treat the numbered activity sequence as a stable cognitive map for both learners and instructor. Student, Projector and Notes use the same activity identities. Instructor-only facilitation detail is layered onto that map rather than replacing it with teacher-specific blocks. This reduces orientation cost during live teaching and prevents a student “Activity 5” from corresponding to a differently named instructor checkpoint.
+
 ## Session-specific learning story
 
 1. **Landscape** — students classify connected physical systems before receiving a working view of IoT.

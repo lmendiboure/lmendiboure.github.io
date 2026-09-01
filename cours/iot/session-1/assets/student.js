@@ -150,7 +150,7 @@
 
   /* ---------- Navigation ---------- */
   const stepLabels = [
-    ['1','Landscape'], ['2','Architecture'], ['3','Requirements'], ['4','Discover'], ['5','Investigate'], ['6','Choose'], ['7','Stress-test']
+    ['1','IoT landscape'], ['2','Architecture v1'], ['3','Requirements'], ['4','Patterns'], ['5','Technologies'], ['6','Choose'], ['7','Stress-test']
   ];
   const screenToStep = [0,0,1,1,2,2,3,4,5,5,6,6];
   const stepEntryScreens = [0,2,4,6,7,8,10];

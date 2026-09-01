@@ -437,6 +437,20 @@ For multi-session courses, use **soft release** at the course level as well: pre
 
 See `COURSE-HUB-AUTHORING.md` for the implementation contract.
 
+## Cross-surface structural invariant
+
+Every session has one **canonical activity skeleton**. Student workspace, Projector and Instructor Notes must expose the **same activity count, numbering, order and short titles**. This is an identity contract, not a visual-style preference.
+
+Allowed asymmetry is about **depth and facilitation**, never about the course skeleton:
+
+- the Student surface may contain richer substeps, adaptive depth and embedded STOPs inside an activity;
+- the Projector gives every canonical activity exactly one **WORK** screen and adds **zero or one RESTITUTION** screen only when a whole-class stop is pedagogically useful;
+- the Instructor Notes keep the private facilitation logic, answer space, caveats and technical depth for that same numbered activity;
+- consecutive activities may deliberately have no restitution between them, but they must remain separately numbered and titled on the Projector and in the Notes;
+- never merge Activities 4–6 into an instructor “Technology block”, rename an activity for the teacher view, or renumber around skipped restitutions.
+
+> **Same skeleton everywhere; different depth where needed.**
+
 ## Dual instructor surfaces: Projector + Notes
 
 A session intended to run without slideware should separate two instructor-facing artifacts.
@@ -445,10 +459,12 @@ A session intended to run without slideware should separate two instructor-facin
 
 This is student-facing even though it lives under the instructor path. It must be safe to screen-share at any moment.
 
-For every checkpoint, it should expose **only two navigable public screens**:
+For every canonical activity, it should expose **one or at most two navigable public screens**:
 
-1. **WORK** — the task, expected artifact, defence prompt and one guardrail to leave visible while groups work;
-2. **RESTITUTION** — one stable whole-class surface containing the appropriate collective representation (when useful), 2–3 discussion questions, one counterexample, and in-place reveals for the concise Takeaway and optional Reality Check.
+1. **WORK** — always present: the task, expected artifact, defence prompt and one guardrail to leave visible while groups work;
+2. **RESTITUTION** — optional: one stable whole-class surface containing the appropriate collective representation (when useful), 2–3 discussion questions, one counterexample, and in-place reveals for the concise Takeaway and optional Reality Check.
+
+Omitting RESTITUTION does not omit or merge the activity. The next public screen is simply the next canonical activity's WORK screen.
 
 The richer facilitation sequence **LOOK → COMPARE → CHALLENGE → UNLOCK → GROUND** remains an instructor mental model and belongs in the private notes. Do not translate each pedagogical move into a projector navigation step.
 
@@ -479,7 +495,7 @@ The Reality Check is not mandatory filler and is not a mini-lecture. Use it when
 Projector invariants:
 
 - large, sparse, high-contrast typography;
-- no more than two navigable screens per checkpoint; use in-place reveal for Takeaway/Reality rather than additional phases;
+- exactly one WORK screen per canonical activity and at most one RESTITUTION screen; use in-place reveal for Takeaway/Reality rather than additional phases;
 - no teaching-method commentary, GitHub/publication details, answer-key language, or authoring notes;
 - no private cues such as “do not tell students…”;
 - the projected challenge must be discussable before its formalisation is shown;
@@ -488,7 +504,7 @@ Projector invariants:
 
 ### Private instructor notes
 
-The private surface should make slide preparation unnecessary. For each checkpoint it should contain:
+The private surface should make slide preparation unnecessary. For each canonical activity it should contain:
 
 - what to listen for in student answers;
 - what counts as a defensible answer;
@@ -503,4 +519,4 @@ The two surfaces should contain the **same conceptual destination** but differen
 
 > **The class sees the intellectual problem and its consolidation. The instructor sees the facilitation logic and answer space.**
 
-This separation is especially important in a no-slides course: projector pages replace both the **work prompt** and the **public explanatory/evidence function** of slides, while notes replace presenter notes. The default **public projector rhythm is WORK → RESTITUTION**. LOOK → COMPARE → CHALLENGE → UNLOCK remains the private facilitation logic inside RESTITUTION; Reality is revealed in-place when useful.
+This separation is especially important in a no-slides course: projector pages replace both the **work prompt** and the **public explanatory/evidence function** of slides, while notes replace presenter notes. The default public rhythm is **WORK → optional RESTITUTION → next canonical activity**. LOOK → COMPARE → CHALLENGE → UNLOCK remains the private facilitation logic inside RESTITUTION; Reality is revealed in-place when useful.

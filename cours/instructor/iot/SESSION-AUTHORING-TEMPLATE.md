@@ -215,9 +215,28 @@ Audit rule: these strings should orient students without revealing the concept o
 
 ---
 
+## Cross-surface skeleton
+
+Define the canonical activity list once before authoring any surface. Copy it unchanged into Student, Projector and Instructor Notes.
+
+| # | Canonical activity title | Student | Projector | Notes | Restitution? |
+|---|---|---|---|---|---|
+| 1 |  | same # + title | WORK | same # + title | yes / no |
+| 2 |  | same # + title | WORK | same # + title | yes / no |
+| … |  |  |  |  |  |
+
+Rules:
+
+- [ ] Same number of canonical activities on all three surfaces.
+- [ ] Same numbering, order and short title strings.
+- [ ] Every Projector activity has one WORK screen.
+- [ ] RESTITUTION is optional and never changes numbering.
+- [ ] A work-only activity remains visible as its own activity rather than being merged into a neighbouring instructor block.
+- [ ] Student-only substeps may exist inside an activity, but they do not create new canonical activity numbers.
+
 ## Collective restitution choice
 
-Choose **zero or one** Live Board for a checkpoint. It is embedded in RESTITUTION and is not a separate phase.
+Choose **zero or one** Live Board for an activity that has RESTITUTION. It is embedded in RESTITUTION and is not a separate phase.
 
 | Reasoning to make visible | Use | Authoring prompt |
 |---|---|---|
@@ -230,7 +249,7 @@ Before using Compare, specify what students must commit privately/in groups **be
 
 ## Projector + instructor-notes checklist
 
-For each STOP, author both surfaces before considering the session complete.
+For each canonical activity, author Student + Projector + Notes before considering the session complete. Add RESTITUTION only when a whole-class stop is useful.
 
 | Surface | Projector (student-visible) | Instructor notes (private) |
 |---|---|---|
@@ -240,16 +259,23 @@ For each STOP, author both surfaces before considering the session complete.
 | Reality reveal | one concrete artifact/number/calculation/source + interpretation question | provenance, assumptions, caveats, what conclusion is justified |
 | Next activity | one primary button; no extra phase | transition/fallback phrasing |
 
+**Structural alignment audit**
+
+- [ ] Do Student, Projector and Notes expose the same canonical activity count?
+- [ ] Are activity numbers, order and short titles identical across all three surfaces?
+- [ ] Are work-only activities still represented explicitly on the Projector and in Notes?
+- [ ] Have I avoided merging multiple student activities into one instructor checkpoint merely for convenience?
+
 **Projection audit**
 
 - [ ] Could this entire page be screen-shared without revealing internal design notes?
 - [ ] Is the current question readable from the back of a classroom?
-- [ ] Does each checkpoint have exactly one WORK screen and one RESTITUTION screen?
+- [ ] Does every canonical activity have exactly one WORK screen and zero or one RESTITUTION screen?
 - [ ] Are Takeaway/Reality revealed in-place rather than implemented as extra screens?
 - [ ] Does every WORK screen make the expected artifact obvious without revealing the answer?
 - [ ] When a Reality Check is used, is every number/source traceable and are worked assumptions labelled?
 - [ ] Does the Reality Check ask students to interpret evidence rather than merely read it?
-- [ ] Does every STOP end with a public concept or concrete interpretation worth remembering?
+- [ ] When an activity has RESTITUTION, does it end with a public concept or concrete interpretation worth remembering?
 - [ ] If a Live Board is used, does its representation match the reasoning task (Capture / Structure / Compare)?
 - [ ] For Compare, did groups commit before the class distribution became visible?
 - [ ] Could the same discussion work better by comparing student artifacts directly? If yes, omit the Live Board.

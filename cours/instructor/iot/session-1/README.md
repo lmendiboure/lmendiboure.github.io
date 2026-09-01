@@ -1,33 +1,37 @@
 # Session 1 instructor surfaces
 
-- `index.html` — **Projector Mode**. Safe to screen-share. Use this instead of slides: one WORK screen while students work, then one RESTITUTION screen for the checkpoint and final debrief.
-- `notes.html` — **Private instructor notes**. Expected answers, acceptable variants, misconceptions, technical precision, fallback prompts and transitions.
+- `index.html` — **Projector Mode**, safe to screen-share.
+- `notes.html` — **Private instructor notes** with accepted answers, misconceptions, technical precision, fallback prompts and transitions.
+
+## Structural invariant
+
+Student, Projector and Notes use exactly the same seven canonical activities:
+
+1. Map the IoT landscape
+2. Build architecture v1
+3. Expose communication requirements
+4. Discover communication patterns
+5. Investigate technologies
+6. Choose under constraints
+7. Stress-test and revise
+
+The Projector gives every activity one WORK screen. Activities 1, 2, 3, 6 and 7 also have one RESTITUTION screen; Activities 4 and 5 are intentionally WORK-only. A missing restitution never changes numbering or merges activities.
 
 ## Projector controls
 
-- Right arrow / Space: advance `WORK → RESTITUTION → next WORK`.
+- Right arrow / Space: advance to RESTITUTION when the current activity has one; otherwise advance directly to the next activity WORK screen.
 - Left arrow: go back one public screen.
 - `F`: fullscreen.
-- The five progress markers jump directly to a checkpoint and open its WORK screen.
+- Seven progress markers represent the same seven activities and open their WORK screen.
 
-Each checkpoint follows:
+**WORK** states the task, deliverable/defence prompt and guardrail. **RESTITUTION** is one stable class screen containing an optional Live Board, 2–3 discussion prompts, a counterexample, and in-place Takeaway/Reality reveals.
 
-**WORK → RESTITUTION**
-
-- **WORK** stays on screen while students work and states the deliverable/guardrail.
-- **RESTITUTION** is one stable class screen. It contains the appropriate Live Board (when useful), 2–3 discussion prompts and one counterexample.
-- **Show takeaway** and **Show reality** reveal content in-place; only one is open at a time, so they are not extra screens.
-
-The private facilitation sequence remains **LOOK → COMPARE → CHALLENGE → FORMALISE → GROUND**, but it lives in `notes.html`, not in projector navigation.
-
-Do not project `notes.html`.
-
+The private sequence **LOOK → COMPARE → CHALLENGE → FORMALISE → GROUND** lives in `notes.html`, not in projector navigation. Do not project `notes.html`.
 
 ## Pacing
 
-Private Notes separate **WORK** and **RESTITUTION** targets. Across Session 1 the planned envelope is roughly 48–57 minutes of group work plus 30–37 minutes of whole-class restitution (78–94 minutes before small transitions). Treat the badges as pacing cues, not mandatory cut-offs.
+Targets are split per activity. The full envelope remains roughly 78–95 minutes. Treat timings as pacing cues, not mandatory cut-offs.
 
+## Collective restitution
 
-## V15 collective restitution
-
-The Projector includes three optional instructor-entered Live Boards embedded directly in RESTITUTION: Capture, Structure and Compare. They require no backend. Use **commit → aggregate → discuss** for tallies.
+Capture, Structure and Compare are the only Live Board primitives. Use **commit → aggregate → discuss**. No backend is required.
