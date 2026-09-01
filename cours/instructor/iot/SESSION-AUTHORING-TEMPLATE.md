@@ -25,7 +25,7 @@ By the end, students should be able to:
 
 ## C. Activity map
 
-| # | Mission step | Core prompt | Student artifact | Must not reveal yet | Expert round |
+| # | Mission step | Core prompt | Student artifact | Must not reveal yet | Challenge me |
 |---|---|---|---|---|---|
 | 1 | | | | | |
 | 2 | | | | | |
@@ -47,11 +47,21 @@ By the end, students should be able to:
 
 ...
 
-**UNLOCK** — formal concept:
+**UNLOCK** — consolidation sequence:
+
+**From your discussion** — what student evidence, disagreement or challenge are you reconnecting to?
 
 ...
 
-**Field Guide card:**
+**Formalise it** — canonical concept / vocabulary / model:
+
+...
+
+**Carry it forward** — one actionable rule for the next decision:
+
+...
+
+**Field Guide card (compressed, not a duplicate of the Unlock):**
 
 - Title:
 - One-sentence rule:
@@ -107,6 +117,33 @@ Checklist:
 - [ ] Commit-before-reveal answers are preserved.
 - [ ] Important artifacts use v1 → v2 rather than overwrite.
 
+## I. Adaptive depth
+
+Select **at most 3–4** conceptual bottlenecks where higher-prior-knowledge learners could use less guidance. Do not add a challenge merely because an activity is short.
+
+| Core objective | Challenge-me open problem | Support 1 | Support 2 | Support 3 | Rejoins at |
+|---|---|---|---|---|---|
+| | | | | | |
+| | | | | | |
+
+### Research trails
+
+Use 0–3 authentic-source tasks. Each must start with a question/claim, not a reading link.
+
+| Claim/question | Prediction required | Primary/official source | Reconciliation prompt |
+|---|---|---|---|
+| | | | |
+| | | | |
+
+Checklist:
+- [ ] Core route remains sufficient for a novice.
+- [ ] Challenge route targets the same objective with less assistance.
+- [ ] Learners opt in; no automatic “expert” label.
+- [ ] Support is progressive and ungraded.
+- [ ] Fast completion yields depth, not busywork.
+- [ ] Research links answer a posed question.
+- [ ] Optional depth does not spoil future discovery.
+
 ## I. Retrieval before synthesis
 
 ### Recall prompts
@@ -128,7 +165,8 @@ Every game mechanic must have a learning function.
 | Mission framing | | |
 | Progressive reveal | | |
 | Confidence | | |
-| Expert trail | | |
+| Challenge me / adaptive depth | | |
+| Research trail | | |
 | Score | | |
 | Badge | | |
 
@@ -142,7 +180,9 @@ Every game mechanic must have a learning function.
 - [ ] Every STOP has a useful counterexample.
 - [ ] Every STOP ends with explicit formalisation.
 - [ ] Field Guide content is concise enough to revise later.
-- [ ] Fast-student content requires deeper reasoning, not just more reading.
+- [ ] Fast/high-prior-knowledge content requires deeper reasoning, not just more reading.
+- [ ] Challenge routes preserve the same learning objective with less assistance.
+- [ ] Research trails use prediction → authentic source → reconciliation.
 - [ ] At least one transfer task changes surface features.
 - [ ] A changed assumption forces revision of an earlier artifact.
 - [ ] Retrieval occurs before the final summary.
@@ -163,3 +203,42 @@ Before implementation, write the three short strings that will appear on the cou
 - **2–3 capability tags:**
 
 Audit rule: these strings should orient students without revealing the concept or answer the session is designed to make them discover.
+
+
+### Unlock quality check
+
+- [ ] The Unlock begins from something students actually produced or debated.
+- [ ] The formal statement adds disciplinary precision rather than merely repeating the activity.
+- [ ] The carry-forward rule is usable in the next activity.
+- [ ] The Field Guide is shorter than the Unlock.
+- [ ] The Unlock does not sound like a sudden answer key.
+
+---
+
+## Projector + instructor-notes checklist
+
+For each STOP, author both surfaces before considering the session complete.
+
+| Element | Projector (student-visible) | Instructor notes (private) |
+|---|---|---|
+| LOOK | one artifact cue | what evidence to inspect |
+| COMPARE | 2–3 large questions | likely answer families |
+| CHALLENGE | one counterexample | why it is useful / what it diagnoses |
+| UNLOCK | From discussion → Formalise → Carry forward | precision, caveats, acceptable variants |
+| Transition | one sentence | fallback phrasing if discussion stalls |
+
+**Projection audit**
+
+- [ ] Could this entire page be screen-shared without revealing internal design notes?
+- [ ] Is the current question readable from the back of a classroom?
+- [ ] Is only one discussion move visually dominant at a time?
+- [ ] Are answers revealed progressively rather than visible before discussion?
+- [ ] Does every STOP end with a public concept worth remembering?
+
+**Notes audit**
+
+- [ ] Do I know what answers I am prepared to accept?
+- [ ] Do I know which misconception I must correct?
+- [ ] Do I have one useful counterexample if discussion is shallow?
+- [ ] Do I have enough technical precision to answer the predictable follow-up questions?
+- [ ] Can I run the session without creating separate slides?

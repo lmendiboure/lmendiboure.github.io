@@ -14,6 +14,8 @@
     landscape: {},
     borderline: {},
     challengeProgress: {},
+    adaptiveDepth: {},
+    researchTrails: {},
     architectureChallenge: null,
     architectureResilience: null,
     flowLens: {flowIndex:null, requirements:[]},
@@ -50,26 +52,38 @@
   const conceptDefs = {
     iot:{
       title:'Working view of IoT',
-      summary:'IoT is a broad systems field in which physical entities are observed or acted upon and connected to digital services through communication and computation.',
-      keep:'“Connected” alone is not the useful distinction. Look at the physical-world role and the end-to-end service.',
+      bridge:'Your classifications crossed home, health, industry, mobility, energy and other domains. The application domain alone therefore does not explain what these systems have in common.',
+      formal:'In this course, we will use <strong>IoT</strong> for systems in which physical entities are observed or acted upon and connected to digital services through communication and computation.',
+      carry:'“Connected” is not enough by itself. When you meet a new system, trace its <strong>physical-world role</strong> and the <strong>end-to-end service</strong> it supports.',
+      fieldSummary:'Physical entities are observed or acted upon and connected to digital services through communication and computation.',
+      fieldKeep:'Connected alone is not the useful distinction: trace the physical-world role and the end-to-end service.',
       tags:['physical world','sense / act','communicate','digital service']
     },
     architecture:{
       title:'Architecture lens',
-      summary:'Separate responsibilities before products: Sense / Act · Communicate · Compute · Store · Use.',
-      keep:'These are responsibilities, not mandatory boxes. One physical machine can implement several of them.',
+      bridge:'Your diagrams may use very different boxes. The challenge also showed that one physical node can perform several roles, while one responsibility can be distributed across several nodes.',
+      formal:'A useful architecture lens is to separate <strong>responsibilities before products</strong>: Sense / Act · Communicate · Compute · Store · Use. These are functions of the system, not mandatory physical layers or boxes.',
+      carry:'Follow the <strong>information flows</strong> between responsibilities. They reveal what must communicate, where dependencies appear, and where later technology choices can matter.',
+      fieldSummary:'Separate responsibilities before products: Sense / Act · Communicate · Compute · Store · Use.',
+      fieldKeep:'Responsibilities are not physical boxes. One device can implement several; one responsibility can span several devices.',
       tags:['responsibility ≠ device','flows matter','end to end']
     },
     requirements:{
       title:'Engineering vocabulary',
-      summary:'Turn vague needs into explicit dimensions that can actually change a design decision.',
-      keep:'How far? → Range · How much data? → Data volume / throughput · How soon? → Latency · How dependable? → Reliability · Limited energy? → Energy budget · How many? → Scale · Does it move? → Mobility · What exists? → Infrastructure · What can we afford? → Cost.',
+      bridge:'Different groups prioritised different concerns, and the challenge showed that even two flows inside the same system may not share the same priorities.',
+      formal:'Engineers make these concerns explicit as <strong>requirements</strong>: range, data volume / throughput, latency, reliability, energy budget, scale, mobility, available infrastructure and cost. They become useful when attached to a particular flow or service need.',
+      carry:'Before comparing communication technologies, identify <strong>which requirements dominate each important flow</strong>. A single system-wide Top 3 can hide meaningful differences.',
+      fieldSummary:'Turn vague needs into explicit requirements that can change a design decision.',
+      fieldKeep:'Range · data volume / throughput · latency · reliability · energy · scale · mobility · infrastructure · cost. Priorities may differ by flow.',
       tags:['name the constraint','prioritise','per-flow reasoning']
     },
     technology:{
       title:'Technology decision rule',
-      summary:'Choose the communication problem and network shape first; attach a technology family second.',
-      keep:'A technology choice can also imply infrastructure ownership, gateways, operator coverage, spectrum, topology and service dependencies. Comparable choices need not be the same abstraction level.',
+      bridge:'The same application need can produce different communication structures: nearby peer, local access point, private gateway infrastructure or operator network. The challenge showed that access technology alone does not describe every dependency in the path.',
+      formal:'Technology names should therefore come <strong>after the communication problem and network shape</strong>. First characterise what the flow needs and how the network must be organised; then identify technology families that can implement that shape.',
+      carry:'Whenever you choose a technology, ask: <strong>what else did we implicitly choose?</strong> Gateways, access points, operator coverage, spectrum, topology and upstream services may all become part of the design.',
+      fieldSummary:'Communication problem → network shape → technology family.',
+      fieldKeep:'A technology choice can also imply infrastructure, ownership and dependencies. Comparable choices need not sit at the same abstraction level.',
       tags:['problem → shape → family','implicit infrastructure','validity domain']
     }
   };
@@ -89,7 +103,7 @@
     document.querySelectorAll('.reveal-stop-challenge').forEach(b=>b.addEventListener('click',()=>{state.stopChallenges={...(state.stopChallenges||{}),[b.dataset.id]:true};saveState();renderStopRitual();}));
     document.querySelectorAll('[data-concept]').forEach(host=>{
       const id=host.dataset.concept,d=conceptDefs[id],unlocked=!!state.conceptUnlocks?.[id]; if(!d)return;
-      host.innerHTML=`<div class="ritual-card unlock ${unlocked?'unlocked':''}"><span class="ritual-kicker">4 · Unlock</span>${unlocked?`<strong>${d.title}</strong><p>${d.summary}</p><div class="unlock-keep">${d.keep}</div><div class="chip-row">${d.tags.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:`<strong>Keep the formal idea after discussion.</strong><p>Do not unlock until the teacher has finished the comparison and challenge.</p><button type="button" class="btn primary unlock-concept" data-id="${id}">Unlock what we keep</button>`}</div>`;
+      host.innerHTML=`<div class="ritual-card unlock ${unlocked?'unlocked':''}"><span class="ritual-kicker">4 · Unlock</span>${unlocked?`<strong>${d.title}</strong><div class="unlock-sequence"><section><span>From your discussion</span><p>${d.bridge}</p></section><section><span>Formalise it</span><p>${d.formal}</p></section><section class="carry"><span>Carry it forward</span><p>${d.carry}</p></section></div><div class="chip-row unlock-tags">${d.tags.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:`<strong>Consolidate what the class just discovered.</strong><p>After the comparison and counterexample, connect your observations to the formal concept before moving on.</p><button type="button" class="btn primary unlock-concept" data-id="${id}">Consolidate what we keep</button>`}</div>`;
     });
     document.querySelectorAll('.unlock-concept').forEach(b=>b.addEventListener('click',()=>{state.conceptUnlocks={...(state.conceptUnlocks||{}),[b.dataset.id]:true};saveState();renderStopRitual();renderFieldGuide();updateStopNextButtons();}));
     updateStopNextButtons();
@@ -99,15 +113,15 @@
     const count=conceptOrder.filter(id=>state.conceptUnlocks?.[id]).length;
     const btn=$('#fieldGuideBtn'),counter=$('#fieldGuideCount'); if(btn)btn.hidden=count===0;if(counter)counter.textContent=`${count}/4`;
     const host=$('#fieldGuideContent');if(!host)return;
-    host.innerHTML=`<div class="field-guide-progress"><strong>${count} / 4 concepts unlocked</strong><span>The guide only contains ideas formalised after class discussion.</span></div>${conceptOrder.map((id,i)=>{const d=conceptDefs[id],on=!!state.conceptUnlocks?.[id];return `<section class="guide-entry ${on?'':'locked'}"><span class="guide-number">${i+1}</span><div>${on?`<strong>${d.title}</strong><p>${d.summary}</p><div class="guide-keep">${d.keep}</div><div class="chip-row">${d.tags.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:`<strong>Concept locked</strong><p>Complete the corresponding STOP discussion first.</p>`}</div></section>`}).join('')}`;
+    host.innerHTML=`<div class="field-guide-progress"><strong>${count} / 4 concepts unlocked</strong><span>Compact reference cards from concepts consolidated after discussion.</span></div>${conceptOrder.map((id,i)=>{const d=conceptDefs[id],on=!!state.conceptUnlocks?.[id];return `<section class="guide-entry ${on?'':'locked'}"><span class="guide-number">${i+1}</span><div>${on?`<strong>${d.title}</strong><p>${d.fieldSummary}</p><div class="guide-keep">${d.fieldKeep}</div><div class="chip-row">${d.tags.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:`<strong>Concept locked</strong><p>Complete the corresponding STOP discussion first.</p>`}</div></section>`}).join('')}`;
   }
 
-  const challengeIds=['landscape','architecture','requirements','discover','investigate','choose','stress'];
+  const challengeIds=['architecture','requirements','discover','stress'];
   function markChallenge(id){ if(!id)return; state.challengeProgress={...(state.challengeProgress||{}),[id]:true}; saveState(); renderExpertProgress(); }
   function renderExpertProgress(){
     const n=challengeIds.filter(id=>state.challengeProgress?.[id]).length;
-    const pill=$('#expertProgress'); if(pill){pill.textContent=`Expert trail ${n}/7`;pill.classList.toggle('active',n>0);}
-    const finish=$('#expertFinish'); if(finish) finish.innerHTML=`<span>Optional expert trail</span><strong>${n} / 7 explored</strong><small>These rounds are not graded; they are there to test how far your reasoning survives.</small>`;
+    const pill=$('#expertProgress'); if(pill){pill.textContent=`Depth trail ${n}/4`;pill.classList.toggle('active',n>0);}
+    const finish=$('#expertFinish'); if(finish) finish.innerHTML=`<span>Optional depth trail</span><strong>${n} / 4 explored</strong><small>Challenge routes use the same concepts with less guidance. They are optional and not graded.</small>`;
   }
 
   function loadState() {
@@ -845,6 +859,87 @@
   }
 
 
+  /* ---------- Adaptive depth: same objective, less scaffolding ---------- */
+  const adaptiveDepthDefs = {
+    architecture:{
+      host:'#depthArchitecture',
+      title:'A component disappears. Keep the service alive.',
+      problem:'Choose one important component in your architecture. Assume it becomes unavailable for 30 minutes. With one architectural move only, explain what you would change and what still remains vulnerable.',
+      supports:[
+        'Start by tracing every information flow that touches the failed component.',
+        'Think in architectural responses rather than products: alternate path, buffering, replication, or degraded service.',
+        'A strong answer states both the response and its remaining failure mode.'
+      ],
+      placeholder:'Which component fails? What single architectural move do you make? What does that move still fail to solve?'
+    },
+    requirements:{
+      host:'#depthRequirements',
+      title:'One system, two flows, different priorities.',
+      problem:'The indoor CO₂ measurements may arrive several minutes late. Outdoor abnormal-noise alerts should arrive within 5 seconds, and outdoor nodes may later be battery powered. Does one system-wide Top 3 still describe both flows? Defend a per-flow view.',
+      supports:[
+        'Compare the two flows independently before looking at your global Top 3.',
+        'Ask which dimensions change: latency, energy, reliability, data volume, range, infrastructure…',
+        'A strong answer identifies at least one priority that changes between the flows and one design consequence.'
+      ],
+      placeholder:'Flow A priorities… Flow B priorities… Therefore I would reconsider…'
+    },
+    discover:{
+      host:'#depthDiscover',
+      title:'Design the network shape before naming a technology.',
+      problem:'150 outdoor nodes send a 20-byte report every 5 minutes. They are battery powered, spread over about 1.5 km, and the university may install a small amount of infrastructure. Propose a communication shape without using any technology name.',
+      supports:[
+        'Classify the problem first: local vs wide area, tiny vs heavy traffic, constrained vs powered devices.',
+        'Decide whether devices should reach a nearby peer, local access point, gateway, or operator infrastructure.',
+        'Only after the shape is clear, ask which technology families could plausibly implement it.'
+      ],
+      placeholder:'Device → … → … → application. Why this shape? Which assumptions make it plausible?'
+    },
+    stress:{
+      host:'#depthStress',
+      title:'Two failures. One architectural move.',
+      problem:'Combine your selected campus incident with a 30-minute upstream Internet outage. You are allowed one structural change only. Choose it, then explain which failure is still only partially handled.',
+      supports:[
+        'Separate what fails locally from what fails only because an upstream service is unreachable.',
+        'Look for one response that helps both events, such as local buffering, local processing, or an alternate path.',
+        'A strong answer explicitly names the residual risk after the one-change budget is spent.'
+      ],
+      placeholder:'My one change is… It helps incident A because… It helps the outage because… It still does not solve…'
+    }
+  };
+  function depthEntry(id){
+    state.adaptiveDepth = state.adaptiveDepth || {};
+    if(!state.adaptiveDepth[id]) state.adaptiveDepth[id]={support:0,response:''};
+    return state.adaptiveDepth[id];
+  }
+  function renderAdaptiveDepth(){
+    Object.entries(adaptiveDepthDefs).forEach(([id,d])=>{
+      const host=$(d.host); if(!host)return;
+      const x=depthEntry(id), support=Math.max(0,Math.min(3,Number(x.support)||0));
+      const complete=(x.response||'').trim().length>=30;
+      const selectedIncident=id==='stress'&&state.selectedStress?stressDefs.find(z=>z.id===state.selectedStress):null;
+      const problem=id==='stress'&&selectedIncident?`Your first incident is <b>${esc(selectedIncident.title)}</b>. At the same time, the upstream Internet path is unavailable for 30 minutes. You are allowed <b>one structural change only</b>. Choose it and identify the residual risk.`:d.problem;
+      host.innerHTML=`<div class="depth-intro"><div><strong>${d.title}</strong><p>Try the open problem first. Open support only when it genuinely helps.</p></div><span class="depth-rule">Beat the scaffold</span></div><div class="depth-problem"><strong>Open problem</strong><p>${problem}</p></div><div class="depth-supports">${d.supports.map((h,i)=>{const n=i+1,shown=support>=n,enabled=n===1||support>=n-1;return `<button type="button" class="depth-support-btn ${shown?'used':''}" data-depth-support="${id}" data-level="${n}" ${enabled?'':'disabled'}>${shown?'✓ ':''}Support ${n}</button>`}).join('')}</div><div class="depth-support-reveal">${d.supports.slice(0,support).map((h,i)=>`<div><b>Support ${i+1}</b> · ${h}</div>`).join('')}</div><label class="depth-response"><span class="label">Your reasoning</span><textarea data-depth-response="${id}" maxlength="900" placeholder="${esc(d.placeholder)}">${esc(x.response||'')}</textarea></label><div class="depth-status"><span>Support used: <strong>${support}/3</strong>${complete&&support===0?' · solved without support':''}</span><span class="${complete?'depth-complete':''}">${complete?'Depth route explored':'Write a short defended answer to complete this route.'}</span></div>`;
+      const parent=host.closest('.adaptive-depth'); const badge=parent?.querySelector('.depth-badge'); if(badge)badge.textContent=`${support}/3 support`;
+    });
+    document.querySelectorAll('[data-depth-support]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.depthSupport,n=+b.dataset.level,x=depthEntry(id);x.support=Math.max(Number(x.support)||0,n);saveState();renderAdaptiveDepth();}));
+    document.querySelectorAll('[data-depth-response]').forEach(t=>t.addEventListener('input',()=>{const id=t.dataset.depthResponse,x=depthEntry(id);x.response=t.value;if(t.value.trim().length>=30){state.challengeProgress={...(state.challengeProgress||{}),[id]:true};}saveState();renderExpertProgress();const status=t.closest('.adaptive-depth-body')?.querySelector('.depth-status span:last-child');if(status){const done=t.value.trim().length>=30;status.textContent=done?'Depth route explored':'Write a short defended answer to complete this route.';status.classList.toggle('depth-complete',done);}}));
+  }
+
+  /* ---------- Research trails: authentic source + prediction + reflection ---------- */
+  const researchDefs=[
+    {id:'ble-range',title:'Is Bluetooth LE a “10 metre technology”?',claim:'A colleague rejects BLE for a large building because “Bluetooth only works for about 10 metres.” Is that a defensible engineering claim?',choices:['Agree','Disagree','Depends'],source:'https://www.bluetooth.com/learn-about-bluetooth/feature-enhancements/',sourceLabel:'Bluetooth SIG · Feature enhancements',reflection:'After checking the source, name the variables or radio-mode trade-offs that make one fixed range number misleading.'},
+    {id:'154-scope',title:'What does IEEE 802.15.4 actually give you?',claim:'A design note says: “We selected IEEE 802.15.4, so routing and the application protocol are now defined.” Predict whether that statement survives the standard description.',choices:['Agree','Disagree','Depends'],source:'https://standards.ieee.org/ieee/802.15.4/5788/',sourceLabel:'IEEE · 802.15.4 standard family',reflection:'What responsibilities does the standard cover, and what still has to be supplied above it?'},
+    {id:'lorawan-private',title:'Does LoRaWAN imply an operator subscription?',claim:'A teammate says LoRaWAN is unsuitable for campus because it necessarily requires buying connectivity from a network operator. Make a prediction before checking the LoRa Alliance.',choices:['Agree','Disagree','Depends'],source:'https://lora-alliance.org/lorawan-for-developers/',sourceLabel:'LoRa Alliance · LoRaWAN for Developers',reflection:'Can LoRaWAN be private? If yes, what infrastructure or service responsibilities does the organisation then take on?'}
+  ];
+  function researchEntry(id){state.researchTrails=state.researchTrails||{};if(!state.researchTrails[id])state.researchTrails[id]={prediction:null,reflection:''};return state.researchTrails[id];}
+  function renderResearchTrails(){
+    const host=$('#researchTrailGrid');if(!host)return;
+    host.innerHTML=researchDefs.map((d,i)=>{const x=researchEntry(d.id),done=!!x.prediction&&(x.reflection||'').trim().length>=20;return `<article class="research-card ${done?'research-complete':''}"><span class="research-kicker">Research trail ${i+1}</span><h4>${d.title}</h4><div class="research-claim">${d.claim}</div><div><span class="label">Prediction first</span><div class="research-predict">${d.choices.map(c=>`<button type="button" data-research-predict="${d.id}" data-choice="${c}" class="${x.prediction===c?'active':''}">${c}</button>`).join('')}</div></div>${x.prediction?`<div class="research-source"><a href="${d.source}" target="_blank" rel="noopener noreferrer">Open official source ↗</a><small>${d.sourceLabel}</small></div><div class="research-reflection"><label>${d.reflection}<textarea data-research-reflection="${d.id}" maxlength="700" placeholder="What did the source confirm, nuance or overturn?">${esc(x.reflection||'')}</textarea></label></div>`:`<div class="research-source"><small>Commit a prediction to unlock the source.</small></div>`}</article>`}).join('');
+    host.querySelectorAll('[data-research-predict]').forEach(b=>b.addEventListener('click',()=>{const x=researchEntry(b.dataset.researchPredict);x.prediction=b.dataset.choice;saveState();renderResearchTrails();}));
+    host.querySelectorAll('[data-research-reflection]').forEach(t=>t.addEventListener('input',()=>{const x=researchEntry(t.dataset.researchReflection);x.reflection=t.value;saveState();const card=t.closest('.research-card');if(card)card.classList.toggle('research-complete',!!x.prediction&&t.value.trim().length>=20);}));
+  }
+
+
   /* ---------- Architecture v1 → v2 revision studio ---------- */
   function architectureChanged(){
     if(!state.architectureV1||!state.architectureV2)return false;
@@ -935,7 +1030,7 @@
     renderScenarios();
     renderCampusDecision();
     renderStress();
-    renderBorderlineChallenge(); renderArchitectureChallenge(); renderFlowLens(); renderLayerTrap(); renderTechnologyCompare(); renderMissingInfoChallenge(); renderDoubleFailure(); renderStopSnapshots(); renderExpertProgress(); renderMemoryLock(); renderStopRitual(); renderFieldGuide(); renderRevisionStudio(); renderDesignEvolution();
+    renderAdaptiveDepth(); renderResearchTrails(); renderStopSnapshots(); renderExpertProgress(); renderMemoryLock(); renderStopRitual(); renderFieldGuide(); renderRevisionStudio(); renderDesignEvolution();
     renderStepper(); renderHistoryNav();
   }
 

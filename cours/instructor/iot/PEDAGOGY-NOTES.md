@@ -52,3 +52,17 @@ The session now separates the **learning frontier** from the **screen currently 
 This is intentionally **structured learner control**, not unrestricted hypermedia navigation. Reviews of learner control report mixed or near-zero average effects and warn that additional navigation choices can increase metacognitive/cognitive demands, especially when learners lack prior knowledge. The design therefore gives students review freedom but not freedom to expose future concepts or silently rewrite committed artifacts.
 
 Relevant sources: Scheiter & Gerjets (2007), *Educational Psychology Review*; Karich, Burns & Maki (2014), *Review of Educational Research*.
+
+
+## Adaptive depth in Session 1
+
+Session 1 uses four optional `Challenge me` routes: architecture, requirements, communication-shape discovery, and compound stress. Each route begins as an open problem and offers three progressively revealed supports. Support use is visible but ungraded.
+
+The technology investigation also contains three `Research trails`. Learners must make a prediction before the official source link appears, then write what the source confirmed, nuanced, or overturned. This prevents authentic sources from becoming passive “extra reading”.
+
+This implementation is motivated by the expertise-reversal literature, particularly Tetzlaff & Simonsmeier (2025), which reports that lower-prior-knowledge learners benefit from higher assistance and higher-prior-knowledge learners can benefit from lower assistance. The meta-analysis also stresses an important asymmetry: ensuring assistance for novices is the stronger priority. The UI therefore never removes Core scaffolding and never equates speed with expertise.
+
+
+## V11.1 — Unlock consolidation rule
+
+The student-facing **UNLOCK** is deliberately richer than the Field Guide card. It reconnects to the immediately preceding discussion, formalises the disciplinary concept, then states how to use it next. The Field Guide keeps only the compact reference version. This avoids both extremes: revealing the formal answer before exploration, and leaving discovery unformalised afterwards.

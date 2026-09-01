@@ -54,3 +54,16 @@ The visual lock is for orientation, not security.
 ## Minimal release control
 
 For a sequential four-session course, avoid hand-editing several card states. Keep a single integer such as `releasedThrough` in the course configuration. Derive `Review / Current / Locked` from session order. This reduces publishing errors and makes the release ritual reproducible.
+
+
+## Adaptive depth across sessions
+
+The course hub should not split students into visible “easy” and “advanced” tracks. Differentiation happens inside each mission using the session-level `Core → Challenge → Research` pattern. The hub remains a common orientation layer for everyone.
+
+When authoring later sessions:
+
+- keep the Core route sufficient for a novice;
+- use 3–4 `Challenge me` routes at genuine conceptual bottlenecks;
+- use 0–3 authentic-source Research Trails;
+- let all routes rejoin the same STOP / mission progression;
+- never infer expertise from completion speed alone.
