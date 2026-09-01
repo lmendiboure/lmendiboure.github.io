@@ -61,4 +61,4 @@ A stakeholder intervention is never decorative. It must introduce a fact, need, 
 
 **operational trigger → decision/artifact → class discussion → formalisation → transfer**
 
-Do not improvise biographies or narrative detail that does not alter the technical reasoning. Session 1 builds and revises architecture; Session 2 continues the same case and makes its exchanges explicit, interoperable and robust.
+Do not let a stakeholder speech duplicate the case dossier or the activity instructions. The speech should trigger or reopen a decision; facts belong in the dossier/state block; the task belongs in the activity prompt. Do not improvise biographies or narrative detail that does not alter the technical reasoning. Session 1 builds and revises architecture; Session 2 continues the same case and makes its exchanges explicit, interoperable and robust.

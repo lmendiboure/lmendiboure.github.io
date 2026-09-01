@@ -6,6 +6,16 @@ This session is the reference implementation of the **Mission–Artifact–Chall
 
 Treat the numbered activity sequence as a stable cognitive map for both learners and instructor. Student, Projector and Notes use the same activity identities. Instructor-only facilitation detail is layered onto that map rather than replacing it with teacher-specific blocks. This reduces orientation cost during live teaching and prevents a student “Activity 5” from corresponding to a differently named instructor checkpoint.
 
+## Running-case integration rule
+
+For each activity, keep three roles distinct:
+
+1. **Stakeholder trigger** — introduces a change, contradiction, incident or decision pressure.
+2. **Case dossier / system state** — contains the factual evidence students may use.
+3. **Student task** — states the engineering work to perform.
+
+If two of these simply repeat each other, merge or rewrite them. The narrative is useful only when it changes the reasoning state of the problem.
+
 ## Session-specific learning story
 
 1. **Landscape** — students classify connected physical systems before receiving a working view of IoT.
