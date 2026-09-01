@@ -4,6 +4,50 @@
   const host = document.querySelector('#missionGrid');
   if (!host) return;
 
+  const MISSION_KEY = 'iot-systems-design-campus-mission-v1';
+
+  function missionDossier(){
+    try{return JSON.parse(localStorage.getItem(MISSION_KEY)||'null')}catch(_){return null}
+  }
+
+  function fmtValue(v){
+    if(Array.isArray(v)) return v.map(x=>fmtValue(x)).filter(Boolean).join(' · ');
+    if(v && typeof v === 'object') return fmtValue(v.label || v.title || v.id || '');
+    if(v === true) return 'Filed';
+    if(v === false || v == null || v === '') return '';
+    return String(v).replace(/[-_]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+  }
+
+  function renderMissionIdentity(){
+    const dossier = missionDossier();
+    const snap = document.querySelector('#missionDossierSnapshot');
+    const topNote = document.querySelector('#topMissionNote');
+    if(!snap) return;
+    const s1 = dossier?.session1 || {};
+    const s2 = dossier?.session2 || {};
+    const hasS1 = Object.values(s1).some(v=>Array.isArray(v)?v.length:Boolean(v));
+    const hasS2 = Object.values(s2).some(v=>Array.isArray(v)?v.length:Boolean(v));
+    if(!hasS1 && !hasS2){
+      if(topNote) topNote.textContent='Mission dossier · no decisions filed yet';
+      return;
+    }
+    const status = hasS2 ? 'Updated through Mission 02' : 'Mission 01 decisions filed';
+    if(topNote) topNote.textContent=`Mission dossier · ${hasS2?'updated':'active'}`;
+    const facts=[];
+    const push=(label,val)=>{const f=fmtValue(val);if(f)facts.push([label,f])};
+    push('Architecture',s1.architectureClass);
+    push('Priorities',s1.priorityRequirements);
+    push('Access strategy',s1.accessStrategy);
+    push('Open uncertainty',s1.keyUncertainty);
+    if(hasS2){
+      push('Application strategy',s2.applicationStrategy);
+      push('Incident tested',s2.incident);
+    }
+    snap.innerHTML=`<div class="dossier-live-head"><span>MISSION DOSSIER</span><b>${status}</b></div>
+      ${facts.length?`<div class="dossier-facts">${facts.slice(0,4).map(([l,v])=>`<div class="dossier-fact"><small>${l}</small><strong>${v}</strong></div>`).join('')}</div>`:''}
+      <p>${hasS2?'Your campus design now carries decisions from the first two missions.':'Mission 02 will reopen this design record rather than start from a blank system.'}</p>`;
+  }
+
   const screenToStep = [0,0,1,1,2,2,3,4,5,5,6,6];
   const stepNames = ['Landscape','Architecture','Requirements','Discover','Investigate','Choose','Stress-test'];
 
@@ -29,6 +73,18 @@
   }
 
   const releasedThrough = Math.max(0, Math.min(cfg.sessions.length, Number(cfg.release?.releasedThrough)||0));
+  const currentSession = cfg.sessions[Math.max(0,releasedThrough-1)];
+  const primaryAction=document.querySelector('#primaryMissionAction');
+  const heroStatus=document.querySelector('#heroMissionStatus');
+  if(currentSession && primaryAction){
+    const progress=localProgress(currentSession);
+    primaryAction.href=`session-${currentSession.id}/`;
+    primaryAction.textContent=`${progress?.pct>0?'Resume':'Enter'} Mission ${currentSession.number} →`;
+    if(heroStatus){
+      heroStatus.textContent=progress?.pct>0 ? `${progress.label} · ${progress.pct}% on this device.` : `Mission ${currentSession.number} is the current operation.`;
+    }
+  }
+  renderMissionIdentity();
   const stateFor = (id) => id < releasedThrough ? 'review' : (id === releasedThrough ? 'open' : 'locked');
   const pathNodes=[...document.querySelectorAll('.course-path .path-node')];
   pathNodes.forEach((n,i)=>n.classList.toggle('current',i===Math.max(0,releasedThrough-1)));

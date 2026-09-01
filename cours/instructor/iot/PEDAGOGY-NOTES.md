@@ -108,3 +108,8 @@ Authoring rule: **students discover the reasoning; they are not expected to disc
 ## Activity count is curriculum-driven
 
 Do **not** force different sessions to contain the same number of activities. Symmetry across sessions is not a design invariant. The invariant applies **within one session**: Student, Projector and Instructor Notes must expose the same canonical activity count, order, numbering and short titles. Add an activity when a concept needs its own cycle of prediction → externalisation → challenge → institutionalisation; do not merge it merely to preserve a visual count.
+
+
+## Cross-session Mission dossier
+
+The running case uses a deliberately small cross-session record. Do **not** turn it into a transcript of student work. Session-internal state (screen, unlocks, retrieval, optional depth, hints) stays separate. The shared dossier contains only structured engineering decisions that are safe to reuse: Architecture v2 class, Top-3 requirements, access stance, one unresolved uncertainty, and the revision trigger. Session 2 personalises its handover from these fields but must always remain fully teachable with the generic fallback. Free text and diagrams may be exported for the student, but they must not be parsed or used to control later pedagogy.

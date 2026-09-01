@@ -20,7 +20,7 @@
 <button class="btn design-btn" id="designBtn" type="button">Our design</button>
 <button class="btn field-guide-btn" hidden="" id="fieldGuideBtn" type="button">Field guide <span id="fieldGuideCount">0/5</span></button><span aria-live="polite" class="expert-progress" id="expertProgress" role="status" title="Optional challenge routes explored">Depth trail 0/4</span>
 <span aria-live="polite" class="save-pill" id="saveState" role="status">Saved on this device</span>
-<button class="btn optional" id="exportBtn" type="button">Export</button>
+<button class="btn optional" id="exportBtn" type="button">Export dossier</button>
 <label class="btn optional" for="importInput" style="cursor:pointer">Import</label>
 <input accept="application/json,.json" hidden="" id="importInput" type="file"/>
 <button class="btn optional danger" id="resetBtn" type="button">Reset</button>
@@ -338,6 +338,12 @@
 <div class="list" id="v2FlowList"></div>
 <div class="revision-foot"><span>One real edit is enough. The point is to make the consequence visible.</span><button class="text-button" id="resetV2" type="button">Reset v2 to v1</button></div>
 </section>
+<section class="card flat mission-handover-card" aria-labelledby="handoverArchitectureTitle">
+<div class="eyebrow">Mission dossier · handover to Session 2</div>
+<h3 id="handoverArchitectureTitle">How would you classify Architecture v2?</h3>
+<p>This one-click label does not grade your architecture. It gives the next session a safe, structured reference to your design without trying to interpret your free text or diagram.</p>
+<div id="handoverArchitecture"></div>
+</section>
 <details class="adaptive-depth" data-depth-id="stress"><summary><span class="challenge-mark">↗</span><span><strong>Challenge me · Two failures, one move</strong><small>Combine incidents and defend one architectural response.</small></span><span class="depth-badge">0/3 support</span></summary><div class="adaptive-depth-body" id="depthStress"></div></details>
 <button class="btn primary next-activity" data-next="13" disabled="" id="finishSessionBtn" type="button">Record a v2 revision to finish →</button>
 </section>
@@ -361,7 +367,7 @@
 <div><strong>Design</strong><span>changes when assumptions change.</span></div>
 </div>
 <div class="next-session-bridge"><span class="eyebrow">Next · Session 2</span><strong>Connectivity gives us a path. It does not tell us what the messages mean or what the exchange guarantees.</strong><p>Next we move from <em>who can reach whom</em> to <em>who sends what, in which order, with which protocol responsibilities, meaning and delivery semantics</em>.</p></div></div>
-<div class="expert-finish" id="expertFinish"></div><div class="finish-actions"><button class="btn primary" id="finishExport" type="button">Export my session</button><button class="btn" id="reviewSession" type="button">Review previous activities</button></div>
+<div class="expert-finish" id="expertFinish"></div><div class="finish-actions"><button class="btn primary" id="finishExport" type="button">Export mission dossier</button><button class="btn" id="reviewSession" type="button">Review previous activities</button></div>
 </div>
 </section>
 </div>

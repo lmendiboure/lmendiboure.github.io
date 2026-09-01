@@ -3,57 +3,88 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="IoT Systems Design — interactive course hub" />
-  <title>IoT Systems Design — Course Hub</title>
+  <meta name="description" content="IoT Systems Design — campus mission workspace" />
+  <title>IoT Systems Design — Campus Mission</title>
   <link rel="stylesheet" href="assets/course.css" />
 </head>
 <body>
 <a class="skip-link" href="#mainContent">Skip to main content</a>
 <header class="topbar">
   <div class="shell topbar-inner">
-    <a class="brand" href="./" aria-label="IoT Systems Design course home"><div class="brand-mark">IoT</div><div><div class="brand-title">Systems Design</div><div class="brand-sub">Course hub · 4 guided missions</div></div></a>
-    <span class="top-note">Your session work stays in this browser</span>
+    <a class="brand" href="./" aria-label="IoT Systems Design mission home"><div class="brand-mark">IoT</div><div><div class="brand-title">Systems Design</div><div class="brand-sub">Campus mission · 4 operations</div></div></a>
+    <span class="top-note" id="topMissionNote">Mission dossier · local to this browser</span>
   </div>
 </header>
 
 <main id="mainContent">
-  <section class="shell hero">
-    <div class="hero-grid">
+  <section class="shell hero mission-hero">
+    <div class="hero-grid mission-hero-grid">
       <div class="hero-copy">
-        <div class="eyebrow">IoT Systems Design · Course map</div>
-        <h1>Design connected systems,<br/>one decision at a time.</h1>
-        <p class="lead">This course is organised as four missions. You will build, explain, challenge and revise IoT designs rather than memorise a catalogue of technologies.</p>
-        <div class="course-principle"><strong>Course rule:</strong> make the need, assumptions and constraints explicit before defending a technology.</div>
-      </div>
-      <div class="course-map-visual" role="img" aria-label="Four mission course path from foundations to robustness">
-        <div class="course-path">
-          <div class="path-node current"><div class="path-dot">01</div><strong>Connect</strong><small>foundations</small></div>
-          <div class="path-node"><div class="path-dot">02</div><strong>Communicate</strong><small>information</small></div>
-          <div class="path-node"><div class="path-dot">03</div><strong>Place</strong><small>device · edge · cloud</small></div>
-          <div class="path-node"><div class="path-dot">04</div><strong>Harden</strong><small>robustness</small></div>
+        <div class="eyebrow">Assignment brief · Campus IoT programme</div>
+        <h1>You are the<br/>systems design team.</h1>
+        <p class="lead">Campus operations has a connected-system programme to deliver. Your job is not to pick fashionable technologies: it is to turn operational needs into an architecture you can explain, defend and revise when the evidence changes.</p>
+        <div class="hero-actions">
+          <a class="btn primary hero-primary" id="primaryMissionAction" href="session-1/">Enter Mission 01 →</a>
+          <span class="hero-status" id="heroMissionStatus">No mission work filed yet on this device.</span>
         </div>
-        <div class="visual-caption">Each mission reuses the same design habit: produce → compare → challenge → formalise → transfer → revise.</div>
+        <div class="course-principle"><strong>Operating rule:</strong> expose the need, assumptions and constraints before defending a technology.</div>
+      </div>
+
+      <aside class="assignment-board" aria-label="Your IoT mission assignment">
+        <div class="assignment-head"><span>MISSION FILE / 00</span><strong>Campus connected-system programme</strong></div>
+        <div class="assignment-grid">
+          <div><small>Your role</small><strong>IoT systems design team</strong><span>Make architecture decisions, not technology guesses.</span></div>
+          <div><small>Operating objective</small><strong>Observe, communicate, place, survive</strong><span>One system grows across four missions.</span></div>
+          <div><small>What changes</small><strong>Evidence and constraints</strong><span>Stakeholders will bring needs, claims and incidents.</span></div>
+          <div><small>Your evidence</small><strong>One evolving mission dossier</strong><span>Structural decisions survive from one mission to the next.</span></div>
+        </div>
+        <div class="assignment-stamp">STATUS · ACTIVE PROGRAMME</div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="shell team-brief" aria-labelledby="teamTitle">
+    <div class="section-head compact-head"><div><div class="eyebrow">Your counterparts</div><h2 id="teamTitle">They bring the problem. You own the design.</h2><p>These four people recur throughout the campus case. They do not reveal the answer: each one changes the evidence your architecture must survive.</p></div></div>
+    <div class="home-roster">
+      <div class="home-person"><span class="home-avatar">AM</span><div><strong>Amina</strong><small>Campus operations lead</small><em>service outcomes · operating constraints</em></div></div>
+      <div class="home-person"><span class="home-avatar">ST</span><div><strong>Sam</strong><small>Field technician</small><em>devices · environment · incidents</em></div></div>
+      <div class="home-person"><span class="home-avatar">YN</span><div><strong>Yanis</strong><small>Network architect</small><em>connectivity · infrastructure · responsibilities</em></div></div>
+      <div class="home-person"><span class="home-avatar">LE</span><div><strong>Leila</strong><small>Platform engineer</small><em>applications · data · interoperability</em></div></div>
+    </div>
+  </section>
+
+  <section class="shell dossier-section" aria-labelledby="dossierTitle">
+    <div class="dossier-home-card">
+      <div class="dossier-home-copy">
+        <div class="eyebrow">Mission continuity</div>
+        <h2 id="dossierTitle">Your decisions do not reset between missions.</h2>
+        <p>Each session keeps its own learning state, but the decisions that describe the system are filed in one mission dossier. The next mission can reopen those decisions when new evidence arrives.</p>
+      </div>
+      <div class="dossier-live" id="missionDossierSnapshot" aria-live="polite">
+        <div class="dossier-live-head"><span>MISSION DOSSIER</span><b>Not started</b></div>
+        <p>Complete Mission 01 to begin filing structural design decisions.</p>
       </div>
     </div>
   </section>
 
-  <section class="shell course-outcomes" aria-labelledby="outcomeTitle">
-    <div class="section-head"><div><div class="eyebrow">By the end of the course</div><h2 id="outcomeTitle">Four capabilities, not four technology lists.</h2></div></div>
+  <section class="shell course-outcomes" aria-labelledby="mandateTitle">
+    <div class="section-head"><div><div class="eyebrow">Your mandate</div><h2 id="mandateTitle">Four responsibilities. One system.</h2><p>The missions are successive engineering responsibilities, not four independent chapters.</p></div></div>
     <div class="outcome-grid">
-      <div class="outcome"><span>1</span><strong>Model the system</strong><small>Translate a physical-world need into functions, components and information flows.</small></div>
-      <div class="outcome"><span>2</span><strong>Defend communication</strong><small>Compare communication choices from explicit requirements and infrastructure assumptions.</small></div>
-      <div class="outcome"><span>3</span><strong>Place computation</strong><small>Reason about device, edge and cloud roles instead of treating “the cloud” as a default.</small></div>
-      <div class="outcome"><span>4</span><strong>Challenge the design</strong><small>Revise an architecture when scale, failures, mobility or dependencies change.</small></div>
+      <div class="outcome"><span>01</span><strong>Establish the system</strong><small>Translate a physical-world need into responsibilities, components, flows and explicit communication requirements.</small></div>
+      <div class="outcome"><span>02</span><strong>Make exchanges work</strong><small>Define interaction patterns, protocol responsibilities, shared meaning and scoped delivery guarantees.</small></div>
+      <div class="outcome"><span>03</span><strong>Place computation</strong><small>Decide what belongs on the device, nearby, at the edge or in the cloud as constraints change.</small></div>
+      <div class="outcome"><span>04</span><strong>Break your own design</strong><small>Expose failure assumptions, challenge dependencies and revise the architecture beyond nominal conditions.</small></div>
     </div>
   </section>
 
   <section class="shell mission-section" aria-labelledby="missionTitle">
-    <div class="section-head"><div><div class="eyebrow">Course progression</div><h2 id="missionTitle">Choose the mission currently open.</h2><p>Completed missions stay available for review. Your current mission is highlighted; later missions unlock as the course progresses.</p></div><span id="courseProgress" class="course-progress">Course status</span></div>
-    <div id="missionGrid" class="mission-grid"></div><noscript><div class="course-note"><strong>JavaScript is required for the interactive course map.</strong> The currently released missions are available from this course hub when JavaScript is enabled.</div></noscript>
+    <div class="section-head"><div><div class="eyebrow">Operations board</div><h2 id="missionTitle">Your current mission.</h2><p>Each operation changes the same campus system. Completed missions remain available as evidence; later missions open as the programme advances.</p></div><span id="courseProgress" class="course-progress">Mission status</span></div>
+    <div id="missionGrid" class="mission-grid"></div>
+    <noscript><div class="course-note"><strong>JavaScript is required for the interactive operations board.</strong> Released missions are available from this hub when JavaScript is enabled.</div></noscript>
   </section>
-<div class="shell" style="padding:0 0 28px"><p class="section-copy"><strong>Running case:</strong> One campus case evolves across the sessions. New stakeholders bring constraints, integration claims and incidents; the technical concepts are formalised after each decision.</p></div></main>
+</main>
 
-<footer class="shell footer"><span>IoT Systems Design · interactive course workspace</span><span>Progress is saved in this browser.</span></footer>
+<footer class="shell footer"><span>IoT Systems Design · campus mission workspace</span><span>Your progress and mission dossier stay in this browser unless exported.</span></footer>
 <script src="course-config.js"></script>
 <script src="assets/course.js"></script>
 </body>

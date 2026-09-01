@@ -3,6 +3,7 @@
   if (!root) return;
 
   const STORAGE_KEY = 'iot-systems-design-session1-v18';
+  const MISSION_KEY = 'iot-systems-design-campus-mission-v1';
   const defaultState = {
     version: 18,
     screen: 0,
@@ -39,7 +40,8 @@
     stressRequirement: null,
     stressResponse: null,
     revisionNote: '',
-    loopClosure: {elements:[], rationale:''}
+    loopClosure: {elements:[], rationale:''},
+    handoverArchitecture: null
   };
   let state = structuredClone(defaultState);
   let nextComponentId = 1;
@@ -48,6 +50,42 @@
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => [...document.querySelectorAll(s)];
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+
+  const handoverArchitectureChoices = [
+    ['direct','Mostly direct','Devices mainly reach the application/service without a dedicated local gateway role.'],
+    ['gateway','Gateway-centred','A local gateway or edge component is a structural intermediary in the design.'],
+    ['hybrid','Hybrid','The design intentionally mixes direct and gateway/intermediated paths.'],
+    ['unclear','Hard to classify','The diagram does not fit one of these patterns cleanly yet.']
+  ];
+  function loadMissionDossier(){
+    try{return JSON.parse(localStorage.getItem(MISSION_KEY)||'null')||{version:1,course:'IoT Systems Design',mission:'Campus environmental observability',session1:{},session2:{}}}
+    catch{return {version:1,course:'IoT Systems Design',mission:'Campus environmental observability',session1:{},session2:{}}}
+  }
+  function session1MissionRecord(){
+    const top=requirementDefs?.filter?.(([id])=>state.requirements?.[id]===2).map(([id,,label])=>({id,label}))||[];
+    const access=campusDecisionPositions?.find?.(x=>x[0]===state.campusDecision?.position);
+    const uncertainty=campusUncertainties?.find?.(x=>x[0]===state.campusDecision?.uncertainty);
+    const incident=stressDefs?.find?.(x=>x.id===state.selectedStress);
+    const architecture=handoverArchitectureChoices.find(x=>x[0]===state.handoverArchitecture);
+    return {
+      architectureClass: architecture?{id:architecture[0],label:architecture[1]}:null,
+      priorityRequirements: top,
+      accessStrategy: access?{id:access[0],label:access[1]}:null,
+      keyUncertainty: uncertainty?{id:uncertainty[0],label:uncertainty[1]}:null,
+      revisionTrigger: incident?{id:incident.id,label:incident.title}:null,
+      architectureV2Completed: !!(state.architectureV2 && architectureChanged()),
+      updatedAt: new Date().toISOString()
+    };
+  }
+  function publishMissionDossier(){
+    try{
+      const dossier=loadMissionDossier();
+      dossier.version=1; dossier.course='IoT Systems Design'; dossier.mission='Campus environmental observability';
+      dossier.session1=session1MissionRecord(); dossier.updatedAt=new Date().toISOString();
+      localStorage.setItem(MISSION_KEY,JSON.stringify(dossier));
+      return dossier;
+    }catch(_){return loadMissionDossier()}
+  }
 
 
   const conceptDefs = {
@@ -147,6 +185,7 @@
   function saveState() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      publishMissionDossier();
       const pill = $('#saveState');
       if (pill) {
         pill.textContent = 'Saved on this device';
@@ -217,7 +256,7 @@
     document.body.classList.toggle('past-intro', index > 0);
     const designButton = $('#designBtn');
     if (designButton) designButton.hidden = index < 2;
-    renderArchitecture(); renderDesignDrawer(); renderStopSnapshots(); renderStopRitual(); renderFieldGuide(); renderRevisionStudio(); renderDesignEvolution();
+    renderArchitecture(); renderDesignDrawer(); renderStopSnapshots(); renderStopRitual(); renderFieldGuide(); renderRevisionStudio(); renderHandoverArchitecture(); renderDesignEvolution();
     saveState();
     if (scroll) window.scrollTo({top: 0, behavior: 'smooth'});
     return true;
@@ -727,6 +766,12 @@
     host.querySelectorAll('[data-campus-uncertainty]').forEach(b=>b.addEventListener('click',()=>{state.campusDecision={...(state.campusDecision||{}),uncertainty:b.dataset.campusUncertainty};saveState();renderCampusDecision();renderDesignDrawer();renderStopSnapshots();}));
   }
 
+  function renderHandoverArchitecture(){
+    const host=$('#handoverArchitecture'); if(!host)return;
+    host.innerHTML=`<div class="campus-position-grid">${handoverArchitectureChoices.map(([id,title,desc])=>`<button type="button" class="campus-position ${state.handoverArchitecture===id?'active':''}" data-handover-architecture="${id}"><strong>${title}</strong><small>${desc}</small></button>`).join('')}</div>`;
+    host.querySelectorAll('[data-handover-architecture]').forEach(b=>b.addEventListener('click',()=>{state.handoverArchitecture=b.dataset.handoverArchitecture;saveState();renderHandoverArchitecture();renderRevisionStudio();renderDesignDrawer();}));
+  }
+
   /* ---------- Stress test ---------- */
   const stressDefs = [
     {id:'outage', icon:'⊘', title:'Internet outage', short:'Sam reports that campus Internet disappears for 30 minutes.', broken:'Your original design may have assumed continuous reachability of remote services.'},
@@ -893,7 +938,8 @@
     const committed=Object.values(state.scenarios||{}).filter(v=>v&&v.committed).length;
     const cp=state.campusDecision?.position?campusDecisionPositions.find(x=>x[0]===state.campusDecision.position):null;
     const v1=state.architectureV1||currentArchitectureModel(), v2=state.architectureV2;
-    host.innerHTML=`<section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Campus mission</strong><span class="design-stat">30 points</span></div><div class="drawer-mission-facts"><span>Buildings + outdoor</span><span>Temperature · humidity · CO₂ · noise</span><span>History + alerts</span></div>${cp?`<div class="drawer-flow">Current connectivity stance: <strong>${esc(cp[1])}</strong></div>`:''}</section><section class="design-section"><div class="design-section-head"><strong>Architecture ${state.architectureV1?'v1 · frozen':'working'}</strong><span class="design-stat">${v1.components.length} components · ${v1.flows.length} flows</span></div>${miniGraphMarkupFor(v1)}</section>${v2&&architectureChanged()?`<section class="design-section design-v2-section"><div class="design-section-head"><strong>Architecture v2 · revised</strong><span class="design-stat">after incident</span></div>${miniGraphMarkupFor(v2)}</section>`:''}<section class="design-section"><div class="design-section-head"><strong>Requirements</strong><span class="design-stat">${selected.length} selected</span></div>${priorities.length?`<div class="chip-row">${priorities.map(x=>`<span class="chip priority">★ ${esc(x)}</span>`).join('')}</div>`:'<p class="drawer-empty">No top-three priorities yet.</p>'}</section><section class="design-section"><div class="design-section-head"><strong>Current investigation</strong></div>${tech?`<div class="drawer-flow">Last technology opened: <strong>${esc(tech)}</strong></div>`:'<p class="drawer-empty">No technology card opened yet.</p>'}<div class="drawer-flow" style="margin-top:6px">Committed transfer decisions: <strong>${committed}</strong></div></section>`;
+    const dossier=loadMissionDossier(), hand=dossier.session1||{}, arch=handoverArchitectureChoices.find(x=>x[0]===state.handoverArchitecture);
+    host.innerHTML=`<section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Mission handover</strong><span class="design-stat">shared with S2</span></div><div class="drawer-mission-facts"><span>Architecture: ${esc(arch?.[1]||'not classified yet')}</span><span>Top constraints: ${esc(hand.priorityRequirements?.map(x=>x.label).join(' · ')||'not fixed yet')}</span><span>Key uncertainty: ${esc(hand.keyUncertainty?.label||'not fixed yet')}</span></div></section><section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Campus mission</strong><span class="design-stat">30 points</span></div><div class="drawer-mission-facts"><span>Buildings + outdoor</span><span>Temperature · humidity · CO₂ · noise</span><span>History + alerts</span></div>${cp?`<div class="drawer-flow">Current connectivity stance: <strong>${esc(cp[1])}</strong></div>`:''}</section><section class="design-section"><div class="design-section-head"><strong>Architecture ${state.architectureV1?'v1 · frozen':'working'}</strong><span class="design-stat">${v1.components.length} components · ${v1.flows.length} flows</span></div>${miniGraphMarkupFor(v1)}</section>${v2&&architectureChanged()?`<section class="design-section design-v2-section"><div class="design-section-head"><strong>Architecture v2 · revised</strong><span class="design-stat">after incident</span></div>${miniGraphMarkupFor(v2)}</section>`:''}<section class="design-section"><div class="design-section-head"><strong>Requirements</strong><span class="design-stat">${selected.length} selected</span></div>${priorities.length?`<div class="chip-row">${priorities.map(x=>`<span class="chip priority">★ ${esc(x)}</span>`).join('')}</div>`:'<p class="drawer-empty">No top-three priorities yet.</p>'}</section><section class="design-section"><div class="design-section-head"><strong>Current investigation</strong></div>${tech?`<div class="drawer-flow">Last technology opened: <strong>${esc(tech)}</strong></div>`:'<p class="drawer-empty">No technology card opened yet.</p>'}<div class="drawer-flow" style="margin-top:6px">Committed transfer decisions: <strong>${committed}</strong></div></section>`;
   }
 
   function openDesign(){renderDesignDrawer();$('#designDrawer').classList.add('open');$('#designDrawer').setAttribute('aria-hidden','false');$('#designScrim').hidden=false;}
@@ -1012,7 +1058,7 @@
     const list=$('#v2FlowList');
     list.innerHTML=v2.flows.length?v2.flows.map((f,i)=>{const a=v2.components.find(c=>String(c.id)===String(f.from)),b=v2.components.find(c=>String(c.id)===String(f.to));return `<div class="list-item"><span><strong>${esc(a?.name||'?')}</strong> <span class="flow-arrow-inline">→</span> <strong>${esc(b?.name||'?')}</strong><small>${esc(f.label||'unlabelled flow')}</small></span><button class="icon-button v2-remove-flow" data-i="${i}" type="button" aria-label="Remove revision flow">×</button></div>`}).join(''):'<p class="empty-copy">No flows in v2.</p>';
     list.querySelectorAll('.v2-remove-flow').forEach(b=>b.addEventListener('click',()=>{v2.flows.splice(+b.dataset.i,1);saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();}));
-    if(finish){finish.disabled=!changed;finish.textContent=changed?'Architecture v2 recorded → finish':'Record a v2 revision to finish →';}
+    if(finish){const classified=!!state.handoverArchitecture;finish.disabled=!(changed&&classified);finish.textContent=!changed?'Record a v2 revision to finish →':(!classified?'Classify Architecture v2 for handover →':'Architecture v2 + handover recorded → finish');}
   }
   $('#v2ComponentForm')?.addEventListener('submit',e=>{e.preventDefault();const inp=$('#v2ComponentInput'),name=inp.value.trim();if(!name)return;const v2=ensureArchitectureV2();const ids=v2.components.map(c=>Number(c.id)).filter(Number.isFinite);const id=(ids.length?Math.max(...ids):0)+1;v2.components.push({id,name,x:0,y:0});inp.value='';saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();});
   $('#v2RemoveComponentBtn')?.addEventListener('click',()=>{const id=+$('#v2RemoveComponent').value;if(!id)return;const v2=ensureArchitectureV2();v2.components=v2.components.filter(c=>c.id!==id);v2.flows=v2.flows.filter(f=>f.from!==id&&f.to!==id);saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();});
@@ -1051,20 +1097,21 @@
 
   /* ---------- Export / import ---------- */
   function exportSession() {
-    const output = {course:'IoT Systems Design', session:'Session 1', exportedAt:new Date().toISOString(), data:state};
+    const dossier=publishMissionDossier();
+    const output={course:'IoT Systems Design',artifact:'Campus IoT mission dossier',exportedAt:new Date().toISOString(),missionDossier:dossier,sessionProgress:{session1:state}};
     const blob=new Blob([JSON.stringify(output,null,2)],{type:'application/json'});
     const url=URL.createObjectURL(blob), a=document.createElement('a');
-    a.href=url; a.download='iot-systems-design-session1.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1200);
+    a.href=url; a.download='iot-campus-mission-dossier.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1200);
   }
   $('#exportBtn').addEventListener('click',exportSession);
   $('#finishExport').addEventListener('click',exportSession);
   $('#importInput').addEventListener('change', e=>{
     const file=e.target.files?.[0]; if(!file)return;
     const reader=new FileReader();
-    reader.onload=()=>{try{const parsed=JSON.parse(reader.result);const candidate=parsed.data||parsed;if(!Array.isArray(candidate.components)||!Array.isArray(candidate.flows))throw new Error();state={...structuredClone(defaultState),...candidate};state.maxUnlockedScreen=Math.max(Number(state.maxUnlockedScreen)||0,Number(state.screen)||0);nextComponentId=Math.max(1,...state.components.map(c=>+c.id||0))+1;saveState();renderAll();showScreen(state.screen,{scroll:false});}catch(_){alert('This is not a valid Session 1 export.');}};
+    reader.onload=()=>{try{const parsed=JSON.parse(reader.result);const candidate=parsed.sessionProgress?.session1||parsed.data||parsed;if(!Array.isArray(candidate.components)||!Array.isArray(candidate.flows))throw new Error();if(parsed.missionDossier)localStorage.setItem(MISSION_KEY,JSON.stringify(parsed.missionDossier));state={...structuredClone(defaultState),...candidate};state.maxUnlockedScreen=Math.max(Number(state.maxUnlockedScreen)||0,Number(state.screen)||0);nextComponentId=Math.max(1,...state.components.map(c=>+c.id||0))+1;saveState();renderAll();showScreen(state.screen,{scroll:false});}catch(_){alert('This is not a valid Session 1 export.');}};
     reader.readAsText(file); e.target.value='';
   });
-  $('#resetBtn').addEventListener('click',()=>{if(!confirm('Reset all work stored for this session on this device?'))return;state=structuredClone(defaultState);nextComponentId=1;saveState();renderAll();showScreen(0);});
+  $('#resetBtn').addEventListener('click',()=>{if(!confirm('Reset all work stored for this session on this device?'))return;state=structuredClone(defaultState);nextComponentId=1;try{const d=loadMissionDossier();d.session1={};localStorage.setItem(MISSION_KEY,JSON.stringify(d));}catch(_){}saveState();renderAll();showScreen(0);});
   $('#reviewSession').addEventListener('click',()=>showScreen(0));
 
   function flashMessage(text) {
@@ -1084,7 +1131,7 @@
     renderScenarios();
     renderCampusDecision();
     renderStress();
-    renderAdaptiveDepth(); renderResearchTrails(); renderStopSnapshots(); renderExpertProgress(); renderMemoryLock(); renderStopRitual(); renderFieldGuide(); renderRevisionStudio(); renderDesignEvolution();
+    renderAdaptiveDepth(); renderResearchTrails(); renderStopSnapshots(); renderExpertProgress(); renderMemoryLock(); renderStopRitual(); renderFieldGuide(); renderRevisionStudio(); renderHandoverArchitecture(); renderDesignEvolution();
     renderStepper(); renderHistoryNav();
   }
 
