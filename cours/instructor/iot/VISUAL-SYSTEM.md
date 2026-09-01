@@ -153,3 +153,11 @@ The problem is not visual richness. The goal is **specific visual richness**: di
 ## 11. Authoring invariant
 
 New sessions should reuse the visual tokens and component grammar before inventing new visual primitives. A new component is justified when the learning representation requires it, not merely to make the page look different.
+
+## 12. Text labels are tabs, not fixed icon boxes
+
+Fixed square markers are reserved for genuinely short symbolic content such as `01`, `02`, `A`, or `B`.
+
+Textual micro-labels such as `COMPARE`, `EVIDENCE`, `BOUNDARY`, or `RESIDUAL RISK` must use **auto-width technical tabs**. Their background expands to contain the full label; the text must never overflow a fixed square.
+
+If horizontal space becomes constrained, stack the tab above its explanatory text rather than shrinking or clipping the label.
