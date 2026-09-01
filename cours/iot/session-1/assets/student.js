@@ -2,9 +2,9 @@
   const root = document.querySelector('.student-page');
   if (!root) return;
 
-  const STORAGE_KEY = 'iot-systems-design-session1-v10';
+  const STORAGE_KEY = 'iot-systems-design-session1-v18';
   const defaultState = {
-    version: 10,
+    version: 18,
     screen: 0,
     maxUnlockedScreen: 0,
     conceptUnlocks: {},
@@ -38,7 +38,8 @@
     selectedStress: null,
     stressRequirement: null,
     stressResponse: null,
-    revisionNote: ''
+    revisionNote: '',
+    loopClosure: {elements:[], rationale:''}
   };
   let state = structuredClone(defaultState);
   let nextComponentId = 1;
@@ -77,6 +78,15 @@
       fieldKeep:'Range · data volume / throughput · latency · reliability · energy · scale · mobility · infrastructure · cost. Priorities may differ by flow.',
       tags:['name the constraint','prioritise','per-flow reasoning']
     },
+    closedLoop:{
+      title:'Closing the loop',
+      bridge:'Monitoring only sends information away from the physical world. Once the system can act, commands, authority and evidence of the resulting physical state become part of the design.',
+      formal:'A <strong>closed-loop IoT system</strong> links observation to decision and actuation, then feeds state back. A command being transmitted or acknowledged does not by itself prove that the physical action occurred.',
+      carry:'Separate <strong>telemetry · command · acknowledgement · state feedback</strong>. Make override authority and safe behaviour explicit whenever the digital system can change the physical world.',
+      fieldSummary:'Observation can become control: decision → command → actuation → state feedback.',
+      fieldKeep:'Command sent ≠ action performed. Model feedback, authority and failure of the physical actuator.',
+      tags:['telemetry ≠ command','feedback','human override','physical effect']
+    },
     technology:{
       title:'Technology decision rule',
       bridge:'The same application need can produce different communication structures: nearby peer, local access point, private gateway infrastructure or operator network. The challenge showed that access technology alone does not describe every dependency in the path.',
@@ -87,11 +97,12 @@
       tags:['problem → shape → family','implicit infrastructure','validity domain']
     }
   };
-  const conceptOrder=['iot','architecture','requirements','technology'];
+  const conceptOrder=['iot','architecture','closedLoop','requirements','technology'];
   const stopChallengeDefs={
     landscape:{title:'Connected is not enough',prompt:'A Raspberry Pi hosts a normal web page but senses or controls nothing in the physical world. Would you call that IoT? Defend the boundary you are using.'},
     architecture:{title:'One box, many responsibilities',prompt:'Suppose one Raspberry Pi senses, stores, computes and serves the dashboard. How many architectural responsibilities exist — and how many physical boxes?'},
     requirements:{title:'Same system, different flow',prompt:'Now make the indoor sensor mains-powered while the outdoor node remains battery-powered. Should Energy still have the same importance for every communication flow?'},
+    closedLoop:{title:'Delivery is not physical success',prompt:'The command reaches the ventilation controller and is acknowledged, but a jammed actuator never opens the damper. What evidence would expose this failure, and where should it appear in the loop?'},
     technology:{title:'Access is not the whole system',prompt:'A LoRaWAN sensor can still reach its gateway, but the gateway loses its upstream Internet path. Which part of the architecture failed — and what does that tell you about “choosing a technology”?' }
   };
 
@@ -111,9 +122,9 @@
   function updateStopNextButtons(){document.querySelectorAll('[data-requires-unlock]').forEach(b=>{b.disabled=!state.conceptUnlocks?.[b.dataset.requiresUnlock];});}
   function renderFieldGuide(){
     const count=conceptOrder.filter(id=>state.conceptUnlocks?.[id]).length;
-    const btn=$('#fieldGuideBtn'),counter=$('#fieldGuideCount'); if(btn)btn.hidden=count===0;if(counter)counter.textContent=`${count}/4`;
+    const btn=$('#fieldGuideBtn'),counter=$('#fieldGuideCount'); if(btn)btn.hidden=count===0;if(counter)counter.textContent=`${count}/5`;
     const host=$('#fieldGuideContent');if(!host)return;
-    host.innerHTML=`<div class="field-guide-progress"><strong>${count} / 4 concepts unlocked</strong><span>Compact reference cards from concepts consolidated after discussion.</span></div>${conceptOrder.map((id,i)=>{const d=conceptDefs[id],on=!!state.conceptUnlocks?.[id];return `<section class="guide-entry ${on?'':'locked'}"><span class="guide-number">${i+1}</span><div>${on?`<strong>${d.title}</strong><p>${d.fieldSummary}</p><div class="guide-keep">${d.fieldKeep}</div><div class="chip-row">${d.tags.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:`<strong>Concept locked</strong><p>Complete the corresponding STOP discussion first.</p>`}</div></section>`}).join('')}`;
+    host.innerHTML=`<div class="field-guide-progress"><strong>${count} / 5 concepts unlocked</strong><span>Compact reference cards from concepts consolidated after discussion.</span></div>${conceptOrder.map((id,i)=>{const d=conceptDefs[id],on=!!state.conceptUnlocks?.[id];return `<section class="guide-entry ${on?'':'locked'}"><span class="guide-number">${i+1}</span><div>${on?`<strong>${d.title}</strong><p>${d.fieldSummary}</p><div class="guide-keep">${d.fieldKeep}</div><div class="chip-row">${d.tags.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:`<strong>Concept locked</strong><p>Complete the corresponding STOP discussion first.</p>`}</div></section>`}).join('')}`;
   }
 
   const challengeIds=['architecture','requirements','discover','stress'];
@@ -150,10 +161,10 @@
 
   /* ---------- Navigation ---------- */
   const stepLabels = [
-    ['1','IoT landscape'], ['2','Architecture v1'], ['3','Requirements'], ['4','Patterns'], ['5','Technologies'], ['6','Choose'], ['7','Stress-test']
+    ['1','Map the IoT landscape'], ['2','Architecture v1'], ['3','Close the loop'], ['4','Requirements'], ['5','Network shapes'], ['6','Technologies'], ['7','Choose'], ['8','Stress-test']
   ];
-  const screenToStep = [0,0,1,1,2,2,3,4,5,5,6,6];
-  const stepEntryScreens = [0,2,4,6,7,8,10];
+  const screenToStep = [0,0,1,1,2,2,3,3,4,5,6,6,7,7];
+  const stepEntryScreens = [0,2,4,6,8,9,10,12];
 
   function renderStepper() {
     const host = $('#stepper');
@@ -193,7 +204,7 @@
   }
 
   function showScreen(index, {scroll = true, unlock = false} = {}) {
-    index = Math.max(0, Math.min(11, Number(index) || 0));
+    index = Math.max(0, Math.min(Math.max(...$$('.activity-screen').map(s=>Number(s.dataset.screen)||0)), Number(index) || 0));
     const frontier=Math.max(Number(state.maxUnlockedScreen)||0,Number(state.screen)||0);
     if(index>frontier && !unlock){flashMessage('That stage is still locked. Continue from your current mission first.');return false;}
     const previousScreen=state.screen;
@@ -313,6 +324,46 @@
     const host=$('#borderlineChallenge');if(!host)return;
     host.innerHTML=`<p class="challenge-copy">These cases sit near the boundary. Commit to a position and prepare an argument; several answers can be defensible.</p><div class="micro-game-grid">${borderlineCases.map(c=>{const choice=state.borderline[c.id];return `<div class="micro-game-card"><strong>${c.title}</strong><small>${c.copy}</small><div class="micro-options">${['IoT','Not necessarily','Depends'].map(o=>`<button type="button" class="micro-option ${choice===o?'active':''}" data-borderline="${c.id}" data-choice="${o}">${o}</button>`).join('')}</div>${choice?`<div class="micro-feedback"><b>Discussion fuel</b>${c.prompt}</div>`:''}</div>`}).join('')}</div>`;
     host.querySelectorAll('[data-borderline]').forEach(b=>b.addEventListener('click',()=>{state.borderline[b.dataset.borderline]=b.dataset.choice;markChallenge('landscape');renderBorderlineChallenge();}));
+  }
+
+
+  /* ---------- Close the loop ---------- */
+  const loopElements = [
+    ['telemetry','Telemetry / sensed state','Bring CO₂ and relevant physical state into the digital system.'],
+    ['decision','Decision / control policy','Decide whether and how the system should act.'],
+    ['command','Command path','Carry the requested action toward the actuator/controller.'],
+    ['actuator','Physical actuator','Change the physical process, here ventilation.'],
+    ['ack','Command acknowledgement','Confirm receipt/handling at a digital endpoint — not physical success.'],
+    ['feedback','Measured state feedback','Observe the resulting physical state after the command.'],
+    ['override','Human override / authority','Make explicit who may supersede automation.'],
+    ['safe','Safe/default behaviour','Define what should happen when control or feedback is unavailable.']
+  ];
+
+  function renderClosedLoop(){
+    state.loopClosure = state.loopClosure && typeof state.loopClosure==='object' ? state.loopClosure : {elements:[],rationale:''};
+    state.loopClosure.elements = Array.isArray(state.loopClosure.elements) ? state.loopClosure.elements : [];
+    const host=$('#loopChoiceGrid');
+    if(host){
+      const chosen=new Set(state.loopClosure.elements);
+      host.innerHTML=loopElements.map(([id,name,copy])=>`<button type="button" class="loop-choice ${chosen.has(id)?'active':''}" data-loop-element="${id}" aria-pressed="${chosen.has(id)?'true':'false'}"><strong>${esc(name)}</strong><span>${esc(copy)}</span></button>`).join('');
+      host.querySelectorAll('[data-loop-element]').forEach(b=>b.addEventListener('click',()=>{
+        const id=b.dataset.loopElement, set=new Set(state.loopClosure.elements||[]);
+        if(set.has(id))set.delete(id);else set.add(id);
+        state.loopClosure.elements=[...set]; saveState(); renderClosedLoop(); renderStopSnapshots();
+      }));
+    }
+    const ta=$('#loopRationale');
+    if(ta){
+      if(document.activeElement!==ta)ta.value=state.loopClosure.rationale||'';
+      ta.oninput=e=>{state.loopClosure.rationale=e.target.value;saveState();updateClosedLoopGate();renderStopSnapshots();};
+    }
+    updateClosedLoopGate();
+  }
+  function updateClosedLoopGate(){
+    const next=$('#loopNext'); if(!next)return;
+    const selected=(state.loopClosure?.elements||[]).length;
+    const rationale=(state.loopClosure?.rationale||'').trim();
+    next.disabled=selected<5||rationale.length<40;
   }
 
 
@@ -792,6 +843,7 @@
   function renderStopSnapshots(){
     const l=$('#stopLandscapeSnapshot');if(l){const cross=landscapeCases.filter(c=>landscapeSelection(c.id).secondary).length;l.innerHTML=`<div class="snapshot-head"><strong>Our IoT landscape</strong><span>${cross} cross-domain choices</span></div>${landscapeSnapshotMarkup()}<div class="snapshot-signal"><b>Discussion signal</b>${cross===0?'Your group used one domain for every case. Was the overlap genuinely negligible, or did the main/secondary framing hide useful ambiguity?':`${cross} of 8 cases crossed a boundary. Pick the hardest one to defend.`}</div>`;}
     const a=$('#stopArchitectureSnapshot');if(a){const degrees=state.components.map(c=>[c,state.flows.filter(f=>f.from===c.id||f.to===c.id).length]).sort((x,y)=>y[1]-x[1]);const hot=degrees[0];a.innerHTML=`<div class="snapshot-head"><strong>Our architecture v1</strong><span>${state.components.length} components · ${state.flows.length} flows</span></div>${miniGraphMarkup()}${state.flows.length?`<div class="snapshot-flow-list">${state.flows.slice(0,6).map(f=>{const x=state.components.find(c=>c.id===f.from),y=state.components.find(c=>c.id===f.to);return `<span>${esc(x?.name||'?')} → ${esc(y?.name||'?')}${f.label?' · '+esc(f.label):''}</span>`}).join('')}</div>`:''}${hot?`<div class="snapshot-signal"><b>Discussion signal</b>${esc(hot[0].name)} touches ${hot[1]} flow${hot[1]===1?'':'s'}. Is that architectural centrality intentional?</div>`:''}`;}
+    const cl=$('#stopLoopSnapshot');if(cl){const chosen=new Set(state.loopClosure?.elements||[]);cl.innerHTML=`<div class="snapshot-head"><strong>Our closed-loop extension</strong><span>${chosen.size} design elements selected</span></div><div class="loop-snapshot-grid">${loopElements.map(([id,n])=>`<span class="${chosen.has(id)?'active':''}">${esc(n)}</span>`).join('')}</div>${state.loopClosure?.rationale?`<div class="snapshot-insight">${esc(state.loopClosure.rationale)}</div>`:''}`;}
     const r=$('#stopRequirementsSnapshot');if(r){const sel=requirementDefs.filter(([id])=>state.requirements[id]);const top=sel.filter(([id])=>state.requirements[id]===2);r.innerHTML=`<div class="snapshot-head"><strong>Our communication requirements</strong><span>${sel.length} selected</span></div><div class="snapshot-requirements"><div><small>Selected</small><div class="chip-row">${sel.map(([id,,n])=>`<span class="chip">${esc(n)}</span>`).join('')||'<span class="empty-copy">None</span>'}</div></div><div><small>Top 3</small><div class="chip-row">${top.map(([id,,n])=>`<span class="chip priority">★ ${esc(n)}</span>`).join('')||'<span class="empty-copy">None starred</span>'}</div></div></div>${state.flowLens?.requirements?.length?`<div class="snapshot-insight">Flow lens completed: its priorities were ${state.flowLens.requirements.map(id=>requirementDefs.find(x=>x[0]===id)?.[2]).filter(Boolean).join(', ')}.</div>`:''}`;}
     const t=$('#stopTechnologySnapshot');if(t){const mystery=mysteryTechs.map(m=>{const x=state.mystery[m.id];return `<span class="snapshot-tech ${x?.revealed?(x.choice===m.answer?'correct':'wrong'):''}">${x?.revealed?(x.choice===m.answer?'✓':'↺'):'·'} ${m.answer}</span>`}).join('');const dec=scenarioDefs.map(x=>{const st=state.scenarios[x.id]||{};return st.committed?`<div><strong>${esc(x.title)}</strong><span>${esc(st.choice||'')}</span>${st.twist?'<small>assumption challenged</small>':''}</div>`:''}).filter(Boolean).join('');const cp=state.campusDecision?.position?campusDecisionPositions.find(x=>x[0]===state.campusDecision.position):null;const cu=state.campusDecision?.uncertainty?campusUncertainties.find(x=>x[0]===state.campusDecision.uncertainty):null;t.innerHTML=`<div class="snapshot-head"><strong>Our technology reasoning</strong><span>${Object.values(state.scenarios||{}).filter(x=>x?.committed).length} transfer decisions</span></div><div class="snapshot-tech-row">${mystery}</div><div class="snapshot-decisions">${dec||'<p class="empty-copy">No deployment decision committed yet.</p>'}</div>${cp?`<div class="snapshot-campus-return"><small>Back to campus</small><strong>${esc(cp[1])}</strong>${cu?`<span>Most decision-sensitive missing fact: ${esc(cu[1])}</span>`:''}</div>`:''}`;}
   }
@@ -987,6 +1039,7 @@
     {id:'beforetech', q:'Before choosing a communication technology, what should you make explicit first?', a:'The application need, architecture/flows, and the requirements or constraints that matter for those flows.'},
     {id:'operator', q:'Which network shape makes operator coverage an explicit design assumption?', a:'Operator-managed wide-area / cellular IoT: the device relies on cellular base stations and an operator network.'},
     {id:'scope', q:'Why is IEEE 802.15.4 not the same kind of object as LoRaWAN?', a:'802.15.4 provides lower-level local radio/link building blocks; LoRaWAN defines a wider network architecture around devices, gateways and network services.'},
+    {id:'feedback', q:'Why does an acknowledged command not prove that the physical action succeeded?', a:'An acknowledgement can confirm message or controller handling, while the actuator or physical process may still fail. Closed-loop control needs evidence of the resulting physical state.'},
     {id:'transfer', q:'Tomorrow one CO₂ sensor is replaced by a camera sending frequent images. Which part of your reasoning should you revisit first?', a:'Revisit the requirements of that flow first — especially data volume/throughput, and potentially energy/latency — then re-evaluate the communication path and technology choice.'}
   ];
   function renderMemoryLock(){
@@ -1022,6 +1075,7 @@
   function renderAll() {
     renderLandscape();
     renderArchitecture();
+    renderClosedLoop();
     renderRequirements();
     renderTechDiscovery();
     renderShapeChallenge();

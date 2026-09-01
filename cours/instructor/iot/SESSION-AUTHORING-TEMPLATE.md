@@ -255,7 +255,7 @@ For each canonical activity, author Student + Projector + Notes before consideri
 |---|---|---|
 | WORK | task + expected artifact + defence prompt + one guardrail | what not to pre-teach; what counts as enough progress |
 | RESTITUTION | optional Capture/Structure/Compare board + 2–3 questions + one counterexample | LOOK/COMPARE logic, likely answer families, what evidence to inspect |
-| Takeaway reveal | concise formalisation + carry-forward rule | precision, caveats, acceptable variants |
+| What-to-keep reveal | principle + canonical reference map | precision, caveats, acceptable variants |
 | Reality reveal | one concrete artifact/number/calculation/source + interpretation question | provenance, assumptions, caveats, what conclusion is justified |
 | Next activity | one primary button; no extra phase | transition/fallback phrasing |
 
@@ -271,7 +271,7 @@ For each canonical activity, author Student + Projector + Notes before consideri
 - [ ] Could this entire page be screen-shared without revealing internal design notes?
 - [ ] Is the current question readable from the back of a classroom?
 - [ ] Does every canonical activity have exactly one WORK screen and zero or one RESTITUTION screen?
-- [ ] Are Takeaway/Reality revealed in-place rather than implemented as extra screens?
+- [ ] Are What-to-keep/Reality revealed in-place rather than implemented as extra screens?
 - [ ] Does every WORK screen make the expected artifact obvious without revealing the answer?
 - [ ] When a Reality Check is used, is every number/source traceable and are worked assumptions labelled?
 - [ ] Does the Reality Check ask students to interpret evidence rather than merely read it?
@@ -308,3 +308,18 @@ Before release, verify the session against `VISUAL-SYSTEM.md`:
 - [ ] Diagrams and collective representations are first-class composition elements.
 - [ ] Monospace is reserved for technical metadata, timings, counters and annotations.
 - [ ] New visual components exist because the learning representation requires them.
+
+
+## Institutionalisation after restitution
+
+For every important restitution, distinguish two instructor-facing functions without adding a new navigation screen:
+
+1. **WHAT TO KEEP / Reference Plate** — institutionalise knowledge that a competent student should leave with even if no group spontaneously mentioned it. Include one principle plus a compact canonical map (typically 3–7 items, distinctions or families). This is not required to be “discovered” by students.
+2. **REALITY CHECK** — ground the reference map with a concrete architecture, worked order of magnitude, payload, standard, or official technical fact and ask students to interpret it.
+
+Authoring rule: **students discover the reasoning; they are not expected to discover the entire discipline.** Reference Plates should be selective maps, not claims of exhaustiveness.
+
+
+## Activity count is curriculum-driven
+
+Do **not** force different sessions to contain the same number of activities. Symmetry across sessions is not a design invariant. The invariant applies **within one session**: Student, Projector and Instructor Notes must expose the same canonical activity count, order, numbering and short titles. Add an activity when a concept needs its own cycle of prediction → externalisation → challenge → institutionalisation; do not merge it merely to preserve a visual count.

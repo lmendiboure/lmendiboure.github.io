@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Interactive student workspace for IoT Systems Design — Session 2" name="description"/>
+<title>Session 2 — How do things communicate?</title>
+<link href="assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="student-page">
+<a class="skip-link" href="#mainContent">Skip to main content</a>
+<header class="topbar no-print"><div class="shell topbar-inner">
+<a aria-label="Back to IoT course hub" class="brand" href="../"><div class="brand-mark">IoT</div><div><div class="brand-title">Systems Design</div><div class="brand-sub">Session 2 · Student workspace</div></div></a>
+<div class="actions"><button class="btn" id="stackBtn" type="button">Our stack</button><span class="save-pill" id="saveState">Saved on this device</span><button class="btn optional" id="exportBtn" type="button">Export</button><label class="btn optional" for="importInput">Import</label><input accept="application/json,.json" hidden="" id="importInput" type="file"/><button class="btn optional danger" id="resetBtn" type="button">Reset</button></div>
+</div></header>
+<main id="mainContent">
+<section class="shell hero"><div class="hero-grid"><div><div class="eyebrow">IoT Systems Design · Session 2</div><h1>Compose first.<br/>Name later.</h1><p class="lead">Connectivity exists. Now make information exchange work end-to-end. Start from conversations and responsibilities; protocol names come only after the structure is clear.</p><div class="hero-rule"><span></span><p><strong>Session rule:</strong> a protocol stack is a composition of roles, not a list of fashionable names.</p></div></div>
+<div aria-label="An unlabeled five-part communication stack waiting to be built" class="stack-hero" role="img"><div class="stack-wire"><span>?</span><span>?</span><span>?</span><span>?</span><span>?</span></div><div class="hero-note">What must each part of the exchange actually provide?</div></div></div><div class="session-bridge"><span>FROM SESSION 1</span><div><strong>Last time: who can reach whom, through which infrastructure?</strong><p>Today assume a path exists. Now decide who sends what, in which order, how it is named/interpreted, and what delivery guarantee the service actually needs.</p></div><b>PATH → EXCHANGE</b></div>
+<div aria-label="Session progression" class="stepper" id="stepper"></div><nav class="history-nav" hidden="" id="historyNav"></nav></section>
+<div class="shell activity-stage">
+<section class="activity-screen" data-screen="0">
+<div class="activity-label"><span>Activity 1</span><span class="pill-neutral">Describe the conversations</span></div>
+<div class="mission-strip"><b>Campus continuity</b><span>Your 30-point environmental monitoring system exists. Today you decide how devices and services exchange information.</span></div>
+<div class="activity-intro"><h2>Before protocols: what kind of conversation is happening?</h2><p>For each situation, identify who initiates, who should receive the information, whether a reply is expected, and whether the exchange is occasional or recurring.</p></div>
+<div class="conversation-grid" id="conversationGrid"></div>
+<div class="reflection-strip"><strong>Compare the shapes:</strong><span>Who starts?</span><span>One receiver or many?</span><span>Immediate reply?</span><span>Does the sender need to know every receiver?</span></div>
+<button class="btn primary next-activity" data-next="1" disabled="" id="a1Next">Conversations mapped → STOP</button>
+</section>
+<section class="activity-screen" data-screen="1" hidden=""><div class="stop-screen"><div class="stop-orbit">STOP</div><div class="eyebrow">Class discussion</div><h2>Different services need different conversations.</h2><div class="stop-snapshot" id="stop1Snapshot"></div><div class="student-stop-question"><span>Compare</span><strong>Which differences matter before any protocol name appears?</strong></div><div class="concept-card"><b>UNLOCK AFTER DISCUSSION</b><p>Interaction patterns describe <strong>who talks to whom and how</strong>: request/response, event notification, publish/subscribe, command, observation. A protocol is one concrete way to implement a pattern.</p></div><button class="btn primary next-activity" data-next="2">Continue →</button></div></section>
+<section class="activity-screen" data-screen="2" hidden="">
+<div class="activity-label"><span>Activity 2</span><span class="pill-neutral">Draw a message choreography</span></div>
+<div class="activity-intro"><h2>Turn one service into an exchange sequence.</h2><p>Choose a situation, place the actors in order, then add labelled messages. The topology alone is not enough: show the <strong>conversation over time</strong>.</p></div>
+<div class="choreo-layout"><aside class="palette card"><div class="eyebrow">Actor palette</div><p>Drag actors into the four slots.</p><div class="actor-palette" id="actorPalette"></div><label class="scenario-select"><span>Conversation</span><select id="choreoScenario"><option value="telemetry">Periodic telemetry</option><option value="query">Read current value</option><option value="alert">Abnormal-condition alert</option><option value="config">Configuration command</option></select></label></aside><div class="card choreo-board"><div class="lane-row" id="actorLanes"></div><div class="message-builder"><select id="msgFrom"></select><span>→</span><select id="msgTo"></select><input id="msgLabel" maxlength="42" placeholder="message meaning"/><button class="btn" id="addMessage" type="button">Add message</button></div><div class="message-list" id="messageList"></div></div></div>
+<div class="reflection-strip"><strong>Look for:</strong><span>request + response?</span><span>one-way event?</span><span>intermediary?</span><span>fan-out to several consumers?</span></div>
+<button class="btn primary next-activity" data-next="3" disabled="" id="a2Next">Sequence ready → STOP</button>
+</section>
+<section class="activity-screen" data-screen="3" hidden=""><div class="stop-screen"><div class="stop-orbit">STOP</div><div class="eyebrow">Class discussion</div><h2>Same nodes, different message choreography.</h2><div class="stop-snapshot" id="stop2Snapshot"></div><div class="student-stop-question"><span>Challenge</span><strong>Could two systems have the same network topology but completely different communication behaviour?</strong></div><div class="concept-card"><b>KEEP</b><p>A topology says <em>where paths exist</em>. A message choreography says <em>who initiates what, in which order, with which semantics</em>.</p></div><button class="btn primary next-activity" data-next="4">Continue →</button></div></section>
+<section class="activity-screen" data-screen="4" hidden="">
+<div class="activity-label"><span>Activity 3</span><span class="pill-neutral">Build the stack by responsibility</span></div>
+<div class="activity-intro"><h2>What responsibilities must be composed?</h2><p>Drag each responsibility to the layer where it belongs. Do this <strong>before</strong> seeing protocol names.</p></div>
+<div class="stack-lab"><div class="responsibility-palette" id="responsibilityPalette"></div><div class="stack-slots" id="stackSlots"></div></div>
+<div class="reflection-strip"><strong>Ask:</strong><span>Which roles are end-to-end?</span><span>Which only concern the local medium?</span><span>Why might constrained links need an adaptation step?</span></div>
+<button class="btn primary next-activity" data-next="5" disabled="" id="a3Next">Responsibilities placed → STOP</button>
+</section>
+<section class="activity-screen" data-screen="5" hidden=""><div class="stop-screen"><div class="stop-orbit">STOP</div><div class="eyebrow">Class discussion</div><h2>A stack is an ordered composition of responsibilities.</h2><div class="stop-snapshot" id="stop3Snapshot"></div><div class="student-stop-question"><span>Test</span><strong>Can one named technology span several responsibilities instead of fitting neatly into one layer?</strong></div><div class="concept-card"><b>WORKING STACK</b><div class="mini-stack"><span>Application exchange</span><span>Transport</span><span>Network</span><span>Adaptation</span><span>Local link</span></div></div><button class="btn primary next-activity" data-next="6">Continue →</button></div></section>
+<section class="activity-screen" data-screen="6" hidden="">
+<div class="activity-label"><span>Activity 4</span><span class="pill-neutral">Discover network and transport pieces</span></div>
+<div class="activity-intro"><h2>Predict the role first. Reveal the name second.</h2><p>Each card describes a communication responsibility. Commit to the role before revealing the protocol or suite.</p></div>
+<div class="detective-grid" id="networkDetective"></div>
+<div class="thread-lens card"><div><span class="eyebrow">Special case</span><h3>Thread does not fit into one little layer box.</h3><p>Keep that question open until the reveal: is Thread a link protocol, a transport protocol, an application protocol — or a networking suite spanning several responsibilities?</p></div><div class="thread-bracket"><span>Application ?</span><span>Transport ?</span><span>Network / routing ?</span><span>Adaptation ?</span><span>802.15.4 link</span></div></div>
+<button class="btn primary next-activity" data-next="7" disabled="" id="a4Next">Network pieces investigated →</button>
+</section>
+<section class="activity-screen" data-screen="7" hidden="">
+<div class="activity-label"><span>Activity 5</span><span class="pill-neutral">Discover application exchange protocols</span></div>
+<div class="activity-intro"><h2>Choose the interaction pattern before the application protocol.</h2><p>Start from the service need. Predict the message pattern, then reveal which protocol family fits that pattern and what it expects underneath.</p></div>
+<div class="app-pattern-grid" id="appPatternGrid"></div>
+<div class="claim-lab card"><div class="eyebrow">Claim lab</div><h3>Same “IoT protocol” label, very different roles.</h3><div class="claim-grid" id="claimGrid"></div></div>
+<button class="btn primary next-activity" data-next="8" disabled="" id="a5Next">Application protocols investigated →</button>
+</section>
+<section class="activity-screen" data-screen="8" hidden="">
+<div class="activity-label"><span>Activity 6</span><span class="pill-neutral">Make the exchange interoperable</span></div>
+<div class="activity-intro"><h2>A working protocol does not make the data self-explanatory.</h2><p>Start from a payload that another system receives successfully. Decide what it still needs to know in order to interpret, address and use the measurement safely.</p></div>
+<div class="interop-layout">
+<section class="payload-panel card"><span class="eyebrow">WHAT · payload meaning</span><pre>{"value": 812}</pre><h3>What is missing?</h3><div class="interop-fields" id="interopFields"></div></section>
+<section class="naming-panel card"><span class="eyebrow">WHERE / WHAT TARGET · identifiers</span><h3>Classify these identifiers.</h3><p>They all help an exchange, but they are not the same kind of “address”.</p><div class="naming-grid" id="namingGrid"></div></section>
+</div>
+<label class="interop-note card"><span>Reconciliation</span><textarea id="interopRationale" placeholder="Explain why protocol interoperability is not enough for semantic interoperability. Mention at least one identifier/addressing distinction."></textarea></label>
+<button class="btn primary next-activity" data-next="9" disabled="" id="a6Next">Exchange described → STOP</button>
+</section>
+<section class="activity-screen" data-screen="9" hidden=""><div class="stop-screen"><div class="stop-orbit">STOP</div><div class="eyebrow">Class discussion</div><h2>Transporting bytes is not the same as sharing meaning.</h2><div class="stop-snapshot" id="stop6Snapshot"></div><div class="student-stop-question"><span>Compare</span><strong>Which information belongs in the payload, which belongs in naming/addressing, and which belongs in a shared data model?</strong></div><div class="concept-card"><b>KEEP</b><p>Protocol interoperability tells systems how to exchange messages. Semantic interoperability requires enough shared structure and meaning to interpret what those messages represent.</p></div><button class="btn primary next-activity" data-next="10">Continue →</button></div></section>
+<section class="activity-screen" data-screen="10" hidden="">
+<div class="activity-label"><span>Activity 7</span><span class="pill-neutral">Compose complete stacks</span></div>
+<div class="activity-intro"><h2>Now assemble real protocol stacks.</h2><p>Drag protocol tiles into the stack. A stack is valid only if the pieces are compatible <strong>and</strong> the composition fits the service assumptions.</p></div>
+<div class="composer-tabs"><button class="composer-tab active" data-compose-case="a">A · Constrained local sensor</button><button class="composer-tab" data-compose-case="b">B · Gateway to cloud</button></div>
+<div class="composer"><aside class="protocol-palette" id="protocolPalette"></aside><div class="composer-main"><div class="case-brief" id="caseBrief"></div><div class="protocol-stack" id="protocolStack"></div><div class="composer-feedback" id="composerFeedback">Build the stack, then check it.</div><button class="btn" id="checkStack" type="button">Check composition</button></div></div>
+<div class="campus-decision card"><div><span class="eyebrow">Back to campus</span><h3>What communication architecture would you defend?</h3><p>Think about periodic telemetry, direct queries and alerts together.</p></div><div class="campus-options" id="campusOptions"></div><textarea id="campusRationale" placeholder="Why? Refer to interaction pattern + stack responsibilities + assumptions."></textarea></div>
+<button class="btn primary next-activity" data-next="11" disabled="" id="a7Next">Stacks composed → STOP</button>
+</section>
+<section class="activity-screen" data-screen="11" hidden=""><div class="stop-screen"><div class="stop-orbit">STOP</div><div class="eyebrow">Class discussion</div><h2>Protocol choice is a composition decision.</h2><div class="stop-snapshot" id="stop7Snapshot"></div><div class="student-stop-question"><span>Compare</span><strong>Which part of your stack is solving semantics, delivery behaviour, routing, adaptation and local access?</strong></div><div class="concept-card"><b>KEEP</b><p>Do not compare MQTT, TCP, Thread and Wi-Fi as if they were substitutes. They solve different parts of the end-to-end exchange and may be composed together.</p></div><button class="btn primary next-activity" data-next="12">Continue →</button></div></section>
+<section class="activity-screen" data-screen="12" hidden="">
+<div class="activity-label"><span>Activity 8</span><span class="pill-neutral">Choose the delivery semantics</span></div>
+<div class="activity-intro"><h2>“Reliable” is not one guarantee.</h2><p>Different services tolerate different losses, duplicates and disconnections. Commit to the guarantee each case actually needs, then place concrete mechanisms at the responsibility that provides them.</p></div>
+<div class="guarantee-case-grid" id="guaranteeCaseGrid"></div>
+<section class="mechanism-lab card">
+<div class="mechanism-lab-head"><div><span class="eyebrow">Mechanism map</span><h3>Who can provide which part of the guarantee?</h3><p>Drag or tap a mechanism, then place it at the responsibility where it primarily acts. Several layers may cooperate end-to-end.</p></div><div class="mechanism-note">MESSAGE DELIVERY ≠ OPERATION EFFECT</div></div>
+<div class="mechanism-layout"><div class="mechanism-palette" id="mechanismPalette"></div><div class="guarantee-zones" id="guaranteeZones"></div></div>
+</section>
+<label class="delivery-rationale card"><span>Boundary statement</span><textarea id="deliveryRationale" placeholder="Explain one case where the network/transport can behave correctly while the application or physical outcome is still wrong."></textarea></label>
+<div class="reflection-strip"><strong>Distinguish:</strong><span>byte delivery</span><span>message delivery</span><span>operation execution</span><span>physical-state confirmation</span></div>
+<button class="btn primary next-activity" data-next="13" disabled="" id="a8Next" type="button">Guarantees mapped → STOP</button>
+</section>
+<section class="activity-screen" data-screen="13" hidden="">
+<div class="stop-screen"><div class="stop-orbit">STOP</div><div class="eyebrow">Class discussion</div><h2>Guarantees belong to a scope.</h2><div class="stop-snapshot" id="stop8Snapshot"></div><div class="student-stop-question"><span>Boundary</span><strong>When someone says “exactly once”, exactly once <em>what</em> — a message, an application operation, or a physical effect?</strong></div><div class="concept-card"><b>KEEP</b><p>Transport and application protocols can improve delivery behaviour, but end-to-end correctness may still require application idempotence, deduplication, persistence, freshness checks and physical-state feedback.</p></div><button class="btn primary next-activity" data-next="14">Continue →</button></div>
+</section>
+
+<section class="activity-screen" data-screen="14" hidden="">
+<div class="activity-label"><span>Activity 9</span><span class="pill-neutral">Stress-test the exchange</span></div>
+<div class="activity-intro"><h2>Which guarantee actually failed?</h2><p>Choose one incident. Name the guarantee that should have held, identify the responsible mechanism(s), then revise the exchange. A lower layer may be behaving correctly while the service still fails.</p></div>
+<div class="incident-grid" id="incidentGrid"></div><div class="stress-card card"><label><span>1 · What failed?</span><textarea id="failureMeaning" placeholder="Name the failed assumption or guarantee."></textarea></label><label><span>2 · Which layer / mechanism should react?</span><textarea id="failureLayer" placeholder="Application semantics? transport? network? local link? intermediary?"></textarea></label><label><span>3 · Revision</span><textarea id="failureRevision" placeholder="What would you change, add or monitor?"></textarea></label></div>
+<button class="btn primary next-activity" data-next="15" disabled="" id="a9Next">Stress-test complete → final debrief</button>
+</section>
+<section class="activity-screen" data-screen="15" hidden=""><div class="finish-card"><div class="finish-mark">Δ</div><div class="eyebrow">Session 2 complete</div><h2>Keep the composition rule.</h2><p class="lead">A protocol name is not the architecture, delivered bytes are not shared meaning, and “reliable” only makes sense once its scope is explicit. Build the exchange from service semantics to end-to-end guarantees.</p><div class="final-chain"><span>Service need</span><b>→</b><span>Interaction pattern</span><b>→</b><span>Message meaning</span><b>→</b><span>Stack responsibilities</span><b>→</b><span>Protocol composition</span><b>→</b><span>Delivery semantics</span><b>→</b><span>Failure semantics</span></div><div class="retrieval-grid"><div><b>01</b><span>Why is Thread not the same kind of object as TCP?</span></div><div><b>02</b><span>Why can MQTT and Wi-Fi coexist without competing?</span></div><div><b>03</b><span>Why is a delivered JSON payload not automatically semantically interoperable?</span></div><div><b>04</b><span>What is the difference between TCP reliable delivery and MQTT message QoS?</span></div><div><b>05</b><span>Why can at-least-once message delivery create a duplicate application effect?</span></div><div><b>06</b><span>What evidence would confirm that a physical command actually took effect?</span></div></div><a class="btn" href="../">Return to course hub</a></div></section>
+</div></main>
+<div class="drawer-scrim" hidden="" id="drawerScrim"></div><aside aria-hidden="true" class="stack-drawer" id="stackDrawer"><div class="drawer-head"><div><div class="eyebrow">Session artifact</div><h2>Our communication design</h2></div><button class="icon-btn" id="drawerClose" type="button">×</button></div><div class="drawer-body" id="drawerBody"></div></aside>
+<div class="toast" id="toast"></div>
+<script src="assets/student.js"></script>
+</body></html>

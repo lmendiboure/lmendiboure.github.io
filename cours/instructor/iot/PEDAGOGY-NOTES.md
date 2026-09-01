@@ -83,3 +83,18 @@ Design restraint matters: multiple representations can support learning when the
 ### Reusing the same session
 
 Live Board content is classroom-specific, not course content. Keep it session-scoped and resettable. Use **Clear board** when one collective restitution needs to be rebuilt; use **New class** before teaching the same session to another group. This prevents a previous cohort's ideas, tallies or collective architecture from becoming accidental prompts for the next cohort.
+
+
+## Institutionalisation after restitution
+
+For every important restitution, distinguish two instructor-facing functions without adding a new navigation screen:
+
+1. **WHAT TO KEEP / Reference Plate** — institutionalise knowledge that a competent student should leave with even if no group spontaneously mentioned it. Include one principle plus a compact canonical map (typically 3–7 items, distinctions or families). This is not required to be “discovered” by students.
+2. **REALITY CHECK** — ground the reference map with a concrete architecture, worked order of magnitude, payload, standard, or official technical fact and ask students to interpret it.
+
+Authoring rule: **students discover the reasoning; they are not expected to discover the entire discipline.** Reference Plates should be selective maps, not claims of exhaustiveness.
+
+
+## Activity count is curriculum-driven
+
+Do **not** force different sessions to contain the same number of activities. Symmetry across sessions is not a design invariant. The invariant applies **within one session**: Student, Projector and Instructor Notes must expose the same canonical activity count, order, numbering and short titles. Add an activity when a concept needs its own cycle of prediction → externalisation → challenge → institutionalisation; do not merge it merely to preserve a visual count.

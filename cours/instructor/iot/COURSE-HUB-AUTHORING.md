@@ -71,3 +71,8 @@ When authoring later sessions:
 - use 0–3 authentic-source Research Trails;
 - let all routes rejoin the same STOP / mission progression;
 - never infer expertise from completion speed alone.
+
+
+## Activity count is curriculum-driven
+
+Do **not** force different sessions to contain the same number of activities. Symmetry across sessions is not a design invariant. The invariant applies **within one session**: Student, Projector and Instructor Notes must expose the same canonical activity count, order, numbering and short titles. Add an activity when a concept needs its own cycle of prediction → externalisation → challenge → institutionalisation; do not merge it merely to preserve a visual count.

@@ -122,7 +122,7 @@ A RESTITUTION screen should normally contain:
 - the appropriate collective representation;
 - 2–3 discussion prompts;
 - one counterexample;
-- in-place Takeaway / Reality reveals.
+- in-place What-to-keep / Reality reveals.
 
 The class representation should be visually dominant.
 
@@ -161,3 +161,18 @@ Fixed square markers are reserved for genuinely short symbolic content such as `
 Textual micro-labels such as `COMPARE`, `EVIDENCE`, `BOUNDARY`, or `RESIDUAL RISK` must use **auto-width technical tabs**. Their background expands to contain the full label; the text must never overflow a fixed square.
 
 If horizontal space becomes constrained, stack the tab above its explanatory text rather than shrinking or clipping the label.
+
+## Restitution reading order
+
+A restitution screen must expose a clear three-step visual hierarchy:
+
+1. **Artifact / class representation** — the main visual surface.
+2. **Discuss** — a narrow question rail beside the artifact.
+3. **Conclude** — a full-width dock below both surfaces.
+
+`What to keep` and `Reality check` belong to the **Conclude** dock, never inside the discussion rail. They are mutually exclusive reveals in the same location. This keeps the public reading order stable: **artifact → discussion → conclusion**, without adding navigation states.
+
+## Conclusion focus on Projector
+
+Rich `WHAT TO KEEP` / `REALITY CHECK` plates must remain readable without turning the Projector into a scrolling document. When a conclusion panel opens, the top restitution context may enter a compact **conclusion focus** state: keep the collective artifact and discussion labels visible, temporarily hide the `Test the idea` challenge, and allocate the remaining stage height to the Reference Plate. Closing the panel restores the full restitution. Never clip or silently hide the institutionalised content itself.
+

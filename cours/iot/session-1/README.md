@@ -26,15 +26,16 @@ The student site uses no backend or database. Work is saved in browser `localSto
 
 ## Pedagogical flow
 
-1. map application domains without being told the conclusion;
+1. map the IoT landscape without being told the conclusion;
 2. enter a persistent campus mission brief, then build an architecture from functions and information flows;
-3. express communication constraints in plain language, then attach formal vocabulary at the STOP;
-4. discover communication network shapes before seeing technology names;
-5. consolidate the technology map with the detective and guided reference cards;
-6. choose technologies under explicit assumptions, complete at least two transfer cases, then return to the campus mission;
-7. stress-test the frozen architecture v1, make a concrete architecture v2 revision, and finish with retrieval before synthesis.
+3. close the loop by adding actuation, command, authority and physical-state feedback;
+4. express communication constraints in plain language, then attach formal vocabulary at the STOP;
+5. discover network shapes before seeing technology names;
+6. consolidate the technology map with the detective and guided reference cards;
+7. choose technologies under explicit assumptions, complete transfer cases, then return to the campus mission;
+8. stress-test the frozen architecture v1, make a concrete architecture v2 revision, and finish with retrieval before synthesis.
 
-At each classroom STOP, the interface follows **LOOK → COMPARE → CHALLENGE → UNLOCK**. The UNLOCK is a short consolidation sequence — **From your discussion → Formalise it → Carry it forward** — and only the compressed reference card is then collected in the persistent Field Guide.
+At collective restitutions, students first compare what they produced. The instructor then opens **WHAT TO KEEP** to institutionalise a compact canonical reference map and, when useful, **REALITY CHECK** to ground it with an architecture, standard, worked example or technical order of magnitude. These are in-place conclusion panels, not extra navigation screens.
 
 ## Navigation model
 

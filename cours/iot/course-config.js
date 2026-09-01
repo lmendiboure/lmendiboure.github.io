@@ -3,12 +3,12 @@
   --------------------------------
   NORMAL WEEK-TO-WEEK USE: edit ONE number only.
 
-      releasedThrough: 1
+      releasedThrough: 2
 
-  When Session 2 is ready:
-    1. add cours/iot/session-2/
-    2. add cours/instructor/iot/session-2/
-    3. change releasedThrough from 1 to 2
+  When Session 3 is ready:
+    1. add cours/iot/session-3/
+    2. add cours/instructor/iot/session-3/
+    3. change releasedThrough from 2 to 3
     4. commit + push
 
   The hub derives states automatically:
@@ -21,7 +21,7 @@
 */
 window.IOT_COURSE_CONFIG = {
   release: {
-    releasedThrough: 1
+    releasedThrough: 2
   },
   course: {
     code: "IoT Systems Design",
@@ -35,9 +35,10 @@ window.IOT_COURSE_CONFIG = {
       kicker: "FOUNDATIONS",
       title: "How do things connect?",
       question: "What must a connected system do before we can defend a communication choice?",
-      summary: "Map the IoT landscape, build a campus architecture, expose requirements, discover communication families and revise the design when assumptions change.",
+      summary: "Map the IoT landscape, build and close the loop of a campus architecture, expose requirements, discover communication families and revise the design when assumptions change.",
       objectives: ["architecture & flows", "requirements", "communication choices"],
-      storageKey: "iot-systems-design-session1-v10"
+      storageKey: "iot-systems-design-session1-v18",
+      progressKind: "screen-frontier"
     },
     {
       id: 2,
@@ -45,8 +46,11 @@ window.IOT_COURSE_CONFIG = {
       kicker: "INFORMATION EXCHANGE",
       title: "How do things communicate?",
       question: "Once connectivity exists, how should devices and services exchange information?",
-      summary: "Compare interaction patterns and application-level communication choices through the needs of an IoT system.",
-      objectives: ["message exchange", "interaction patterns", "application protocols"]
+      summary: "Build interaction patterns and protocol stacks from communication responsibilities, make messages interoperable, compose MQTT, CoAP, TCP/UDP, Thread and IP pieces, then make delivery guarantees explicit without confusing abstraction levels.",
+      objectives: ["message choreography", "protocol stacks", "meaning & delivery semantics"],
+      storageKey: "iot-systems-design-session2-v3",
+      progressKind: "activity-frontier",
+      progressLabels: ["Conversations","Choreography","Stack roles","Network + transport","Application protocols","Interoperability","Compose","Delivery semantics","Stress-test"]
     },
     {
       id: 3,

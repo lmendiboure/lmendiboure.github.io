@@ -13,6 +13,13 @@
       const raw = localStorage.getItem(session.storageKey);
       if(!raw) return {pct:0,label:'Not started on this device',action:'Enter mission'};
       const state = JSON.parse(raw);
+      if(session.progressKind === 'activity-frontier'){
+        const frontier=Math.max(0,Math.min(6,Number(state.frontier)||0));
+        const pct=Math.round(frontier/6*100);
+        const labels=session.progressLabels||[];
+        if(Number(state.screen)>=11) return {pct:100,label:'Final debrief reached on this device',action:'Review mission'};
+        return {pct,label:`In progress · ${labels[frontier]||`Activity ${frontier+1}`}`,action:'Continue mission'};
+      }
       const frontier = Math.max(Number(state.maxUnlockedScreen)||0, Number(state.screen)||0);
       const pct = Math.max(0, Math.min(100, Math.round(frontier / 11 * 100)));
       if(frontier >= 11) return {pct:100,label:'Final debrief reached on this device',action:'Review mission'};
@@ -23,6 +30,9 @@
 
   const releasedThrough = Math.max(0, Math.min(cfg.sessions.length, Number(cfg.release?.releasedThrough)||0));
   const stateFor = (id) => id < releasedThrough ? 'review' : (id === releasedThrough ? 'open' : 'locked');
+  const pathNodes=[...document.querySelectorAll('.course-path .path-node')];
+  pathNodes.forEach((n,i)=>n.classList.toggle('current',i===Math.max(0,releasedThrough-1)));
+
   const stateLabels = {open:'Current mission',review:'Available for review',locked:'Locked'};
   const classes = ['','s2','s3','s4'];
   host.innerHTML = cfg.sessions.map((s,i)=>{

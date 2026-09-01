@@ -462,7 +462,7 @@ This is student-facing even though it lives under the instructor path. It must b
 For every canonical activity, it should expose **one or at most two navigable public screens**:
 
 1. **WORK** — always present: the task, expected artifact, defence prompt and one guardrail to leave visible while groups work;
-2. **RESTITUTION** — optional: one stable whole-class surface containing the appropriate collective representation (when useful), 2–3 discussion questions, one counterexample, and in-place reveals for the concise Takeaway and optional Reality Check.
+2. **RESTITUTION** — optional: one stable whole-class surface containing the appropriate collective representation (when useful), 2–3 discussion questions, one counterexample, and an in-place conclusion dock for **What to keep / Reference Plate** and optional **Reality Check**.
 
 Omitting RESTITUTION does not omit or merge the activity. The next public screen is simply the next canonical activity's WORK screen.
 
@@ -495,7 +495,7 @@ The Reality Check is not mandatory filler and is not a mini-lecture. Use it when
 Projector invariants:
 
 - large, sparse, high-contrast typography;
-- exactly one WORK screen per canonical activity and at most one RESTITUTION screen; use in-place reveal for Takeaway/Reality rather than additional phases;
+- exactly one WORK screen per canonical activity and at most one RESTITUTION screen; use in-place reveal for **What to keep / Reality Check** rather than additional phases;
 - no teaching-method commentary, GitHub/publication details, answer-key language, or authoring notes;
 - no private cues such as “do not tell students…”;
 - the projected challenge must be discussable before its formalisation is shown;
@@ -527,7 +527,7 @@ Any class-entered state on the Projector must be **ephemeral and explicitly rese
 
 Required controls:
 - **Clear board** — clears only the current Live Board (Capture, Structure or Compare).
-- **New class** — clears every instructor-entered Live Board/tally/collective structure, closes any open Takeaway/Reality reveal, returns to Activity 1 / WORK, and leaves all static course content unchanged.
+- **New class** — clears every instructor-entered Live Board/tally/collective structure, closes any open What-to-keep/Reality reveal, returns to Activity 1 / WORK, and leaves all static course content unchanged.
 
 Reset invariants:
 - clearing instructor state must never erase student-side progress or modify course content;
@@ -540,3 +540,18 @@ Reset invariants:
 The learning pattern and the visual pattern are separate concerns. A session may change its subject matter without changing the course's visual grammar.
 
 Use the shared **Technical Atlas / Systems Design Review** system documented in `VISUAL-SYSTEM.md`. Student, Projector and Instructor Notes should share its typography, grid, palette, diagram language and interaction states. Do not reintroduce a generic card/dashboard grammar when authoring a new session.
+
+
+## Institutionalisation after restitution
+
+For every important restitution, distinguish two instructor-facing functions without adding a new navigation screen:
+
+1. **WHAT TO KEEP / Reference Plate** — institutionalise knowledge that a competent student should leave with even if no group spontaneously mentioned it. Include one principle plus a compact canonical map (typically 3–7 items, distinctions or families). This is not required to be “discovered” by students.
+2. **REALITY CHECK** — ground the reference map with a concrete architecture, worked order of magnitude, payload, standard, or official technical fact and ask students to interpret it.
+
+Authoring rule: **students discover the reasoning; they are not expected to discover the entire discipline.** Reference Plates should be selective maps, not claims of exhaustiveness.
+
+
+## Activity count is curriculum-driven
+
+Do **not** force different sessions to contain the same number of activities. Symmetry across sessions is not a design invariant. The invariant applies **within one session**: Student, Projector and Instructor Notes must expose the same canonical activity count, order, numbering and short titles. Add an activity when a concept needs its own cycle of prediction → externalisation → challenge → institutionalisation; do not merge it merely to preserve a visual count.
