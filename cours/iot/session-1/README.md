@@ -31,7 +31,7 @@ The student site uses no backend or database. Work is saved in browser `localSto
 3. express communication constraints in plain language, then attach formal vocabulary at the STOP;
 4. discover communication network shapes before seeing technology names;
 5. consolidate the technology map with the detective and guided reference cards;
-6. choose technologies under explicit assumptions, use transfer cases, then return to the campus mission;
+6. choose technologies under explicit assumptions, complete at least two transfer cases, then return to the campus mission;
 7. stress-test the frozen architecture v1, make a concrete architecture v2 revision, and finish with retrieval before synthesis.
 
 At each classroom STOP, the interface follows **LOOK → COMPARE → CHALLENGE → UNLOCK**. The UNLOCK is a short consolidation sequence — **From your discussion → Formalise it → Carry it forward** — and only the compressed reference card is then collected in the persistent Field Guide.

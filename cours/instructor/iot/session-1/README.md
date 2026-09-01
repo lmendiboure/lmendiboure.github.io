@@ -25,7 +25,7 @@ Do not project `notes.html`.
 
 ## Pacing
 
-Private Notes include approximate discussion targets per STOP. Treat them as pacing cues, not mandatory cut-offs.
+Private Notes separate **WORK** and **RESTITUTION** targets. Across Session 1 the planned envelope is roughly 48–57 minutes of group work plus 30–37 minutes of whole-class restitution (78–94 minutes before small transitions). Treat the badges as pacing cues, not mandatory cut-offs.
 
 
 ## V15 collective restitution
