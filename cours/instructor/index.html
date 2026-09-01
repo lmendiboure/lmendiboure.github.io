@@ -309,6 +309,203 @@
       font-weight:600;
     }
 
+
+    .student-access{margin-top:34px;display:grid;grid-template-columns:minmax(0,1fr) 210px;border:2px solid var(--ink);background:var(--surface)}
+    .student-access-copy{padding:26px 28px 24px;display:flex;flex-direction:column;justify-content:center;min-width:0}
+    .student-access-kicker{color:var(--signal);font-size:.65rem;font-weight:850}
+    .student-access-title{margin:8px 0 9px;font-size:clamp(1.7rem,3vw,2.55rem);line-height:1;letter-spacing:-.045em}
+    .student-access-copy p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.48;max-width:60ch}
+    .student-url{margin-top:20px;display:flex;align-items:center;gap:12px;padding:12px 14px;border-top:2px solid var(--ink);border-bottom:1px solid var(--line);background:var(--paper);min-width:0}
+    .student-url-label{flex:0 0 auto;color:var(--signal);font-size:.62rem;font-weight:850}
+    .student-url a{min-width:0;overflow-wrap:anywhere;color:var(--ink);font:800 clamp(.8rem,1.45vw,1rem) ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-decoration:none}
+    .student-url a:hover,.student-url a:focus-visible{color:var(--signal);outline:none;text-decoration:underline}
+    .student-access-qr{border-left:2px solid var(--ink);background:#fff;padding:20px;display:grid;place-items:center;align-content:center;gap:10px}
+    .student-access-qr img{display:block;width:168px;height:168px;image-rendering:pixelated}
+    .student-access-qr span{color:var(--muted);font-size:.58rem;font-weight:800;text-align:center}
+    @media(max-width:700px){
+      .student-access{grid-template-columns:1fr}
+      .student-access-qr{border-left:0;border-top:2px solid var(--ink);grid-template-columns:auto 1fr;justify-content:start}
+      .student-access-qr img{width:132px;height:132px}
+      .student-url{align-items:flex-start;flex-direction:column;gap:5px}
+    }
+
+
+    .projection-btn{
+      margin-top:14px;
+      min-height:44px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      width:100%;
+      padding:11px 13px;
+      border:1px solid var(--ink);
+      background:var(--signal);
+      color:#fff;
+      font-size:.65rem;
+      font-weight:850;
+      cursor:pointer;
+    }
+
+    .projection-btn:hover,
+    .projection-btn:focus-visible{
+      background:var(--ink);
+      outline:2px solid var(--signal);
+      outline-offset:2px;
+    }
+
+    .projection-overlay{
+      position:fixed;
+      inset:0;
+      z-index:1000;
+      display:none;
+      overflow:auto;
+      background:var(--paper);
+      color:var(--ink);
+    }
+
+    .projection-overlay.open{
+      display:block;
+    }
+
+    .projection-stage{
+      min-height:100vh;
+      width:min(1220px,calc(100% - 48px));
+      margin:0 auto;
+      padding:34px 0 42px;
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      gap:26px;
+    }
+
+    .projection-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      padding-bottom:14px;
+      border-bottom:2px solid var(--ink);
+    }
+
+    .projection-kicker{
+      color:var(--signal);
+      font-size:.72rem;
+      font-weight:850;
+    }
+
+    .projection-close{
+      min-height:42px;
+      border:1px solid var(--ink);
+      background:var(--surface);
+      color:var(--ink);
+      padding:9px 12px;
+      font-size:.64rem;
+      font-weight:850;
+      cursor:pointer;
+    }
+
+    .projection-close:hover,
+    .projection-close:focus-visible{
+      background:var(--ink);
+      color:#fff;
+      outline:2px solid var(--signal);
+      outline-offset:2px;
+    }
+
+    .projection-main{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(360px,.75fr);
+      gap:48px;
+      align-items:center;
+    }
+
+    .projection-copy h2{
+      margin:0 0 20px;
+      max-width:760px;
+      font-size:clamp(3.4rem,7vw,7rem);
+      line-height:.9;
+      letter-spacing:-.065em;
+      text-wrap:balance;
+    }
+
+    .projection-copy p{
+      margin:0 0 24px;
+      max-width:650px;
+      color:var(--muted);
+      font-size:clamp(1.05rem,1.6vw,1.35rem);
+      line-height:1.45;
+    }
+
+    .projection-url{
+      display:block;
+      padding:18px 0 14px;
+      border-top:3px solid var(--ink);
+      border-bottom:1px solid var(--line);
+      color:var(--signal);
+      text-decoration:none;
+      overflow-wrap:anywhere;
+      font:850 clamp(1.35rem,2.6vw,2.45rem) ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      line-height:1.25;
+    }
+
+    .projection-url:hover,
+    .projection-url:focus-visible{
+      color:var(--ink);
+      outline:none;
+    }
+
+    .projection-qr{
+      justify-self:center;
+      width:min(100%,460px);
+      background:#fff;
+      border:3px solid var(--ink);
+      padding:24px;
+    }
+
+    .projection-qr img{
+      display:block;
+      width:100%;
+      height:auto;
+      aspect-ratio:1;
+      image-rendering:pixelated;
+    }
+
+    .projection-footer{
+      padding-top:14px;
+      border-top:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:.64rem;
+      font-weight:700;
+    }
+
+    body.projection-mode{
+      overflow:hidden;
+    }
+
+    @media(max-width:900px){
+      .projection-stage{
+        width:min(100% - 28px,1220px);
+        min-height:auto;
+      }
+      .projection-main{
+        grid-template-columns:1fr;
+      }
+      .projection-qr{
+        width:min(100%,390px);
+      }
+    }
+
+    @media(max-width:560px){
+      .projection-stage{padding-top:18px}
+      .projection-copy h2{font-size:clamp(2.7rem,14vw,4rem)}
+      .projection-top{align-items:flex-start}
+      .projection-footer{display:none}
+    }
+
     @media(max-width:860px){
       .programme-head{
         grid-template-columns:1fr;
@@ -383,6 +580,28 @@
         Sélectionnez un enseignement pour accéder à son hub enseignant, aux vues de projection et aux notes de séance.
       </p>
 
+
+      <aside class="student-access" aria-labelledby="student-access-title">
+        <div class="student-access-copy">
+          <div class="student-access-kicker mono">À projeter · Accès étudiant</div>
+          <h2 class="student-access-title" id="student-access-title">Rejoindre l’espace de cours</h2>
+          <p>Les étudiants peuvent scanner le QR code ou saisir directement l’adresse ci-dessous.</p>
+          <div class="student-url">
+            <span class="student-url-label mono">URL</span>
+            <a href="https://lmendiboure.github.io/cours/" target="_blank" rel="noopener">https://lmendiboure.github.io/cours/</a>
+          </div>
+
+          <button class="projection-btn mono" id="openProjection" type="button">
+            Projeter l’accès étudiant
+            <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <div class="student-access-qr">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQgAAAEIAQAAAACLjVdSAAABkklEQVR4nO2ZwY7DQAhDn1f5/1/2HoDJ7GHVUwnqdNTDFPngWAQMkXlxfl4BvogPRlyguFkmfsAdHcO0TQ8MICyAJUpGxzBtREiRDQaBlVpEdBTTToQAWcgpz0M8JiFCDvw/oofHY4gL2B5fYFnyHZ3CtE+PejssK4uqvKJTmLbpsbJDjmYra4tOYdrnP5wSsGXF3XunMO1BhBh1lUHLecB5fiwUyLPuaUQ4Lz+wDcaRI+sCYVHtKUwbERbIW3osiTyM6dsRkQ/Gtis5jFd7OS0/tpaS9UImi6rwcfWj/MfecOVwZCHVFKadCOGc94WFVD34uPoh/xng8vXJymod5z8ucPYXgcOpqwqID90HIRljCbvml3yDRjHtQEi2c9InLUjUEDyLaQOi1sd1TUNWY81x/Xb3546/DqtePm0K07590L1fzxqaLeZE/3HBmmWpLpuSxEgzhWmjHnFqVcjtSM7z6zsiPkVFx4X6ADOR6ZsR9iohObWET3UzjwGIbb+umGFimlvrwjFM2/3Hozy+iJmIX0mHwPdfx0SfAAAAAElFTkSuQmCC" alt="QR code vers https://lmendiboure.github.io/cours/">
+          <span class="mono">Scanner pour ouvrir /cours/</span>
+        </div>
+      </aside>
+
       <section class="programme" aria-labelledby="master-title">
         <div class="programme-head">
           <div class="section-kicker mono">Master</div>
@@ -453,5 +672,68 @@
       </div>
     </section>
   </main>
+
+  <section class="projection-overlay" id="projectionOverlay" aria-hidden="true" aria-labelledby="projectionTitle">
+    <div class="projection-stage">
+      <div class="projection-top">
+        <div class="projection-kicker mono">Accès étudiant · À projeter</div>
+        <button class="projection-close mono" id="closeProjection" type="button">Retour espace enseignant ×</button>
+      </div>
+
+      <div class="projection-main">
+        <div class="projection-copy">
+          <h2 id="projectionTitle">Accédez au cours.</h2>
+          <p>Scannez le QR code ou ouvrez directement l’adresse suivante.</p>
+          <a class="projection-url" href="https://lmendiboure.github.io/cours/" target="_blank" rel="noopener">
+            https://lmendiboure.github.io/cours/
+          </a>
+        </div>
+
+        <div class="projection-qr">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQgAAAEIAQAAAACLjVdSAAABkklEQVR4nO2ZwY7DQAhDn1f5/1/2HoDJ7GHVUwnqdNTDFPngWAQMkXlxfl4BvogPRlyguFkmfsAdHcO0TQ8MICyAJUpGxzBtREiRDQaBlVpEdBTTToQAWcgpz0M8JiFCDvw/oofHY4gL2B5fYFnyHZ3CtE+PejssK4uqvKJTmLbpsbJDjmYra4tOYdrnP5wSsGXF3XunMO1BhBh1lUHLecB5fiwUyLPuaUQ4Lz+wDcaRI+sCYVHtKUwbERbIW3osiTyM6dsRkQ/Gtis5jFd7OS0/tpaS9UImi6rwcfWj/MfecOVwZCHVFKadCOGc94WFVD34uPoh/xng8vXJymod5z8ucPYXgcOpqwqID90HIRljCbvml3yDRjHtQEi2c9InLUjUEDyLaQOi1sd1TUNWY81x/Xb3546/DqtePm0K07590L1fzxqaLeZE/3HBmmWpLpuSxEgzhWmjHnFqVcjtSM7z6zsiPkVFx4X6ADOR6ZsR9iohObWET3UzjwGIbb+umGFimlvrwjFM2/3Hozy+iJmIX0mHwPdfx0SfAAAAAElFTkSuQmCC" alt="QR code vers https://lmendiboure.github.io/cours/">
+        </div>
+      </div>
+
+      <div class="projection-footer mono">
+        <span>https://lmendiboure.github.io/cours/</span>
+        <span>Scanner · Ouvrir · Choisir son enseignement</span>
+      </div>
+    </div>
+  </section>
+
+<script>
+(() => {
+  const overlay = document.getElementById('projectionOverlay');
+  const openBtn = document.getElementById('openProjection');
+  const closeBtn = document.getElementById('closeProjection');
+
+  function openProjection() {
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('projection-mode');
+    closeBtn.focus();
+  }
+
+  function closeProjection() {
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('projection-mode');
+    openBtn.focus();
+  }
+
+  openBtn.addEventListener('click', openProjection);
+  closeBtn.addEventListener('click', closeProjection);
+
+  overlay.addEventListener('click', (event) => {
+    if (event.target === overlay) closeProjection();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && overlay.classList.contains('open')) {
+      closeProjection();
+    }
+  });
+})();
+</script>
 </body>
 </html>
