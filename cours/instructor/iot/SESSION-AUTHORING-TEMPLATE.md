@@ -287,3 +287,12 @@ For each canonical activity, author Student + Projector + Notes before consideri
 - [ ] Do I have one useful counterexample if discussion is shallow?
 - [ ] Do I have enough technical precision to answer the predictable follow-up questions?
 - [ ] Can I run the session without creating separate slides?
+
+### Reuse / reset contract
+
+If the Projector contains instructor-entered state:
+- [ ] every Live Board has a **Clear board** control;
+- [ ] the Projector has one global **New class** control;
+- [ ] **New class** clears all instructor-entered state and reveals, then returns to Activity 1 / WORK;
+- [ ] reset never affects the Student workspace;
+- [ ] reset behavior is tested before publication.

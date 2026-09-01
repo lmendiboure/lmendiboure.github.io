@@ -520,3 +520,17 @@ The two surfaces should contain the **same conceptual destination** but differen
 > **The class sees the intellectual problem and its consolidation. The instructor sees the facilitation logic and answer space.**
 
 This separation is especially important in a no-slides course: projector pages replace both the **work prompt** and the **public explanatory/evidence function** of slides, while notes replace presenter notes. The default public rhythm is **WORK → optional RESTITUTION → next canonical activity**. LOOK → COMPARE → CHALLENGE → UNLOCK remains the private facilitation logic inside RESTITUTION; Reality is revealed in-place when useful.
+
+### Resettable instructor state
+
+Any class-entered state on the Projector must be **ephemeral and explicitly resettable**. Reusing a session with another cohort must never require browser-storage tools or manual cleanup.
+
+Required controls:
+- **Clear board** — clears only the current Live Board (Capture, Structure or Compare).
+- **New class** — clears every instructor-entered Live Board/tally/collective structure, closes any open Takeaway/Reality reveal, returns to Activity 1 / WORK, and leaves all static course content unchanged.
+
+Reset invariants:
+- clearing instructor state must never erase student-side progress or modify course content;
+- destructive resets require a confirmation;
+- interactive instructor state should use session-scoped browser storage unless persistence across browser sessions is explicitly required;
+- every new Instructor interaction primitive must define both a local reset and its behavior under **New class**.

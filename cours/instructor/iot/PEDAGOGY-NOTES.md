@@ -79,3 +79,7 @@ V14 adds a lightweight instructor-entered **Live Board** rather than a classroom
 For class distributions, use **commit → aggregate → discuss**. Peer-instruction research has shown that exposing a class histogram before a second response can pull students toward the majority; therefore the collective tally should appear only after groups have committed their own reasoning. The board is evidence about the room, not an answer key.
 
 Design restraint matters: multiple representations can support learning when they clarify complementary information, but unnecessary representations can add processing demands. The Live Board is therefore optional and limited to three stable primitives rather than a bespoke widget per activity.
+
+### Reusing the same session
+
+Live Board content is classroom-specific, not course content. Keep it session-scoped and resettable. Use **Clear board** when one collective restitution needs to be rebuilt; use **New class** before teaching the same session to another group. This prevents a previous cohort's ideas, tallies or collective architecture from becoming accidental prompts for the next cohort.

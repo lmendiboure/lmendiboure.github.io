@@ -35,3 +35,11 @@ Targets are split per activity. The full envelope remains roughly 78–95 minute
 ## Collective restitution
 
 Capture, Structure and Compare are the only Live Board primitives. Use **commit → aggregate → discuss**. No backend is required.
+
+## Reusing Session 1
+
+The Projector stores class-entered Live Board state only for the current browser session.
+
+- **Clear board** resets the current Capture / Structure / Compare board.
+- **New class** clears all class-entered boards and tallies, closes Takeaway/Reality reveals, and returns to Activity 1 / WORK.
+- Student progress is separate and is never changed by either instructor reset.
