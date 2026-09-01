@@ -1,25 +1,24 @@
 # Session 1 instructor surfaces
 
-- `index.html` — **Projector Mode**. Safe to screen-share. Use this instead of slides during group work, at each STOP, for the Reality Checks, and at the final debrief.
+- `index.html` — **Projector Mode**. Safe to screen-share. Use this instead of slides: one WORK screen while students work, then one RESTITUTION screen for the checkpoint and final debrief.
 - `notes.html` — **Private instructor notes**. Expected answers, acceptable variants, misconceptions, technical precision, fallback prompts and transitions.
 
 ## Projector controls
 
-- Right arrow / Space: reveal next discussion phase.
-- Left arrow: go back one phase.
-- Down / Up: next / previous STOP.
+- Right arrow / Space: advance `WORK → RESTITUTION → next WORK`.
+- Left arrow: go back one public screen.
 - `F`: fullscreen.
+- The five progress markers jump directly to a checkpoint and open its WORK screen.
 
 Each checkpoint follows:
 
-**WORK → LOOK → COMPARE → CHALLENGE → UNLOCK → REALITY CHECK**
+**WORK → RESTITUTION**
 
 - **WORK** stays on screen while students work and states the deliverable/guardrail.
-- **REALITY CHECK** shows one concrete output, calculation, reference architecture or authoritative technical fact after formalisation, then asks the class to interpret it.
+- **RESTITUTION** is one stable class screen. It contains the appropriate Live Board (when useful), 2–3 discussion prompts and one counterexample.
+- **Show takeaway** and **Show reality** reveal content in-place; only one is open at a time, so they are not extra screens.
 
-The public UNLOCK follows:
-
-**From your discussion → Formalise it → Carry it forward**
+The private facilitation sequence remains **LOOK → COMPARE → CHALLENGE → FORMALISE → GROUND**, but it lives in `notes.html`, not in projector navigation.
 
 Do not project `notes.html`.
 
@@ -29,6 +28,6 @@ Do not project `notes.html`.
 Private Notes include approximate discussion targets per STOP. Treat them as pacing cues, not mandatory cut-offs.
 
 
-## V14 collective restitution
+## V15 collective restitution
 
-The Projector includes three optional instructor-entered Live Boards embedded in LOOK/COMPARE: Capture, Structure and Compare. They require no backend. Use **commit → aggregate → discuss** for tallies.
+The Projector includes three optional instructor-entered Live Boards embedded directly in RESTITUTION: Capture, Structure and Compare. They require no backend. Use **commit → aggregate → discuss** for tallies.

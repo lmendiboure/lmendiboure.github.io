@@ -217,7 +217,7 @@ Audit rule: these strings should orient students without revealing the concept o
 
 ## Collective restitution choice
 
-Choose **zero or one** Live Board for a checkpoint. It is embedded in LOOK/COMPARE and is not a separate phase.
+Choose **zero or one** Live Board for a checkpoint. It is embedded in RESTITUTION and is not a separate phase.
 
 | Reasoning to make visible | Use | Authoring prompt |
 |---|---|---|
@@ -232,22 +232,20 @@ Before using Compare, specify what students must commit privately/in groups **be
 
 For each STOP, author both surfaces before considering the session complete.
 
-| Element | Projector (student-visible) | Instructor notes (private) |
+| Surface | Projector (student-visible) | Instructor notes (private) |
 |---|---|---|
-| WORK | task + expected artifact + one guardrail | what not to pre-teach; what counts as enough progress |
-| LOOK | one artifact cue | what evidence to inspect |
-| COMPARE | 2–3 large questions | likely answer families |
-| CHALLENGE | one counterexample | why it is useful / what it diagnoses |
-| UNLOCK | From discussion → Formalise → Carry forward | precision, caveats, acceptable variants |
-| REALITY CHECK | one concrete artifact/number/calculation/source + interpretation question | provenance, assumptions, caveats, what conclusion is justified |
-| NEXT | one sentence | fallback phrasing if discussion stalls |
+| WORK | task + expected artifact + defence prompt + one guardrail | what not to pre-teach; what counts as enough progress |
+| RESTITUTION | optional Capture/Structure/Compare board + 2–3 questions + one counterexample | LOOK/COMPARE logic, likely answer families, what evidence to inspect |
+| Takeaway reveal | concise formalisation + carry-forward rule | precision, caveats, acceptable variants |
+| Reality reveal | one concrete artifact/number/calculation/source + interpretation question | provenance, assumptions, caveats, what conclusion is justified |
+| Next activity | one primary button; no extra phase | transition/fallback phrasing |
 
 **Projection audit**
 
 - [ ] Could this entire page be screen-shared without revealing internal design notes?
 - [ ] Is the current question readable from the back of a classroom?
-- [ ] Is only one discussion move visually dominant at a time?
-- [ ] Are answers revealed progressively rather than visible before discussion?
+- [ ] Does each checkpoint have exactly one WORK screen and one RESTITUTION screen?
+- [ ] Are Takeaway/Reality revealed in-place rather than implemented as extra screens?
 - [ ] Does every WORK screen make the expected artifact obvious without revealing the answer?
 - [ ] When a Reality Check is used, is every number/source traceable and are worked assumptions labelled?
 - [ ] Does the Reality Check ask students to interpret evidence rather than merely read it?

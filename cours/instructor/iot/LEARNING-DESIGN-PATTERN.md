@@ -340,7 +340,7 @@ For a new course/session:
 2. Choose **one anchor mission** where all outcomes can matter.
 3. Define the **initial artifact** students can create before formal teaching.
 4. Identify the concepts that can safely be **discovered before naming**.
-5. For each concept, write the STOP quartet: LOOK / COMPARE / CHALLENGE / UNLOCK.
+5. For each concept, write the private facilitation quartet: LOOK / COMPARE / CHALLENGE / UNLOCK, then compress it into one public RESTITUTION screen.
 6. Write each UNLOCK as **From your discussion → Formalise it → Carry it forward**, then compress it into a separate Field Guide card.
 7. Identify jargon requiring a scaffolding ladder.
 8. Create 3–5 transfer cases varying surface features.
@@ -445,19 +445,16 @@ A session intended to run without slideware should separate two instructor-facin
 
 This is student-facing even though it lives under the instructor path. It must be safe to screen-share at any moment.
 
-For every checkpoint, it should provide a complete public teaching loop:
+For every checkpoint, it should expose **only two navigable public screens**:
 
-1. **WORK** — the task, expected artifact and one guardrail to leave visible while groups work;
-2. **LOOK** — what students should keep visible from their own work;
-3. **COMPARE** — 2–3 questions that surface meaningful differences between groups;
-4. **CHALLENGE** — one counterexample or changed assumption;
-5. **UNLOCK** — the public consolidation, using **From your discussion → Formalise it → Carry it forward**;
-6. **REALITY CHECK** — one concrete artifact, worked calculation, measured/official number, reference architecture or disciplinary source that students interpret after formalisation;
-7. **NEXT** — one sentence that creates the need for the next activity.
+1. **WORK** — the task, expected artifact, defence prompt and one guardrail to leave visible while groups work;
+2. **RESTITUTION** — one stable whole-class surface containing the appropriate collective representation (when useful), 2–3 discussion questions, one counterexample, and in-place reveals for the concise Takeaway and optional Reality Check.
+
+The richer facilitation sequence **LOOK → COMPARE → CHALLENGE → UNLOCK → GROUND** remains an instructor mental model and belongs in the private notes. Do not translate each pedagogical move into a projector navigation step.
 
 ### Lightweight collective restitution: Live Boards
 
-The Projector may temporarily become the **external memory of the room** during LOOK or COMPARE, but this is not a new public phase. Use at most three reusable representation primitives:
+The Projector may temporarily become the **external memory of the room** during RESTITUTION, but this is not a new public phase. Use at most three reusable representation primitives:
 
 - **Capture** — short ideas, claims or recurring features when the reasoning unit is verbal;
 - **Structure** — boxes + labelled flows when relationships, responsibilities or architecture are the reasoning unit;
@@ -470,19 +467,19 @@ For response distributions, follow **commit → aggregate → discuss**. Groups 
 Live Board invariants:
 
 - no backend, student accounts or device polling is required; the instructor enters the collective response;
-- the board lives inside the existing LOOK/COMPARE screen, so it creates no additional navigation transition;
+- the board lives inside the single RESTITUTION screen, so it creates no additional navigation transition;
 - Capture is not a word cloud: frequency is not treated as semantic importance;
 - Structure is a collective model, not a hidden reference answer;
 - Compare is a discussion trigger, not an assessment result;
 - preserve the student artifact as primary evidence; the collective board supplements rather than replaces it;
 - omit the board when the student artifacts themselves are already easy to compare.
 
-The Reality Check is not mandatory filler and is not a mini-lecture. Use it when a concrete external or worked artifact can answer a question created by the preceding reasoning. Prefer **one strong piece of evidence + one interpretation question** over a dense fact slide. Use a second Reality Check only when one evidence screen would become too dense or when two genuinely different evidence types must be interpreted separately. Clearly label worked assumptions, distinguish measured values from illustrative calculations, and link official sources when technical numbers are shown.
+The Reality Check is not mandatory filler and is not a mini-lecture. Use it when a concrete external or worked artifact can answer a question created by the preceding reasoning. Prefer **one strong piece of evidence + one interpretation question** over a dense fact slide. If the evidence would require a second projector state or dense scrolling, compress it or move the detail to private notes. Clearly label worked assumptions, distinguish measured values from illustrative calculations, and link official sources when technical numbers are shown.
 
 Projector invariants:
 
 - large, sparse, high-contrast typography;
-- progressive reveal rather than a dense all-at-once slide;
+- no more than two navigable screens per checkpoint; use in-place reveal for Takeaway/Reality rather than additional phases;
 - no teaching-method commentary, GitHub/publication details, answer-key language, or authoring notes;
 - no private cues such as “do not tell students…”;
 - the projected challenge must be discussable before its formalisation is shown;
@@ -506,4 +503,4 @@ The two surfaces should contain the **same conceptual destination** but differen
 
 > **The class sees the intellectual problem and its consolidation. The instructor sees the facilitation logic and answer space.**
 
-This separation is especially important in a no-slides course: projector pages replace both the **work prompt** and the **public explanatory/evidence function** of slides, while notes replace presenter notes. The default public rhythm is **WORK → LOOK → COMPARE → CHALLENGE → UNLOCK → REALITY CHECK**.
+This separation is especially important in a no-slides course: projector pages replace both the **work prompt** and the **public explanatory/evidence function** of slides, while notes replace presenter notes. The default **public projector rhythm is WORK → RESTITUTION**. LOOK → COMPARE → CHALLENGE → UNLOCK remains the private facilitation logic inside RESTITUTION; Reality is revealed in-place when useful.
