@@ -20,6 +20,7 @@ This document maps each major design mechanism to research that motivates it. It
 | Field Guide after discussion | Formalisation and persistent reference | Scaffolding + retrieval/review design | A concise reference after generation prevents leaving concepts implicit | That reading the guide replaces retrieval practice |
 | Architecture v1 → v2 | Make conceptual change observable; require application | Active/constructive engagement; case/problem solving | Revision requires students to use new information on a prior artifact | That visible revision alone measures conceptual understanding perfectly |
 | Memory Lock before synthesis | Retrieval practice | Roediger & Karpicke 2006; Karpicke & Blunt 2011 | Retrieval supports longer-term retention and meaningful learning | That four immediate questions guarantee long-term retention |
+| Live Board: Capture / Structure / Compare | Make selected student reasoning externally visible in a task-matched representation | Visible-thinking/documentation logic; concept-mapping review; multiple-external-representation research; peer-instruction sequencing | External representations and structured class response can support comparison and discussion when the representation is meaningful and supported | That more visualisations are always better, that a class majority is correct, or that this specific three-widget implementation has an isolated causal effect |
 | Mission / incidents / depth trail / unlocks | Motivation and coherent gameful framing | Gamification meta-analyses | Gamification can support outcomes/motivation, with heterogeneous effects depending on design | That points, badges or “game feel” are inherently effective |
 
 ## Core references
@@ -35,6 +36,9 @@ This document maps each major design mechanism to research that motivates it. It
 - Bayona, J. A., & Durán, W. F. (2024). A meta-analysis of the influence of case method and lecture teaching on cognitive and affective learning outcomes. *The International Journal of Management Education*. https://doi.org/10.1016/j.ijme.2024.100935
 - Scheiter, K., & Gerjets, P. (2007). Learner Control in Hypermedia Environments. *Educational Psychology Review*. https://doi.org/10.1007/s10648-007-9046-3
 - Karich, A. C., Burns, M. K., & Maki, K. E. (2014). Updated Meta-Analysis of Learner Control Within Educational Technology. *Review of Educational Research*. https://doi.org/10.3102/0034654314526064
+- Smith, M. K. et al. (2009). Why Peer Discussion Improves Student Performance on In-Class Concept Questions. *Science, 323*(5910), 122–124. https://doi.org/10.1126/science.1165919
+- Machado, C. T., & Carvalho, A. A. (2020). Concept Mapping: Benefits and Challenges in Higher Education. *The Journal of Continuing Higher Education, 68*(1). https://doi.org/10.1080/07377363.2020.1712579
+- Rexigel, E. et al. (2024). The More the Better? A Systematic Review and Meta-Analysis of the Benefits of More than Two External Representations in STEM Education. *Educational Psychology Review, 36*, 124. https://doi.org/10.1007/s10648-024-09958-y
 - Sailer, M., & Homner, L. (2020). The Gamification of Learning: a Meta-analysis. *Educational Psychology Review*. https://doi.org/10.1007/s10648-019-09498-w
 - Li, L., Hew, K. F., & Du, J. (2024). Gamification enhances student intrinsic motivation, perceptions of autonomy and relatedness, but minimal impact on competency. *Educational Technology Research and Development*. https://doi.org/10.1007/s11423-023-10337-7
 

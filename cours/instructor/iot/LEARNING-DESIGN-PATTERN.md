@@ -445,13 +445,39 @@ A session intended to run without slideware should separate two instructor-facin
 
 This is student-facing even though it lives under the instructor path. It must be safe to screen-share at any moment.
 
-For every discussion checkpoint, it should provide:
+For every checkpoint, it should provide a complete public teaching loop:
 
-1. **LOOK** — what students should keep visible from their own work;
-2. **COMPARE** — 2–3 questions that surface meaningful differences between groups;
-3. **CHALLENGE** — one counterexample or changed assumption;
-4. **UNLOCK** — the public consolidation, using **From your discussion → Formalise it → Carry it forward**;
-5. **TRANSITION** — one sentence that creates the need for the next activity.
+1. **WORK** — the task, expected artifact and one guardrail to leave visible while groups work;
+2. **LOOK** — what students should keep visible from their own work;
+3. **COMPARE** — 2–3 questions that surface meaningful differences between groups;
+4. **CHALLENGE** — one counterexample or changed assumption;
+5. **UNLOCK** — the public consolidation, using **From your discussion → Formalise it → Carry it forward**;
+6. **REALITY CHECK** — one concrete artifact, worked calculation, measured/official number, reference architecture or disciplinary source that students interpret after formalisation;
+7. **NEXT** — one sentence that creates the need for the next activity.
+
+### Lightweight collective restitution: Live Boards
+
+The Projector may temporarily become the **external memory of the room** during LOOK or COMPARE, but this is not a new public phase. Use at most three reusable representation primitives:
+
+- **Capture** — short ideas, claims or recurring features when the reasoning unit is verbal;
+- **Structure** — boxes + labelled flows when relationships, responsibilities or architecture are the reasoning unit;
+- **Compare** — a simple tally or categorical distribution when variation between committed group decisions is the reasoning unit.
+
+Choose the representation that matches the task. Do not add a board merely for interactivity. A representation should expose something that prose alone would hide: recurrence, structure, or variation.
+
+For response distributions, follow **commit → aggregate → discuss**. Groups must record their own decision before the class tally is visible; the aggregate describes the room and must not be framed as a correctness signal. The teacher should capture a small number of discriminating responses rather than transcribing the whole discussion.
+
+Live Board invariants:
+
+- no backend, student accounts or device polling is required; the instructor enters the collective response;
+- the board lives inside the existing LOOK/COMPARE screen, so it creates no additional navigation transition;
+- Capture is not a word cloud: frequency is not treated as semantic importance;
+- Structure is a collective model, not a hidden reference answer;
+- Compare is a discussion trigger, not an assessment result;
+- preserve the student artifact as primary evidence; the collective board supplements rather than replaces it;
+- omit the board when the student artifacts themselves are already easy to compare.
+
+The Reality Check is not mandatory filler and is not a mini-lecture. Use it when a concrete external or worked artifact can answer a question created by the preceding reasoning. Prefer **one strong piece of evidence + one interpretation question** over a dense fact slide. Use a second Reality Check only when one evidence screen would become too dense or when two genuinely different evidence types must be interpreted separately. Clearly label worked assumptions, distinguish measured values from illustrative calculations, and link official sources when technical numbers are shown.
 
 Projector invariants:
 
@@ -460,7 +486,8 @@ Projector invariants:
 - no teaching-method commentary, GitHub/publication details, answer-key language, or authoring notes;
 - no private cues such as “do not tell students…”;
 - the projected challenge must be discussable before its formalisation is shown;
-- the final public screen should contain the concept students are expected to retain.
+- the public sequence must not end at abstraction: when useful, a Reality Check should connect the concept to a concrete system, output, calculation or authoritative technical fact;
+- the final public screen should contain either the concrete evidence students should be able to interpret or the concept they are expected to retain.
 
 ### Private instructor notes
 
@@ -479,4 +506,4 @@ The two surfaces should contain the **same conceptual destination** but differen
 
 > **The class sees the intellectual problem and its consolidation. The instructor sees the facilitation logic and answer space.**
 
-This separation is especially important in a no-slides course: projector pages replace the public function of slides, while notes replace presenter notes.
+This separation is especially important in a no-slides course: projector pages replace both the **work prompt** and the **public explanatory/evidence function** of slides, while notes replace presenter notes. The default public rhythm is **WORK → LOOK → COMPARE → CHALLENGE → UNLOCK → REALITY CHECK**.

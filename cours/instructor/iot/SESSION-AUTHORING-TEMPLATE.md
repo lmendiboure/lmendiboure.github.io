@@ -215,17 +215,32 @@ Audit rule: these strings should orient students without revealing the concept o
 
 ---
 
+## Collective restitution choice
+
+Choose **zero or one** Live Board for a checkpoint. It is embedded in LOOK/COMPARE and is not a separate phase.
+
+| Reasoning to make visible | Use | Authoring prompt |
+|---|---|---|
+| Short recurring ideas / claims | **Capture** | What 4–8 short entries would help the room see recurrence or disagreement? |
+| Components / responsibilities / relations / flows | **Structure** | What minimal boxes and labelled connections can be built from student contributions? |
+| Distribution of already-committed choices | **Compare** | Which small set of categories is worth tallying, and what question will the divergence answer? |
+| None of the above | **No board** | Can student artifacts already be compared directly? |
+
+Before using Compare, specify what students must commit privately/in groups **before** the tally is shown. Never frame the majority as the correct answer.
+
 ## Projector + instructor-notes checklist
 
 For each STOP, author both surfaces before considering the session complete.
 
 | Element | Projector (student-visible) | Instructor notes (private) |
 |---|---|---|
+| WORK | task + expected artifact + one guardrail | what not to pre-teach; what counts as enough progress |
 | LOOK | one artifact cue | what evidence to inspect |
 | COMPARE | 2–3 large questions | likely answer families |
 | CHALLENGE | one counterexample | why it is useful / what it diagnoses |
 | UNLOCK | From discussion → Formalise → Carry forward | precision, caveats, acceptable variants |
-| Transition | one sentence | fallback phrasing if discussion stalls |
+| REALITY CHECK | one concrete artifact/number/calculation/source + interpretation question | provenance, assumptions, caveats, what conclusion is justified |
+| NEXT | one sentence | fallback phrasing if discussion stalls |
 
 **Projection audit**
 
@@ -233,7 +248,13 @@ For each STOP, author both surfaces before considering the session complete.
 - [ ] Is the current question readable from the back of a classroom?
 - [ ] Is only one discussion move visually dominant at a time?
 - [ ] Are answers revealed progressively rather than visible before discussion?
-- [ ] Does every STOP end with a public concept worth remembering?
+- [ ] Does every WORK screen make the expected artifact obvious without revealing the answer?
+- [ ] When a Reality Check is used, is every number/source traceable and are worked assumptions labelled?
+- [ ] Does the Reality Check ask students to interpret evidence rather than merely read it?
+- [ ] Does every STOP end with a public concept or concrete interpretation worth remembering?
+- [ ] If a Live Board is used, does its representation match the reasoning task (Capture / Structure / Compare)?
+- [ ] For Compare, did groups commit before the class distribution became visible?
+- [ ] Could the same discussion work better by comparing student artifacts directly? If yes, omit the Live Board.
 
 **Notes audit**
 

@@ -19,3 +19,14 @@ The student cards intentionally avoid simplistic fixed range tables. Quantitativ
 ## Visual assets
 
 The course UI is self-contained. The opening IoT landscape visual is rendered with HTML/CSS and does not depend on an external image request.
+
+## Projector Reality Check references
+
+The Projector uses a small number of concrete figures after the conceptual discussion. They are labelled as protocol/physical rates or worked assumptions, not application-throughput benchmarks.
+
+- Bluetooth SIG — Bluetooth LE primer. LE protocol data rates: 1 Mb/s (LE 1M), 2 Mb/s (LE 2M), 500 kb/s (LE Coded S=2), 125 kb/s (LE Coded S=8): https://www.bluetooth.com/bluetooth-le-primer/
+- LoRa Alliance — RP002-1.0.3, EU863-870 default LoRa DR0–DR5 approximately 0.3–5 kb/s and regional spectrum-access constraints: https://lora-alliance.org/wp-content/uploads/2021/05/RP-2-1.0.3.pdf
+- IEEE — current 802.15.4 description: PHY and MAC specifications for low-data-rate wireless connectivity: https://standards.ieee.org/ieee/802.15.4/11041/
+- GSMA — Mobile IoT Deployment Guide (2026): NB-IoT and LTE-M deployment/configuration guidance: https://www.gsma.com/solutions-and-impact/technologies/internet-of-things/wp-content/uploads/2026/02/Mobile-IoT-Deployment-Guide-digital-1.pdf
+
+The STOP 3 traffic figures are intentionally **worked scenarios**, not measurements: 30 nodes × four 32-bit values × one report/minute gives 480 raw bytes/minute, or about 0.69 MB/day before protocol overhead. The camera contrast assumes a 100 kB image every 5 seconds (about 1.73 GB/day).

@@ -66,3 +66,12 @@ This implementation is motivated by the expertise-reversal literature, particula
 ## V11.1 — Unlock consolidation rule
 
 The student-facing **UNLOCK** is deliberately richer than the Field Guide card. It reconnects to the immediately preceding discussion, formalises the disciplinary concept, then states how to use it next. The Field Guide keeps only the compact reference version. This avoids both extremes: revealing the formal answer before exploration, and leaving discovery unformalised afterwards.
+
+
+## Collective restitution / visible thinking
+
+V14 adds a lightweight instructor-entered **Live Board** rather than a classroom-response backend. The purpose is to make selected student thinking externally visible in a representation matched to the task: short ideas (Capture), relations (Structure), or committed distributions (Compare). This follows the broader visible-thinking/documentation rationale: externalise thinking so the class can inspect and revise it, rather than treating responses as ephemeral talk.
+
+For class distributions, use **commit → aggregate → discuss**. Peer-instruction research has shown that exposing a class histogram before a second response can pull students toward the majority; therefore the collective tally should appear only after groups have committed their own reasoning. The board is evidence about the room, not an answer key.
+
+Design restraint matters: multiple representations can support learning when they clarify complementary information, but unnecessary representations can add processing demands. The Live Board is therefore optional and limited to three stable primitives rather than a bespoke widget per activity.
