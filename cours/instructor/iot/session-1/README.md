@@ -1,7 +1,7 @@
 # Session 1 instructor surfaces
 
 - `index.html` — **Projector Mode**, safe to screen-share.
-- `notes.html` — **Private instructor notes** with accepted answers, misconceptions, technical precision, fallback prompts and transitions.
+- `notes.html` — **Instructor-facing facilitation notes** with accepted answers, misconceptions, technical precision, fallback prompts and transitions.
 
 ## Structural invariant
 
@@ -27,11 +27,11 @@ The Projector gives every activity one WORK screen. Activities 1, 2, 3, 4, 7 and
 
 **WORK** states the task, deliverable/defence prompt and guardrail. **RESTITUTION** is one stable class screen containing an optional Live Board, 2–3 discussion prompts, a counterexample, and an in-place conclusion dock with **What to keep** / **Reality check**.
 
-The private sequence **LOOK → COMPARE → CHALLENGE → FORMALISE → GROUND** lives in `notes.html`, not in projector navigation. Do not project `notes.html`.
+The instructor-facing sequence **LOOK → COMPARE → CHALLENGE → FORMALISE → GROUND** lives in `notes.html`, not in projector navigation. Do not project `notes.html`.
 
 ## Pacing
 
-Targets are split per activity. The full envelope remains roughly 100–120 minutes, depending on discussion depth. Treat timings as pacing cues, not mandatory cut-offs.
+Two pacing modes are explicit in `notes.html`: a strict **90-minute Core run** (10 / 14 / 12 / 11 / 5 / 7 / 16 / 15 min) and the existing **101–122 minute full-depth envelope**. The Core run preserves all six restitutions and timeboxes work/discussion; it does not delete conceptual steps.
 
 ## Collective restitution
 
@@ -64,3 +64,8 @@ Do not let a stakeholder speech duplicate the case dossier or the activity instr
 ## Mission dossier across sessions
 
 The student workspace keeps pedagogical progress (screens, unlocks, retrieval, hints) inside the session state, but publishes only a small structured **Mission dossier** across sessions. Session 1 records the classified Architecture v2 pattern, Top-3 communication requirements, campus access stance, key open uncertainty, and the incident that triggered revision. Session 2 reads those fields when available and otherwise uses a generic fallback. Free-text answers are never interpreted to drive the next session. The export file contains the Mission dossier plus the current session progress so it can also be moved to another browser.
+
+
+## Publication boundary
+
+`notes.html` is **instructor-facing, not access-controlled**. If `cours/instructor/` is deployed on public GitHub Pages, anyone who knows the path can open it. The Projector is designed to be student-safe; keep the instructor tree local/private if facilitation answers must genuinely remain unavailable.

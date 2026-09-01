@@ -1,22 +1,34 @@
-# Sources techniques — Séance 1
+# Sources techniques et territoriales — Séance 1
 
-Ces sources servent aux **retours au réel** et à la précision des notes enseignant. Elles ne remplacent pas les activités de découverte.
+Ces sources servent aux **retours au réel** et à la précision des notes enseignant. Elles ne remplacent pas les activités de découverte. La vallée est réelle ; la mission et les incidents sont scénarisés.
+
+## Dossier terrain — Vallée des Aldudes
+
+### Communauté Pays Basque — La Vallée des Aldudes, au cœur des montagnes
+
+https://www.communaute-paysbasque.fr/actualites/toutes-les-actualites/actualite/la-vallee-des-aldudes-au-coeur-des-montagnes
+
+La page décrit la vallée comme composée des trois villages des Aldudes, d'Urepel et de Banca, à l'entrée du Kintoa, territoire de pâturages et de bois d'environ 2 500 ha.
+
+### Géorisques — inondation à Urepel / AZI Nive des Aldudes
+
+https://www.georisques.gouv.fr/mes-risques/connaitre-les-risques-pres-de-chez-moi/detail/INOND?adresse=64543+Urepel&city=Urepel&codeInsee=64543&commune=Urepel&form-commune=true
+
+La page indique un risque de crue torrentielle ou à montée rapide et référence l'AZI Nive des Aldudes couvrant notamment Aldudes, Banca et Urepel.
+
+### Communauté Pays Basque — projet Olha à Banca
+
+https://www.communaute-paysbasque.fr/actualites/toutes-les-actualites/actualite/tiers-lieu-olha-un-projet-emblematique-pour-la-vallee-des-aldudes
+
+Le projet a été adapté avec un nouveau bâtiment hors zone à risque de crue. La même source mentionne reconstruction de la station d'épuration de Banca et travaux de confortement des berges.
 
 ## A3 — Hydrométrie : observable, mesure et prévision
 
-### HydroPortail / Vigicrues — station hydrométrique
+### HydroPortail — station réelle sur la Nive des Aldudes
 
-Source officielle :
-https://www.hydro.eaufrance.fr/aide/la-station-hydrometrique
+https://www.hydro.eaufrance.fr/stationhydro/Q916461001/fiche
 
-Une station hydrométrique permet d’observer une grandeur hydrométrique, typiquement une hauteur d’eau et/ou un débit. Le cours l’utilise pour montrer que le **risque de crue** n’est pas directement une mesure : il est construit à partir d’observations et d’autres informations.
-
-### Vigicrues — services d’observation et de prévision
-
-Source officielle :
-https://www.vigicrues.gouv.fr/services/v1.1
-
-La documentation distingue les observations et les prévisions en hauteur ou en débit. Elle sert de support enseignant pour éviter d’assimiler mesure, état et prévision.
+La station « La Nive des Aldudes à Saint-Étienne-de-Baïgorry » est donnée comme mise en service en 1960 et utilisée notamment pour le suivi d'étiage et la prévision des crues. Elle permet d'ancrer localement la différence entre **mesurer une hauteur/débit** et **connaître un risque**.
 
 ## A6 — Observation et métadonnées
 

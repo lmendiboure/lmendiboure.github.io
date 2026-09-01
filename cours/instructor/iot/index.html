@@ -3,56 +3,128 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Instructor hub for IoT Systems Design" />
-  <title>IoT Systems Design — Instructor Hub</title>
+  <meta name="description" content="Instructor cockpit for IoT Systems Design" />
+  <title>IoT Systems Design — Instructor Cockpit</title>
   <link rel="stylesheet" href="../../iot/assets/course.css" />
 </head>
 <body class="teacher-hub">
 <a class="skip-link" href="#mainContent">Skip to main content</a>
-<header class="topbar"><div class="shell topbar-inner"><a class="brand" href="./"><div class="brand-mark">IoT</div><div><div class="brand-title">Systems Design</div><div class="brand-sub">Instructor hub</div></div></a><a class="btn" href="../../iot/">Open student course hub</a></div></header>
+<header class="topbar"><div class="shell topbar-inner"><a class="brand" href="./"><div class="brand-mark">IoT</div><div><div class="brand-title">Systems Design</div><div class="brand-sub">Instructor cockpit</div></div></a><a class="btn" href="../../iot/">Open student course hub</a></div></header>
 <main id="mainContent">
-  <section class="shell hero"><div class="hero-copy"><div class="eyebrow">Instructor workspace</div><h1>Four missions.<br/>One learning pattern.</h1><p class="lead">Use this hub to open the classroom Projector, keep private facilitation notes nearby, maintain the reusable learning-design pattern, and release one student mission at a time.</p></div></section>
+  <section class="shell teacher-command">
+    <div class="teacher-command-main">
+      <div class="eyebrow">Teach · current mission</div>
+      <div class="teacher-current-line"><span id="currentMissionNumber">MISSION</span><span id="currentMissionState" class="state-badge">CURRENT</span></div>
+      <h1 id="currentMissionTitle">Current mission</h1>
+      <p id="currentMissionQuestion" class="lead"></p>
+      <div id="currentMissionMeta" class="teacher-meta-row"></div>
+      <div class="teacher-launch-actions">
+        <a id="currentProjector" class="btn primary" href="#">Open projector →</a>
+        <a id="currentNotes" class="btn" href="#">Open facilitation notes</a>
+        <a id="currentStudent" class="btn" href="#">Open student view</a>
+      </div>
+      <div class="teacher-mustleave">
+        <div class="eyebrow">Do not leave without</div>
+        <ul id="currentMustLeave"></ul>
+      </div>
+    </div>
+    <aside class="class-access-card" aria-label="Student access">
+      <div class="class-access-head"><span>CLASS ACCESS</span><b>PROJECT THIS</b></div>
+      <div class="class-access-body">
+        <img src="assets/student-access-qr.png" alt="QR code to https://lmendiboure.github.io/cours/" />
+        <div>
+          <div class="eyebrow">Student entry point</div>
+          <p class="class-url">lmendiboure.github.io/cours/</p>
+          <p>Students enter from the shared course page. Keep this card visible while the room connects.</p>
+          <a class="btn" href="https://lmendiboure.github.io/cours/">Open access page</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="shell teacher-pacing-section">
+    <div class="section-head"><div><div class="eyebrow">Run of show</div><h2>Core first. Depth when time allows.</h2><p>The current notes contain a full-depth envelope and a strict 90-minute route. The 90-minute route keeps the conceptual spine and every essential restitution; it compresses work and discussion rather than deleting the learning sequence.</p></div></div>
+    <div class="teacher-pacing-grid">
+      <article><span>CORE RUN</span><strong id="coreRun">90 min</strong><p>Use the per-activity Core caps in the facilitation notes.</p></article>
+      <article><span>FULL DEPTH</span><strong id="fullRun">—</strong><p>Use when the timetable allows longer discussion and optional depth.</p></article>
+      <article><span>ACTIVITIES</span><strong id="activityCount">—</strong><p>Canonical Student / Projector / Notes sequence.</p></article>
+      <article><span>RESTITUTIONS</span><strong id="stopCount">—</strong><p>Do not skip the named institutionalisation points in the Core route.</p></article>
+    </div>
+  </section>
 
   <section class="shell mission-section">
-    <div class="section-head"><div><div class="eyebrow">Teaching sequence</div><h2>Projector + notes</h2><p>The release state below mirrors the student hub. A locked session should normally have no published student folder yet.</p></div><span id="teacherCourseProgress" class="course-progress">Course status</span></div>
+    <div class="section-head"><div><div class="eyebrow">Mission control</div><h2>All sessions</h2><p>Open the Projector and instructor-facing notes from the same canonical mission map. Release state mirrors the student hub.</p></div><span id="teacherCourseProgress" class="course-progress">Course status</span></div>
     <div id="teacherMissionGrid" class="mission-grid"></div>
-
-    <div class="release-box">
-      <div class="eyebrow" style="color:#bfd0df">Recommended release workflow</div>
-      <h2>Open a session without editing the hub HTML.</h2>
-      <p>Keep future student folders out of the published GitHub Pages tree. When a session is ready, copy its folder into <code>cours/iot/</code>, then edit only <code>cours/iot/course-config.js</code>.</p>
-      <div class="release-steps"><div><b>1 · Publish</b><span>Add <code>session-N/</code> to the Pages tree.</span></div><div><b>2 · Switch state</b><span>Previous session → <code>review</code>; new session → <code>open</code>.</span></div><div><b>3 · Push</b><span>Commit and push. The course hub updates automatically.</span></div></div>
-    </div>
   </section>
 
-  <section class="shell" style="padding-bottom:52px">
-    <div class="section-head"><div><div class="eyebrow">Reusable design system</div><h2>Pattern documentation</h2><p>These files are the reusable part of the work and should evolve across courses, not just across IoT sessions.</p></div></div>
-    <div class="resource-grid">
-      <a class="resource-card" href="LEARNING-DESIGN-PATTERN.md"><strong>Learning Design Pattern</strong><span>MACU cycle, invariants, STOP ritual, navigation rules and anti-patterns.</span></a>
-      <a class="resource-card" href="EVIDENCE-MAP.md"><strong>Evidence Map</strong><span>Mechanism → supporting research → limits of the claim.</span></a>
-      <a class="resource-card" href="SESSION-AUTHORING-TEMPLATE.md"><strong>Session Authoring Template</strong><span>Blank structure for designing a new mission with the same pattern.</span></a>
-      <a class="resource-card" href="PEDAGOGY-NOTES.md"><strong>Pedagogy Notes</strong><span>Why the current IoT implementation makes each design choice.</span></a>
-      <a class="resource-card" href="COURSE-HUB-AUTHORING.md"><strong>Course Hub Authoring</strong><span>How to scale the pattern from one session to a multi-session course.</span></a>
-      <a class="resource-card" href="PUBLISHING.md"><strong>Publishing Guide</strong><span>Exact GitHub Pages workflow and what “locked” does and does not mean.</span></a>
-      <a class="resource-card" href="VISUAL-SYSTEM.md"><strong>Visual System</strong><span>Technical Atlas identity: typography, grid, diagrams, palette and reusable component rules.</span></a>
-    </div>
+  <section class="shell teacher-author-section">
+    <details class="author-details">
+      <summary><span><span class="eyebrow">Author / publish</span><strong>Course maintenance and reusable design system</strong></span><span>Open tools</span></summary>
+      <div class="author-details-body">
+        <div class="release-box teacher-release-box">
+          <div class="eyebrow" style="color:#bfd0df">Release workflow</div>
+          <h2>Publish a mission without editing either hub.</h2>
+          <p>Keep future student folders out of the published GitHub Pages tree. When a mission is ready, add its folder and edit only <code>cours/iot/course-config.js</code>.</p>
+          <div class="release-steps"><div><b>1 · Publish</b><span>Add <code>session-N/</code> to the student tree.</span></div><div><b>2 · Switch state</b><span>Change <code>releasedThrough</code>.</span></div><div><b>3 · Push</b><span>Commit and push. Both hubs derive state automatically.</span></div></div>
+        </div>
+        <div class="instructor-privacy-note"><strong>Instructor-facing ≠ access-controlled.</strong><span>If <code>cours/instructor/</code> is published through GitHub Pages, anyone who knows the path can open it. Projector pages are designed to be student-safe. Facilitation notes contain answers and misconceptions: keep the instructor tree local/private if those must genuinely remain unavailable.</span></div>
+        <div class="resource-grid">
+          <a class="resource-card" href="LEARNING-DESIGN-PATTERN.md"><strong>Learning Design Pattern</strong><span>MACU cycle, invariants, STOP ritual, navigation rules and anti-patterns.</span></a>
+          <a class="resource-card" href="EVIDENCE-MAP.md"><strong>Evidence Map</strong><span>Mechanism → supporting research → limits of the claim.</span></a>
+          <a class="resource-card" href="SESSION-AUTHORING-TEMPLATE.md"><strong>Session Authoring Template</strong><span>Blank structure for a new mission using the same pattern.</span></a>
+          <a class="resource-card" href="PEDAGOGY-NOTES.md"><strong>Pedagogy Notes</strong><span>Why the current IoT implementation makes each design choice.</span></a>
+          <a class="resource-card" href="COURSE-HUB-AUTHORING.md"><strong>Course Hub Authoring</strong><span>How to scale the pattern from one session to a multi-session course.</span></a>
+          <a class="resource-card" href="PUBLISHING.md"><strong>Publishing Guide</strong><span>GitHub Pages workflow, release states and privacy boundary.</span></a>
+          <a class="resource-card" href="VISUAL-SYSTEM.md"><strong>Visual System</strong><span>Technical Atlas identity and reusable component rules.</span></a>
+        </div>
+      </div>
+    </details>
   </section>
 </main>
-<footer class="shell footer"><span>Instructor hub · not linked from the student course hub</span><span>GitHub Pages remains public if this path is known</span></footer>
+<footer class="shell footer"><span>Instructor-facing teaching cockpit</span><span>Projector is student-safe · notes are not access-controlled if published</span></footer>
 <script src="../../iot/course-config.js"></script>
 <script>
 (() => {
   const cfg=window.IOT_COURSE_CONFIG;if(!cfg)return;
-  const host=document.querySelector('#teacherMissionGrid');
   const released=Math.max(0,Math.min(cfg.sessions.length,Number(cfg.release?.releasedThrough)||0));
+  const currentId=released || 1;
+  const current=cfg.sessions.find(s=>s.id===currentId) || cfg.sessions[0];
+  const teacherMeta={
+    1:{full:'101–122 min',activities:'8',stops:'6',must:[
+      'Architecture is a set of responsibilities and flows, not a list of products.',
+      'Communication requirements are stated before technologies are selected.',
+      'A changed assumption can force a visible architecture revision.'
+    ]},
+    2:{full:'117–136 min',activities:'9',stops:'7',must:[
+      'Interaction pattern, choreography and protocol responsibility are distinct design questions.',
+      'Protocol interoperability does not guarantee shared meaning.',
+      'Delivery guarantees are scoped; end-to-end correctness is a chain of guarantees.'
+    ]},
+    3:{full:'TBD',activities:'TBD',stops:'TBD',must:['Define the non-negotiable outcomes when Mission 03 is authored.']},
+    4:{full:'TBD',activities:'TBD',stops:'TBD',must:['Define the non-negotiable outcomes when Mission 04 is authored.']}
+  };
+  const meta=teacherMeta[current.id]||teacherMeta[3];
+  document.querySelector('#currentMissionNumber').textContent=`MISSION ${current.number}`;
+  document.querySelector('#currentMissionState').textContent=released?'CURRENT':'PREP';
+  document.querySelector('#currentMissionTitle').textContent=current.title;
+  document.querySelector('#currentMissionQuestion').textContent=current.question;
+  document.querySelector('#currentMissionMeta').innerHTML=current.objectives.map(o=>`<span>${o}</span>`).join('');
+  document.querySelector('#currentMustLeave').innerHTML=meta.must.map(x=>`<li>${x}</li>`).join('');
+  document.querySelector('#fullRun').textContent=meta.full;
+  document.querySelector('#activityCount').textContent=meta.activities;
+  document.querySelector('#stopCount').textContent=meta.stops;
+  const published=current.id<=released;
+  const p=document.querySelector('#currentProjector'),n=document.querySelector('#currentNotes'),s=document.querySelector('#currentStudent');
+  if(published){p.href=`session-${current.id}/`;n.href=`session-${current.id}/notes.html`;s.href=`../../iot/session-${current.id}/`;}
+  else{[p,n,s].forEach(a=>{a.removeAttribute('href');a.classList.add('disabled');a.setAttribute('aria-disabled','true');});}
+
+  const host=document.querySelector('#teacherMissionGrid');
   const stateFor=id=>id<released?'review':(id===released?'open':'locked');
   const stateLabels={open:'Current',review:'Review',locked:'Locked'};
-  host.innerHTML=cfg.sessions.map((s,i)=>{
-    const state=stateFor(s.id);
-    const guidePublished=s.id<=released;
-    const klass=['','s2','s3','s4'][i]||'';
-    const action=guidePublished?`<div class="mission-action" style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn primary" href="session-${s.id}/">Project →</a><a class="btn" href="session-${s.id}/notes.html">Notes</a></div>`:`<div class="locked-note"><b>○</b><span>Teacher guide not published yet</span></div>`;
-    return `<article class="mission-card ${klass}"><div class="mission-top"><span class="mission-number">${s.number}</span><span class="state-badge ${state==='locked'?'locked':''}">${stateLabels[state]}</span></div><div class="mission-kicker">${s.kicker}</div><h3>${s.title}</h3><p class="mission-question">${s.question}</p><p class="mission-summary">${s.summary}</p><div class="objective-row">${s.objectives.map(o=>`<span>${o}</span>`).join('')}</div>${action}</article>`;
+  host.innerHTML=cfg.sessions.map((sess,i)=>{
+    const state=stateFor(sess.id),guidePublished=sess.id<=released,klass=['','s2','s3','s4'][i]||'';
+    const action=guidePublished?`<div class="mission-action" style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn primary" href="session-${sess.id}/">Projector →</a><a class="btn" href="session-${sess.id}/notes.html">Notes</a><a class="btn" href="../../iot/session-${sess.id}/">Student</a></div>`:`<div class="locked-note"><b>○</b><span>Teacher guide not published yet</span></div>`;
+    return `<article class="mission-card ${klass}"><div class="mission-top"><span class="mission-number">${sess.number}</span><span class="state-badge ${state==='locked'?'locked':''}">${stateLabels[state]}</span></div><div class="mission-kicker">${sess.kicker}</div><h3>${sess.title}</h3><p class="mission-question">${sess.question}</p><p class="mission-summary">${sess.summary}</p><div class="objective-row">${sess.objectives.map(o=>`<span>${o}</span>`).join('')}</div>${action}</article>`;
   }).join('');
   document.querySelector('#teacherCourseProgress').textContent=`${released}/${cfg.sessions.length} student missions published · ${released?1:0} current`;
 })();

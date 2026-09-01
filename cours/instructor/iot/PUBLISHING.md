@@ -17,6 +17,15 @@ The intended URLs are:
 
 There is deliberately no teacher link on the public student hub.
 
+
+## Instructor privacy boundary
+
+The word **Instructor** describes the intended audience, not an access-control mechanism. If `/cours/instructor/iot/` is inside the GitHub Pages publication tree, the hub, Projector and facilitation notes are reachable by anyone who knows their URLs.
+
+- **Projector pages** are deliberately student-safe and can be published.
+- **Facilitation notes** contain accepted answers, misconceptions and landing points. If those must genuinely remain unavailable to students, keep the instructor tree local or in a private repository/deployment.
+- Do not rely on “not linked from the student hub” as a security boundary.
+
 ## The one number to edit
 
 Course availability is controlled from:

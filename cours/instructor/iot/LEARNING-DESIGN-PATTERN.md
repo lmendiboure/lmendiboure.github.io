@@ -457,7 +457,7 @@ Allowed asymmetry is about **depth and facilitation**, never about the course sk
 
 - the Student surface may contain richer substeps, adaptive depth and embedded STOPs inside an activity;
 - the Projector gives every canonical activity exactly one **WORK** screen and adds **zero or one RESTITUTION** screen only when a whole-class stop is pedagogically useful;
-- the Instructor Notes keep the private facilitation logic, answer space, caveats and technical depth for that same numbered activity;
+- the Instructor Notes keep the instructor-facing facilitation logic, answer space, caveats and technical depth for that same numbered activity;
 - consecutive activities may deliberately have no restitution between them, but they must remain separately numbered and titled on the Projector and in the Notes;
 - never merge Activities 4–6 into an instructor “Technology block”, rename an activity for the teacher view, or renumber around skipped restitutions.
 
@@ -478,7 +478,7 @@ For every canonical activity, it should expose **one or at most two navigable pu
 
 Omitting RESTITUTION does not omit or merge the activity. The next public screen is simply the next canonical activity's WORK screen.
 
-The richer facilitation sequence **LOOK → COMPARE → CHALLENGE → UNLOCK → GROUND** remains an instructor mental model and belongs in the private notes. Do not translate each pedagogical move into a projector navigation step.
+The richer facilitation sequence **LOOK → COMPARE → CHALLENGE → UNLOCK → GROUND** remains an instructor mental model and belongs in the instructor-facing notes. Do not translate each pedagogical move into a projector navigation step.
 
 ### Lightweight collective restitution: Live Boards
 
@@ -502,21 +502,21 @@ Live Board invariants:
 - preserve the student artifact as primary evidence; the collective board supplements rather than replaces it;
 - omit the board when the student artifacts themselves are already easy to compare.
 
-The Reality Check is not mandatory filler and is not a mini-lecture. Use it when a concrete external or worked artifact can answer a question created by the preceding reasoning. Prefer **one strong piece of evidence + one interpretation question** over a dense fact slide. If the evidence would require a second projector state or dense scrolling, compress it or move the detail to private notes. Clearly label worked assumptions, distinguish measured values from illustrative calculations, and link official sources when technical numbers are shown.
+The Reality Check is not mandatory filler and is not a mini-lecture. Use it when a concrete external or worked artifact can answer a question created by the preceding reasoning. Prefer **one strong piece of evidence + one interpretation question** over a dense fact slide. If the evidence would require a second projector state or dense scrolling, compress it or move the detail to instructor-facing notes. Clearly label worked assumptions, distinguish measured values from illustrative calculations, and link official sources when technical numbers are shown.
 
 Projector invariants:
 
 - large, sparse, high-contrast typography;
 - exactly one WORK screen per canonical activity and at most one RESTITUTION screen; use in-place reveal for **What to keep / Reality Check** rather than additional phases;
 - no teaching-method commentary, GitHub/publication details, answer-key language, or authoring notes;
-- no private cues such as “do not tell students…”;
+- no instructor-only cues such as “do not tell students…”;
 - the projected challenge must be discussable before its formalisation is shown;
 - the public sequence must not end at abstraction: when useful, a Reality Check should connect the concept to a concrete system, output, calculation or authoritative technical fact;
 - the final public screen should contain either the concrete evidence students should be able to interpret or the concept they are expected to retain.
 
-### Private instructor notes
+### Instructor-facing facilitation notes
 
-The private surface should make slide preparation unnecessary. For each canonical activity it should contain:
+The instructor-facing surface should make slide preparation unnecessary. For each canonical activity it should contain:
 
 - what to listen for in student answers;
 - what counts as a defensible answer;
@@ -529,9 +529,11 @@ The private surface should make slide preparation unnecessary. For each canonica
 
 The two surfaces should contain the **same conceptual destination** but different information density.
 
+**Publication boundary:** “instructor-facing” describes audience, not access control. If these notes are deployed on public GitHub Pages, they are reachable by URL. Keep them local/private when accepted answers or facilitation cues must genuinely remain unavailable to students.
+
 > **The class sees the intellectual problem and its consolidation. The instructor sees the facilitation logic and answer space.**
 
-This separation is especially important in a no-slides course: projector pages replace both the **work prompt** and the **public explanatory/evidence function** of slides, while notes replace presenter notes. The default public rhythm is **WORK → optional RESTITUTION → next canonical activity**. LOOK → COMPARE → CHALLENGE → UNLOCK remains the private facilitation logic inside RESTITUTION; Reality is revealed in-place when useful.
+This separation is especially important in a no-slides course: projector pages replace both the **work prompt** and the **public explanatory/evidence function** of slides, while notes replace presenter notes. The default public rhythm is **WORK → optional RESTITUTION → next canonical activity**. LOOK → COMPARE → CHALLENGE → UNLOCK remains the instructor-facing facilitation logic inside RESTITUTION; Reality is revealed in-place when useful.
 
 ### Resettable instructor state
 

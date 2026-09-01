@@ -21,7 +21,9 @@ Le nouveau cours applique les mêmes invariants MACU, la même soft linearity, l
 
 ## Documents spécifiques à ce cours
 
-- `COURSE-DESIGN.md` — architecture des cinq séances.
+- `COURSE-DESIGN.md` — architecture des cinq séances et continuité narrative.
+- `NARRATIVE-AND-EVIDENCE.md` — séparation réel/fiction, sources territoriales et fondement pédagogique de l’ancrage authentique.
+- `EPISODE-BRIEFS.md` — battements narratifs détaillés et continuité pédagogique de S1 à S5.
 - `session-1/` — Projection, notes enseignant et contrat structurel de la S1.
 
 ## Publication

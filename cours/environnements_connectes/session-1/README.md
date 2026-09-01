@@ -2,9 +2,9 @@
 
 ## Mission
 
-**Observer un environnement : comment savoir ce qui se passe quelque part sans être sur place ?**
+**Épisode 1 — Lundi 08:42 : observer la vallée des Aldudes sans commencer par la technologie.**
 
-La séance est une mission interactive de 1h30 utilisant le même pattern MACU que le cours IoT :
+Le territoire est réel (Banca, Les Aldudes, Urepel) ; la cellule d’étude, les personnages et les incidents sont scénarisés. La séance est une mission interactive de 1h30 utilisant le même pattern MACU que le cours IoT :
 
 **Découvrir → Externaliser → Comparer → Éprouver → Formaliser → Transférer → Réviser → Récupérer**
 
@@ -30,5 +30,6 @@ Le **dossier d'observation** accumule les décisions de la séance. La stratégi
 - progression douce : futur verrouillé, passé revisitable ;
 - Guide de terrain débloqué après les restitutions ;
 - stockage local : `environnements-connectes-session1-v2` ;
-- export/import JSON ;
+- dossier de mission inter-séances (`environnements-connectes-mission-v1`) ;
+- export/import JSON du bundle de mission ;
 - aucun backend requis.

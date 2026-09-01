@@ -1,12 +1,13 @@
 (() => {
-  const STORAGE_KEY = 'environnements-connectes-session1-v2';
+  const STORAGE_KEY = 'environnements-connectes-session1-v3';
+  const MissionStore = window.ECMissionStore;
   const $ = s => document.querySelector(s);
   const $$ = s => [...document.querySelectorAll(s)];
   const esc = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
   const clone = x => JSON.parse(JSON.stringify(x));
 
   const defaultState = {
-    version:2, screen:0, frontier:0, completed:false,
+    version:3, screen:0, frontier:0, completed:false, teamName:'',
     conceptUnlocks:{}, stopChallenges:{},
     needs:[], ranks:['','',''], needReason:'',
     decisions:{}, decisionChallenge:'',
@@ -22,12 +23,12 @@
   let state = clone(defaultState);
 
   const needs = [
-    'Niveau de la rivière','Risque de crue','État du pont','Circulation sur la route','Départ de feu','Sécheresse de la végétation','Humidité des sols','Besoin d’irrigation','Occupation des bâtiments','Consommation énergétique','Accès routier disponible','Prévisions météo locales'
+    'Niveau de la Nive des Aldudes','Risque de crue sur un secteur habité','État d’un ouvrage d’accès','Accessibilité de la route de vallée','Départ de feu sur un versant boisé','Sécheresse de la végétation','Humidité des sols','Besoin d’irrigation','Occupation d’un bâtiment public','Consommation énergétique','Accès à une exploitation isolée','Prévisions météo locales'
   ];
   const decisionDefs = [
-    ['d1','Fermer temporairement la route basse','Quelle information faudrait-il avoir avant de prendre cette décision ?'],
-    ['d2','Envoyer une équipe inspecter le pont','Qu’est-ce qui justifierait réellement le déplacement ?'],
-    ['d3','Déclencher une alerte crue','Quelle information doit être disponible, et avec quelle actualité ?']
+    ['d1','Fermer temporairement un accès routier en fond de vallée','Quelle information faudrait-il avoir avant de prendre cette décision ?'],
+    ['d2','Envoyer une équipe inspecter un ouvrage d’accès','Qu’est-ce qui justifierait réellement le déplacement ?'],
+    ['d3','Déclencher une vigilance locale liée à la Nive des Aldudes','Quelle information doit être disponible, et avec quelle actualité ?']
   ];
   const chainItems = ['Décision','Information nécessaire','Phénomène réel','Observable','Mesure'];
   const correctChain = chainItems;
@@ -74,7 +75,7 @@
     ['bridge_shock','La même mesure mensuelle','Décider juste après un choc si l’ouvrage doit fermer','fragile']
   ];
   const strategyDefs = [
-    ['river','Station de niveau d’eau','Mesure locale fréquente du phénomène critique.'],
+    ['river','Station de niveau d’eau','Mesure locale fréquente sur la Nive des Aldudes ou un point du bassin.'],
     ['rain','Pluviométrie / météo','Contexte amont et évolution attendue.'],
     ['camera','Caméra sur zone basse','Observation visuelle de la situation locale.'],
     ['satellite','Imagerie satellite','Couverture large mais temporalité différente.'],
@@ -82,10 +83,10 @@
     ['human','Signalements terrain','Information contextualisée mais non systématique.']
   ];
   const incidentDefs = [
-    ['fail','Station rivière indisponible','Votre source locale la plus fréquente ne transmet plus.'],
+    ['fail','Station de niveau indisponible','Votre source locale la plus fréquente ne transmet plus.'],
     ['drift','Capteur dérive','La station continue à produire des valeurs plausibles mais biaisées.'],
     ['delay','Données externes retardées','Le flux météo arrive avec 45 minutes de retard.'],
-    ['conflict','Sources contradictoires','La caméra suggère une situation dangereuse, la station indique un niveau normal.']
+    ['conflict','Sources contradictoires','Une observation visuelle suggère une situation dangereuse, la station indique un niveau normal.']
   ];
 
   const conceptDefs = {
@@ -111,7 +112,52 @@
   const screenToStep=[0,0,1,2,2,3,4,4,5,6,6,7,8,8,9,9];
 
   function load(){try{const raw=localStorage.getItem(STORAGE_KEY);if(raw) state={...clone(defaultState),...JSON.parse(raw)};state.frontier=Math.max(Number(state.frontier)||0,screenToStep[state.screen]||0);}catch(_){}}
-  function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));const p=$('#saveState');if(p){p.textContent='Sauvegardé sur cet appareil';p.classList.add('saved-flash');setTimeout(()=>p.classList.remove('saved-flash'),220)}}catch(_){}}
+
+  function namedSource(id){const d=strategyDefs.find(x=>x[0]===id);return d?{id:d[0],label:d[1],description:d[2]}:{id,label:id,description:''}}
+  function incidentRecord(){const d=incidentDefs.find(x=>x[0]===state.incident);return d?{id:d[0],label:d[1],description:d[2]}:null}
+  function missionObservation(){
+    const v1=state.strategyV1;
+    const v1Claims=v1?.claims||state.strategyClaims||{};
+    const v1Sources=(v1?.sources||state.strategy||[]).map(id=>({...namedSource(id),role:v1Claims[id]?.role||'',limit:v1Claims[id]?.limit||''}));
+    const v2Sources=(state.strategyV2||[]).map(id=>namedSource(id));
+    return {
+      schemaVersion:1,
+      episode:1,
+      title:'Observer un environnement',
+      status:state.completed?'completed':(state.frontier>0||state.teamName.trim()?'in-progress':'not-started'),
+      updatedAt:new Date().toISOString(),
+      priorities:[...state.ranks.filter(Boolean)],
+      priorityRationale:state.needReason||'',
+      decisionRequirements:decisionDefs.map(([id,decision])=>({id,decision,information:state.decisions[id]||''})),
+      observationChain:[...state.chain],
+      observableExample:state.observableExample||'',
+      exploredSources:state.sources.map(id=>{const d=sourceDefs.find(x=>x[0]===id);return d?{id,label:d[1],description:d[2]}:{id,label:id}}),
+      sourceComplementarity:state.sourceReason||'',
+      sourceProfiles:clone(state.sourceProfiles||{}),
+      transfers:{forest:state.forestTransfer||'',bridgeProxy:state.bridgeProxyTransfer||'',bridgeQuality:state.qualityTransfer||''},
+      context:{metadata:[...state.metadata],timeMeaning:state.timeMeaning||'',timeComparison:state.metadataCompare||'',observationCases:clone(state.observationCases||{}),freshnessReasoning:state.freshness||''},
+      quality:{diagnostics:clone(state.quality||{}),usage:clone(state.qualityUsage||{})},
+      strategy:{
+        v1:v1?{frozenAt:v1.at||null,sources:v1Sources,blindSpot:v1.reason||state.strategyReason||''}:null,
+        v2:state.strategyV2?{sources:v2Sources,incident:incidentRecord(),revision:{brokenAssumption:state.revisionHypothesis||'',threatenedInformation:state.revisionInfo||'',change:state.revisionAction||'',remainingWeakness:state.revisionWeakness||''}}:null
+      }
+    };
+  }
+  function syncMission(){
+    if(!MissionStore) return {ok:true};
+    return MissionStore.update(d=>{
+      d.team={...(d.team||{}),name:state.teamName||''};
+      d.observation=missionObservation();
+      d.progress=d.progress||{lastEpisodeTouched:0,lastEpisodeCompleted:0,episodes:{}};
+      d.progress.episodes=d.progress.episodes||{};
+      d.progress.episodes['1']={status:d.observation.status,frontier:Number(state.frontier)||0,completed:!!state.completed,updatedAt:d.observation.updatedAt};
+      d.progress.lastEpisodeTouched=Math.max(Number(d.progress.lastEpisodeTouched)||0,1);
+      if(state.completed)d.progress.lastEpisodeCompleted=Math.max(Number(d.progress.lastEpisodeCompleted)||0,1);
+      else if((Number(d.progress.lastEpisodeCompleted)||0)===1)d.progress.lastEpisodeCompleted=0;
+      return d;
+    });
+  }
+  function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));const mission=syncMission();const p=$('#saveState');if(p){p.textContent=mission?.ok===false?'Travail local sauvé · dossier non synchronisé':'Dossier sauvegardé';p.classList.add('saved-flash');setTimeout(()=>p.classList.remove('saved-flash'),220)}}catch(_){}}
   function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;setTimeout(()=>t.hidden=true,2200)}
 
   function renderStepper(){const host=$('#stepper');const viewed=screenToStep[state.screen]||0;host.innerHTML=stepLabels.map((label,i)=>{const unlocked=i<=state.frontier;const cls=['step-dot',!unlocked?'locked':'',i<state.frontier?'done':'',i===viewed?'active':''].filter(Boolean).join(' ');return `<button class="${cls}" ${unlocked?'':'disabled'} data-step="${entryScreens[i]}"><span>${i<state.frontier?'✓':i+1}</span><small>${label}</small></button>`}).join('');host.querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>showScreen(+b.dataset.step));}
@@ -139,17 +185,21 @@
 
   function renderStopRitual(){$$('[data-stop-challenge]').forEach(h=>{const id=h.dataset.stopChallenge,d=stopChallenges[id];if(!d)return;const shown=!!state.stopChallenges[id];h.innerHTML=`<div class="ritual-card challenge"><span class="ritual-kicker">3 · Éprouver</span><strong>${d[0]}</strong>${shown?`<p>${d[1]}</p>`:`<p>Révélez le contre-exemple lorsque l’enseignant le demande.</p><button class="btn soft" data-reveal-challenge="${id}">Révéler le challenge</button>`}</div>`});$$('[data-reveal-challenge]').forEach(b=>b.onclick=()=>{state.stopChallenges[b.dataset.revealChallenge]=true;save();renderStopRitual();});$$('[data-concept]').forEach(h=>{const id=h.dataset.concept,d=conceptDefs[id];if(!d)return;const on=!!state.conceptUnlocks[id];h.innerHTML=`<div class="ritual-card unlock"><span class="ritual-kicker">4 · Formaliser</span>${on?`<strong>${d.title}</strong><div class="unlock-sequence"><section><span>À partir de vos constats</span><p>${d.bridge}</p></section><section class="formalise"><span>Formaliser</span><p>${d.formal}</p></section><section class="carry"><span>Règle pour la suite</span><p>${d.carry}</p></section></div>`:`<strong>Consolidez ce que la classe vient de mettre au jour.</strong><p>La formalisation arrive après la comparaison et le contre-exemple.</p><button class="btn primary" data-unlock="${id}">Ajouter au Guide de terrain</button>`}</div>`});$$('[data-unlock]').forEach(b=>b.onclick=()=>{state.conceptUnlocks[b.dataset.unlock]=true;save();renderStopRitual();renderFieldGuide();updateUnlockButtons();});$$('[data-reality]').forEach(r=>{r.hidden=!state.conceptUnlocks[r.dataset.reality]});updateUnlockButtons();}
   function updateUnlockButtons(){$$('[data-requires-unlock]').forEach(b=>b.disabled=!state.conceptUnlocks[b.dataset.requiresUnlock]);}
-  function renderFieldGuide(){const count=conceptOrder.filter(id=>state.conceptUnlocks[id]).length;$('#fieldGuideBtn').hidden=count===0;$('#fieldGuideCount').textContent=`${count}/6`;$('#fieldGuideContent').innerHTML=`<div class="field-guide-progress"><strong>${count} / 6 concepts débloqués</strong><span>Cartes compactes pour révision ; la formalisation complète reste dans les STOP.</span></div>`+conceptOrder.map((id,i)=>{const d=conceptDefs[id],on=!!state.conceptUnlocks[id];return `<section class="guide-entry ${on?'':'locked'}"><span class="guide-number">${i+1}</span><div>${on?`<strong>${d.title}</strong><p>${d.summary}</p><div class="guide-keep">${d.keep}</div>`:`<strong>Concept verrouillé</strong><p>Terminez la restitution correspondante.</p>`}</div></section>`}).join('');}
-  function renderDesign(){const n=id=>strategyDefs.find(x=>x[0]===id)?.[1]||id;const claims=state.strategyV1?.claims||state.strategyClaims;$('#designContent').innerHTML=`<section class="design-section"><h3>1 · Besoin</h3><div class="drawer-list">${state.ranks.filter(Boolean).map((x,i)=>`<span>${i+1}. ${esc(x)}</span>`).join('')||'<span>Pas encore priorisé.</span>'}</div></section><section class="design-section"><h3>2 · Chaîne d’observation</h3><div class="drawer-list"><span>${state.chain.map(esc).join(' → ')||'Pas encore construite.'}</span></div></section><section class="design-section"><h3>3 · Sources explorées</h3><div class="drawer-list">${state.sources.map(id=>`<span>• ${sourceDefs.find(x=>x[0]===id)?.[1]}</span>`).join('')||'<span>Aucune source retenue.</span>'}</div></section><section class="design-section"><h3>4 · Stratégie v1</h3><div class="drawer-list">${(state.strategyV1?.sources||state.strategy).map(id=>{const c=claims[id]||{};return `<span>• ${n(id)} — ${esc(c.role||'apport non défini')} / limite: ${esc(c.limit||'non définie')}</span>`}).join('')||'<span>Pas encore construite.</span>'}</div></section><section class="design-section"><h3>5 · Révision v2</h3><div class="drawer-list">${(state.strategyV2||[]).map(id=>`<span>• ${n(id)}</span>`).join('')||'<span>Pas encore révisée.</span>'}${state.revisionAction?`<span><strong>Règle :</strong> ${esc(state.revisionAction)}</span>`:''}${state.revisionWeakness?`<span><strong>Limite restante :</strong> ${esc(state.revisionWeakness)}</span>`:''}</div></section>`;}
+  function renderFieldGuide(){const count=conceptOrder.filter(id=>state.conceptUnlocks[id]).length;$('#fieldGuideBtn').hidden=count===0;$('#fieldGuideCount').textContent=`${count}/6`;$('#fieldGuideContent').innerHTML=`<div class="field-guide-progress"><strong>${count} / 6 repères disponibles</strong><span>Version courte des règles déjà consolidées ; revenez au STOP correspondant pour retrouver le raisonnement complet.</span></div>`+conceptOrder.map((id,i)=>{const d=conceptDefs[id],on=!!state.conceptUnlocks[id];return `<section class="guide-entry ${on?'':'locked'}"><span class="guide-number">${i+1}</span><div>${on?`<strong>${d.title}</strong><p>${d.summary}</p><div class="guide-keep">${d.keep}</div>`:`<strong>Repère non encore disponible</strong><p>Terminez la restitution correspondante.</p>`}</div></section>`}).join('');}
+  function renderDesign(){const n=id=>strategyDefs.find(x=>x[0]===id)?.[1]||id;const claims=state.strategyV1?.claims||state.strategyClaims;$('#designContent').innerHTML=`<section class="design-section"><h3>Dossier de mission</h3><div class="drawer-list"><span><strong>Territoire :</strong> Vallée des Aldudes · Banca · Les Aldudes · Urepel</span><span><strong>Cellule :</strong> ${esc(state.teamName||'non renseignée')}</span><span><strong>Périmètre :</strong> Banca · Les Aldudes · Urepel · vallée de la Nive des Aldudes</span></div></section><section class="design-section"><h3>1 · Besoin</h3><div class="drawer-list">${state.ranks.filter(Boolean).map((x,i)=>`<span>${i+1}. ${esc(x)}</span>`).join('')||'<span>Pas encore priorisé.</span>'}</div></section><section class="design-section"><h3>2 · Chaîne d’observation</h3><div class="drawer-list"><span>${state.chain.map(esc).join(' → ')||'Pas encore construite.'}</span></div></section><section class="design-section"><h3>3 · Sources explorées</h3><div class="drawer-list">${state.sources.map(id=>`<span>• ${sourceDefs.find(x=>x[0]===id)?.[1]}</span>`).join('')||'<span>Aucune source retenue.</span>'}</div></section><section class="design-section"><h3>4 · Stratégie v1</h3><div class="drawer-list">${(state.strategyV1?.sources||state.strategy).map(id=>{const c=claims[id]||{};return `<span>• ${n(id)} — ${esc(c.role||'apport non défini')} / limite: ${esc(c.limit||'non définie')}</span>`}).join('')||'<span>Pas encore construite.</span>'}</div></section><section class="design-section"><h3>5 · Révision v2</h3><div class="drawer-list">${(state.strategyV2||[]).map(id=>`<span>• ${n(id)}</span>`).join('')||'<span>Pas encore révisée.</span>'}${state.revisionAction?`<span><strong>Règle :</strong> ${esc(state.revisionAction)}</span>`:''}${state.revisionWeakness?`<span><strong>Limite restante :</strong> ${esc(state.revisionWeakness)}</span>`:''}</div></section>`;}
 
   function openDrawer(id,scrim){$(id).classList.add('open');$(id).setAttribute('aria-hidden','false');$(scrim).hidden=false}function closeDrawer(id,scrim){$(id).classList.remove('open');$(id).setAttribute('aria-hidden','true');$(scrim).hidden=true}
   $('#designBtn').onclick=()=>{renderDesign();openDrawer('#designDrawer','#designScrim')};$('#closeDesign').onclick=()=>closeDrawer('#designDrawer','#designScrim');$('#designScrim').onclick=()=>closeDrawer('#designDrawer','#designScrim');$('#fieldGuideBtn').onclick=()=>{renderFieldGuide();openDrawer('#fieldGuideDrawer','#fieldGuideScrim')};$('#closeFieldGuide').onclick=()=>closeDrawer('#fieldGuideDrawer','#fieldGuideScrim');$('#fieldGuideScrim').onclick=()=>closeDrawer('#fieldGuideDrawer','#fieldGuideScrim');
 
-  function exportSession(){const blob=new Blob([JSON.stringify({course:'Environnements connectés et données',session:'S1 · Observer un environnement',exportedAt:new Date().toISOString(),data:state},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='environnements-connectes-s1-observation.json';a.click();URL.revokeObjectURL(a.href)}
-  $('#exportBtn').onclick=exportSession;$('#finishExport').onclick=exportSession;$('#importInput').onchange=e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const p=JSON.parse(r.result),d=p.data||p;state={...clone(defaultState),...d};save();renderAll();showScreen(state.screen);toast('Dossier importé.')}catch(_){alert('Fichier de séance invalide.')}};r.readAsText(f)};$('#resetBtn').onclick=()=>{if(confirm('Effacer tout le travail local de cette séance ?')){state=clone(defaultState);save();renderAll();showScreen(0);}};
+  function exportSession(){
+    syncMission();
+    const payload=MissionStore?MissionStore.makeBundle({'1':state}):{format:'environnements-connectes-session-export',exportedAt:new Date().toISOString(),sessions:{'1':state}};
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='aldudes-dossier-mission.json';a.click();URL.revokeObjectURL(a.href)
+  }
+  $('#exportBtn').onclick=exportSession;$('#finishExport').onclick=exportSession;$('#importInput').onchange=e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const p=JSON.parse(r.result);let d=null;if(p.format==='environnements-connectes-mission-bundle'&&MissionStore){const imported=MissionStore.importBundle(p);d=imported.sessions?.['1']||imported.sessions?.[1]||null;}else d=p.data||p.sessions?.['1']||p.sessions?.[1]||p;if(!d||typeof d!=='object')throw new Error('État S1 absent');state={...clone(defaultState),...d};save();renderAll();showScreen(state.screen);toast('Dossier de mission importé.')}catch(err){console.warn(err);alert('Fichier de mission invalide ou incompatible.')}};r.readAsText(f)};$('#resetBtn').onclick=()=>{if(confirm('Effacer le travail de S1 et les décisions de mission qui en dépendent ?')){state=clone(defaultState);if(MissionStore)MissionStore.clearFromEpisode(1);save();renderAll();showScreen(0);}};
   $('#finishBtn').onclick=()=>{state.completed=true;save();$('#finalSynthesis').hidden=false;$('#finishBtn').hidden=true;renderStepper();};
 
   function bindGeneralInputs(){if($('#needReason')){} }
-  function renderAll(){renderNeeds();renderDecisions();renderChain();renderSources();renderClassify();renderMetadata();renderObservationCases();renderQuality();renderStrategy();renderIncident();renderSnapshots();renderStopRitual();renderFieldGuide();renderDesign();if(state.completed){$('#finalSynthesis').hidden=false;$('#finishBtn').hidden=true}else{$('#finalSynthesis').hidden=true;$('#finishBtn').hidden=false}}
+  function renderAll(){const team=$('#teamName');if(team){team.value=state.teamName||'';team.oninput=e=>{state.teamName=e.target.value;save();renderDesign();};}renderNeeds();renderDecisions();renderChain();renderSources();renderClassify();renderMetadata();renderObservationCases();renderQuality();renderStrategy();renderIncident();renderSnapshots();renderStopRitual();renderFieldGuide();renderDesign();if(state.completed){$('#finalSynthesis').hidden=false;$('#finishBtn').hidden=true}else{$('#finalSynthesis').hidden=true;$('#finishBtn').hidden=false}}
   load();renderAll();showScreen(state.screen,{unlock:false});
 })();

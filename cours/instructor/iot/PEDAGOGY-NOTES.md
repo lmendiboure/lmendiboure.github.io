@@ -113,3 +113,8 @@ Do **not** force different sessions to contain the same number of activities. Sy
 ## Cross-session Mission dossier
 
 The running case uses a deliberately small cross-session record. Do **not** turn it into a transcript of student work. Session-internal state (screen, unlocks, retrieval, optional depth, hints) stays separate. The shared dossier contains only structured engineering decisions that are safe to reuse: Architecture v2 class, Top-3 requirements, access stance, one unresolved uncertainty, and the revision trigger. Session 2 personalises its handover from these fields but must always remain fully teachable with the generic fallback. Free text and diagrams may be exported for the student, but they must not be parsed or used to control later pedagogy.
+
+
+## Instructor cockpit rule
+
+The instructor home page is a **teaching cockpit first** and an authoring workspace second. Above the fold it must expose the current mission, Projector, facilitation notes, student access, non-negotiable outcomes and pacing mode. Publishing and pattern-maintenance tools are secondary and collapsible. Session notes distinguish a strict 90-minute Core run from the full-depth envelope; the Core route compresses time but preserves the conceptual sequence and institutionalisation points.

@@ -46,7 +46,7 @@ Do not use the final screen as a lecture summary. After the Activity 9 restituti
 
 ## Duration
 
-Session 2 is intentionally longer than Session 1. Activity count is determined by conceptual work, not symmetry across sessions. The dedicated delivery-semantics activity prevents the final stress-test from having to introduce reliability, retries, duplicate effects and offline persistence for the first time.
+Two pacing modes are explicit in `notes.html`: a strict **90-minute Core run** (9 / 10 / 10 / 6 / 7 / 12 / 14 / 14 / 8 min) and the existing **117–136 minute full-depth envelope**. The Core run preserves all seven restitutions and timeboxes work/discussion; optional Challenge routes belong to the full-depth run. Activity count remains curriculum-driven: the dedicated delivery-semantics activity prevents the final stress-test from introducing reliability, retries, duplicate effects and offline persistence for the first time.
 
 ## Running operational case
 
@@ -67,3 +67,8 @@ Do not let a stakeholder speech duplicate the case dossier or the activity instr
 ## Mission dossier across sessions
 
 The student workspace keeps pedagogical progress (screens, unlocks, retrieval, hints) inside the session state, but publishes only a small structured **Mission dossier** across sessions. Session 1 records the classified Architecture v2 pattern, Top-3 communication requirements, campus access stance, key open uncertainty, and the incident that triggered revision. Session 2 reads those fields when available and otherwise uses a generic fallback. Free-text answers are never interpreted to drive the next session. The export file contains the Mission dossier plus the current session progress so it can also be moved to another browser.
+
+
+## Publication boundary
+
+`notes.html` is **instructor-facing, not access-controlled**. If `cours/instructor/` is deployed on public GitHub Pages, anyone who knows the path can open it. The Projector is designed to be student-safe; keep the instructor tree local/private if facilitation answers must genuinely remain unavailable.
