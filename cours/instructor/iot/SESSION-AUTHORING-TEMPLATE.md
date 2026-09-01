@@ -296,3 +296,15 @@ If the Projector contains instructor-entered state:
 - [ ] **New class** clears all instructor-entered state and reveals, then returns to Activity 1 / WORK;
 - [ ] reset never affects the Student workspace;
 - [ ] reset behavior is tested before publication.
+
+## Visual-system check
+
+Before release, verify the session against `VISUAL-SYSTEM.md`:
+
+- [ ] Same Technical Atlas identity on Student, Projector and Notes.
+- [ ] Hierarchy comes primarily from typography, spacing, grid and rules.
+- [ ] No decorative per-activity rainbow palette.
+- [ ] Large-radius cards / gradients / soft shadows are not used as default layout primitives.
+- [ ] Diagrams and collective representations are first-class composition elements.
+- [ ] Monospace is reserved for technical metadata, timings, counters and annotations.
+- [ ] New visual components exist because the learning representation requires them.

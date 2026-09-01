@@ -534,3 +534,9 @@ Reset invariants:
 - destructive resets require a confirmation;
 - interactive instructor state should use session-scoped browser storage unless persistence across browser sessions is explicitly required;
 - every new Instructor interaction primitive must define both a local reset and its behavior under **New class**.
+
+## Visual-system invariant
+
+The learning pattern and the visual pattern are separate concerns. A session may change its subject matter without changing the course's visual grammar.
+
+Use the shared **Technical Atlas / Systems Design Review** system documented in `VISUAL-SYSTEM.md`. Student, Projector and Instructor Notes should share its typography, grid, palette, diagram language and interaction states. Do not reintroduce a generic card/dashboard grammar when authoring a new session.
