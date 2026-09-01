@@ -729,11 +729,11 @@
 
   /* ---------- Stress test ---------- */
   const stressDefs = [
-    {id:'outage', icon:'⊘', title:'Internet outage', short:'Campus Internet disappears for 30 minutes.', broken:'Your original design may have assumed continuous reachability of remote services.'},
-    {id:'battery', icon:'ϟ', title:'Two-year battery target', short:'Outdoor nodes cannot be regularly maintained.', broken:'Your original design may have treated radio activity and energy as cheap.'},
-    {id:'scale', icon:'×20', title:'Scale explosion', short:'30 measurement points become 600.', broken:'Your original design may have assumed that shared network, processing and storage resources scale linearly.'},
-    {id:'camera', icon:'▣', title:'High-volume sensor', short:'A camera now sends an image every 10 seconds.', broken:'Your original design may have assumed that all sensors have a similar traffic profile.'},
-    {id:'remote', icon:'◌', title:'No terrestrial coverage', short:'Some sensors move to isolated mountain sites.', broken:'Your original design may have assumed terrestrial access infrastructure is available everywhere.'}
+    {id:'outage', icon:'⊘', title:'Internet outage', short:'Sam reports that campus Internet disappears for 30 minutes.', broken:'Your original design may have assumed continuous reachability of remote services.'},
+    {id:'battery', icon:'ϟ', title:'Two-year battery target', short:'Sam reports that outdoor nodes cannot be regularly maintained.', broken:'Your original design may have treated radio activity and energy as cheap.'},
+    {id:'scale', icon:'×20', title:'Scale explosion', short:'Amina expands the service from 30 measurement points to 600.', broken:'Your original design may have assumed that shared network, processing and storage resources scale linearly.'},
+    {id:'camera', icon:'▣', title:'High-volume sensor', short:'Leila adds a camera flow: one image every 10 seconds.', broken:'Your original design may have assumed that all sensors have a similar traffic profile.'},
+    {id:'remote', icon:'◌', title:'No terrestrial coverage', short:'Amina extends the service to isolated mountain sites with no terrestrial coverage.', broken:'Your original design may have assumed terrestrial access infrastructure is available everywhere.'}
   ];
   const responseChoices = [
     ['local-buffer','Add local buffering','Keep data locally while a remote path is unavailable.'],

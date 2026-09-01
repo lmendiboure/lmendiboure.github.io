@@ -46,3 +46,7 @@ The session uses **soft linearity**:
 - review mode is explicit and provides a one-click return to the current mission;
 - meaningful commitments are preserved rather than silently rewritten;
 - Architecture v1 becomes read-only after STOP 2 and later structural change is recorded as Architecture v2.
+
+## Running case
+
+This session is part of one continuous campus engineering case. Stakeholder interventions introduce only decision-relevant information: service needs, field constraints, architecture claims, integration problems or incidents. The narrative is therefore functional rather than decorative.

@@ -32,8 +32,8 @@
 <div class="hero-grid">
 <div>
 <div class="eyebrow">IoT Systems Design · Session 1</div>
-<h1>Map first.<br/>Define later.</h1>
-<p class="lead">Start with eight connected physical systems. Decide how you would classify them, where your categories overlap, and only then ask what belongs under the IoT label.</p>
+<h1>Join the design team.<br/>Earn the architecture.</h1>
+<p class="lead">A real campus project will become your running case. First calibrate what belongs in the IoT landscape; then design, challenge and revise one system as new operational evidence arrives.</p>
 <div class="hero-rule"><span></span><p><strong>Rule:</strong> use your current intuition first — no searching yet.</p></div>
 </div>
 <div aria-label="Eight unclassified connected-system cases waiting to be mapped" class="hero-landscape hero-unresolved" role="img">
@@ -43,13 +43,13 @@
 <div class="hero-visual-note">Eight cases. Your categories. No answer revealed yet.</div>
 </div>
 </div>
-<div aria-label="Session progression" class="stepper" id="stepper"></div>
+<section class="case-roster card flat"><div class="case-roster-head"><span class="eyebrow">Running case · the campus team</span><strong>Four people, four sources of engineering constraints.</strong><p>They do not give you answers. They bring needs, evidence and incidents that change what the system must do.</p></div><div class="case-roster-grid"><div class="case-person"><span class="case-avatar">AM</span><div><strong>Amina</strong><small>Campus operations lead</small><em>service outcomes · operating constraints</em></div></div><div class="case-person"><span class="case-avatar">ST</span><div><strong>Sam</strong><small>Field technician</small><em>devices · physical environment · incidents</em></div></div><div class="case-person"><span class="case-avatar">YN</span><div><strong>Yanis</strong><small>Network architect</small><em>connectivity · infrastructure · protocol responsibilities</em></div></div><div class="case-person"><span class="case-avatar">LE</span><div><strong>Leila</strong><small>Platform engineer</small><em>applications · data · interoperability</em></div></div></div></section><div aria-label="Session progression" class="stepper" id="stepper"></div>
 <nav aria-label="Review navigation" class="history-nav" hidden="" id="historyNav"></nav>
 </section>
 <div class="shell activity-stage">
 <!-- ACTIVITY 1 -->
 <section class="activity-screen" data-screen="0">
-<div class="activity-label"><span>Activity 1</span><span class="pill-neutral">Map the IoT landscape</span></div>
+<div class="activity-label"><span>Activity 1</span><span class="pill-neutral">Map the IoT landscape</span></div><aside class="case-voice"><div class="case-avatar large">AM</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Amina</strong><span>Campus operations lead</span><em>Onboarding brief</em></div><blockquote>“Before I approve an ‘IoT project’, I want to know whether that label is actually useful. Here are eight connected physical systems. Show me what they have in common — and where the boundaries become ambiguous.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>What makes these systems part of one field without pretending their constraints are identical?</span></div><div class="case-state"><b>Case state</b><span>No campus architecture yet · first establish the systems boundary.</span></div></div></aside>
 <div class="activity-intro landscape-intro">
 <h2>Which world does each system belong to?</h2>
 <p>Choose one <strong>main domain</strong> for each case and, when you can defend it, one <strong>secondary domain</strong>. Use your current intuition — no searching yet.</p>
@@ -83,7 +83,7 @@
 </section>
 <!-- ACTIVITY 2 -->
 <section class="activity-screen" data-screen="2" hidden="">
-<div class="activity-label"><span>Activity 2</span><span class="pill-neutral">Build architecture v1</span></div>
+<div class="activity-label"><span>Activity 2</span><span class="pill-neutral">Build architecture v1</span></div><aside class="case-voice"><div class="case-avatar large">AM</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Amina</strong><span>Campus operations lead</span><em>Project handover</em></div><blockquote>“We need environmental visibility across the campus: 30 measurement points, indoor and outdoor, with history and abnormal-condition alerts. I can describe the outcome. I am not going to prescribe the architecture.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>Which functions, components and information flows are necessary before any technology is named?</span></div><div class="case-state"><b>Case state</b><span>Campus case opened · architecture v1 does not exist yet.</span></div></div></aside>
 <section aria-labelledby="campusMissionTitle" class="mission-brief">
 <div class="mission-copy">
 <div class="mission-meta"><span>Campus mission</span><span>Design dossier</span></div>
@@ -164,8 +164,8 @@
 </section>
 <!-- ACTIVITY 3 -->
 <section class="activity-screen" data-screen="4" hidden="">
-<div class="activity-label"><span>Activity 3</span><span class="pill-neutral">Close the loop</span></div>
-<div class="mission-context"><span class="mission-context-tag">Mission change</span><strong>CO₂ can now trigger ventilation.</strong><span>The system no longer only observes the campus: it may act on the physical world, while a human must retain override authority.</span></div>
+<div class="activity-label"><span>Activity 3</span><span class="pill-neutral">Close the loop</span></div><aside class="case-voice"><div class="case-avatar large">AM</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Amina</strong><span>Campus operations lead</span><em>Requirement change</em></div><blockquote>“Facilities has approved automatic ventilation when CO₂ is too high. The operator must still be able to override automation, and ‘command sent’ is not enough evidence for me.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>How must architecture v1 change when observation becomes closed-loop control?</span></div><div class="case-state"><b>Case state</b><span>The system now acts on the physical world.</span></div></div></aside>
+<div class="mission-context"><span class="mission-context-tag">Case update</span><strong>Observation → control</strong><span>Human override and physical-state evidence are now in scope.</span></div>
 <div class="activity-intro">
 <h2>What changes when the system can act?</h2>
 <p>Extend your reasoning from monitoring to a closed loop. Decide which elements are necessary to make a command defensible — and which evidence tells you that the physical action really happened.</p>
@@ -195,7 +195,7 @@
 </section>
 <!-- ACTIVITY 3 -->
 <section class="activity-screen" data-screen="6" hidden="">
-<div class="activity-label"><span>Activity 4</span><span class="pill-neutral">Expose communication requirements</span></div>
+<div class="activity-label"><span>Activity 4</span><span class="pill-neutral">Expose communication requirements</span></div><aside class="case-voice"><div class="case-avatar large">ST</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Sam</strong><span>Field technician</span><em>Field review</em></div><blockquote>“Your diagram looks clean, but the campus is not. Some points are outdoors, some are behind thick walls, some may be battery powered, and I do not yet know what infrastructure is available everywhere.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>Which communication requirements matter, and which missing facts could change them?</span></div><div class="case-state"><b>Case state</b><span>Architecture exists · deployment assumptions are still incomplete.</span></div></div></aside>
 <div class="mission-context"><span class="mission-context-tag">Campus mission</span><strong>30 points · indoor + outdoor · 4 signals</strong><span>History and alerts are the service outcomes. Use your own architecture as evidence.</span></div>
 <div class="activity-intro">
 <h2>What actually matters for a communication link?</h2>
@@ -229,7 +229,7 @@
 </section>
 <!-- ACTIVITY 4 -->
 <section class="activity-screen" data-screen="8" hidden="">
-<div class="activity-label"><span>Activity 5</span><span class="pill-neutral">Discover network shapes</span></div>
+<div class="activity-label"><span>Activity 5</span><span class="pill-neutral">Discover network shapes</span></div><aside class="case-voice"><div class="case-avatar large">YN</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Yanis</strong><span>Network architect</span><em>Architecture review</em></div><blockquote>“Do not ask me for ‘the best IoT network’ yet. Tell me the communication shape you need: range, data volume, device budget and available infrastructure. Then we can attach names.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>What network shapes solve different communication problems before standards are compared?</span></div><div class="case-state"><b>Case state</b><span>Requirements are explicit · technology names remain deliberately hidden.</span></div></div></aside>
 <div class="mission-context"><span class="mission-context-tag">Campus mission</span><strong>Your flows now need communication paths.</strong><span>Do not choose a technology yet. First understand the shapes of networks that could carry those flows.</span></div>
 <div class="activity-intro">
 <h2>Start from the communication problem — not from a standard name.</h2>
@@ -253,7 +253,7 @@
 </section>
 <!-- ACTIVITY 5 -->
 <section class="activity-screen" data-screen="9" hidden="">
-<div class="activity-label"><span>Activity 6</span><span class="pill-neutral">Investigate technologies</span></div>
+<div class="activity-label"><span>Activity 6</span><span class="pill-neutral">Investigate technologies</span></div><aside class="case-voice"><div class="case-avatar large">YN</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Yanis</strong><span>Network architect</span><em>Integrator shortlist</em></div><blockquote>“The integrator has sent Wi-Fi, Bluetooth LE, IEEE 802.15.4, LoRaWAN and NB-IoT as candidate families. Your job is not to recognise logos; it is to uncover what choosing each one commits us to.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>What architecture, infrastructure and trade-offs come with each family?</span></div><div class="case-state"><b>Case state</b><span>Network shapes known · concrete technology families can now be investigated.</span></div></div></aside>
 <div class="mission-context"><span class="mission-context-tag">Campus mission</span><strong>Keep your Top 3 requirements visible.</strong><span>As you inspect each family, ask which part of your campus design it could plausibly serve — and what infrastructure it would add.</span></div>
 <div class="activity-intro">
 <h2>Now test the map you just built.</h2>
@@ -278,7 +278,7 @@
 </section>
 <!-- ACTIVITY 6 -->
 <section class="activity-screen" data-screen="10" hidden="">
-<div class="activity-label"><span>Activity 7</span><span class="pill-neutral">Choose under constraints</span></div>
+<div class="activity-label"><span>Activity 7</span><span class="pill-neutral">Choose under constraints</span></div><aside class="case-voice"><div class="case-avatar large">AM</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Amina</strong><span>Campus design review</span><em>Procurement pressure</em></div><blockquote>“Procurement would prefer one communication family everywhere. Before I accept that simplification, prove whether your reasoning survives other deployment contexts — then come back to our campus.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>Is one family defensible across all campus flows, and under which assumptions?</span></div><div class="case-state"><b>Case state</b><span>Candidate technologies known · validity domains must now be defended.</span></div></div></aside>
 <div class="mission-context transfer"><span class="mission-context-tag">Transfer test</span><strong>Leave campus briefly to test your reasoning.</strong><span>These cases look different on purpose. After them, you will return to the campus mission.</span></div>
 <div class="activity-intro">
 <h2>Which candidate is the best fit <em>given these assumptions</em>?</h2>
@@ -311,8 +311,8 @@
 </section>
 <!-- ACTIVITY 7 -->
 <section class="activity-screen" data-screen="12" hidden="">
-<div class="activity-label"><span>Activity 8</span><span class="pill-neutral">Stress-test and revise</span></div>
-<div class="mission-context danger-context"><span class="mission-context-tag">Back to campus</span><strong>Stress-test the system you designed.</strong><span>Every event below changes one fact in the original campus brief.</span></div>
+<div class="activity-label"><span>Activity 8</span><span class="pill-neutral">Stress-test and revise</span></div><aside class="case-voice"><div class="case-avatar large">ST</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Sam</strong><span>Field technician</span><em>Incident report</em></div><blockquote>“One assumption from the original brief has just failed in the field. I need a structural response, not a sentence saying the system should be ‘more robust’.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>Which assumption broke, which requirement moved, and what concrete architecture v2 change follows?</span></div><div class="case-state"><b>Case state</b><span>Architecture v1 is frozen · the incident must produce an explicit v2 delta.</span></div></div></aside>
+<div class="mission-context danger-context"><span class="mission-context-tag">Case update</span><strong>v1 frozen → incident → v2 required</strong><span>Your response must change the structure of the system, not only its wording.</span></div>
 <div class="activity-intro">
 <h2>What happens when one assumption changes?</h2>
 <p>Pick a change and follow its consequences: what stops working, which requirement becomes harder, and what architectural response would you try?</p>

@@ -44,3 +44,18 @@ The Projector stores class-entered Live Board state only for the current browser
 - **Clear board** resets the current Capture / Structure / Compare board.
 - **New class** clears all class-entered boards and tallies, closes What-to-keep/Reality reveals, and returns to Activity 1 / WORK.
 - Student progress is separate and is never changed by either instructor reset.
+
+## Running operational case
+
+Sessions 1 and 2 use the **same campus environmental system** and the same four stakeholder voices:
+
+- **Amina — Campus operations lead:** service outcomes and operating constraints.
+- **Sam — Field technician:** physical devices, deployment evidence and incidents.
+- **Yanis — Network architect:** connectivity, infrastructure and protocol responsibilities.
+- **Leila — Platform engineer:** applications, data and interoperability.
+
+A stakeholder intervention is never decorative. It must introduce a fact, need, claim or incident that changes the engineering question. The student loop is:
+
+**operational trigger → decision/artifact → class discussion → formalisation → transfer**
+
+Do not improvise biographies or narrative detail that does not alter the technical reasoning. Session 1 builds and revises architecture; Session 2 continues the same case and makes its exchanges explicit, interoperable and robust.
