@@ -28,12 +28,12 @@ The student site uses no backend or database. Work is saved in browser `localSto
 
 1. map the IoT landscape without being told the conclusion;
 2. enter a persistent campus mission brief, then build an architecture from functions and information flows;
-3. close the loop from a fully visible control chain, then decide what proves physical effect, what an acknowledgement proves, and where override authority sits;
-4. rank communication constraints at system level, then challenge that ranking on one real Architecture v1 flow before the STOP;
-5. compare five network shapes side by side using distance, traffic, device budget and infrastructure, then shortlist the shapes worth deeper campus investigation;
+3. close the loop by adding actuation, command, authority and physical-state feedback;
+4. express communication constraints in plain language, then attach formal vocabulary at the STOP;
+5. discover network shapes before seeing technology names;
 6. consolidate the technology map with the detective and guided reference cards;
-7. choose technologies under explicit assumptions, sample transfer cases as useful practice, then return to the campus mission without a form-completion gate;
-8. stress-test the frozen architecture v1 by tracing incident → challenged assumption → affected architectural scope → requirement → one explicit v2 design move, defend its residual dependency at a dedicated STOP, then finish with retrieval before synthesis. NTN is introduced only when the incident removes terrestrial coverage, where direct satellite access and satellite backhaul become distinct design choices.
+7. choose technologies under explicit assumptions, complete transfer cases, then return to the campus mission;
+8. stress-test the frozen architecture v1, make a concrete architecture v2 revision, and finish with retrieval before synthesis.
 
 At collective restitutions, students first compare what they produced. The instructor then opens **WHAT TO KEEP** to institutionalise a compact canonical reference map and, when useful, **REALITY CHECK** to ground it with an architecture, standard, worked example or technical order of magnitude. These are in-place conclusion panels, not extra navigation screens.
 
@@ -45,7 +45,7 @@ The session uses **soft linearity**:
 - every already-unlocked stage can be revisited from the progression bar;
 - review mode is explicit and provides a one-click return to the current mission;
 - meaningful commitments are preserved rather than silently rewritten;
-- Architecture v1 becomes read-only after STOP 2; later revision is recorded as an explicit causal v2 design move while v1 remains visible as evidence.
+- Architecture v1 becomes read-only after STOP 2 and later structural change is recorded as Architecture v2.
 
 ## Running case
 

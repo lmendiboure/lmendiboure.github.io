@@ -4,19 +4,19 @@
 
 Canonical nine-activity skeleton shared by Student / Projector / Instructor Notes:
 
-1. What kind of conversation is this?
-2. Who speaks, and in what order?
-3. Five jobs hidden inside communication
-4. Attach technical names to the jobs
-5. Three ways applications can exchange information
-6. The bytes arrived — why is the data unusable?
-7. Build the whole path end to end
-8. “Reliable” what, exactly?
-9. Explain one failure from end to end
+1. Describe the conversations
+2. Draw a message choreography
+3. Build the stack by responsibility
+4. Audit network and transport evidence
+5. Build an application-protocol evidence map
+6. Repair the interoperability contract
+7. Compose complete stacks
+8. Build scoped delivery contracts
+9. Build an auditable failure trace
 
 Core reasoning loop:
 
-**concrete service behaviour → ordered exchange → communication jobs → technical names → application exchange → shared meaning → full path → scoped guarantee → failure trace**
+**service need → interaction pattern → choreography → message meaning → stack responsibilities → protocol composition → delivery semantics → failure test**
 
 Design principle: students reason about roles, scopes and interaction patterns before protocol names are treated as design answers.
 
@@ -28,7 +28,7 @@ Activities 1, 2, 3, 6, 7, 8 and 9 include a full student STOP aligned with the P
 
 At each STOP, the student's own artifact remains visible. The counterexample is revealed during discussion, then the formal concept is explicitly consolidated before the next activity unlocks. The resulting compact reference map is added to the persistent **Field guide**.
 
-Activities 4 and 5 remain WORK-only on purpose, but they are no longer recognition exercises. Activity 4 presents the engineering problem solved by each lower-stack technology before revealing its name. Activity 5 starts from three understandable application exchange needs before attaching MQTT, CoAP and HTTP. Incorrect classifications remain discussable rather than blocking progress.
+Activities 4 and 5 remain WORK-only on purpose. They use predict-before-reveal cards to introduce concrete protocol names without interrupting the discovery sequence with premature whole-class correction. Their protocol map is institutionalised during the Activity 7 composition STOP.
 
 The Core route remains sufficient for novices. Four optional **Challenge me** routes add deeper reasoning at genuine bottlenecks: multi-row suites, schema/semantic mapping, MQTT over Thread, and duplicate-operation crash windows. They rejoin the same activity progression and do not reveal future protocol answers.
 
@@ -76,10 +76,10 @@ The student workspace keeps pedagogical progress (screens, unlocks, retrieval, h
 
 ## v1.22 interaction principle
 
-Session 2 uses the same visible three-step Core workflow grammar as Session 1. Dense activities avoid hidden answer-key gates. Progressive disclosure is used only when it clarifies the reasoning sequence; reference material remains visible when hiding it would create unnecessary clicks.
+Session 2 uses the same visible three-step Core workflow grammar as Session 1. Dense activities reveal their next sub-task progressively instead of displaying every interaction at once.
 
-Session 2 deliberately avoids worksheet-style prose entry in the Core route. Students build inspectable artefacts: conversation-pattern decisions, a message choreography, responsibility stack, lower-stack classifications, application service choices, an interoperability repair, complete stacks, a scoped retry/crash analysis and a failure trace. Reference boards can be explored without becoming completion gates. Optional Challenge-me routes may still ask for a short defended response.
+Session 2 deliberately avoids worksheet-style prose entry in the Core route. Students build inspectable artefacts: conversation contracts, a message choreography, responsibility stack, protocol evidence maps, an interoperability scope map, complete stacks, delivery contracts and a failure trace. Optional Challenge-me routes may still ask for a short defended response.
 
 ### Restitution structure
 
-Activities 4–5 form a deliberate **name-after-need block**. Activity 3 first establishes the engineering jobs in plain language. Activity 4 attaches lower-stack names to those jobs from problem-first clues. Activity 5 attaches application-protocol names to service behaviours already understood from Activity 1. A short instructor calibration is acceptable, but do not convert unfamiliar vocabulary into a prerequisite.
+Activities 4–5 form a deliberate **protocol evidence block**: students audit lower-stack evidence, then application-protocol evidence, without a full class STOP between them. Their interfaces contain embedded factual audits. The Activity 3 STOP must therefore stay protocol-name neutral, and the complete protocol map is institutionalised later at the **Compose complete stacks** STOP. A short 60–90 s instructor calibration is acceptable if a shared misconception survives an embedded audit; it is not a separate concept unlock.

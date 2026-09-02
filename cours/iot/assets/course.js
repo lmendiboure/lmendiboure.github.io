@@ -113,14 +113,4 @@
   const available = releasedThrough;
   const pill = document.querySelector('#courseProgress');
   if(pill) pill.textContent = available > 0 ? `${available} / ${cfg.sessions.length} mission${available===1?'':'s'} available · Mission ${available} current` : `No mission open yet`;
-
-  const debriefCard=document.querySelector('#finalDebriefCard');
-  const debriefAction=document.querySelector('#finalDebriefAction');
-  const debriefOpen=releasedThrough>=cfg.sessions.length && cfg.sessions.length>0;
-  if(debriefCard && debriefAction){
-    debriefCard.classList.toggle('locked',!debriefOpen);
-    debriefAction.textContent=debriefOpen?'Open final debrief →':'Final debrief · locked';
-    debriefAction.setAttribute('aria-disabled',debriefOpen?'false':'true');
-    if(!debriefOpen) debriefAction.addEventListener('click',e=>e.preventDefault());
-  }
 })();

@@ -2,77 +2,80 @@
 
 **Mission:** How do things communicate?
 
-Canonical nine-activity skeleton shared by Student / Projector / Instructor Notes:
+## Canonical eight-activity sequence
 
-1. What kind of conversation is this?
-2. Who speaks, and in what order?
-3. Five jobs hidden inside communication
-4. Attach technical names to the jobs
-5. Three ways applications can exchange information
-6. The bytes arrived — why is the data unusable?
-7. Build the whole path end to end
-8. “Reliable” what, exactly?
-9. Explain one failure from end to end
+1. Describe the conversation
+2. Make message order visible
+3. Separate four communication jobs
+4. Read one complete stack, then complete a partial stack
+5. Choose among MQTT, CoAP and HTTP from service behaviour
+6. Compose two end-to-end protocol paths
+7. Repair a data contract so the payload is understandable
+8. Defend one implementable campus exchange
 
 Core reasoning loop:
 
-**concrete service behaviour → ordered exchange → communication jobs → technical names → application exchange → shared meaning → full path → scoped guarantee → failure trace**
+**service behaviour → message order → communication responsibilities → worked stack → application protocol → composition → shared meaning → defended design**
 
-Design principle: students reason about roles, scopes and interaction patterns before protocol names are treated as design answers.
+## Scope decision
 
-## Restitution contract
+Session 2 deliberately stops before delivery-semantics and failure-analysis material.
 
-Projector restitutions are used for Activities 1, 2, 3, 6, 7, 8 and 9. The Student surface now exposes the same seven STOPs, including Activity 9.
+The following concepts are **deferred to Session 4 — Robustness**:
 
-Use the stable rhythm:
+- protocol-level QoS and acknowledgement semantics;
+- at-most-once / at-least-once / exactly-once claims;
+- retry crash windows and duplicate operation effects;
+- end-to-end failure tracing;
+- physical-state confirmation as a robustness mechanism.
 
-**LOOK → COMPARE → CHALLENGE → FORMALISE → GROUND**
+They are important, but they create a second conceptual arc. Keeping them in Session 2 forces novices to build too many interdependent mental models in one sitting. Session 3 remains focused on device / edge / cloud placement and therefore is not the right destination for this material.
 
-- **LOOK**: keep the group's own artifact visible.
-- **COMPARE**: expose differences in reasoning, not only different final answers.
-- **CHALLENGE**: reveal the counterexample after groups have committed.
-- **FORMALISE**: use a static compare prompt when the goal is only to inspect differences between groups. Flip a Projector card only when the question benefits from an explicit local **KEEP** anchor; then have students unlock the corresponding formal concept on their Student surface.
-- **GROUND**: use **Reality check** for a concrete standard, architecture, mechanism or technical fact.
+## Design rationale
 
-The Student **Field guide** stores the compressed reference version after each discussion. It is deliberately less verbose than the Projector Reference Plate but covers the same conceptual map.
+The session now uses three instructional moves repeatedly:
 
-Activities 4 and 5 remain WORK-only so the flow is not interrupted by a premature vocabulary lecture. The engineering need comes first, the technical name second, and the complete map is consolidated during Activity 7.
+1. **Problem before term.** Students first see the engineering need in ordinary language.
+2. **Worked example before independent completion.** Activity 1 and Activity 4 provide a complete example before students complete a related case.
+3. **Progressive disclosure.** Technical detail appears when it answers the current question; optional mechanisms such as 6LoWPAN are not part of the core decision set.
 
-The Student Core route is sufficient on its own. Four optional **Challenge me** routes are available at Activities 3, 6, 7 and 8; use them for groups ready for less scaffolding, not simply for groups that finish quickly.
+The initial stack model contains four responsibilities only:
 
-## Final retrieval
+- Application
+- Transport
+- Network
+- Local access
 
-Do not use the final screen as a lecture summary. After the Activity 9 restitution, students enter a six-question Memory Lock. They answer before revealing. The synthesis remains hidden until all prompts have been retrieved.
+6LoWPAN is introduced as an adaptation mechanism used under IPv6 on constrained IEEE 802.15.4 links, not as a fifth mental category students must manipulate in the core route.
 
-## Duration
+## Page-density rule
 
-Two pacing modes are explicit in `notes.html`: a strict **90-minute Core run** (9 / 10 / 10 / 6 / 7 / 12 / 14 / 14 / 8 min) and the existing **117–136 minute full-depth envelope**. The Core run preserves all seven restitutions and timeboxes work/discussion; optional Challenge routes belong to the full-depth run. Activity count remains curriculum-driven: the dedicated delivery-semantics activity prevents the final stress-test from introducing reliability, retries, duplicate effects and offline persistence for the first time.
+A core activity should normally contain only:
 
-## Running operational case
+- one short problem statement;
+- one worked example or compact reference when required;
+- one main student manipulation;
+- one short takeaway / boundary.
 
-Sessions 1 and 2 use the **same campus environmental system** and the same four stakeholder voices:
+Avoid stacking stakeholder story + glossary + workflow + interaction + reflection + optional challenge on the same screen. Optional depth belongs in a `<details>` reference or instructor discussion, not in the main visual hierarchy.
 
-- **Amina — Campus operations lead:** service outcomes and operating constraints.
-- **Sam — Field technician:** physical devices, deployment evidence and incidents.
-- **Yanis — Network architect:** connectivity, infrastructure and protocol responsibilities.
-- **Leila — Platform engineer:** applications, data and interoperability.
+## Discussion rhythm
 
-A stakeholder intervention is never decorative. It must introduce a fact, need, claim or incident that changes the engineering question. The student loop is:
+Five STOPs are retained, after Activities 1, 3, 5, 7 and 8. Each STOP uses:
 
-**operational trigger → decision/artifact → class discussion → formalisation → transfer**
+**student artifact → one comparison/challenge question → concise “what to keep” reveal**
 
-Use the same student-facing reading order everywhere: **STARTING POINT → NEW INPUT → DESIGN IMPACT → YOUR MOVE**. The starting point recalls only the minimum prior state; the stakeholder contributes one new fact, need, contradiction or incident; design impact states what has become unresolved without solving it; the activity alone owns the instruction. Do not add a second case-state block that repeats the same information, and do not improvise biography or narrative detail that does not alter the technical reasoning.
+There is no hidden answer-key gate. Students must commit to a decision, but an incorrect decision is discussion evidence rather than a progression failure.
 
+## Mission dossier
 
-## Mission dossier across sessions
+Session 2 publishes only compact design state for later sessions:
 
-The student workspace keeps pedagogical progress (screens, unlocks, retrieval, hints) inside the session state, but publishes only a small structured **Mission dossier** across sessions. Session 1 records the classified Architecture v2 pattern, Top-3 communication requirements, campus access stance, key open uncertainty, and the incident that triggered revision. Session 2 reads those fields when available and otherwise uses a generic fallback. Free-text answers are never interpreted to drive the next session. The export file contains the Mission dossier plus the current session progress so it can also be moved to another browser.
+- interaction-pattern choices;
+- the partial worked-stack completion;
+- application-protocol choices;
+- two composed protocol paths;
+- the semantic contract elements selected;
+- the final defended exchange.
 
-
-## Publication boundary
-
-`notes.html` is **instructor-facing, not access-controlled**. If `cours/instructor/` is deployed on public GitHub Pages, anyone who knows the path can open it. The Projector is designed to be student-safe; keep the instructor tree local/private if facilitation answers must genuinely remain unavailable.
-
-## Protocol evidence block
-
-Activities 4 and 5 intentionally have no full restitution. Treat them as a problem-first naming block. During Activity 3, stabilise only the five engineering jobs; do not require prior knowledge of IPv6/6LoWPAN/TCP/UDP/Thread. In Activity 4, each unfamiliar name is revealed only after its engineering clue has been interpreted. The full technical map is consolidated at Activity 7.
+Pedagogical navigation state remains local to the session.
