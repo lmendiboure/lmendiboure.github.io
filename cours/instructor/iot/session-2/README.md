@@ -31,7 +31,7 @@ Use the stable rhythm:
 - **LOOK**: keep the group's own artifact visible.
 - **COMPARE**: expose differences in reasoning, not only different final answers.
 - **CHALLENGE**: reveal the counterexample after groups have committed.
-- **FORMALISE**: after discussion, flip the relevant Projector card to reveal its local **KEEP** anchor; then have students unlock the corresponding formal concept on their Student surface.
+- **FORMALISE**: use a static compare prompt when the goal is only to inspect differences between groups. Flip a Projector card only when the question benefits from an explicit local **KEEP** anchor; then have students unlock the corresponding formal concept on their Student surface.
 - **GROUND**: use **Reality check** for a concrete standard, architecture, mechanism or technical fact.
 
 The Student **Field guide** stores the compressed reference version after each discussion. It is deliberately less verbose than the Projector Reference Plate but covers the same conceptual map.

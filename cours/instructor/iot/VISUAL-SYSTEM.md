@@ -167,12 +167,12 @@ If horizontal space becomes constrained, stack the tab above its explanatory tex
 A restitution screen must expose a clear vertical hierarchy:
 
 1. **Artifact / class representation** — the main visual surface, full width.
-2. **Discuss + KEEP** — a full-width row of cards below it. The question is visible on the front; after discussion, flipping reveals the local teaching anchor.
+2. **Compare, then discuss** — when a restitution starts by comparing class artefacts, show that comparison prompt as a static strip below the board. Only questions that benefit from an explicit teaching anchor become flippable cards: the question stays visible first; the back reveals the local KEEP anchor.
 3. **Reality check** — optional, below the deck, used only to ground or transfer the result.
 
-Do not add a second `What to keep` panel on the Projector: the flipped cards already carry the local takeaways. This keeps the public reading order stable: **artifact → question → discussion → KEEP → reality check**, without adding navigation states.
+Do not add a second `What to keep` panel on the Projector. A static compare prompt has no hidden answer; the optional flippable cards carry only the local takeaways that genuinely need formalisation. The public reading order is **artifact → compare → discuss/test → optional KEEP → reality check**.
 
 ## Conclusion focus on Projector
 
-Rich `REALITY CHECK` plates must remain readable without turning the Projector into a scrolling document. When the Reality Check opens, the top restitution context may enter a compact **conclusion focus** state so the external evidence remains legible. The flipped KEEP cards themselves must never be clipped or treated as a second hidden reference plate.
+Rich `REALITY CHECK` plates must remain readable without turning the Projector into a scrolling document. When the Reality Check opens, the top restitution context may enter a compact **conclusion focus** state so the external evidence remains legible. KEEP cards must never be clipped or treated as a second hidden reference plate.
 

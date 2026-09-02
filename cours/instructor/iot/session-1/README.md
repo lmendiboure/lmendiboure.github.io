@@ -25,7 +25,7 @@ The Projector gives every activity one WORK screen. Activities 1, 2, 3, 4, 7 and
 - `F`: fullscreen.
 - Eight progress markers represent the same eight activities and open their WORK screen.
 
-**WORK** states the task, deliverable/defence prompt and guardrail. **RESTITUTION** is one stable class screen: optional Live Board first, then full-width discussion cards. Each card shows the question on the front and the local **KEEP** anchor on the back. An optional **Reality check** grounds or transfers the result after discussion.
+**WORK** states the task, deliverable/defence prompt and guardrail. **RESTITUTION** is one stable class screen: optional Live Board first; a static **COMPARE THE ROOM** prompt when the class artefact must simply be read across groups; then only the deeper discussion/test questions become flippable cards with a local **KEEP** anchor. Flipping is optional, not a checklist. An optional **Reality check** grounds or transfers the result after discussion.
 
 The instructor-facing sequence **LOOK → COMPARE → CHALLENGE → FORMALISE → GROUND** lives in `notes.html`, not in projector navigation. Do not project `notes.html`.
 

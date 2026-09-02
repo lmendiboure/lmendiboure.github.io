@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Final visual debrief for IoT Systems Design" />
+  <title>IoT Systems Design — Final Debrief</title>
+  <link rel="stylesheet" href="../assets/course.css" />
+</head>
+<body class="debrief-page">
+<a class="skip-link" href="#mainContent">Skip to main content</a>
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <a class="brand" href="../" aria-label="Back to IoT Systems Design mission home"><div class="brand-mark">IoT</div><div><div class="brand-title">Systems Design</div><div class="brand-sub">Final debrief · system design map</div></div></a>
+    <a class="btn" href="../">← Mission home</a>
+  </div>
+</header>
+
+<main id="mainContent">
+  <section class="shell debrief-hero">
+    <div class="eyebrow">Final debrief · course map</div>
+    <h1>How to design a connected system<br/>you can defend.</h1>
+    <p class="lead">The course was not a catalogue of technologies. It was one design loop: turn an operational need into a system, make its exchanges explicit, qualify its guarantees, and revise the design when evidence changes.</p>
+    <div class="debrief-rule"><strong>Read this map from left to right.</strong><span>Each block is a question to reopen when a connected system changes.</span></div>
+  </section>
+
+  <section class="shell debrief-spine" aria-labelledby="spineTitle">
+    <div class="section-head"><div><div class="eyebrow">The whole course in one line</div><h2 id="spineTitle">One system. Five moves.</h2></div></div>
+    <div class="spine-track" aria-label="Mission to revision design chain">
+      <div><span>01</span><strong>Mission</strong><small>What must happen?</small></div>
+      <b>→</b>
+      <div><span>02</span><strong>Architecture</strong><small>Who is responsible for what?</small></div>
+      <b>→</b>
+      <div><span>03</span><strong>Communication</strong><small>How do exchanges work?</small></div>
+      <b>→</b>
+      <div><span>04</span><strong>Guarantees</strong><small>What is actually assured?</small></div>
+      <b>→</b>
+      <div><span>05</span><strong>Revision</strong><small>What changes when assumptions fail?</small></div>
+    </div>
+  </section>
+
+  <section class="shell debrief-missions" aria-labelledby="missionsTitle">
+    <div class="section-head"><div><div class="eyebrow">Four missions</div><h2 id="missionsTitle">The same campus system, seen from four responsibilities.</h2></div></div>
+    <div class="debrief-mission-grid">
+      <article><span>MISSION 01</span><strong>Establish the system</strong><p>Need → boundary → architecture → flows → requirements → communication families → revision.</p></article>
+      <article><span>MISSION 02</span><strong>Make exchanges work</strong><p>Interaction → choreography → responsibilities → protocols → shared meaning → delivery semantics.</p></article>
+      <article><span>MISSION 03</span><strong>Place computation</strong><p>Device / nearby / edge / cloud placement follows latency, data, energy, resilience and operating constraints.</p></article>
+      <article><span>MISSION 04</span><strong>Break and revise</strong><p>Expose assumptions, trace failures, revise the design and make the residual risk explicit.</p></article>
+    </div>
+  </section>
+
+  <section class="shell reasoning-section" aria-labelledby="reasoningTitle">
+    <div class="section-head"><div><div class="eyebrow">Design reasoning map</div><h2 id="reasoningTitle">Six questions to reopen on any connected system.</h2><p>Do not memorize the boxes. Reuse the questions.</p></div></div>
+    <div class="reasoning-map">
+      <article class="reason-card">
+        <div class="reason-index">01</div><div class="reason-body"><span>START FROM THE MISSION</span><h3>What must the system actually do?</h3><div class="reason-columns"><div><b>Look for</b><p>observation · command · maintenance · actors · constraints · operating context</p></div><div class="reason-trap"><b>Common trap</b><p>Starting from technologies.</p></div></div></div>
+      </article>
+      <article class="reason-card">
+        <div class="reason-index">02</div><div class="reason-body"><span>STRUCTURE THE SYSTEM</span><h3>Which roles exist, and where are they placed?</h3><div class="reason-columns"><div><b>Look for</b><p>device · gateway · platform · direct / gateway-centred / hybrid · local / edge / cloud</p></div><div class="reason-trap"><b>Common trap</b><p>Drawing boxes without responsibilities.</p></div></div></div>
+      </article>
+      <article class="reason-card">
+        <div class="reason-index">03</div><div class="reason-body"><span>MAKE COMMUNICATION EXPLICIT</span><h3>How do the exchanges behave?</h3><div class="reason-columns"><div><b>Look for</b><p>initiator · receiver · request/response · publish/subscribe · blocking · timing · choreography</p></div><div class="reason-trap"><b>Common trap</b><p>Confusing topology with choreography.</p></div></div></div>
+      </article>
+      <article class="reason-card">
+        <div class="reason-index">04</div><div class="reason-body"><span>COMPOSE RESPONSIBILITIES</span><h3>Which problem is solved at each level?</h3><div class="reason-columns"><div><b>Look for</b><p>link · adaptation · network · transport · application exchange</p><div class="reason-equations"><span>Thread ≠ MQTT</span><span>TCP ≠ Wi-Fi</span></div></div><div class="reason-trap"><b>Common trap</b><p>Comparing technologies that solve different responsibilities.</p></div></div></div>
+      </article>
+      <article class="reason-card">
+        <div class="reason-index">05</div><div class="reason-body"><span>CHECK MEANING + GUARANTEES</span><h3>Do systems understand the same thing, and what is actually guaranteed?</h3><div class="reason-columns"><div><b>Look for</b><p>syntax · semantics · delivery scope · duplicates · disconnects · message delivery · physical effect</p></div><div class="reason-trap"><b>Common trap</b><p>Saying “reliable” without saying reliable for what.</p></div></div></div>
+      </article>
+      <article class="reason-card">
+        <div class="reason-index">06</div><div class="reason-body"><span>REVISE THE DESIGN</span><h3>What changed, and why must the architecture change?</h3><div class="reason-columns"><div><b>Look for</b><p>broken assumption · requirement under pressure · affected responsibility · design delta · residual risk</p></div><div class="reason-trap"><b>Common trap</b><p>Adding components without causal justification.</p></div></div></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="shell remember-section" aria-labelledby="rememberTitle">
+    <div class="remember-board">
+      <div class="remember-copy"><div class="eyebrow">If you remember only six things</div><h2 id="rememberTitle">Keep the reasoning, not the catalogue.</h2><p>These six statements are the shortest version of the course.</p></div>
+      <ol class="remember-list">
+        <li><b>01</b><span>Start from the mission, not from technologies.</span></li>
+        <li><b>02</b><span>Separate structure, communication and guarantees.</span></li>
+        <li><b>03</b><span>A technology only makes sense relative to its responsibility.</span></li>
+        <li><b>04</b><span>Protocol interoperability is not semantic interoperability.</span></li>
+        <li><b>05</b><span>A guarantee is meaningful only if its scope is explicit.</span></li>
+        <li><b>06</b><span>A good architecture can be revised when assumptions fail.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="shell transfer-section" aria-labelledby="transferTitle">
+    <div class="section-head"><div><div class="eyebrow">Transfer check</div><h2 id="transferTitle">Can the reasoning survive a different system?</h2><p>Answer before opening the engineering anchor.</p></div></div>
+    <div class="transfer-grid">
+      <details class="transfer-card"><summary><span>01</span><strong>MQTT works correctly, but two services still interpret the same payload differently. What failed?</strong></summary><div><b>Engineering anchor</b><p>Protocol transport can be correct while semantic interoperability is absent. Reopen the shared data model, units, identifiers and meaning.</p></div></details>
+      <details class="transfer-card"><summary><span>02</span><strong>A command is retried after an acknowledgement is lost. What must be questioned before claiming “reliable command”?</strong></summary><div><b>Engineering anchor</b><p>Define the object and scope of the guarantee. Message delivery, operation execution and physical effect are different claims; duplicate effects may require durable operation identity and deduplication.</p></div></details>
+      <details class="transfer-card"><summary><span>03</span><strong>A service must keep operating during temporary backhaul loss. What part of the design must reopen?</strong></summary><div><b>Engineering anchor</b><p>Revisit architecture, placement and communication together: what must remain local, what can buffer, which dependency failed and what degraded behaviour is acceptable?</p></div></details>
+    </div>
+  </section>
+
+  <section class="shell field-guide-section" aria-labelledby="fieldTitle">
+    <div class="section-head"><div><div class="eyebrow">Field guide essentials</div><h2 id="fieldTitle">Eight terms worth carrying into the next system.</h2></div></div>
+    <div class="field-grid">
+      <div><strong>Interaction pattern</strong><span>How participants exchange information at service level.</span></div>
+      <div><strong>Choreography</strong><span>How exchanges unfold over time.</span></div>
+      <div><strong>Responsibility</strong><span>The precise problem a mechanism solves.</span></div>
+      <div><strong>Stack</strong><span>A composition of mechanisms across distinct responsibilities.</span></div>
+      <div><strong>Semantic interoperability</strong><span>Shared meaning, not just compatible bytes or protocols.</span></div>
+      <div><strong>Delivery scope</strong><span>Exactly what is guaranteed, and where.</span></div>
+      <div><strong>Design delta</strong><span>The structural change justified by new evidence.</span></div>
+      <div><strong>Residual risk</strong><span>What remains possible after the mitigation.</span></div>
+    </div>
+  </section>
+
+  <section class="shell final-takeaway">
+    <div class="eyebrow">Final takeaway</div>
+    <h2>A connected system is defendable when its structure, exchanges, guarantees and revisions are justified from evidence.</h2>
+    <p>Technology names are evidence only after the design question is clear.</p>
+    <a class="btn primary" href="../">Return to mission dossier →</a>
+  </section>
+</main>
+
+<footer class="shell footer"><span>IoT Systems Design · final debrief</span><span>Mission dossier = your system decisions · Final debrief = the reusable reasoning map</span></footer>
+</body>
+</html>
