@@ -29,7 +29,7 @@ Le **dossier d'observation** accumule les décisions de la séance. La stratégi
 
 - progression douce : futur verrouillé, passé revisitable ;
 - Guide de terrain débloqué après les restitutions ;
-- stockage local : `environnements-connectes-session1-v2` ;
+- stockage local : `environnements-connectes-session1-v5` ;
 - dossier de mission inter-séances (`environnements-connectes-mission-v1`) ;
 - export/import JSON du bundle de mission ;
 - aucun backend requis.
@@ -39,5 +39,13 @@ Le **dossier d'observation** accumule les décisions de la séance. La stratégi
 
 - A4 : le panorama de 8 familles est désormais replié par défaut ; la carte espace × rythme reste le geste principal.
 - A10 : suppression de la note libre et passage de 4 maillons cliqués à 3 repères structurants ; l'information menacée est discutée au STOP.
-- Projector : questions de restitution sous forme de cartes à retourner, verso = ancrage pédagogique ; conclusion réduite à `À retenir` puis `Retour au réel`.
+- Projector : `COMPARER` reste une question ouverte non retournable ; `PRÉCISER / ÉPROUVER` deviennent les cartes à retourner, verso = ancrage pédagogique ; `Retour au réel` seulement s’il apporte un transfert.
 - Correctifs CSS : wrapping défensif des libellés français et des traces de classe, `min-width:0` sur les composants de restitution.
+
+
+## Restitution — règle v1.15
+- **COMPARER** est une question ouverte projetée, jamais une carte à retourner : elle sert à mettre les artefacts en regard et à faire apparaître les divergences.
+- **PRÉCISER / ÉPROUVER** peuvent être retournés après échange ; leur verso contient l’ancrage à conserver.
+- Ne pas dupliquer le verso dans un panneau « À retenir ».
+- Le **Retour au réel** n’est utilisé que s’il apporte un cas, une donnée, un ordre de grandeur ou un transfert supplémentaire.
+- En fin de séance : 4 questions flash sans score, puis un résumé explicite des capacités acquises et une transition vers S2.

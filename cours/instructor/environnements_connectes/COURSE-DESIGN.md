@@ -325,7 +325,7 @@ Ce repère doit tenir en deux phrases et relier directement l'artefact précéde
 - une référence secondaire doit être **repliée par défaut** si elle n'est pas nécessaire pour réaliser le geste principal ;
 - supprimer une saisie écrite dès qu'un choix structuré + une défense orale produisent le même apprentissage ;
 - pour une activité riche, afficher un **parcours en trois mouvements maximum** sans ajouter de nouveaux clics ;
-- côté Projector, une restitution suit **question visible → réponse de la salle → carte retournée avec l'ancrage à garder → À retenir → Retour au réel** ;
+- côté Projector, une restitution suit **COMPARER (discussion ouverte, non retournable) → PRÉCISER / ÉPROUVER (cartes retournables avec l’ancrage à garder) → Retour au réel si utile** ;
 - le verso d'une carte de discussion n'est pas « la bonne réponse » mais le repère conceptuel à conserver après l'échange ;
 - les traces de classe et libellés français doivent toujours accepter `min-width:0` et le retour à la ligne ; aucune carte ne doit élargir la colonne de restitution.
 
