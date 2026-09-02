@@ -162,3 +162,77 @@ Les surfaces étudiantes doivent rester **dans le dossier de mission**. Elles ne
 Ces éléments appartiennent aux notes enseignant et aux documents d’authoring. Côté étudiant, les mêmes informations doivent être reformulées comme **faits du dossier, contraintes, ordre de mission, interlocuteurs, incidents, décisions et traces du travail**.
 
 L’honnêteté sur la fiction reste explicite mais discrète : une mention globale suffit pour indiquer que les lieux et données terrain sont sourcés tandis que les interlocuteurs et incidents de mission sont scénarisés.
+
+---
+
+## Contrat de micro-pédagogie — à conserver pour S2 à S5
+
+La structure MACU et la narration ne suffisent pas : la forme de l'activité doit elle-même produire du raisonnement. Les conventions suivantes sont désormais considérées comme stables pour le cours.
+
+### 1. Manipuler avant de rédiger
+
+La rédaction libre est l'exception, pas le moteur principal d'une activité. Par défaut, faire travailler les étudiants sur un corpus suffisamment riche déjà présent dans la page :
+
+- sélectionner parmi des possibilités crédibles ;
+- classer ou catégoriser ;
+- apparier des éléments ;
+- ordonner une chaîne ;
+- comparer plusieurs solutions ;
+- prioriser sous contrainte ;
+- construire une combinaison ;
+- diagnostiquer une faiblesse ;
+- réviser un choix après changement d'hypothèse.
+
+Un champ libre n'est justifié que s'il apporte quelque chose qu'une interaction structurée ne permet pas : proposition hors corpus, justification courte, ou remarque personnelle facultative. Il ne doit jamais servir à demander aux étudiants de deviner le contenu que le cours pourrait leur fournir.
+
+### 2. Donner un corpus, puis demander un choix
+
+Une activité dense commence souvent par un panorama partiel ou complet, puis impose une décision. Exemple de pattern :
+
+> possibilités → sélection → priorité → justification/association → contrainte → révision
+
+L'objectif n'est pas de tester si l'étudiant sait inventer cinq exemples, mais s'il sait distinguer ceux qui comptent, expliquer pourquoi et transférer la règle.
+
+### 3. Une intervention de personnage doit faire avancer le dossier
+
+Une intervention suit la grammaire :
+
+**POINT DE DÉPART → NOUVELLE INFORMATION → IMPACT SUR LA MISSION → À VOUS**
+
+- **Point de départ** rappelle seulement l'état déjà acquis, sans réexpliquer l'activité précédente.
+- **Nouvelle information** contient le fait, la contrainte ou la demande qui change réellement la situation.
+- **Impact sur la mission** indique la décision de conception désormais nécessaire, sans donner la solution.
+- **À vous** bascule immédiatement vers la manipulation.
+
+Ne pas convoquer un personnage lorsqu'aucune nouvelle information n'est nécessaire. Une voix récurrente n'est pas un décor : elle représente une exigence et doit avoir un effet sur le travail demandé.
+
+### 4. Éviter la répétition entre activité, intervention et STOP
+
+Une même information ne doit pas être répétée sous quatre formes successives. Chaque surface a un rôle distinct :
+
+- **intervention** : ce qui vient de changer ;
+- **activité** : ce qu'il faut faire avec cette information ;
+- **restitution** : ce que les productions de la classe permettent de comparer ;
+- **formalisation** : le concept général qui dépasse le cas ;
+- **référence / step further** : panorama, variantes, faits, limites ou exemples que les étudiants n'avaient pas nécessairement devant eux.
+
+### 5. Une restitution doit apporter plus que la correction
+
+Les STOP importants doivent pouvoir enrichir le corpus. Selon le sujet, prévoir :
+
+- un panorama de réponses possibles plus large que les cartes de l'activité ;
+- des cas de transfert ;
+- une distinction conceptuelle ou une taxonomie utile ;
+- un ordre de grandeur ou un fait terrain vérifié ;
+- un contre-exemple ;
+- une règle de conception réutilisable.
+
+La restitution n'est donc pas « voici la bonne réponse ». Elle transforme les choix locaux des groupes en connaissance générale.
+
+### 6. Commit avant challenge
+
+Ne pas sauver les étudiants avant que leur décision soit figée. Lorsque l'activité prépare un stress test :
+
+**choix → commit → révélation → conséquence → révision**.
+
+L'enseignant évite d'annoncer la future panne ou la future contrainte sous forme de conseil préventif. Une décision imparfaite mais explicite est pédagogiquement plus utile qu'une solution parfaite soufflée avant le challenge.

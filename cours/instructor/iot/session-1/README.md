@@ -58,7 +58,7 @@ A stakeholder intervention is never decorative. It must introduce a fact, need, 
 
 **operational trigger → decision/artifact → class discussion → formalisation → transfer**
 
-Do not let a stakeholder speech duplicate the case dossier or the activity instructions. The speech should trigger or reopen a decision; facts belong in the dossier/state block; the task belongs in the activity prompt. Do not improvise biographies or narrative detail that does not alter the technical reasoning. Session 1 builds and revises architecture; Session 2 continues the same case and makes its exchanges explicit, interoperable and robust.
+Use the same student-facing reading order everywhere: **STARTING POINT → NEW INPUT → DESIGN IMPACT → YOUR MOVE**. The starting point recalls only the minimum prior state; the stakeholder contributes one new fact, need, contradiction or incident; design impact states what has become unresolved without solving it; the activity alone owns the instruction. Do not add a second case-state block that repeats the same information, and do not improvise biography or narrative detail that does not alter the technical reasoning.
 
 
 ## Mission dossier across sessions

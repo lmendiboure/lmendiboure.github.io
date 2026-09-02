@@ -49,8 +49,8 @@
 <div class="shell activity-stage">
 <!-- ACTIVITY 1 -->
 <section class="activity-screen" data-screen="0">
-<div class="activity-label"><span>Activity 1</span><span class="pill-neutral">Map the IoT landscape</span></div><aside class="case-voice"><div class="case-avatar large">AM</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Amina</strong><span>Campus operations lead</span><em>Onboarding brief</em></div><blockquote>“People keep using the word ‘IoT’ for very different connected systems. Before the campus brief is even classified that way, I need a boundary that is useful without pretending every domain has the same constraints.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>What makes these systems part of one field without pretending their constraints are identical?</span></div><div class="case-state"><b>Case state</b><span>No campus architecture yet · first establish the systems boundary.</span></div></div></aside>
-<div class="activity-intro landscape-intro">
+<div class="activity-label"><span>Activity 1</span><span class="pill-neutral">Map the IoT landscape</span></div><aside class="case-voice"><div class="case-avatar large">AM</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Amina</strong><span>Campus operations lead</span><em>Scope question</em></div><div class="case-context"><b>STARTING POINT</b><span>No campus design yet · first establish a useful systems boundary.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“The word ‘IoT’ is being used for very different connected systems. Before I classify the campus project that way, I need a boundary that is useful without pretending every domain has the same constraints.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>Establish a defensible IoT boundary before the campus case is designed.</span></div></div></aside>
+<div class="activity-intro landscape-intro"><div class="activity-move-label">YOUR MOVE</div>
 <h2>Which world does each system belong to?</h2>
 <p>Choose one <strong>main domain</strong> for each case and, when you can defend it, one <strong>secondary domain</strong>. Use your current intuition — no searching yet.</p>
 </div>
@@ -83,7 +83,7 @@
 </section>
 <!-- ACTIVITY 2 -->
 <section class="activity-screen" data-screen="2" hidden="">
-<div class="activity-label"><span>Activity 2</span><span class="pill-neutral">Build architecture v1</span></div><aside class="case-voice"><div class="case-avatar large">AM</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Amina</strong><span>Campus operations lead</span><em>Project handover</em></div><blockquote>“This is the campus case file. It contains service facts, not a solution. A previous team filled gaps with plausible assumptions, and those assumptions later became ‘requirements’ by accident. I do not want that to happen again.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>What architecture is justified by the dossier now, and which choices must remain open because evidence is missing?</span></div><div class="case-state"><b>Case state</b><span>Initial brief issued · facts and unknowns separated · architecture not yet committed.</span></div></div></aside>
+<div class="activity-label"><span>Activity 2</span><span class="pill-neutral">Build architecture v1</span></div><aside class="case-voice"><div class="case-avatar large">AM</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Amina</strong><span>Campus operations lead</span><em>Project handover</em></div><div class="case-context"><b>STARTING POINT</b><span>IoT boundary established · the campus case has not yet been designed.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“Here is the campus case file. It contains service facts, not a solution. A previous team filled gaps with plausible assumptions, and those assumptions later became ‘requirements’ by accident.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>Architecture v1 must be justified from known facts while unresolved choices remain visibly open.</span></div></div></aside>
 <section aria-labelledby="campusMissionTitle" class="mission-brief">
 <div class="mission-copy">
 <div class="mission-meta"><span>Case file 01</span><span>Initial operating brief</span></div>
@@ -107,7 +107,7 @@
 <div class="frozen-notice" hidden="" id="architectureFrozenNotice">
 <span class="frozen-icon">◇</span><div><strong>Architecture v1 is frozen.</strong><p>You can review the design your group defended at STOP 2, but you cannot silently rewrite it. If later evidence changes your reasoning, that change will be recorded as Architecture v2.</p></div>
 </div>
-<div class="activity-intro">
+<div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
 <h3>Build architecture v1 from a blank canvas</h3>
 <p>Invent the components yourself. Name <strong>roles or functions</strong>, not products or protocols. Then describe what information flows between them.</p>
 </div>
@@ -164,9 +164,9 @@
 </section>
 <!-- ACTIVITY 3 -->
 <section class="activity-screen" data-screen="4" hidden="">
-<div class="activity-label"><span>Activity 3</span><span class="pill-neutral">Close the loop</span></div><aside class="case-voice"><div class="case-avatar large">AM</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Amina</strong><span>Campus operations lead</span><em>Requirement change</em></div><blockquote>“Facilities has changed the contract. Monitoring CO₂ is no longer enough: the system may now change ventilation. The operator must retain authority, and I need evidence about what happened in the room — not only in the network.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>How must architecture v1 change when observation becomes closed-loop control?</span></div><div class="case-state"><b>Case state</b><span>The system now acts on the physical world.</span></div></div></aside>
+<div class="activity-label"><span>Activity 3</span><span class="pill-neutral">Close the loop</span></div><aside class="case-voice"><div class="case-avatar large">AM</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Amina</strong><span>Campus operations lead</span><em>Contract amendment</em></div><div class="case-context"><b>STARTING POINT</b><span>Architecture v1 supports observation, history and alerts.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“Facilities has amended the contract. Monitoring CO₂ is no longer enough: the system may now change ventilation, while the operator must retain authority.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>The architecture must evolve from observation to controlled action on the physical world.</span></div></div></aside>
 <div class="mission-context"><span class="mission-context-tag">Design continuity</span><strong>Keep the existing measurement, history and alert service.</strong><span>Architecture v1 remains your baseline. Extend it only where the amended operating contract creates a new responsibility or information dependency.</span></div>
-<div class="activity-intro">
+<div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
 <h2>Extend Architecture v1 only where the amended contract forces a change.</h2>
 <p>Preserve what still works. Add the minimum responsibilities and flows needed to support controlled actuation, operator authority and evidence that distinguishes digital handling from physical outcome.</p>
 </div>
@@ -195,9 +195,9 @@
 </section>
 <!-- ACTIVITY 3 -->
 <section class="activity-screen" data-screen="6" hidden="">
-<div class="activity-label"><span>Activity 4</span><span class="pill-neutral">Expose communication requirements</span></div><aside class="case-voice"><div class="case-avatar large">ST</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Sam</strong><span>Field technician</span><em>Field review</em></div><blockquote>“I walked the deployment zones. Your arrows hide very different physical conditions: thick walls, outdoor points, uncertain power budgets and uneven infrastructure. Treating all of those links as equivalent would be a field-design mistake.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>Which per-flow communication requirements become decision-driving once field evidence is considered?</span></div><div class="case-state"><b>Case state</b><span>Architecture v1 retained · communication links no longer share the same assumptions.</span></div></div></aside>
+<div class="activity-label"><span>Activity 4</span><span class="pill-neutral">Expose communication requirements</span></div><aside class="case-voice"><div class="case-avatar large">ST</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Sam</strong><span>Field technician</span><em>Field evidence</em></div><div class="case-context"><b>STARTING POINT</b><span>Architecture v1 contains communication flows, but their physical conditions are still implicit.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“I walked the deployment zones. Some links cross thick walls, some reach outdoor points, power budgets differ and infrastructure is uneven.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>Each flow now needs communication requirements grounded in field evidence.</span></div></div></aside>
 <div class="mission-context"><span class="mission-context-tag">Design basis</span><strong>Architecture v1 + service outcomes stay fixed.</strong><span>Use your own flows as evidence. Only the assumptions governing each communication link are being reopened.</span></div>
-<div class="activity-intro">
+<div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
 <h2>Annotate your own communication flows with decision-driving constraints.</h2>
 <p>First select every dimension that could materially change a flow. Then star the <strong>three that dominate this scenario</strong> and justify at least one priority from the field evidence.</p>
 </div>
@@ -229,9 +229,9 @@
 </section>
 <!-- ACTIVITY 4 -->
 <section class="activity-screen" data-screen="8" hidden="">
-<div class="activity-label"><span>Activity 5</span><span class="pill-neutral">Discover network shapes</span></div><aside class="case-voice"><div class="case-avatar large">YN</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Yanis</strong><span>Network architect</span><em>Architecture review</em></div><blockquote>“We now have explicit communication requirements, but we still do not have a complete site survey or coverage answer. A standard name chosen at this point would hide assumptions we have not validated.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>What network shapes solve different communication problems before standards are compared?</span></div><div class="case-state"><b>Case state</b><span>Requirements are explicit · technology names remain deliberately hidden.</span></div></div></aside>
+<div class="activity-label"><span>Activity 5</span><span class="pill-neutral">Discover network shapes</span></div><aside class="case-voice"><div class="case-avatar large">YN</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Yanis</strong><span>Network architect</span><em>Evidence gap</em></div><div class="case-context"><b>STARTING POINT</b><span>Communication requirements are explicit · site coverage and infrastructure evidence remain incomplete.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“We know what the links must achieve, but we still do not have a complete site survey or coverage answer. Choosing a standard now would hide assumptions we have not validated.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>Reason first about network shapes and operating assumptions, before comparing technology names.</span></div></div></aside>
 <div class="mission-context"><span class="mission-context-tag">Evidence available</span><strong>Your Architecture v1 flows + Top 3 requirements + Sam’s field observations.</strong><span>Exact coverage and provider availability are still unknown. Use the evidence you have to identify a defensible network shape before attaching a standard name.</span></div>
-<div class="activity-intro">
+<div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
 <h2>Build a map of network shapes from the evidence.</h2>
 <p>For each shape, identify the distance, traffic, device-budget and infrastructure assumptions it is designed around. Technology names stay hidden until that reasoning is explicit.</p>
 </div>
@@ -253,9 +253,9 @@
 </section>
 <!-- ACTIVITY 5 -->
 <section class="activity-screen" data-screen="9" hidden="">
-<div class="activity-label"><span>Activity 6</span><span class="pill-neutral">Investigate technologies</span></div><aside class="case-voice"><div class="case-avatar large">YN</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Yanis</strong><span>Network architect</span><em>Integrator shortlist</em></div><blockquote>“The integrator has sent Wi-Fi, Bluetooth LE, IEEE 802.15.4, LoRaWAN and NB-IoT as candidate families. The shortlist contains names, but almost nothing about the infrastructure and architectural commitments behind them.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>What architecture, infrastructure and trade-offs come with each family?</span></div><div class="case-state"><b>Case state</b><span>Network shapes known · concrete technology families can now be investigated.</span></div></div></aside>
+<div class="activity-label"><span>Activity 6</span><span class="pill-neutral">Investigate technologies</span></div><aside class="case-voice"><div class="case-avatar large">YN</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Yanis</strong><span>Network architect</span><em>Integrator shortlist</em></div><div class="case-context"><b>STARTING POINT</b><span>Network shapes are explicit · concrete technology families have not yet been evaluated.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“The integrator has sent five candidate families: Wi-Fi, Bluetooth LE, IEEE 802.15.4, LoRaWAN and NB-IoT. The shortlist contains names but almost no architectural commitments.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>Expose the infrastructure, topology and trade-offs that come with each candidate family.</span></div></div></aside>
 <div class="mission-context"><span class="mission-context-tag">Decision basis</span><strong>Your Top 3 requirements now become test criteria.</strong><span>Inspect each candidate against a concrete campus flow and record the infrastructure or architectural commitments it introduces.</span></div>
-<div class="activity-intro">
+<div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
 <h2>Now test the map you just built.</h2>
 <p>The detective is now a consolidation exercise, not a prior-knowledge test. If a term is unfamiliar, use the reference map rather than guessing blindly.</p>
 </div>
@@ -278,9 +278,9 @@
 </section>
 <!-- ACTIVITY 6 -->
 <section class="activity-screen" data-screen="10" hidden="">
-<div class="activity-label"><span>Activity 7</span><span class="pill-neutral">Choose under constraints</span></div><aside class="case-voice"><div class="case-avatar large">AM</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Amina</strong><span>Campus design review</span><em>Procurement pressure</em></div><blockquote>“Procurement would prefer one communication family everywhere. That would simplify purchasing, but I do not know whether the argument for it is an engineering rule or merely an accident of this campus.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>Is one family defensible across all campus flows, and under which assumptions?</span></div><div class="case-state"><b>Case state</b><span>Candidate technologies known · validity domains must now be defended.</span></div></div></aside>
+<div class="activity-label"><span>Activity 7</span><span class="pill-neutral">Choose under constraints</span></div><aside class="case-voice"><div class="case-avatar large">AM</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Amina</strong><span>Campus operations lead</span><em>Procurement pressure</em></div><div class="case-context"><b>STARTING POINT</b><span>Candidate families and their validity domains are now visible.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“Procurement would prefer one communication family everywhere. That would simplify purchasing, but I do not know whether it is an engineering rule or merely convenient for this campus.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>Test whether one family survives different deployment assumptions before committing the campus strategy.</span></div></div></aside>
 <div class="mission-context transfer"><span class="mission-context-tag">Transfer rule</span><strong>Keep the reasoning criteria; change the deployment context.</strong><span>A rule that works only because of one campus-specific assumption is not yet a transferable engineering rule.</span></div>
-<div class="activity-intro">
+<div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
 <h2>Which candidate is the best fit <em>given these assumptions</em>?</h2>
 <p>There may be several feasible solutions. Complete <strong>at least two deployment cases</strong>: choose one candidate, commit your answer, then reveal the reasoning. Additional cases are optional if you have time. Afterwards, return to the campus checkpoint and test whether your position survives missing information.</p>
 </div>
@@ -311,9 +311,9 @@
 </section>
 <!-- ACTIVITY 7 -->
 <section class="activity-screen" data-screen="12" hidden="">
-<div class="activity-label"><span>Activity 8</span><span class="pill-neutral">Stress-test and revise</span></div><aside class="case-voice"><div class="case-avatar large">ST</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Sam</strong><span>Field technician</span><em>Incident report</em></div><blockquote>“I have an incident log from the field. One assumption used in Architecture v1 is no longer true. The incident report currently says only ‘make the system more robust’, which is not an actionable engineering change.”</blockquote><div class="case-decision"><b>Decision reopened</b><span>Which assumption broke, which requirement moved, and what concrete architecture v2 change follows?</span></div><div class="case-state"><b>Case state</b><span>Architecture v1 is frozen · the incident must produce an explicit v2 delta.</span></div></div></aside>
+<div class="activity-label"><span>Activity 8</span><span class="pill-neutral">Stress-test and revise</span></div><aside class="case-voice"><div class="case-avatar large">ST</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Sam</strong><span>Field technician</span><em>Incident report</em></div><div class="case-context"><b>STARTING POINT</b><span>Architecture v1 and its assumptions are now explicit.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“A field incident has invalidated one assumption used in Architecture v1. The current report says only ‘make the system more robust’, which is not an actionable change.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>Trace the broken assumption to a requirement and produce one explicit Architecture v2 delta.</span></div></div></aside>
 <div class="mission-context danger-context"><span class="mission-context-tag">Revision rule</span><strong>Preserve v1 as evidence.</strong><span>Record the chain explicitly: broken assumption → affected requirement → structural Architecture v2 delta.</span></div>
-<div class="activity-intro">
+<div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
 <h2>Trace the incident through the design, then edit a copy of v1.</h2>
 <p>Identify the broken assumption, the requirement put under pressure and the responsibility affected before making one structural Architecture v2 change.</p>
 </div>
@@ -338,7 +338,7 @@
 <div class="list" id="v2FlowList"></div>
 <div class="revision-foot"><span>One real edit is enough. The point is to make the consequence visible.</span><button class="text-button" id="resetV2" type="button">Reset v2 to v1</button></div>
 </section>
-<section class="card flat mission-handover-card" aria-labelledby="handoverArchitectureTitle">
+<section aria-labelledby="handoverArchitectureTitle" class="card flat mission-handover-card">
 <div class="eyebrow">Mission dossier · handover to Session 2</div>
 <h3 id="handoverArchitectureTitle">How would you classify Architecture v2?</h3>
 <p>This one-click label does not grade your architecture. It gives the next session a safe, structured reference to your design without trying to interpret your free text or diagram.</p>

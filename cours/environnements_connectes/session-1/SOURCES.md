@@ -71,3 +71,12 @@ Source officielle :
 https://wmo.int/sites/default/files/2024-01/WHOS%20metadata%20quality.pdf
 
 Cette source peut être utilisée pour approfondir le rôle de la localisation, des unités, de la période disponible, du fuseau horaire et de l’espacement/agrégation des observations hydrologiques.
+
+## A7 — Relief et observation 3D
+
+### IGN — LiDAR HD, descriptif technique
+
+Source officielle :
+https://geoservices.ign.fr/sites/default/files/2022-05/DT_LiDAR_HD_1-0.pdf
+
+Les spécifications du produit LiDAR HD indiquent une acquisition aérienne avec une densité d'au moins **10 impulsions par m²**. Le cours l'utilise comme exemple de représentation spatiale très détaillée qui ne constitue pas, pour autant, un flux d'observation temps réel.

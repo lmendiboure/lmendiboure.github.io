@@ -7,12 +7,12 @@ Canonical nine-activity skeleton shared by Student / Projector / Instructor Note
 1. Describe the conversations
 2. Draw a message choreography
 3. Build the stack by responsibility
-4. Discover network and transport pieces
-5. Discover application exchange protocols
-6. Make the exchange interoperable
+4. Audit network and transport evidence
+5. Build an application-protocol evidence map
+6. Repair the interoperability contract
 7. Compose complete stacks
-8. Choose the delivery semantics
-9. Stress-test the exchange
+8. Build scoped delivery contracts
+9. Build an auditable failure trace
 
 Core reasoning loop:
 
@@ -72,3 +72,12 @@ This session is part of one continuous campus engineering case. Stakeholder inte
 ## Mission dossier across sessions
 
 The student workspace keeps pedagogical progress (screens, unlocks, retrieval, hints) inside the session state, but publishes only a small structured **Mission dossier** across sessions. Session 1 records the classified Architecture v2 pattern, Top-3 communication requirements, campus access stance, key open uncertainty, and the incident that triggered revision. Session 2 reads those fields when available and otherwise uses a generic fallback. Free-text answers are never interpreted to drive the next session. The export file contains the Mission dossier plus the current session progress so it can also be moved to another browser.
+
+
+## v1.22 interaction principle
+
+Session 2 deliberately avoids worksheet-style prose entry in the Core route. Students build inspectable artefacts: conversation contracts, a message choreography, responsibility stack, protocol evidence maps, an interoperability scope map, complete stacks, delivery contracts and a failure trace. Optional Challenge-me routes may still ask for a short defended response.
+
+### Restitution structure
+
+Activities 4–5 form a deliberate **protocol evidence block**: students audit lower-stack evidence, then application-protocol evidence, without a full class STOP between them. Their interfaces contain embedded factual audits. The Activity 3 STOP must therefore stay protocol-name neutral, and the complete protocol map is institutionalised later at the **Compose complete stacks** STOP. A short 60–90 s instructor calibration is acceptable if a shared misconception survives an embedded audit; it is not a separate concept unlock.

@@ -249,3 +249,16 @@ Les événements peuvent être révélés comme un journal d'exploitation, sans 
 ### Sortie du cours
 
 Artefact final : architecture déployable, dépendances visibles, coûts/limites assumés, décisions soutenues et composants supprimés explicitement justifiés.
+
+---
+
+## Convention d'écriture des épisodes futurs
+
+Chaque activité de S2 à S5 doit être relue avec quatre questions avant publication :
+
+1. **L'étudiant manipule-t-il une matière riche, ou lui demande-t-on surtout de remplir du texte ?**
+2. **Si un personnage intervient, apporte-t-il une information réellement nouvelle ?**
+3. **La restitution ajoute-t-elle un référentiel ou une connaissance au-delà des réponses visibles dans l'activité ?**
+4. **Une information importante est-elle répétée inutilement entre brief, intervention, consigne, STOP et Guide de terrain ?**
+
+Cible : privilégier sélection, appariement, classement, comparaison, priorisation, construction et révision. La rédaction libre reste ponctuelle et justifiée.

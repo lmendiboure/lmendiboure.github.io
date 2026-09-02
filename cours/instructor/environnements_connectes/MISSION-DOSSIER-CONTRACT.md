@@ -4,7 +4,7 @@
 
 Chaque séance conserve son **état pédagogique interne** (écran courant, Unlocks, réponses intermédiaires, retrieval, etc.) dans une clé locale propre. En parallèle, elle publie uniquement ses **décisions structurantes** dans un dossier de mission commun.
 
-- État S1 : `environnements-connectes-session1-v3`
+- État S1 : `environnements-connectes-session1-v4`
 - Dossier partagé : `environnements-connectes-mission-v1`
 
 Les futures S2–S5 doivent **lire le dossier partagé**, et non dépendre de la structure interne de S1.

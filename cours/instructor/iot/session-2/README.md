@@ -61,7 +61,7 @@ A stakeholder intervention is never decorative. It must introduce a fact, need, 
 
 **operational trigger → decision/artifact → class discussion → formalisation → transfer**
 
-Do not let a stakeholder speech duplicate the case dossier or the activity instructions. The speech should trigger or reopen a decision; facts belong in the dossier/state block; the task belongs in the activity prompt. Do not improvise biographies or narrative detail that does not alter the technical reasoning. Session 1 builds and revises architecture; Session 2 continues the same case and makes its exchanges explicit, interoperable and robust.
+Use the same student-facing reading order everywhere: **STARTING POINT → NEW INPUT → DESIGN IMPACT → YOUR MOVE**. The starting point recalls only the minimum prior state; the stakeholder contributes one new fact, need, contradiction or incident; design impact states what has become unresolved without solving it; the activity alone owns the instruction. Do not add a second case-state block that repeats the same information, and do not improvise biography or narrative detail that does not alter the technical reasoning.
 
 
 ## Mission dossier across sessions
@@ -72,3 +72,7 @@ The student workspace keeps pedagogical progress (screens, unlocks, retrieval, h
 ## Publication boundary
 
 `notes.html` is **instructor-facing, not access-controlled**. If `cours/instructor/` is deployed on public GitHub Pages, anyone who knows the path can open it. The Projector is designed to be student-safe; keep the instructor tree local/private if facilitation answers must genuinely remain unavailable.
+
+## Protocol evidence block
+
+Activities 4 and 5 intentionally have no full restitution. Treat them as one evidence-acquisition block with embedded audits. Do not leak IPv6/6LoWPAN/TCP/UDP/Thread placement during the Activity 3 STOP. If needed, run a 60–90 s boundary calibration after an audit; the full technical institutionalisation happens at the Activity 7 composition restitution.

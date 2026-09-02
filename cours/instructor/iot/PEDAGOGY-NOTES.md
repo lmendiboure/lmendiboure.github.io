@@ -118,3 +118,12 @@ The running case uses a deliberately small cross-session record. Do **not** turn
 ## Instructor cockpit rule
 
 The instructor home page is a **teaching cockpit first** and an authoring workspace second. Above the fold it must expose the current mission, Projector, facilitation notes, student access, non-negotiable outcomes and pacing mode. Publishing and pattern-maintenance tools are secondary and collapsible. Session notes distinguish a strict 90-minute Core run from the full-depth envelope; the Core route compresses time but preserves the conceptual sequence and institutionalisation points.
+
+
+### Session 2 artefact rule (v1.22)
+
+For protocol-heavy material, prefer **construct / classify / compose / trace** over repeated free-text justification. A structured interaction is not automatically simplistic: it is valuable when several pieces must be combined into an auditable artefact and the class STOP is where correctness is challenged. Avoid clue cards whose wording already names the answer. Optional Challenge-me routes may use short prose because they intentionally reduce scaffolding.
+
+### Intervention clarity rule
+
+Student-facing stakeholder interventions use one fixed reading order: **STARTING POINT → NEW INPUT → DESIGN IMPACT → YOUR MOVE**. The character contributes only new evidence, need, contradiction or incident. `STARTING POINT` recalls the minimum prior state needed to interpret it; `DESIGN IMPACT` states what has become unresolved without giving the solution; the activity alone owns the instruction under `YOUR MOVE`. Avoid adding a second case-state or mission-state block when the same information is already visible in the session handover.

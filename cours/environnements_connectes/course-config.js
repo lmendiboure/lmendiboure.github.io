@@ -20,7 +20,7 @@ window.ENV_COURSE_CONFIG = {
       story: "Le dossier arrive sans liste de capteurs ni solution préconçue. Votre première responsabilité est de décider ce qui mérite d'être connu.",
       summary: "Partir des décisions, identifier observables et sources, qualifier une observation puis réviser la stratégie quand une hypothèse du terrain tombe.",
       objectives: ["besoin → observation", "sources & métadonnées", "qualité & représentativité"],
-      storageKey: "environnements-connectes-session1-v3",
+      storageKey: "environnements-connectes-session1-v4",
       progressKind: "activity-frontier",
       progressLabels: ["Besoin", "Décision", "Observable", "Sources", "Direct / proxy", "Contexte", "Espace & temps", "Qualité", "Stratégie", "Stress-test"]
     },
