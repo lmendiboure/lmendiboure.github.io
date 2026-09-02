@@ -185,6 +185,19 @@ La rédaction libre est l'exception, pas le moteur principal d'une activité. Pa
 
 Un champ libre n'est justifié que s'il apporte quelque chose qu'une interaction structurée ne permet pas : proposition hors corpus, justification courte, ou remarque personnelle facultative. Il ne doit jamais servir à demander aux étudiants de deviner le contenu que le cours pourrait leur fournir.
 
+### 1 bis. Une interaction doit être évidente avant le premier clic
+
+Une interaction structurée n’est utile que si son **affordance** est immédiatement lisible. La surface étudiant doit donc montrer, sans explication orale de l’enseignant :
+
+- ce qui est manipulable ;
+- l’action attendue (`RETENIR`, `PLACER`, `CLASSER`, `ASSOCIER`, etc.) ;
+- l’état courant (`0/5`, `3/4`, sélection active, élément verrouillé) ;
+- ce qui reste à faire avant de poursuivre ;
+- un état sélectionné nettement distinct du simple survol ;
+- un bouton de progression désactivé tant que l’artefact minimal n’est pas complet.
+
+Éviter les cartes qui ressemblent à des fiches d’information mais sont secrètement cliquables. Éviter aussi les clics sans conséquence explicite : toute sélection doit alimenter un artefact, une comparaison, un profil ou une décision ultérieure. Le modèle de référence est celui du cours IoT : **action visible → feedback immédiat → progression visible → engagement avant restitution**.
+
 ### 2. Donner un corpus, puis demander un choix
 
 Une activité dense commence souvent par un panorama partiel ou complet, puis impose une décision. Exemple de pattern :
@@ -236,3 +249,23 @@ Ne pas sauver les étudiants avant que leur décision soit figée. Lorsque l'act
 **choix → commit → révélation → conséquence → révision**.
 
 L'enseignant évite d'annoncer la future panne ou la future contrainte sous forme de conseil préventif. Une décision imparfaite mais explicite est pédagogiquement plus utile qu'une solution parfaite soufflée avant le challenge.
+
+### 1 ter. Une activité complexe expose son workflow
+
+Quand une activité comporte plusieurs opérations, l’étudiant ne doit pas les reconstruire à partir du texte. La page affiche des sous-étapes numérotées et un état de progression explicite, par exemple :
+
+**1 · CLASSER → 2 · RELIER**
+
+ou
+
+**1 · DIAGNOSTIQUER → 2 · CHANGER L’USAGE → 3 · PRIORISER → 4 · CONTRE-EXEMPLE**.
+
+Chaque sous-étape doit montrer :
+
+- l’action attendue ;
+- la quantité ou la condition de complétion ;
+- le feedback après manipulation ;
+- l’état complet/verrouillé ;
+- la relation avec l’artefact final de l’activité.
+
+Le même workflow est résumé dans les Notes enseignant sous **Parcours étudiant à l’écran**. Ce contrat est à conserver pour S2–S5.

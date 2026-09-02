@@ -256,9 +256,10 @@ Artefact final : architecture déployable, dépendances visibles, coûts/limites
 
 Chaque activité de S2 à S5 doit être relue avec quatre questions avant publication :
 
-1. **L'étudiant manipule-t-il une matière riche, ou lui demande-t-on surtout de remplir du texte ?**
-2. **Si un personnage intervient, apporte-t-il une information réellement nouvelle ?**
-3. **La restitution ajoute-t-elle un référentiel ou une connaissance au-delà des réponses visibles dans l'activité ?**
-4. **Une information importante est-elle répétée inutilement entre brief, intervention, consigne, STOP et Guide de terrain ?**
+1. **L'étudiant comprend-il immédiatement ce qui est manipulable et ce que son action produit ?**
+2. **L'étudiant manipule-t-il une matière riche, ou lui demande-t-on surtout de remplir du texte ?**
+3. **Si un personnage intervient, apporte-t-il une information réellement nouvelle ?**
+4. **La restitution ajoute-t-elle un référentiel ou une connaissance au-delà des réponses visibles dans l'activité ?**
+5. **Une information importante est-elle répétée inutilement entre brief, intervention, consigne, STOP et Guide de terrain ?**
 
 Cible : privilégier sélection, appariement, classement, comparaison, priorisation, construction et révision. La rédaction libre reste ponctuelle et justifiée.
