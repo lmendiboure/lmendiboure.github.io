@@ -4,19 +4,19 @@
 
 Canonical nine-activity skeleton shared by Student / Projector / Instructor Notes:
 
-1. Describe the conversations
-2. Draw a message choreography
-3. Build the stack by responsibility
-4. Discover network and transport pieces
-5. Discover application exchange protocols
-6. Make the exchange interoperable
-7. Compose complete stacks
-8. Choose the delivery semantics
-9. Stress-test the exchange
+1. What kind of conversation is this?
+2. Who speaks, and in what order?
+3. Five jobs hidden inside communication
+4. Attach technical names to the jobs
+5. Three ways applications can exchange information
+6. The bytes arrived — why is the data unusable?
+7. Build the whole path end to end
+8. “Reliable” what, exactly?
+9. Explain one failure from end to end
 
 Core reasoning loop:
 
-**service need → interaction pattern → choreography → message meaning → stack responsibilities → protocol composition → delivery semantics → failure test**
+**concrete service behaviour → ordered exchange → communication jobs → technical names → application exchange → shared meaning → full path → scoped guarantee → failure trace**
 
 Design principle: students reason about roles, scopes and interaction patterns before protocol names are treated as design answers.
 
@@ -36,7 +36,7 @@ Use the stable rhythm:
 
 The Student **Field guide** stores the compressed reference version after each discussion. It is deliberately less verbose than the Projector Reference Plate but covers the same conceptual map.
 
-Activities 4 and 5 remain WORK-only so protocol discovery is not interrupted by premature whole-class correction. Their concrete names are consolidated in the Activity 7 composition restitution.
+Activities 4 and 5 remain WORK-only so the flow is not interrupted by a premature vocabulary lecture. The engineering need comes first, the technical name second, and the complete map is consolidated during Activity 7.
 
 The Student Core route is sufficient on its own. Four optional **Challenge me** routes are available at Activities 3, 6, 7 and 8; use them for groups ready for less scaffolding, not simply for groups that finish quickly.
 
@@ -75,4 +75,4 @@ The student workspace keeps pedagogical progress (screens, unlocks, retrieval, h
 
 ## Protocol evidence block
 
-Activities 4 and 5 intentionally have no full restitution. Treat them as one evidence-acquisition block with embedded audits. Do not leak IPv6/6LoWPAN/TCP/UDP/Thread placement during the Activity 3 STOP. If needed, run a 60–90 s boundary calibration after an audit; the full technical institutionalisation happens at the Activity 7 composition restitution.
+Activities 4 and 5 intentionally have no full restitution. Treat them as a problem-first naming block. During Activity 3, stabilise only the five engineering jobs; do not require prior knowledge of IPv6/6LoWPAN/TCP/UDP/Thread. In Activity 4, each unfamiliar name is revealed only after its engineering clue has been interpreted. The full technical map is consolidated at Activity 7.
