@@ -189,7 +189,7 @@ Every STOP should have the same visual and instructional grammar.
 Display exactly what the group produced.
 
 ### 2 · COMPARE
-Ask one question where different defensible answers are likely. On the Projector, keep facilitation prompts **face-down by default** and turn one card only when the room needs it. The class artefact should remain the starting point; the prompt deck is support, not a checklist.
+Ask one question where different defensible answers are likely. On the Projector, the **question is visible on the front of the card**. Discuss it first, then flip the card to reveal the local **KEEP** anchor. The class artefact remains the starting point; the deck is support, not a checklist.
 
 Useful forms:
 - “Which group made a different assumption?”
@@ -485,7 +485,7 @@ This is student-facing even though it lives under the instructor path. It must b
 For every canonical activity, it should expose **one or at most two navigable public screens**:
 
 1. **WORK** — always present: the task, expected artifact, defence prompt and one guardrail to leave visible while groups work;
-2. **RESTITUTION** — optional: one stable whole-class surface containing the appropriate collective representation (when useful), a small **face-down discussion deck** (typically 2–3 prompts + one stress-test card), and an in-place conclusion dock for **What to keep / Reference Plate** and optional **Reality Check**. Turn prompts as needed; do not expose the whole facilitation script before the discussion.
+2. **RESTITUTION** — optional: one stable whole-class surface containing the appropriate collective representation (when useful), then a full-width discussion deck (typically 2–3 question cards + one stress-test card). The **front shows the question**; the **back shows the local KEEP anchor**. An optional in-place **Reality Check** follows only after discussion. The Projector no longer duplicates those card takeaways in a separate `What to keep` panel.
 
 Omitting RESTITUTION does not omit or merge the activity. The next public screen is simply the next canonical activity's WORK screen.
 
@@ -518,7 +518,7 @@ The Reality Check is not mandatory filler and is not a mini-lecture. Use it when
 Projector invariants:
 
 - large, sparse, high-contrast typography;
-- exactly one WORK screen per canonical activity and at most one RESTITUTION screen; use in-place reveal for **What to keep / Reality Check** rather than additional phases;
+- exactly one WORK screen per canonical activity and at most one RESTITUTION screen; use card flips for local **KEEP** anchors and an in-place **Reality Check** rather than additional phases;
 - no teaching-method commentary, GitHub/publication details, answer-key language, or authoring notes;
 - no instructor-only cues such as “do not tell students…”;
 - the projected challenge must be discussable before its formalisation is shown;

@@ -164,15 +164,15 @@ If horizontal space becomes constrained, stack the tab above its explanatory tex
 
 ## Restitution reading order
 
-A restitution screen must expose a clear three-step visual hierarchy:
+A restitution screen must expose a clear vertical hierarchy:
 
-1. **Artifact / class representation** — the main visual surface.
-2. **Discuss** — a narrow question rail beside the artifact.
-3. **Conclude** — a full-width dock below both surfaces.
+1. **Artifact / class representation** — the main visual surface, full width.
+2. **Discuss + KEEP** — a full-width row of cards below it. The question is visible on the front; after discussion, flipping reveals the local teaching anchor.
+3. **Reality check** — optional, below the deck, used only to ground or transfer the result.
 
-`What to keep` and `Reality check` belong to the **Conclude** dock, never inside the discussion rail. They are mutually exclusive reveals in the same location. This keeps the public reading order stable: **artifact → discussion → conclusion**, without adding navigation states.
+Do not add a second `What to keep` panel on the Projector: the flipped cards already carry the local takeaways. This keeps the public reading order stable: **artifact → question → discussion → KEEP → reality check**, without adding navigation states.
 
 ## Conclusion focus on Projector
 
-Rich `WHAT TO KEEP` / `REALITY CHECK` plates must remain readable without turning the Projector into a scrolling document. When a conclusion panel opens, the top restitution context may enter a compact **conclusion focus** state: keep the collective artifact and discussion labels visible, temporarily hide the `Test the idea` challenge, and allocate the remaining stage height to the Reference Plate. Closing the panel restores the full restitution. Never clip or silently hide the institutionalised content itself.
+Rich `REALITY CHECK` plates must remain readable without turning the Projector into a scrolling document. When the Reality Check opens, the top restitution context may enter a compact **conclusion focus** state so the external evidence remains legible. The flipped KEEP cards themselves must never be clipped or treated as a second hidden reference plate.
 
