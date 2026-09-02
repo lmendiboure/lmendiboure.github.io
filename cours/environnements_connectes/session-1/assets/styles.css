@@ -663,3 +663,11 @@ h2{letter-spacing:-.035em}.lead{font-size:1.05rem;line-height:1.6}
 @media(max-width:760px){.session-outcomes{grid-template-columns:1fr}.session-outcomes>div,.session-outcomes>div:nth-child(odd),.session-outcomes>div:nth-child(even){padding:12px 0;border-right:0}.next-session-bridge{padding:13px}}
 
 .finish-card .finish-lead strong,.finish-card .next-session-bridge strong{color:#fff}
+
+/* v1.16 richer reasoning */
+.question-strip{display:grid;gap:.5rem;margin:1rem 0;padding:1rem;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+.question-strip strong{font-size:.82rem;text-transform:uppercase;letter-spacing:.05em}.question-strip span{font-weight:650}
+.sorting-cards.contextual .sorting-card small{display:block;line-height:1.35;margin:.45rem 0;color:var(--muted)}
+.observation-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin:1rem 0}.observation-compare article{padding:1rem;border:1px solid var(--line);border-radius:14px;background:var(--panel)}.observation-compare article>span{font-weight:800}.observation-compare p{margin:.4rem 0 0;color:var(--muted)}
+.quality-reason{margin-top:.7rem;padding-top:.7rem;border-top:1px solid var(--line)}.quality-reason>span{display:block;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.45rem}
+@media(max-width:760px){.observation-compare{grid-template-columns:1fr}}
