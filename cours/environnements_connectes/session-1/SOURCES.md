@@ -14,7 +14,7 @@ La page décrit la vallée comme composée des trois villages des Aldudes, d'Ure
 
 https://www.georisques.gouv.fr/mes-risques/connaitre-les-risques-pres-de-chez-moi/detail/INOND?adresse=64543+Urepel&city=Urepel&codeInsee=64543&commune=Urepel&form-commune=true
 
-La page indique un risque de crue torrentielle ou à montée rapide et référence l'AZI Nive des Aldudes couvrant notamment Aldudes, Banca et Urepel.
+La page indique un risque de crue torrentielle ou à montée rapide et référence l'AZI Nive des Aldudes couvrant Aldudes, Banca, Urepel et Saint-Étienne-de-Baïgorry.
 
 ### Communauté Pays Basque — projet Olha à Banca
 
@@ -22,13 +22,24 @@ https://www.communaute-paysbasque.fr/actualites/toutes-les-actualites/actualite/
 
 Le projet a été adapté avec un nouveau bâtiment hors zone à risque de crue. La même source mentionne reconstruction de la station d'épuration de Banca et travaux de confortement des berges.
 
+
+### Communauté Pays Basque — PLUi Sud Basse-Navarre (approuvé en 2026)
+
+https://www.communaute-paysbasque.fr/logement-et-urbanisme/les-procedures-durbanisme/procedures-durbanisme/elaboration-du-plan-local-durbanisme-infracommunautaire-plui-sud-basse-navarre
+
+Le périmètre du PLUi Sud Basse-Navarre inclut Aldudes, Banca et Urepel. Les documents d'approbation 2026 apportent des repères locaux utiles pour l'enseignant : topographie très contrainte à Banca, présence de la Nive des Aldudes, urbanisation linéaire aux Aldudes, prairies et reliefs à Urepel. Ne pas transformer ces repères en inventaire exhaustif du territoire.
+
+### Insee — repère démographique 2023
+
+Aldudes : 332 habitants ; Banca : 358 ; Urepel : 274, soit 964 habitants au total selon les populations communales 2023 publiées par l'Insee en 2026. Utiliser seulement comme ordre de grandeur daté ; la Communauté Pays Basque parle de façon arrondie d'un territoire rural d'environ 1 000 habitants.
+
 ## A3 — Hydrométrie : observable, mesure et prévision
 
 ### HydroPortail — station réelle sur la Nive des Aldudes
 
 https://www.hydro.eaufrance.fr/stationhydro/Q916461001/fiche
 
-La station « La Nive des Aldudes à Saint-Étienne-de-Baïgorry » est donnée comme mise en service en 1960 et utilisée notamment pour le suivi d'étiage et la prévision des crues. Elle permet d'ancrer localement la différence entre **mesurer une hauteur/débit** et **connaître un risque**.
+La station « La Nive des Aldudes à Saint-Étienne-de-Baïgorry » est donnée comme mise en service en 1960 et utilisée notamment pour le suivi d'étiage et la prévision des crues. Elle permet d'ancrer la différence entre **observer une grandeur hydrométrique** et **évaluer un risque**. Attention : la station citée est à Saint-Étienne-de-Baïgorry, en aval des trois communes de la vallée ; ne pas la présenter comme une station située aux Aldudes, à Banca ou à Urepel.
 
 ## A6 — Observation et métadonnées
 
