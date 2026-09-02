@@ -2,10 +2,10 @@
   const root = document.querySelector('.student-page');
   if (!root) return;
 
-  const STORAGE_KEY = 'iot-systems-design-session1-v18';
+  const STORAGE_KEY = 'iot-systems-design-session1-v19';
   const MISSION_KEY = 'iot-systems-design-campus-mission-v1';
   const defaultState = {
-    version: 18,
+    version: 19,
     screen: 0,
     maxUnlockedScreen: 0,
     conceptUnlocks: {},
@@ -24,6 +24,7 @@
     layerTrap: {},
     shapeChallenge: {},
     techDiscovery: {},
+    techDiscoveryPredictions: {},
     technologyCompare: {a:'lorawan', b:'cellular'},
     missingInfo: {},
     doubleStress: null,
@@ -37,7 +38,9 @@
     recall: {},
     lastTechnology: null,
     selectedStress: null,
+    stressTarget: null,
     stressRequirement: null,
+    brokenAssumptionRevealed: false,
     stressResponse: null,
     revisionNote: '',
     loopClosure: {elements:[], rationale:''},
@@ -133,15 +136,25 @@
       fieldSummary:'Communication problem → network shape → technology family.',
       fieldKeep:'A technology choice can also imply infrastructure, ownership and dependencies. Comparable choices need not sit at the same abstraction level.',
       tags:['problem → shape → family','implicit infrastructure','validity domain']
+    },
+    revision:{
+      title:'Revision rule',
+      bridge:'Your v2 differs from v1 because a concrete incident invalidated an assumption. The useful artifact is therefore not the extra box or flow by itself, but the chain that explains why it had to change.',
+      formal:'A defensible architecture revision traces <strong>changed assumption → affected responsibility or flow → requirement under pressure → design delta</strong>, then states the residual risk or new trade-off.',
+      carry:'Robustness is conditional. Preserve the previous design as evidence, make the minimum justified change, and name what the mitigation still does not solve.',
+      fieldSummary:'A revision is a causal design delta, not a generic robustness add-on.',
+      fieldKeep:'Changed assumption → affected responsibility / flow → requirement → design delta → residual risk.',
+      tags:['preserve v1','trace the cause','minimum delta','residual risk']
     }
   };
-  const conceptOrder=['iot','architecture','closedLoop','requirements','technology'];
+  const conceptOrder=['iot','architecture','closedLoop','requirements','technology','revision'];
   const stopChallengeDefs={
     landscape:{title:'Connected is not enough',prompt:'A Raspberry Pi hosts a normal web page but senses or controls nothing in the physical world. Would you call that IoT? Defend the boundary you are using.'},
     architecture:{title:'One box, many responsibilities',prompt:'Suppose one Raspberry Pi senses, stores, computes and serves the dashboard. How many architectural responsibilities exist — and how many physical boxes?'},
     requirements:{title:'Same system, different flow',prompt:'Now make the indoor sensor mains-powered while the outdoor node remains battery-powered. Should Energy still have the same importance for every communication flow?'},
     closedLoop:{title:'Delivery is not physical success',prompt:'The command reaches the ventilation controller and is acknowledged, but a jammed actuator never opens the damper. What evidence would expose this failure, and where should it appear in the loop?'},
-    technology:{title:'Access is not the whole system',prompt:'A LoRaWAN sensor can still reach its gateway, but the gateway loses its upstream Internet path. Which part of the architecture failed — and what does that tell you about “choosing a technology”?' }
+    technology:{title:'Access is not the whole system',prompt:'A LoRaWAN sensor can still reach its gateway, but the gateway loses its upstream Internet path. Which part of the architecture failed — and what does that tell you about “choosing a technology”?' },
+    revision:{title:'A mitigation moves the boundary',prompt:'Your v2 survives the selected incident. Now remove the new component or dependency you introduced. What failure reappears, and what new dependency did the mitigation create?'}
   };
 
   function renderStopRitual(){
@@ -157,12 +170,12 @@
     document.querySelectorAll('.unlock-concept').forEach(b=>b.addEventListener('click',()=>{state.conceptUnlocks={...(state.conceptUnlocks||{}),[b.dataset.id]:true};saveState();renderStopRitual();renderFieldGuide();updateStopNextButtons();}));
     updateStopNextButtons();
   }
-  function updateStopNextButtons(){document.querySelectorAll('[data-requires-unlock]').forEach(b=>{b.disabled=!state.conceptUnlocks?.[b.dataset.requiresUnlock];});}
+  function updateStopNextButtons(){document.querySelectorAll('[data-requires-unlock]').forEach(b=>{const conceptReady=!!state.conceptUnlocks?.[b.dataset.requiresUnlock];const handoverReady=b.dataset.requiresHandover?!!state.handoverArchitecture:true;b.disabled=!(conceptReady&&handoverReady);});}
   function renderFieldGuide(){
     const count=conceptOrder.filter(id=>state.conceptUnlocks?.[id]).length;
-    const btn=$('#fieldGuideBtn'),counter=$('#fieldGuideCount'); if(btn)btn.hidden=count===0;if(counter)counter.textContent=`${count}/5`;
+    const btn=$('#fieldGuideBtn'),counter=$('#fieldGuideCount'); if(btn)btn.hidden=count===0;if(counter)counter.textContent=`${count}/6`;
     const host=$('#fieldGuideContent');if(!host)return;
-    host.innerHTML=`<div class="field-guide-progress"><strong>${count} / 5 concepts unlocked</strong><span>Compact reference cards from concepts consolidated after discussion.</span></div>${conceptOrder.map((id,i)=>{const d=conceptDefs[id],on=!!state.conceptUnlocks?.[id];return `<section class="guide-entry ${on?'':'locked'}"><span class="guide-number">${i+1}</span><div>${on?`<strong>${d.title}</strong><p>${d.fieldSummary}</p><div class="guide-keep">${d.fieldKeep}</div><div class="chip-row">${d.tags.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:`<strong>Concept locked</strong><p>Complete the corresponding STOP discussion first.</p>`}</div></section>`}).join('')}`;
+    host.innerHTML=`<div class="field-guide-progress"><strong>${count} / 6 concepts unlocked</strong><span>Compact reference cards from concepts consolidated after discussion.</span></div>${conceptOrder.map((id,i)=>{const d=conceptDefs[id],on=!!state.conceptUnlocks?.[id];return `<section class="guide-entry ${on?'':'locked'}"><span class="guide-number">${i+1}</span><div>${on?`<strong>${d.title}</strong><p>${d.fieldSummary}</p><div class="guide-keep">${d.fieldKeep}</div><div class="chip-row">${d.tags.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:`<strong>Concept locked</strong><p>Complete the corresponding STOP discussion first.</p>`}</div></section>`}).join('')}`;
   }
 
   const challengeIds=['architecture','requirements','discover','stress'];
@@ -202,7 +215,7 @@
   const stepLabels = [
     ['1','Map the IoT landscape'], ['2','Architecture v1'], ['3','Close the loop'], ['4','Requirements'], ['5','Network shapes'], ['6','Technologies'], ['7','Choose'], ['8','Stress-test']
   ];
-  const screenToStep = [0,0,1,1,2,2,3,3,4,5,6,6,7,7];
+  const screenToStep = [0,0,1,1,2,2,3,3,4,5,6,6,7,7,7];
   const stepEntryScreens = [0,2,4,6,8,9,10,12];
 
   function renderStepper() {
@@ -628,8 +641,15 @@
     const selected=requirementDefs.filter(([id])=>state.requirements[id]);
     if(!selected.length){host.innerHTML='<span class="empty-copy">Nothing selected yet.</span>';return;}
     const priorities=selected.filter(([id])=>state.requirements[id]===2);
-    host.innerHTML=selected.map(([id,,name])=>`<span class="chip ${state.requirements[id]===2?'priority':''}">${state.requirements[id]===2?'★ ':''}${name}</span>`).join('') + `<span class="priority-help">${priorities.length}/3 priorities starred</span>`;
-    const next=$('#toStop2'); if(next) next.disabled=priorities.length!==3;
+    host.innerHTML=selected.map(([id,,name])=>`<span class="chip ${state.requirements[id]===2?'priority':''}">${state.requirements[id]===2?'★ ':''}${name}</span>`).join('') + `<span class="priority-help">${priorities.length}/3 system priorities starred</span>`;
+    updateRequirementsNext();
+  }
+  function updateRequirementsNext(){
+    const next=$('#toStop2'); if(!next)return;
+    const globalTop=Object.values(state.requirements||{}).filter(v=>v===2).length;
+    const flowTop=Array.isArray(state.flowLens?.requirements)?state.flowLens.requirements.length:0;
+    next.disabled=!(globalTop===3&&flowTop===3);
+    next.textContent=globalTop!==3?'Star exactly 3 system priorities →':(flowTop!==3?'Give one flow its own Top 3 →':'Both rankings ready → STOP');
   }
 
   const referenceReqs = requirementDefs.map(([id,icon,name,desc,term])=>[term,name,desc]);
@@ -639,11 +659,11 @@
 
   /* ---------- Guided technology discovery ---------- */
   const discoveryFamilies = [
-    {id:'ble', icon:'↔', title:'Nearby peer', question:'A small device mainly needs to talk to a nearby phone or gateway.', shape:['Device','Nearby peer'], name:'Bluetooth LE', essential:'Designed for low-energy local communication. A phone or nearby gateway is a very common architectural partner.', words:[['Peer','The nearby device at the other end of a direct communication relationship.'],['Radio mode','Different radio modes can trade speed for robustness and achievable range.']]},
-    {id:'wifi', icon:'⌂', title:'Local access network', question:'Devices can join infrastructure that already provides local network connectivity.', shape:['Device','Access point','Local / IP network','Application'], name:'Wi-Fi', essential:'A natural family when a local wireless network exists and the application may need richer traffic or direct IP integration.', words:[['Access point','Local infrastructure that wireless devices join to reach the rest of the network.'],['IP network','The packet network used to reach other machines and services.']]},
-    {id:'dot154', icon:'◇', title:'Low-power local building block', question:'Small local devices need basic radio exchange rules, while another stack can provide the rest of the networking system.', shape:['Device','Basic local radio/link rules','Higher-level networking','Application'], name:'IEEE 802.15.4', essential:'Think of this as a building block, not a complete IoT application architecture. It defines basic local radio transmission and channel-sharing behaviour.', words:[['PHY','Technical name for the rules that turn bits into signals over the physical radio link.'],['MAC','Technical name for rules that coordinate access to a shared communication medium.']]},
-    {id:'lorawan', icon:'◜', title:'Gateway-based wide area', question:'Many constrained devices send small amounts of data over long distances through one or more gateways.', shape:['End device','Gateway(s)','Network service','Application'], name:'LoRaWAN', essential:'A low-power wide-area network architecture. Gateways relay device radio traffic toward network services; deployments can be private or shared/public.', words:[['Gateway','A system that connects one communication environment to another.'],['LoRa vs LoRaWAN','LoRa names the radio technology; LoRaWAN defines network rules and architecture above it.']]},
-    {id:'cellular', icon:'▥', title:'Operator-managed wide area', question:'Devices need wide-area connectivity without you deploying local gateways, and a mobile operator provides service.', shape:['Device','Cellular base station','Operator network','Application'], name:'Cellular IoT', essential:'Common cellular IoT options include NB-IoT and LTE-M. They are delivered through operator infrastructure, so coverage and service availability are design assumptions.', words:[['Operator network','Infrastructure run by a mobile-network provider rather than by your local deployment.'],['NB-IoT / LTE-M','Two complementary cellular IoT technologies with different performance envelopes.']]}
+    {id:'ble', icon:'↔', title:'Nearby peer', question:'A small device mainly needs to talk to a nearby phone or gateway.', shape:['Device','Nearby peer'], dependency:'Nearby peer', dependencyOptions:['Nearby peer','Local infrastructure','Operator service'], name:'Bluetooth LE', essential:'Designed for low-energy local communication. A phone or nearby gateway is a very common architectural partner.', words:[['Peer','The nearby device at the other end of a direct communication relationship.'],['Radio mode','Different radio modes can trade speed for robustness and achievable range.']]},
+    {id:'wifi', icon:'⌂', title:'Local access network', question:'Devices can join infrastructure that already provides local network connectivity.', shape:['Device','Access point','Local / IP network','Application'], dependency:'Local infrastructure', dependencyOptions:['Nearby peer','Local infrastructure','Gateway relay'], name:'Wi-Fi', essential:'A natural family when a local wireless network exists and the application may need richer traffic or direct IP integration.', words:[['Access point','Local infrastructure that wireless devices join to reach the rest of the network.'],['IP network','The packet network used to reach other machines and services.']]},
+    {id:'dot154', icon:'◇', title:'Low-power local building block', question:'Small local devices need basic radio exchange rules, while another stack can provide the rest of the networking system.', shape:['Device','Basic local radio/link rules','Higher-level networking','Application'], dependency:'Higher-level networking', dependencyOptions:['Local infrastructure','Higher-level networking','Operator service'], name:'IEEE 802.15.4', essential:'Think of this as a building block, not a complete IoT application architecture. It defines basic local radio transmission and channel-sharing behaviour.', words:[['PHY','Technical name for the rules that turn bits into signals over the physical radio link.'],['MAC','Technical name for rules that coordinate access to a shared communication medium.']]},
+    {id:'lorawan', icon:'◜', title:'Gateway-based wide area', question:'Many constrained devices send small amounts of data over long distances through one or more gateways.', shape:['End device','Gateway(s)','Network service','Application'], dependency:'Gateway relay', dependencyOptions:['Nearby peer','Gateway relay','Operator service'], name:'LoRaWAN', essential:'A low-power wide-area network architecture. Gateways relay device radio traffic toward network services; deployments can be private or shared/public.', words:[['Gateway','A system that connects one communication environment to another.'],['LoRa vs LoRaWAN','LoRa names the radio technology; LoRaWAN defines network rules and architecture above it.']]},
+    {id:'cellular', icon:'▥', title:'Operator-managed wide area', question:'Devices need wide-area connectivity without you deploying local gateways, and a mobile operator provides service.', shape:['Device','Cellular base station','Operator network','Application'], dependency:'Operator service', dependencyOptions:['Local infrastructure','Gateway relay','Operator service'], name:'Cellular IoT', essential:'Common cellular IoT options include NB-IoT and LTE-M. They are delivered through operator infrastructure, so coverage and service availability are design assumptions.', words:[['Operator network','Infrastructure run by a mobile-network provider rather than by your local deployment.'],['NB-IoT / LTE-M','Two complementary cellular IoT technologies with different performance envelopes.']]}
   ];
   const plainGlossary = [
     ['Access point','Local wireless infrastructure that devices join to reach a network.'],
@@ -657,10 +677,11 @@
 
   function renderTechDiscovery(){
     const host=$('#techDiscoveryGrid'); if(!host)return;
-    host.innerHTML=discoveryFamilies.map((f,i)=>{const revealed=!!state.techDiscovery?.[f.id];return `<article class="discovery-card ${revealed?'revealed':''}"><div class="discovery-top"><span class="discovery-icon">${f.icon}</span><div><span class="eyebrow">Network shape ${i+1}</span><h3>${f.title}</h3></div></div><p>${f.question}</p><div class="shape-chain">${f.shape.map((x,j)=>`${j?'<span class="shape-arrow">→</span>':''}<span>${x}</span>`).join('')}</div>${!revealed?`<button type="button" class="btn soft reveal-family" data-family="${f.id}">Reveal a real technology family</button>`:`<div class="family-reveal"><span class="family-name">${f.name}</span><p>${f.essential}</p><details><summary>New words in this card</summary><div class="family-words">${f.words.map(([a,b])=>`<div><strong>${a}</strong><span>${b}</span></div>`).join('')}</div></details></div>`}</article>`}).join('');
+    host.innerHTML=discoveryFamilies.map((f,i)=>{const revealed=!!state.techDiscovery?.[f.id],prediction=state.techDiscoveryPredictions?.[f.id];return `<article class="discovery-card ${revealed?'revealed':''}"><div class="discovery-top"><span class="discovery-icon">${f.icon}</span><div><span class="eyebrow">Network shape ${i+1}</span><h3>${f.title}</h3></div></div><p>${f.question}</p><div class="shape-chain">${f.shape.map((x,j)=>`${j?'<span class="shape-arrow">→</span>':''}<span>${x}</span>`).join('')}</div><div class="shape-prediction"><strong>Before the name: what structural dependency defines this shape most strongly?</strong><div class="challenge-chip-row">${f.dependencyOptions.map(o=>`<button type="button" class="chip-button ${prediction===o?'active':''}" data-shape-predict="${f.id}" data-choice="${esc(o)}" ${revealed?'disabled':''}>${o}</button>`).join('')}</div>${prediction&&revealed?`<div class="micro-feedback"><b>${prediction===f.dependency?'Useful structural reading.':'Compare your prediction with the revealed architecture.'}</b>The key dependency highlighted here is <strong>${f.dependency}</strong>.</div>`:''}</div>${!revealed?`<button type="button" class="btn soft reveal-family" data-family="${f.id}" ${prediction?'':'disabled'}>${prediction?'Reveal a real technology family':'Commit one structural prediction first'}</button>`:`<div class="family-reveal"><span class="family-name">${f.name}</span><p>${f.essential}</p><details><summary>New words in this card</summary><div class="family-words">${f.words.map(([a,b])=>`<div><strong>${a}</strong><span>${b}</span></div>`).join('')}</div></details></div>`}</article>`}).join('');
+    host.querySelectorAll('[data-shape-predict]').forEach(b=>b.addEventListener('click',()=>{state.techDiscoveryPredictions={...(state.techDiscoveryPredictions||{}),[b.dataset.shapePredict]:b.dataset.choice};saveState();renderTechDiscovery();}));
     host.querySelectorAll('.reveal-family').forEach(b=>b.addEventListener('click',()=>{state.techDiscovery={...(state.techDiscovery||{}),[b.dataset.family]:true};saveState();renderTechDiscovery();renderFamilyMapStrip();}));
-    const n=discoveryFamilies.filter(f=>state.techDiscovery?.[f.id]).length;
-    const prog=$('#techDiscoveryProgress');if(prog)prog.textContent=`${n} / ${discoveryFamilies.length} revealed`;
+    const n=discoveryFamilies.filter(f=>state.techDiscovery?.[f.id]&&state.techDiscoveryPredictions?.[f.id]).length;
+    const prog=$('#techDiscoveryProgress');if(prog)prog.textContent=`${n} / ${discoveryFamilies.length} reasoned + revealed`;
     const next=$('#discoveryNext');if(next)next.disabled=n<discoveryFamilies.length;
     const gloss=$('#plainGlossary');if(gloss)gloss.innerHTML=plainGlossary.map(([a,b])=>`<div><strong>${a}</strong><span>${b}</span></div>`).join('');
   }
@@ -776,7 +797,7 @@
   function renderHandoverArchitecture(){
     const host=$('#handoverArchitecture'); if(!host)return;
     host.innerHTML=`<div class="campus-position-grid">${handoverArchitectureChoices.map(([id,title,desc])=>`<button type="button" class="campus-position ${state.handoverArchitecture===id?'active':''}" data-handover-architecture="${id}"><strong>${title}</strong><small>${desc}</small></button>`).join('')}</div>`;
-    host.querySelectorAll('[data-handover-architecture]').forEach(b=>b.addEventListener('click',()=>{state.handoverArchitecture=b.dataset.handoverArchitecture;saveState();renderHandoverArchitecture();renderRevisionStudio();renderDesignDrawer();}));
+    host.querySelectorAll('[data-handover-architecture]').forEach(b=>b.addEventListener('click',()=>{state.handoverArchitecture=b.dataset.handoverArchitecture;saveState();renderHandoverArchitecture();renderDesignDrawer();updateStopNextButtons();}));
   }
 
   /* ---------- Stress test ---------- */
@@ -799,23 +820,40 @@
   function renderStress() {
     const host=$('#stressGrid');
     host.innerHTML=stressDefs.map(s=>`<button type="button" class="event ${state.selectedStress===s.id?'selected':''}" data-stress="${s.id}"><span class="event-icon">${s.icon}</span><span><strong>${s.title}</strong><small>${s.short}</small></span></button>`).join('');
-    host.querySelectorAll('.event').forEach(b=>b.addEventListener('click',()=>{state.selectedStress=b.dataset.stress;state.stressRequirement=null;state.stressResponse=null;state.doubleStress=null;saveState();renderStress();renderStressResponse();renderRevisionStudio();renderDoubleFailure();}));
+    host.querySelectorAll('.event').forEach(b=>b.addEventListener('click',()=>{state.selectedStress=b.dataset.stress;state.stressTarget=null;state.stressRequirement=null;state.stressResponse=null;state.brokenAssumptionRevealed=false;state.doubleStress=null;state.handoverArchitecture=null;if(state.architectureV1)state.architectureV2=cloneArchitecture(state.architectureV1);saveState();renderStress();renderStressResponse();renderRevisionStudio();renderDoubleFailure();}));
     renderStressResponse(); renderDoubleFailure();
   }
 
+  function stressTargetLabel(target=state.stressTarget){
+    if(!target)return null;
+    const model=state.architectureV1||currentArchitectureModel();
+    const [kind,raw]=String(target).split(':');
+    if(kind==='component') return model.components.find(c=>String(c.id)===String(raw))?.name||null;
+    if(kind==='flow'){
+      const f=model.flows[Number(raw)]; if(!f)return null;
+      const a=model.components.find(c=>String(c.id)===String(f.from)),b=model.components.find(c=>String(c.id)===String(f.to));
+      return `${a?.name||'?'} → ${b?.name||'?'}${f.label?' · '+f.label:''}`;
+    }
+    return null;
+  }
   function renderStressResponse() {
     const box=$('#stressResponse');
     if(!state.selectedStress){box.hidden=true;return;}
     box.hidden=false;
-    const s=stressDefs.find(x=>x.id===state.selectedStress);
-    $('#brokenPrompt').textContent=s.broken;
+    const s=stressDefs.find(x=>x.id===state.selectedStress),model=state.architectureV1||currentArchitectureModel();
+    const broken=$('#brokenPrompt'),reveal=$('#revealBrokenAssumption');
+    if(broken){broken.textContent=s.broken;broken.hidden=!state.brokenAssumptionRevealed;}
+    if(reveal){reveal.hidden=!!state.brokenAssumptionRevealed;reveal.onclick=()=>{state.brokenAssumptionRevealed=true;saveState();renderStressResponse();};}
+    const targetHost=$('#stressTargetChoices');
+    if(targetHost){
+      const componentButtons=model.components.map(c=>`<button type="button" class="chip-button ${state.stressTarget===`component:${c.id}`?'active':''}" data-stress-target="component:${c.id}">${esc(c.name)}</button>`).join('');
+      const flowButtons=model.flows.map((f,i)=>{const a=model.components.find(c=>String(c.id)===String(f.from)),b=model.components.find(c=>String(c.id)===String(f.to));const label=`${a?.name||'?'} → ${b?.name||'?'}${f.label?' · '+f.label:''}`;return `<button type="button" class="chip-button ${state.stressTarget===`flow:${i}`?'active':''}" data-stress-target="flow:${i}">${esc(label)}</button>`}).join('');
+      targetHost.innerHTML=`<div class="stress-target-group"><small>Responsibilities / components</small><div class="challenge-chip-row">${componentButtons||'<span class="empty-copy">No v1 component available.</span>'}</div></div><div class="stress-target-group"><small>Information flows</small><div class="challenge-chip-row">${flowButtons||'<span class="empty-copy">No labelled flow available.</span>'}</div></div>`;
+      targetHost.querySelectorAll('[data-stress-target]').forEach(b=>b.addEventListener('click',()=>{state.stressTarget=b.dataset.stressTarget;saveState();renderStressResponse();renderRevisionStudio();}));
+    }
     $('#stressRequirementChoices').innerHTML=requirementDefs.map(([id,,name])=>`<button type="button" class="chip-button ${state.stressRequirement===id?'active':''}" data-stress-req="${id}">${name}</button>`).join('');
     $('#stressRequirementChoices').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state.stressRequirement=b.dataset.stressReq;saveState();renderStressResponse();renderRevisionStudio();}));
-    $('#architectureResponseChoices').innerHTML=responseChoices.map(([id,name,desc])=>`<button type="button" class="choice-card compact ${state.stressResponse===id?'state-2':''}" data-response="${id}"><span><strong>${name}</strong><small>${desc}</small></span></button>`).join('');
-    $('#architectureResponseChoices').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state.stressResponse=b.dataset.response;saveState();renderStressResponse();renderRevisionStudio();}));
-    $('#revisionNote').value=state.revisionNote||'';
   }
-  $('#revisionNote').addEventListener('input', e=>{state.revisionNote=e.target.value;saveState();});
 
 
   /* ---------- Optional challenge modes + STOP snapshots ---------- */
@@ -833,16 +871,16 @@
 
   function renderFlowLens(){
     const host=$('#flowLens');if(!host)return;
-    if(!state.flows.length){host.innerHTML='<p class="challenge-copy">Add at least one information flow first.</p>';return;}
+    if(!state.flows.length){host.innerHTML='<p class="challenge-copy">Architecture v1 has no information flow to test yet. Return to Activity 2 and add at least one labelled arrow.</p>';updateRequirementsNext();return;}
     const idx=Number.isInteger(state.flowLens?.flowIndex)?state.flowLens.flowIndex:0;
     if(idx>=state.flows.length) state.flowLens={flowIndex:0,requirements:[]};
-    const current=state.flows[state.flowLens.flowIndex??0];
     const reqs=Array.isArray(state.flowLens.requirements)?state.flowLens.requirements:[];
     const globalTop=requirementDefs.filter(([id])=>state.requirements[id]===2).map(([id])=>id);
     const overlap=reqs.filter(x=>globalTop.includes(x)).length;
-    host.innerHTML=`<p class="challenge-copy">Pick one arrow, then choose up to three constraints specifically for that flow — not for the whole system.</p><label class="challenge-select"><span>Flow</span><select id="flowLensSelect">${state.flows.map((f,i)=>{const a=state.components.find(x=>x.id===f.from),b=state.components.find(x=>x.id===f.to);return `<option value="${i}" ${i===(state.flowLens.flowIndex??0)?'selected':''}>${esc(a?.name||'?')} → ${esc(b?.name||'?')}${f.label?' · '+esc(f.label):''}</option>`}).join('')}</select></label><div class="challenge-chip-row">${requirementDefs.map(([id,,name])=>`<button type="button" class="chip-button ${reqs.includes(id)?'active':''}" data-flow-req="${id}">${name}</button>`).join('')}</div>${reqs.length?`<div class="micro-feedback"><b>Compare with your system-wide Top 3</b>${globalTop.length?`${overlap} of your ${reqs.length} flow-specific choices overlap with the global priorities. ${overlap===reqs.length?'Maybe this flow dominates your overall thinking.':'That difference is exactly the point: flows can have distinct requirements.'}`:'You have not starred a global Top 3 yet.'}</div>`:''}`;
-    $('#flowLensSelect')?.addEventListener('change',e=>{state.flowLens={flowIndex:+e.target.value,requirements:[]};saveState();renderFlowLens();});
-    host.querySelectorAll('[data-flow-req]').forEach(b=>b.addEventListener('click',()=>{let a=[...(state.flowLens.requirements||[])],id=b.dataset.flowReq;if(a.includes(id))a=a.filter(x=>x!==id);else if(a.length<3)a.push(id);else{flashMessage('Choose up to three for this flow.');return;}state.flowLens.requirements=a;if(a.length)markChallenge('requirements');else saveState();renderFlowLens();renderStopSnapshots();}));
+    host.innerHTML=`<label class="challenge-select"><span>Reference flow</span><select id="flowLensSelect">${state.flows.map((f,i)=>{const a=state.components.find(x=>x.id===f.from),b=state.components.find(x=>x.id===f.to);return `<option value="${i}" ${i===(state.flowLens.flowIndex??0)?'selected':''}>${esc(a?.name||'?')} → ${esc(b?.name||'?')}${f.label?' · '+esc(f.label):''}</option>`}).join('')}</select></label><div class="flow-lens-question"><strong>Which three constraints dominate this flow specifically?</strong><span>${reqs.length}/3 selected</span></div><div class="challenge-chip-row">${requirementDefs.map(([id,,name])=>`<button type="button" class="chip-button ${reqs.includes(id)?'active':''}" data-flow-req="${id}">${name}</button>`).join('')}</div>${reqs.length===3?`<div class="micro-feedback"><b>Now compare the two rankings.</b>${globalTop.length===3?`${overlap} of 3 flow-specific priorities overlap with the system Top 3. ${overlap===3?'That can be defensible, but be ready to explain why this flow is representative.':'The mismatch is useful evidence: one system-wide ranking does not describe every arrow equally.'}`:'Finish the system Top 3 to make the comparison meaningful.'}</div>`:''}`;
+    $('#flowLensSelect')?.addEventListener('change',e=>{state.flowLens={flowIndex:+e.target.value,requirements:[]};saveState();renderFlowLens();renderStopSnapshots();});
+    host.querySelectorAll('[data-flow-req]').forEach(b=>b.addEventListener('click',()=>{let a=[...(state.flowLens.requirements||[])],id=b.dataset.flowReq;if(a.includes(id))a=a.filter(x=>x!==id);else if(a.length<3)a.push(id);else{flashMessage('Choose exactly three for this flow. Remove one first.');return;}state.flowLens.requirements=a;saveState();renderFlowLens();renderStopSnapshots();}));
+    updateRequirementsNext();
   }
 
   const layerPairs=[
@@ -896,8 +934,9 @@
     const l=$('#stopLandscapeSnapshot');if(l){const cross=landscapeCases.filter(c=>landscapeSelection(c.id).secondary).length;l.innerHTML=`<div class="snapshot-head"><strong>Our IoT landscape</strong><span>${cross} cross-domain choices</span></div>${landscapeSnapshotMarkup()}<div class="snapshot-signal"><b>Discussion signal</b>${cross===0?'Your group used one domain for every case. Was the overlap genuinely negligible, or did the main/secondary framing hide useful ambiguity?':`${cross} of 8 cases crossed a boundary. Pick the hardest one to defend.`}</div>`;}
     const a=$('#stopArchitectureSnapshot');if(a){const degrees=state.components.map(c=>[c,state.flows.filter(f=>f.from===c.id||f.to===c.id).length]).sort((x,y)=>y[1]-x[1]);const hot=degrees[0];a.innerHTML=`<div class="snapshot-head"><strong>Our architecture v1</strong><span>${state.components.length} components · ${state.flows.length} flows</span></div>${miniGraphMarkup()}${state.flows.length?`<div class="snapshot-flow-list">${state.flows.slice(0,6).map(f=>{const x=state.components.find(c=>c.id===f.from),y=state.components.find(c=>c.id===f.to);return `<span>${esc(x?.name||'?')} → ${esc(y?.name||'?')}${f.label?' · '+esc(f.label):''}</span>`}).join('')}</div>`:''}${hot?`<div class="snapshot-signal"><b>Discussion signal</b>${esc(hot[0].name)} touches ${hot[1]} flow${hot[1]===1?'':'s'}. Is that architectural centrality intentional?</div>`:''}`;}
     const cl=$('#stopLoopSnapshot');if(cl){const chosen=new Set(state.loopClosure?.elements||[]);cl.innerHTML=`<div class="snapshot-head"><strong>Our closed-loop extension</strong><span>${chosen.size} design elements selected</span></div><div class="loop-snapshot-grid">${loopElements.map(([id,n])=>`<span class="${chosen.has(id)?'active':''}">${esc(n)}</span>`).join('')}</div>${state.loopClosure?.rationale?`<div class="snapshot-insight">${esc(state.loopClosure.rationale)}</div>`:''}`;}
-    const r=$('#stopRequirementsSnapshot');if(r){const sel=requirementDefs.filter(([id])=>state.requirements[id]);const top=sel.filter(([id])=>state.requirements[id]===2);r.innerHTML=`<div class="snapshot-head"><strong>Our communication requirements</strong><span>${sel.length} selected</span></div><div class="snapshot-requirements"><div><small>Selected</small><div class="chip-row">${sel.map(([id,,n])=>`<span class="chip">${esc(n)}</span>`).join('')||'<span class="empty-copy">None</span>'}</div></div><div><small>Top 3</small><div class="chip-row">${top.map(([id,,n])=>`<span class="chip priority">★ ${esc(n)}</span>`).join('')||'<span class="empty-copy">None starred</span>'}</div></div></div>${state.flowLens?.requirements?.length?`<div class="snapshot-insight">Flow lens completed: its priorities were ${state.flowLens.requirements.map(id=>requirementDefs.find(x=>x[0]===id)?.[2]).filter(Boolean).join(', ')}.</div>`:''}`;}
+    const r=$('#stopRequirementsSnapshot');if(r){const sel=requirementDefs.filter(([id])=>state.requirements[id]);const top=sel.filter(([id])=>state.requirements[id]===2);r.innerHTML=`<div class="snapshot-head"><strong>Our communication requirements</strong><span>${sel.length} selected</span></div><div class="snapshot-requirements"><div><small>Selected</small><div class="chip-row">${sel.map(([id,,n])=>`<span class="chip">${esc(n)}</span>`).join('')||'<span class="empty-copy">None</span>'}</div></div><div><small>Top 3</small><div class="chip-row">${top.map(([id,,n])=>`<span class="chip priority">★ ${esc(n)}</span>`).join('')||'<span class="empty-copy">None starred</span>'}</div></div></div>${state.flowLens?.requirements?.length?(()=>{const f=state.flows[state.flowLens.flowIndex??0],a=state.components.find(x=>x.id===f?.from),b=state.components.find(x=>x.id===f?.to),label=f?`${a?.name||'?'} → ${b?.name||'?'}${f.label?' · '+f.label:''}`:'selected flow';return `<div class="snapshot-insight"><b>Flow-specific Top 3 · ${esc(label)}</b><br>${state.flowLens.requirements.map(id=>requirementDefs.find(x=>x[0]===id)?.[2]).filter(Boolean).join(', ')}</div>`})():''}`;}
     const t=$('#stopTechnologySnapshot');if(t){const mystery=mysteryTechs.map(m=>{const x=state.mystery[m.id];return `<span class="snapshot-tech ${x?.revealed?(x.choice===m.answer?'correct':'wrong'):''}">${x?.revealed?(x.choice===m.answer?'✓':'↺'):'·'} ${m.answer}</span>`}).join('');const dec=scenarioDefs.map(x=>{const st=state.scenarios[x.id]||{};return st.committed?`<div><strong>${esc(x.title)}</strong><span>${esc(st.choice||'')}</span>${st.twist?'<small>assumption challenged</small>':''}</div>`:''}).filter(Boolean).join('');const cp=state.campusDecision?.position?campusDecisionPositions.find(x=>x[0]===state.campusDecision.position):null;const cu=state.campusDecision?.uncertainty?campusUncertainties.find(x=>x[0]===state.campusDecision.uncertainty):null;t.innerHTML=`<div class="snapshot-head"><strong>Our technology reasoning</strong><span>${Object.values(state.scenarios||{}).filter(x=>x?.committed).length} transfer decisions</span></div><div class="snapshot-tech-row">${mystery}</div><div class="snapshot-decisions">${dec||'<p class="empty-copy">No deployment decision committed yet.</p>'}</div>${cp?`<div class="snapshot-campus-return"><small>Back to campus</small><strong>${esc(cp[1])}</strong>${cu?`<span>Most decision-sensitive missing fact: ${esc(cu[1])}</span>`:''}</div>`:''}`;}
+    const rv=$('#stopRevisionSnapshot');if(rv){const d=architectureDelta(),incident=stressDefs.find(x=>x.id===state.selectedStress),req=requirementDefs.find(x=>x[0]===state.stressRequirement),target=stressTargetLabel(),delta=[...d.added.map(x=>`+ ${x}`),...d.removed.map(x=>`− ${x}`),d.addedFlows?`+ ${d.addedFlows} flow${d.addedFlows>1?'s':''}`:'',d.removedFlows?`− ${d.removedFlows} flow${d.removedFlows>1?'s':''}`:''].filter(Boolean);rv.innerHTML=`<div class="snapshot-head"><strong>Our Architecture v1 → v2 revision</strong><span>${delta.length} structural delta${delta.length===1?'':'s'}</span></div><div class="revision-stop-cause"><span><small>Incident</small><strong>${esc(incident?.title||'Not selected')}</strong></span><b>→</b><span><small>Affected first</small><strong>${esc(target||'Not selected')}</strong></span><b>→</b><span><small>Requirement</small><strong>${esc(req?.[2]||'Not selected')}</strong></span></div><div class="revision-compare stop-compare"><div><span class="revision-label">Frozen v1</span>${miniGraphMarkupFor(state.architectureV1)}</div><div><span class="revision-label">Working v2</span>${miniGraphMarkupFor(state.architectureV2||state.architectureV1)}</div></div><div class="evolution-delta">${delta.length?delta.map(x=>`<span>${esc(x)}</span>`).join(''):'<span>No structural delta recorded</span>'}</div>`;}
   }
   $$('.review-activity').forEach(b=>b.addEventListener('click',()=>showScreen(b.dataset.reviewScreen)));
 
@@ -1052,25 +1091,27 @@
   }
   function renderRevisionStudio(){
     const studio=$('#revisionStudio'); if(!studio)return;
-    const ready=!!(state.selectedStress&&state.stressRequirement&&state.stressResponse);
+    const ready=!!(state.selectedStress&&state.stressTarget&&state.stressRequirement);
     studio.hidden=!ready;
-    const finish=$('#finishSessionBtn');
-    if(!ready){if(finish){finish.disabled=true;finish.textContent='Complete the incident analysis first →';}return;}
+    const toStop=$('#toStressStop');
+    if(!ready){if(toStop){toStop.disabled=true;toStop.textContent='Complete the v1 diagnosis first →';}return;}
     const v2=ensureArchitectureV2(),v1=state.architectureV1;
     $('#revisionV1Graph').innerHTML=miniGraphMarkupFor(v1);
     $('#revisionV2Graph').innerHTML=miniGraphMarkupFor(v2);
+    const incident=stressDefs.find(x=>x.id===state.selectedStress),req=requirementDefs.find(x=>x[0]===state.stressRequirement),target=stressTargetLabel();
+    const cause=$('#revisionCauseStrip');if(cause)cause.innerHTML=`<span><small>Incident</small><strong>${esc(incident?.title||'')}</strong></span><b>→</b><span><small>Affected first</small><strong>${esc(target||'')}</strong></span><b>→</b><span><small>Requirement</small><strong>${esc(req?.[2]||'')}</strong></span><b>→</b><span><small>Your move</small><strong>Edit v2</strong></span>`;
     const status=$('#revisionStatus'); const changed=architectureChanged(); if(status){status.textContent=changed?'v2 changed':'No change yet';status.classList.toggle('changed',changed);}
     const opts='<option value="">Choose…</option>'+v2.components.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');
     $('#v2RemoveComponent').innerHTML=opts; $('#v2FlowFrom').innerHTML=opts.replace('Choose…','From…'); $('#v2FlowTo').innerHTML=opts.replace('Choose…','To…');
     const list=$('#v2FlowList');
     list.innerHTML=v2.flows.length?v2.flows.map((f,i)=>{const a=v2.components.find(c=>String(c.id)===String(f.from)),b=v2.components.find(c=>String(c.id)===String(f.to));return `<div class="list-item"><span><strong>${esc(a?.name||'?')}</strong> <span class="flow-arrow-inline">→</span> <strong>${esc(b?.name||'?')}</strong><small>${esc(f.label||'unlabelled flow')}</small></span><button class="icon-button v2-remove-flow" data-i="${i}" type="button" aria-label="Remove revision flow">×</button></div>`}).join(''):'<p class="empty-copy">No flows in v2.</p>';
-    list.querySelectorAll('.v2-remove-flow').forEach(b=>b.addEventListener('click',()=>{v2.flows.splice(+b.dataset.i,1);saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();}));
-    if(finish){const classified=!!state.handoverArchitecture;finish.disabled=!(changed&&classified);finish.textContent=!changed?'Record a v2 revision to finish →':(!classified?'Classify Architecture v2 for handover →':'Architecture v2 + handover recorded → finish');}
+    list.querySelectorAll('.v2-remove-flow').forEach(b=>b.addEventListener('click',()=>{v2.flows.splice(+b.dataset.i,1);saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();renderStopSnapshots();}));
+    if(toStop){toStop.disabled=!changed;toStop.textContent=changed?'Structural v2 delta ready → STOP':'Make one structural v2 change →';}
   }
-  $('#v2ComponentForm')?.addEventListener('submit',e=>{e.preventDefault();const inp=$('#v2ComponentInput'),name=inp.value.trim();if(!name)return;const v2=ensureArchitectureV2();const ids=v2.components.map(c=>Number(c.id)).filter(Number.isFinite);const id=(ids.length?Math.max(...ids):0)+1;v2.components.push({id,name,x:0,y:0});inp.value='';saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();});
-  $('#v2RemoveComponentBtn')?.addEventListener('click',()=>{const id=+$('#v2RemoveComponent').value;if(!id)return;const v2=ensureArchitectureV2();v2.components=v2.components.filter(c=>c.id!==id);v2.flows=v2.flows.filter(f=>f.from!==id&&f.to!==id);saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();});
-  $('#v2FlowForm')?.addEventListener('submit',e=>{e.preventDefault();const from=+$('#v2FlowFrom').value,to=+$('#v2FlowTo').value,label=$('#v2FlowLabel').value.trim();if(!from||!to||from===to){flashMessage('Choose two different components.');return;}const v2=ensureArchitectureV2();v2.flows.push({from,to,label});$('#v2FlowLabel').value='';saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();});
-  $('#resetV2')?.addEventListener('click',()=>{if(!state.architectureV1)return;state.architectureV2=cloneArchitecture(state.architectureV1);saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();});
+  $('#v2ComponentForm')?.addEventListener('submit',e=>{e.preventDefault();const inp=$('#v2ComponentInput'),name=inp.value.trim();if(!name)return;const v2=ensureArchitectureV2();const ids=v2.components.map(c=>Number(c.id)).filter(Number.isFinite);const id=(ids.length?Math.max(...ids):0)+1;v2.components.push({id,name,x:0,y:0});inp.value='';saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();renderStopSnapshots();});
+  $('#v2RemoveComponentBtn')?.addEventListener('click',()=>{const id=+$('#v2RemoveComponent').value;if(!id)return;const v2=ensureArchitectureV2();v2.components=v2.components.filter(c=>c.id!==id);v2.flows=v2.flows.filter(f=>f.from!==id&&f.to!==id);saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();renderStopSnapshots();});
+  $('#v2FlowForm')?.addEventListener('submit',e=>{e.preventDefault();const from=+$('#v2FlowFrom').value,to=+$('#v2FlowTo').value,label=$('#v2FlowLabel').value.trim();if(!from||!to||from===to){flashMessage('Choose two different components.');return;}const v2=ensureArchitectureV2();v2.flows.push({from,to,label});$('#v2FlowLabel').value='';saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();renderStopSnapshots();});
+  $('#resetV2')?.addEventListener('click',()=>{if(!state.architectureV1)return;state.architectureV2=cloneArchitecture(state.architectureV1);saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();renderStopSnapshots();});
   function architectureDelta(){
     const v1=state.architectureV1,v2=state.architectureV2;if(!v1||!v2)return {added:[],removed:[],addedFlows:0,removedFlows:0};
     const m1=new Map(v1.components.map(c=>[String(c.id),c.name])),m2=new Map(v2.components.map(c=>[String(c.id),c.name]));
@@ -1083,8 +1124,8 @@
     if(!state.architectureV1){host.innerHTML='';return;}
     const v2=state.architectureV2||state.architectureV1,d=architectureDelta(),changed=architectureChanged();
     const deltas=[...d.added.map(x=>`+ ${esc(x)}`),...d.removed.map(x=>`− ${esc(x)}`),d.addedFlows?`+ ${d.addedFlows} flow${d.addedFlows>1?'s':''}`:'',d.removedFlows?`− ${d.removedFlows} flow${d.removedFlows>1?'s':''}`:''].filter(Boolean);
-    const incident=stressDefs.find(x=>x.id===state.selectedStress), req=requirementDefs.find(x=>x[0]===state.stressRequirement), response=responseChoices.find(x=>x[0]===state.stressResponse);
-    host.innerHTML=`<div class="evolution-head"><span class="eyebrow">Visible learning artifact</span><h3>Architecture v1 → v2</h3><p>${changed?'Your final design is not the same object you started with. The incident forced a structural revision.':'No structural revision was recorded; compare your verbal response with the frozen v1.'}</p></div>${incident&&req&&response?`<div class="evolution-cause"><span>Changed assumption</span><strong>${esc(incident.title)}</strong><b>→</b><span>Requirement under pressure</span><strong>${esc(req[2])}</strong><b>→</b><span>Response</span><strong>${esc(response[1])}</strong></div>`:''}<div class="evolution-grid"><div><span>V1 · before requirements and incident</span>${miniGraphMarkupFor(state.architectureV1)}</div><div><span>V2 · after the incident</span>${miniGraphMarkupFor(v2)}</div></div><div class="evolution-delta">${deltas.length?deltas.map(x=>`<span>${x}</span>`).join(''):'<span>No structural delta recorded</span>'}</div>`;
+    const incident=stressDefs.find(x=>x.id===state.selectedStress), req=requirementDefs.find(x=>x[0]===state.stressRequirement), target=stressTargetLabel();
+    host.innerHTML=`<div class="evolution-head"><span class="eyebrow">Visible learning artifact</span><h3>Architecture v1 → v2</h3><p>${changed?'Your final design is not the same object you started with. The incident forced a structural revision.':'No structural revision was recorded; compare your verbal response with the frozen v1.'}</p></div>${incident&&req&&target?`<div class="evolution-cause"><span>Incident</span><strong>${esc(incident.title)}</strong><b>→</b><span>Affected first</span><strong>${esc(target)}</strong><b>→</b><span>Requirement under pressure</span><strong>${esc(req[2])}</strong><b>→</b><span>Actual delta</span><strong>${deltas.length?esc(deltas.join(' · ')):'not recorded'}</strong></div>`:''}<div class="evolution-grid"><div><span>V1 · before the incident</span>${miniGraphMarkupFor(state.architectureV1)}</div><div><span>V2 · after the incident</span>${miniGraphMarkupFor(v2)}</div></div><div class="evolution-delta">${deltas.length?deltas.map(x=>`<span>${x}</span>`).join(''):'<span>No structural delta recorded</span>'}</div>`;
   }
 
   /* ---------- Retrieval checkpoint ---------- */
@@ -1093,7 +1134,8 @@
     {id:'operator', q:'Which network shape makes operator coverage an explicit design assumption?', a:'Operator-managed wide-area / cellular IoT: the device relies on cellular base stations and an operator network.'},
     {id:'scope', q:'Why is IEEE 802.15.4 not the same kind of object as LoRaWAN?', a:'802.15.4 provides lower-level local radio/link building blocks; LoRaWAN defines a wider network architecture around devices, gateways and network services.'},
     {id:'feedback', q:'Why does an acknowledged command not prove that the physical action succeeded?', a:'An acknowledgement can confirm message or controller handling, while the actuator or physical process may still fail. Closed-loop control needs evidence of the resulting physical state.'},
-    {id:'transfer', q:'Tomorrow one CO₂ sensor is replaced by a camera sending frequent images. Which part of your reasoning should you revisit first?', a:'Revisit the requirements of that flow first — especially data volume/throughput, and potentially energy/latency — then re-evaluate the communication path and technology choice.'}
+    {id:'transfer', q:'Tomorrow one CO₂ sensor is replaced by a camera sending frequent images. Which part of your reasoning should you revisit first?', a:'Revisit the requirements of that flow first — especially data volume/throughput, and potentially energy/latency — then re-evaluate the communication path and technology choice.'},
+    {id:'revision', q:'What makes an Architecture v2 revision defensible rather than just “more robust”?', a:'Trace the changed assumption to the responsibility or flow affected, the requirement under pressure, the structural design delta, and the residual risk or new dependency.'}
   ];
   function renderMemoryLock(){
     const host=$('#memoryLock'); if(!host)return;

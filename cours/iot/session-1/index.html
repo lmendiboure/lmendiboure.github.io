@@ -18,7 +18,7 @@
 </a>
 <div class="actions">
 <button class="btn design-btn" id="designBtn" type="button">Our design</button>
-<button class="btn field-guide-btn" hidden="" id="fieldGuideBtn" type="button">Field guide <span id="fieldGuideCount">0/5</span></button><span aria-live="polite" class="expert-progress" id="expertProgress" role="status" title="Optional challenge routes explored">Depth trail 0/4</span>
+<button class="btn field-guide-btn" hidden="" id="fieldGuideBtn" type="button">Field guide <span id="fieldGuideCount">0/6</span></button><span aria-live="polite" class="expert-progress" id="expertProgress" role="status" title="Optional challenge routes explored">Depth trail 0/4</span>
 <span aria-live="polite" class="save-pill" id="saveState" role="status">Saved on this device</span>
 <button class="btn optional" id="exportBtn" type="button">Export dossier</button>
 <label class="btn optional" for="importInput" style="cursor:pointer">Import</label>
@@ -199,19 +199,23 @@
 <div class="activity-label"><span>Activity 4</span><span class="pill-neutral">Expose communication requirements</span></div><aside class="case-voice"><div class="case-avatar large">ST</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Sam</strong><span>Field technician</span><em>Field evidence</em></div><div class="case-context"><b>STARTING POINT</b><span>Architecture v1 contains communication flows, but their physical conditions are still implicit.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“I walked the deployment zones. Some links cross thick walls, some reach outdoor points, power budgets differ and infrastructure is uneven.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>Each flow now needs communication requirements grounded in field evidence.</span></div></div></aside>
 <div class="mission-context"><span class="mission-context-tag">Design basis</span><strong>Architecture v1 + service outcomes stay fixed.</strong><span>Use your own flows as evidence. Only the assumptions governing each communication link are being reopened.</span></div>
 <div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
-<h2>Annotate your own communication flows with decision-driving constraints.</h2>
-<p>First select every dimension that could materially change a flow. Then star the <strong>three that dominate this scenario</strong>. The oral defence happens at the STOP, not in a text box.</p>
+<h2>Rank the system, then challenge that ranking on one real flow.</h2>
+<p>Select every dimension that could materially change a communication decision, then star the <strong>three that dominate the campus scenario overall</strong>. After that, test whether one specific arrow in Architecture v1 keeps the same priorities.</p>
 </div>
-<div class="work-sequence" aria-label="Core workflow"><span><b>1</b> Select relevant dimensions</span><span><b>2</b> Star exactly 3 priorities</span><span><b>3</b> Compare at STOP</span></div>
+<div class="work-sequence" aria-label="Core workflow"><span><b>1</b> Select relevant dimensions</span><span><b>2</b> Star the system Top 3</span><span><b>3</b> Test one real flow</span><span><b>4</b> Compare at STOP</span></div>
 <div class="choice-grid requirement-choice-grid" id="requirementCards"></div>
 <div class="selection-summary card flat">
-<div><strong>Your shortlist</strong><p class="section-copy">Step 1: select relevant dimensions. Step 2: use the stars below to choose exactly three priorities.</p></div>
+<div><strong>System-level shortlist</strong><p class="section-copy">Select the dimensions that matter somewhere in the system, then star exactly three overall priorities. This is a first summary, not the final per-flow answer.</p></div>
 <div class="chip-row" id="requirementSummary"></div>
 </div>
+<section class="flow-lens-core card flat" aria-labelledby="flowLensTitle">
+<div class="flow-lens-head"><span class="eyebrow">Required flow check</span><h3 id="flowLensTitle">Would one real flow keep the same Top 3?</h3><p class="section-copy">Choose one arrow from Architecture v1 and give that flow its own three priorities. The point is to expose where a system-wide ranking hides a local difference.</p></div>
+<div id="flowLens"></div>
+</section>
 <details class="help-compact"><summary>We are not sure what a “requirement” means here</summary><p>Choose one arrow in your architecture. Ask what would make that communication fail to satisfy the application: too far, too slow, too much data, too much energy, too many devices, no infrastructure, and so on.</p></details>
-<div class="reflection-strip"><strong>Before you stop:</strong><span>Look back at one arrow in your architecture. Would the same top three requirements apply to every other arrow?</span></div>
-<details class="adaptive-depth" data-depth-id="requirements"><summary><span class="challenge-mark">↗</span><span><strong>Challenge me · Per-flow requirements</strong><small>Use a changed flow to challenge your system-wide Top 3.</small></span><span class="depth-badge">0/3 support</span></summary><div class="adaptive-depth-body" id="depthRequirements"></div></details>
-<button class="btn primary next-activity" data-next="7" id="toStop2" type="button">Requirements ready → STOP</button>
+<div class="reflection-strip"><strong>Question to carry to the STOP:</strong><span>Compare the system Top 3 with your chosen flow. Which priority changed — or why did none change?</span></div>
+<details class="adaptive-depth" data-depth-id="requirements"><summary><span class="challenge-mark">↗</span><span><strong>Challenge me · Two flows, different evidence</strong><small>Test whether a second flow forces a different priority set.</small></span><span class="depth-badge">0/3 support</span></summary><div class="adaptive-depth-body" id="depthRequirements"></div></details>
+<button class="btn primary next-activity" data-next="7" id="toStop2" type="button">Complete both rankings → STOP</button>
 </section>
 <!-- STOP 3 -->
 <section class="activity-screen" data-screen="7" hidden="">
@@ -235,9 +239,9 @@
 <div class="mission-context"><span class="mission-context-tag">Evidence available</span><strong>Your Architecture v1 flows + Top 3 requirements + Sam’s field observations.</strong><span>Exact coverage and provider availability are still unknown. Use the evidence you have to identify a defensible network shape before attaching a standard name.</span></div>
 <div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
 <h2>Build a map of network shapes from the evidence.</h2>
-<p>For each shape, identify the distance, traffic, device-budget and infrastructure assumptions it is designed around. Technology names stay hidden until that reasoning is explicit.</p>
+<p>For each shape, identify the distance, traffic, device-budget and infrastructure assumptions it is designed around. Before revealing a technology family, make one prediction about the <strong>structural dependency</strong> that defines the shape.</p>
 </div>
-<div class="work-sequence" aria-label="Core workflow"><span><b>1</b> Read the network shape</span><span><b>2</b> Reveal the family name</span><span><b>3</b> Build the 5-shape map</span></div>
+<div class="work-sequence" aria-label="Core workflow"><span><b>1</b> Read the network shape</span><span><b>2</b> Predict its key dependency</span><span><b>3</b> Reveal the family</span></div>
 <div class="decision-compass card flat">
 <div class="decision-compass-head"><span class="eyebrow">Before naming a technology</span><strong>Ask four concrete questions</strong></div>
 <div class="decision-question-grid">
@@ -247,7 +251,7 @@
 <div><span>⌂</span><strong>What infrastructure exists?</strong><small>Phone, local network, gateway, operator coverage, none?</small></div>
 </div>
 </div>
-<div class="guided-tech-head"><div><span class="eyebrow">Guided discovery</span><h3>Five network shapes</h3><p class="section-copy">Read the plain-language description first. Then reveal the technology name and the minimum vocabulary attached to it.</p></div><span class="guided-progress" id="techDiscoveryProgress">0 / 5 revealed</span></div>
+<div class="guided-tech-head"><div><span class="eyebrow">Guided discovery</span><h3>Five network shapes</h3><p class="section-copy">Read the plain-language description, commit one structural prediction, then reveal the technology name and the minimum vocabulary attached to it.</p></div><span class="guided-progress" id="techDiscoveryProgress">0 / 5 reasoned</span></div>
 <div class="tech-discovery-grid" id="techDiscoveryGrid"></div>
 <details class="term-shelf"><summary><strong>New words, in plain English</strong><span>Open this whenever a term blocks you.</span></summary><div class="plain-glossary" id="plainGlossary"></div></details>
 <details class="secondary-lens"><summary><strong>Special path · Satellite / NTN</strong><span>Open only when you want to test where a non-terrestrial link fits.</span></summary><div class="satellite-primer card flat"><h3>Where can a satellite link fit?</h3><div class="satellite-primer-grid"><div><strong>Direct access</strong><span>device → non-terrestrial access → network</span></div><div><strong>Backhaul</strong><span>device → local gateway → satellite path → network</span></div></div><p class="section-copy">These are different architectures. Keep both in mind for later.</p></div></details>
@@ -315,24 +319,24 @@
 <button class="btn primary next-activity stop-next" data-next="12" data-requires-unlock="technology" disabled="" type="button">Concept unlocked → continue</button>
 </div>
 </section>
-<!-- ACTIVITY 7 -->
+<!-- ACTIVITY 8 -->
 <section class="activity-screen" data-screen="12" hidden="">
-<div class="activity-label"><span>Activity 8</span><span class="pill-neutral">Stress-test and revise</span></div><aside class="case-voice"><div class="case-avatar large">ST</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Sam</strong><span>Field technician</span><em>Incident report</em></div><div class="case-context"><b>STARTING POINT</b><span>Architecture v1 and its assumptions are now explicit.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“A field incident has invalidated one assumption used in Architecture v1. The current report says only ‘make the system more robust’, which is not an actionable change.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>Trace the broken assumption to a requirement and produce one explicit Architecture v2 delta.</span></div></div></aside>
-<div class="mission-context danger-context"><span class="mission-context-tag">Revision rule</span><strong>Preserve v1 as evidence.</strong><span>Record the chain explicitly: broken assumption → affected requirement → structural Architecture v2 delta.</span></div>
+<div class="activity-label"><span>Activity 8</span><span class="pill-neutral">Stress-test and revise</span></div><aside class="case-voice"><div class="case-avatar large">ST</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Sam</strong><span>Field technician</span><em>Incident report</em></div><div class="case-context"><b>STARTING POINT</b><span>Architecture v1 and its assumptions are now explicit.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“A field incident has invalidated one assumption used in Architecture v1. The current report says only ‘make the system more robust’, which is not an actionable change.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>Trace the incident through your own v1 and produce one explicit Architecture v2 delta.</span></div></div></aside>
+<div class="mission-context danger-context"><span class="mission-context-tag">Revision rule</span><strong>Preserve v1 as evidence.</strong><span>Trace the causal chain: incident → challenged assumption → affected responsibility / flow → requirement under pressure → structural v2 delta.</span></div>
 <div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
-<h2>Trace the incident through the design, then edit a copy of v1.</h2>
-<p>Identify the broken assumption, the requirement put under pressure and the responsibility affected before making one structural Architecture v2 change.</p>
+<h2>Diagnose the failure on v1, then make the smallest defensible v2 change.</h2>
+<p>Do not choose a canned “robustness solution”. Start from the incident, identify what in <strong>your own architecture</strong> is affected first, and only then revise a copy of v1.</p>
 </div>
-<div class="work-sequence" aria-label="Core workflow"><span><b>1</b> Trace the failure</span><span><b>2</b> Edit Architecture v2</span><span><b>3</b> File the handover</span></div>
+<div class="work-sequence" aria-label="Core workflow"><span><b>1</b> Choose the incident</span><span><b>2</b> Diagnose v1</span><span><b>3</b> Revise v2</span></div>
 <div class="event-grid rich-events" id="stressGrid"></div>
 <div class="stress-response card flat" hidden="" id="stressResponse">
-<div class="stress-prompt"><span class="stress-number">1</span><div><strong>Broken assumption</strong><p id="brokenPrompt"></p></div></div>
-<div class="stress-prompt"><span class="stress-number">2</span><div><strong>Requirement that changes</strong><div class="chip-row" id="stressRequirementChoices"></div></div></div>
-<div class="stress-prompt"><span class="stress-number">3</span><div><strong>Architectural response</strong><div class="choice-grid compact-choice-grid" id="architectureResponseChoices"></div></div></div>
-<label class="optional-note"><span>Optional note — explain your first instinct</span><textarea id="revisionNote" maxlength="300" placeholder="One short sentence is enough."></textarea></label>
+<div class="stress-prompt"><span class="stress-number">1</span><div><strong>What assumption in Architecture v1 does this incident challenge?</strong><p class="stress-question-copy">Discuss it first. Do not reveal the suggested reading until your group has a hypothesis.</p><button class="text-button" id="revealBrokenAssumption" type="button">Need a check? Reveal one plausible reading</button><p class="plausible-reading" hidden="" id="brokenPrompt"></p></div></div>
+<div class="stress-prompt"><span class="stress-number">2</span><div><strong>Which part of v1 is affected first?</strong><p class="stress-question-copy">Select one responsibility/component or one information flow from your frozen architecture.</p><div id="stressTargetChoices"></div></div></div>
+<div class="stress-prompt"><span class="stress-number">3</span><div><strong>Which requirement is now under pressure?</strong><div class="chip-row" id="stressRequirementChoices"></div></div></div>
 </div>
 <section class="revision-studio card flat" hidden="" id="revisionStudio">
-<div class="revision-head"><div><span class="eyebrow">Core mission · architecture v2</span><h3>Make one concrete structural revision.</h3><p class="section-copy">Architecture v1 was frozen after STOP 2. Now edit a copy so the final debrief can show what changed — not only what you said would change.</p></div><span class="revision-status" id="revisionStatus">No change yet</span></div>
+<div class="revision-head"><div><span class="eyebrow">Core mission · architecture v2</span><h3>Make one concrete structural revision.</h3><p class="section-copy">Architecture v1 remains frozen. Edit the working copy only after the diagnosis above is explicit, so the final comparison shows a traceable design consequence.</p></div><span class="revision-status" id="revisionStatus">No change yet</span></div>
+<div class="revision-cause-strip" id="revisionCauseStrip"></div>
 <div class="revision-compare">
 <div><span class="revision-label">Frozen v1</span><div id="revisionV1Graph"></div></div>
 <div><span class="revision-label">Working v2</span><div id="revisionV2Graph"></div></div>
@@ -343,28 +347,48 @@
 <form class="revision-tool flow" id="v2FlowForm"><select aria-label="Revision flow source" id="v2FlowFrom"><option value="">From…</option></select><select aria-label="Revision flow destination" id="v2FlowTo"><option value="">To…</option></select><input id="v2FlowLabel" maxlength="70" placeholder="What is exchanged?"/><button class="btn soft" type="submit">Add flow</button></form>
 </div>
 <div class="list" id="v2FlowList"></div>
+<details class="help-compact design-move-support"><summary>Need ideas after diagnosing the failure?</summary><p>Possible <em>design moves</em> include buffering, changing an intermediary/gateway role, introducing an alternate access path, moving processing closer to the source, replication, or explicit degraded operation. These are prompts, not answers: choose only what your causal chain justifies.</p></details>
 <div class="revision-foot"><span>One real edit is enough. The point is to make the consequence visible.</span><button class="text-button" id="resetV2" type="button">Reset v2 to v1</button></div>
 </section>
-<section aria-labelledby="handoverArchitectureTitle" class="card flat mission-handover-card">
-<div class="eyebrow">Mission dossier · handover to Session 2</div>
+<details class="adaptive-depth" data-depth-id="stress"><summary><span class="challenge-mark">↗</span><span><strong>Challenge me · Two failures, one move</strong><small>Combine incidents and defend one architectural response.</small></span><span class="depth-badge">0/3 support</span></summary><div class="adaptive-depth-body" id="depthStress"></div></details>
+<button class="btn primary next-activity" data-next="13" disabled="" id="toStressStop" type="button">Record one structural v2 change → STOP</button>
+</section>
+<!-- STOP 8 -->
+<section class="activity-screen" data-screen="13" hidden="">
+<div class="stop-screen revision-stop">
+<div class="stop-orbit">STOP</div>
+<div class="eyebrow">Revision hearing</div>
+<h2>Keep v1 and v2 visible. Defend the causal chain.</h2>
+<p>The revision is not “more robust” because it has more boxes. Use the actual delta below and explain what forced it.</p>
+<div class="stop-snapshot" id="stopRevisionSnapshot"></div>
+<button class="text-button review-activity" data-review-screen="12" type="button">← Review / edit our v2 revision</button>
+<div class="student-discussion-prompts" aria-label="Revision discussion questions">
+<div><span>1 · DELTA</span><strong>What changed structurally between v1 and v2?</strong></div>
+<div><span>2 · CAUSE</span><strong>Which challenged assumption forced that change?</strong></div>
+<div><span>3 · RESIDUAL RISK</span><strong>What dependency, trade-off or failure does v2 still not solve?</strong></div>
+</div>
+<div class="teacher-challenge-slot" data-stop-challenge="revision"></div>
+<div class="concept-unlock-slot" data-concept="revision"></div>
+<section aria-labelledby="handoverArchitectureTitle" class="card flat mission-handover-card stop-handover">
+<div class="eyebrow">After the discussion · handover to Session 2</div>
 <h3 id="handoverArchitectureTitle">How would you classify Architecture v2?</h3>
-<p>This one-click label does not grade your architecture. It gives the next session a safe, structured reference to your design without trying to interpret your free text or diagram.</p>
+<p>This label is not part of the stress-test reasoning. It simply gives Session 2 a structured reference to the architecture you have now defended.</p>
 <div id="handoverArchitecture"></div>
 </section>
-<details class="adaptive-depth" data-depth-id="stress"><summary><span class="challenge-mark">↗</span><span><strong>Challenge me · Two failures, one move</strong><small>Combine incidents and defend one architectural response.</small></span><span class="depth-badge">0/3 support</span></summary><div class="adaptive-depth-body" id="depthStress"></div></details>
-<button class="btn primary next-activity" data-next="13" disabled="" id="finishSessionBtn" type="button">Record a v2 revision to finish →</button>
+<button class="btn primary next-activity stop-next" data-next="14" data-requires-unlock="revision" data-requires-handover="true" disabled="" id="finishSessionBtn" type="button">Consolidate + classify v2 → finish</button>
+</div>
 </section>
 <!-- FINISH -->
-<section class="activity-screen" data-screen="13" hidden="">
+<section class="activity-screen" data-screen="14" hidden="">
 <div class="finish-card">
 <div class="finish-mark">✓</div>
 <div class="eyebrow">Session complete</div>
 <h2>Before rereading anything, retrieve it.</h2>
-<p class="lead">Five quick prompts. Think first, then reveal. This is not graded.</p>
+<p class="lead">Six quick prompts. Think first, then reveal. This is not graded.</p>
 <div class="memory-lock" id="memoryLock"></div>
 <div class="session-synthesis" hidden="" id="sessionSynthesis">
 <div class="synthesis-rule"><span></span><strong>Session synthesis</strong><span></span></div>
-<p class="lead">Need → functions → architecture → flows → feedback / control → requirements → candidate technologies → challenge → revision.</p>
+<p class="lead">Need → functions → architecture → flows → feedback / control → requirements → candidate technologies → challenge → revision → residual risk.</p>
 <div class="design-evolution" id="designEvolution"></div>
 <div class="takeaway-grid">
 <div><strong>Architecture</strong><span>is not a list of products.</span></div>

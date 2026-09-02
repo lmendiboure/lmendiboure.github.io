@@ -37,7 +37,7 @@ window.IOT_COURSE_CONFIG = {
       question: "What must a connected system do before we can defend a communication choice?",
       summary: "Map the IoT landscape, build and close the loop of a campus architecture, expose requirements, discover communication families and revise the design when assumptions change.",
       objectives: ["architecture & flows", "requirements", "communication choices"],
-      storageKey: "iot-systems-design-session1-v18",
+      storageKey: "iot-systems-design-session1-v19",
       progressKind: "screen-frontier"
     },
     {

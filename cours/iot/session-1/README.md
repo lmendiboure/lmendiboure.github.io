@@ -29,11 +29,11 @@ The student site uses no backend or database. Work is saved in browser `localSto
 1. map the IoT landscape without being told the conclusion;
 2. enter a persistent campus mission brief, then build an architecture from functions and information flows;
 3. close the loop by adding actuation, command, authority and physical-state feedback;
-4. express communication constraints in plain language, then attach formal vocabulary at the STOP;
-5. discover network shapes before seeing technology names;
+4. rank communication constraints at system level, then challenge that ranking on one real Architecture v1 flow before the STOP;
+5. discover network shapes by predicting their structural dependency before revealing technology names;
 6. consolidate the technology map with the detective and guided reference cards;
 7. choose technologies under explicit assumptions, complete transfer cases, then return to the campus mission;
-8. stress-test the frozen architecture v1, make a concrete architecture v2 revision, and finish with retrieval before synthesis.
+8. stress-test the frozen architecture v1 by tracing incident → challenged assumption → affected responsibility/flow → requirement, make a concrete architecture v2 delta, defend residual risk at a dedicated STOP, then finish with retrieval before synthesis.
 
 At collective restitutions, students first compare what they produced. The instructor then opens **WHAT TO KEEP** to institutionalise a compact canonical reference map and, when useful, **REALITY CHECK** to ground it with an architecture, standard, worked example or technical order of magnitude. These are in-place conclusion panels, not extra navigation screens.
 
