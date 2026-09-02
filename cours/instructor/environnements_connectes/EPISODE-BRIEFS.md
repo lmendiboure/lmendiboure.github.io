@@ -1,3 +1,5 @@
+> **Contrat local :** avant d’ajouter un fait territorial dans un épisode, vérifier [`LOCAL-FACT-CHECK.md`](LOCAL-FACT-CHECK.md). Tout ce qui n’y est pas établi par une source datée reste une hypothèse ou un incident scénarisé.
+
 # Briefs narratifs des cinq épisodes — Mission Vallée des Aldudes
 
 Ce document complète `COURSE-DESIGN.md`. Il fixe les **battements narratifs** qui doivent rester présents lors de l'implémentation des séances futures, sans remplacer les contenus scientifiques ni le template MACU.

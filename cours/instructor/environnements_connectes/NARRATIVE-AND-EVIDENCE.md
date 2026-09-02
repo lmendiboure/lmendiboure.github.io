@@ -8,8 +8,8 @@ Le cours adopte un **territoire réel** mais une **mission fictive**.
 
 - Banca, Les Aldudes et Urepel composent la vallée des Aldudes.
 - La vallée se situe à l'entrée du Kintoa ; la Communauté Pays Basque décrit ce dernier comme un territoire de pâturages et de bois d'environ 2 500 ha.
-- Le risque de crue sur la Nive des Aldudes est documenté par Géorisques.
-- Une station hydrométrique sur la Nive des Aldudes existe à Saint-Étienne-de-Baïgorry ; HydroPortail indique une mise en service en 1960 et des finalités de suivi d'étiage et prévision des crues.
+- Le risque d’inondation est documenté par Géorisques ; l’AZI « Nive des Aldudes » cite Aldudes, Banca, Urepel et Saint-Étienne-de-Baïgorry.
+- Une station hydrométrique sur la Nive des Aldudes existe à **Saint-Étienne-de-Baïgorry**, en aval des trois communes de la vallée ; HydroPortail indique une mise en service en 1960 et des finalités de suivi d’étiage et prévision des crues.
 - Le projet Olha à Banca a été adapté avec un nouveau bâtiment hors zone à risque de crue ; la Communauté Pays Basque mentionne également reconstruction de la station d'épuration et confortement de berges.
 
 ### Scénarisé
@@ -22,10 +22,15 @@ Le cours adopte un **territoire réel** mais une **mission fictive**.
 
 ## 2. Sources territoriales principales
 
+### À propos du mot « Kintoa »
+
+Dans le cadrage territorial du cours, **Kintoa** renvoie au *pays Quint / Kintoa* cité par la Communauté Pays Basque, territoire transfrontalier de pâturages et de bois. La filière/AOP Kintoa existe également ; ne pas employer le même mot dans le cours sans préciser le sens.
+
+
 ### Communauté Pays Basque — vallée des Aldudes
 https://www.communaute-paysbasque.fr/actualites/toutes-les-actualites/actualite/la-vallee-des-aldudes-au-coeur-des-montagnes
 
-Établit notamment les trois villages (Les Aldudes, Urepel, Banca), l'entrée du Kintoa et le caractère pâturages/bois de ce territoire.
+Établit notamment les trois villages (Les Aldudes, Urepel, Banca), l’entrée du **pays Quint ou Kintoa** et le caractère pâturages/bois de ce territoire. Ici, « Kintoa » désigne donc d’abord le territoire du pays Quint ; ne pas le confondre avec la seule appellation/filière Kintoa.
 
 ### Géorisques — risque d'inondation / Urepel
 https://www.georisques.gouv.fr/mes-risques/connaitre-les-risques-pres-de-chez-moi/detail/INOND?adresse=64543+Urepel&city=Urepel&codeInsee=64543&commune=Urepel&form-commune=true
@@ -46,6 +51,19 @@ Le projet a été adapté avec construction hors zone à risque de crue ; la pag
 https://www.insee.fr/fr/statistiques/1405599?geo=COM-64016
 
 Contexte quantitatif optionnel pour l'enseignant. En 2023 : 332 habitants et densité 14,3 hab./km² pour la commune des Aldudes. Ne pas extrapoler ces chiffres à toute la vallée.
+
+
+### Communauté Pays Basque — PLUi Sud Basse-Navarre, approbation 2026
+https://www.communaute-paysbasque.fr/logement-et-urbanisme/les-procedures-durbanisme/procedures-durbanisme/elaboration-du-plan-local-durbanisme-infracommunautaire-plui-sud-basse-navarre
+
+Confirme qu'Aldudes, Banca et Urepel appartiennent au périmètre Sud Basse-Navarre. Les pièces approuvées en 2026 documentent notamment les contraintes de relief, la Nive des Aldudes à Banca, l'urbanisation le long de la RD948 aux Aldudes et des secteurs de prairie à Urepel.
+
+### Insee — populations communales 2023 publiées en 2026
+- Aldudes : 332 habitants.
+- Banca : 358 habitants.
+- Urepel : 274 habitants.
+
+Total arithmétique : 964 habitants. La formulation « environ 1 000 habitants » employée par la Communauté Pays Basque est donc cohérente comme ordre de grandeur, mais les chiffres doivent rester datés.
 
 ## 3. Fondement pédagogique de l'ancrage authentique
 

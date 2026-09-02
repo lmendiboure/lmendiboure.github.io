@@ -16,6 +16,9 @@ Le fil rouge n'est plus une vallée fictive générique. Le cours est ancré dan
 
 ### Contrat d'authenticité
 
+
+Le fichier [`LOCAL-FACT-CHECK.md`](LOCAL-FACT-CHECK.md) est le contrat de formulation locale. Toute nouvelle affirmation sur le territoire (couverture réseau, équipement existant, risque précis, infrastructure, statut d’un projet) doit y être sourcée ou rester explicitement scénarisée.
+
 Trois niveaux doivent toujours rester distingués :
 
 1. **Territoire réel et faits documentés** : communes, relief, Nive des Aldudes, Kintoa, activités et risques lorsque des sources fiables les documentent.
