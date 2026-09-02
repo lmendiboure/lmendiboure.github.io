@@ -258,7 +258,7 @@ Quand une activité comporte plusieurs opérations, l’étudiant ne doit pas le
 
 ou
 
-**1 · DIAGNOSTIQUER → 2 · CHANGER L’USAGE → 3 · PRIORISER → 4 · CONTRE-EXEMPLE**.
+**1 · DIAGNOSTIQUER → 2 · CHANGER L’USAGE → 3 · PRIORISER**, puis **Mode Défi facultatif · CONTRE-EXEMPLE**.
 
 Chaque sous-étape doit montrer :
 
@@ -269,3 +269,10 @@ Chaque sous-étape doit montrer :
 - la relation avec l’artefact final de l’activité.
 
 Le même workflow est résumé dans les Notes enseignant sous **Parcours étudiant à l’écran**. Ce contrat est à conserver pour S2–S5.
+
+
+## Progression guidée intra-activité
+
+Pour les activités comportant plusieurs manipulations, ne pas afficher quatre formulaires actifs simultanément. La prochaine sous-étape peut rester visible comme destination, mais elle reste verrouillée jusqu'à ce que l'artefact précédent soit suffisamment construit. Le contrat visuel est : **action courante → compteur/feedback → sous-étape suivante verrouillée → déblocage → engagement suivant**.
+
+Une interaction est retenue seulement si elle change l'artefact, une hypothèse, une classification ou une décision. Les clics purement décoratifs sont interdits.

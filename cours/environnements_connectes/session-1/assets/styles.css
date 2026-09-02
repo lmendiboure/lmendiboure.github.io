@@ -311,6 +311,8 @@ button:disabled,.btn:disabled{cursor:not-allowed;opacity:.58}
   --atlas-paper:#fbfaf5;
   --atlas-grid:#dcd9cf;
   --atlas-blue:#1555d9;
+  /* Compatibility aliases used by Aldudes-specific components. */
+  --ink:#13191f;--paper:#fbfaf5;--signal:#1555d9;--soft:#e9e6dc;
 }
 html{background:var(--bg)}
 body{
@@ -537,3 +539,54 @@ h2{letter-spacing:-.035em}.lead{font-size:1.05rem;line-height:1.6}
   .option-action{grid-column:2;margin-top:2px}
   .workflow-status{padding:10px 11px}
 }
+
+
+/* v1.6 — parity audit with IoT v1.24: character clarity + guided substeps */
+.case-avatar{
+  border-radius:50%!important;
+  background:var(--atlas-ink,#13191f)!important;
+  color:#fff!important;
+  border:1px solid var(--atlas-ink,#13191f);
+  box-shadow:0 0 0 3px var(--atlas-paper,#fbfaf5),0 0 0 4px var(--border);
+  font-size:.72rem;
+}
+.case-avatar.large{width:46px;height:46px;flex:0 0 46px;font-size:.78rem}
+.case-voice>.case-avatar.large{align-self:start;margin:16px 0 0 16px}
+.case-voice.incident .case-avatar{background:var(--red)!important;border-color:var(--red);box-shadow:0 0 0 3px var(--atlas-paper,#fbfaf5),0 0 0 4px rgba(178,59,59,.35)}
+.case-voice{border-left-color:var(--atlas-blue,#1555d9);background:var(--atlas-paper,#fbfaf5)}
+.case-voice-meta em,.case-signal-label,.case-impact b{color:var(--atlas-blue,#1555d9)}
+
+.session-cast-mini{margin-top:18px;padding-top:12px;border-top:1px solid var(--border)}
+.session-cast-label{display:block;font:850 .62rem ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.session-cast-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.session-cast-person{display:flex;gap:8px;align-items:center;min-width:0;border:1px solid var(--border);background:rgba(251,250,245,.7);padding:8px}
+.session-cast-person>.case-avatar{width:30px;height:30px;flex-basis:30px;font-size:.62rem;box-shadow:none}
+.session-cast-person>span:last-child{display:grid;min-width:0}.session-cast-person strong{font-size:.75rem}.session-cast-person small{font-size:.64rem;color:var(--muted)}
+
+.guided-substep{position:relative;transition:opacity .16s,max-height .18s,filter .16s;scroll-margin-top:90px}
+.guided-substep.guided-locked{max-height:112px;overflow:hidden;opacity:.66;filter:saturate(.45);pointer-events:none;user-select:none}
+.guided-substep.guided-locked::after{content:attr(data-lock-label);position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:18px;background:rgba(242,240,232,.92);border:1px dashed #aaa99f;color:#56616a;font:850 .68rem ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.035em;z-index:5}
+.guided-substep:not(.guided-locked){animation:guidedOpen .18s ease-out}
+@keyframes guidedOpen{from{opacity:.45;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* Action labels must be readable at a glance, not micro-copy. */
+.option-action,.source-card-action,.incident-action{font-size:.62rem!important;letter-spacing:.045em}
+.interaction-help{font-size:.8rem}.interaction-step{font-size:.66rem}
+
+/* More obvious current-action surfaces. */
+.workflow-status:not(.complete),.interaction-status:not(.complete){border-top-color:var(--atlas-blue,#1555d9)}
+.workflow-status.complete,.interaction-status.complete{border-top-color:var(--green)}
+
+@media(max-width:760px){
+  .session-cast-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .guided-substep.guided-locked{max-height:96px}
+}
+
+/* v1.6 final parity — keep recurring people visually identical to the IoT reference. */
+.case-avatar{width:34px;height:34px;flex:0 0 34px;border-radius:50%!important;display:grid;place-items:center;background:var(--ink,#17212b)!important;color:#fff!important;border:0;box-shadow:none;font:850 .68rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.04em}
+.case-avatar.large{width:46px;height:46px;flex-basis:46px;font-size:.76rem}
+.case-voice blockquote{font-size:1.03rem}
+.case-impact{grid-template-columns:112px 1fr}
+.session-cast-person>.case-avatar{width:34px;height:34px;flex-basis:34px;font-size:.68rem}
+.optional-extension{border-style:dashed;background:rgba(255,255,255,.35)}
+.optional-extension .depth-badge-inline{display:inline-flex;margin-left:8px;padding:2px 6px;border:1px solid var(--border);font:850 .58rem ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
