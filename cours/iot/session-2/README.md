@@ -28,7 +28,7 @@ Activities 1, 2, 3, 6, 7, 8 and 9 include a full student STOP aligned with the P
 
 At each STOP, the student's own artifact remains visible. The counterexample is revealed during discussion, then the formal concept is explicitly consolidated before the next activity unlocks. The resulting compact reference map is added to the persistent **Field guide**.
 
-Activities 4 and 5 remain WORK-only on purpose. They use predict-before-reveal cards to introduce concrete protocol names without interrupting the discovery sequence with premature whole-class correction. Their protocol map is institutionalised during the Activity 7 composition STOP.
+Activities 4 and 5 remain WORK-only on purpose. Activity 4 uses one-shot evidence classification with immediate scope/boundary feedback; incorrect classifications remain discussable rather than blocking progress. Activity 5 exposes the protocol evidence as a reference and asks for three service decisions with one decisive reason each; fragment sorting is optional. Their protocol map is institutionalised during the Activity 7 composition STOP.
 
 The Core route remains sufficient for novices. Four optional **Challenge me** routes add deeper reasoning at genuine bottlenecks: multi-row suites, schema/semantic mapping, MQTT over Thread, and duplicate-operation crash windows. They rejoin the same activity progression and do not reveal future protocol answers.
 
@@ -76,9 +76,9 @@ The student workspace keeps pedagogical progress (screens, unlocks, retrieval, h
 
 ## v1.22 interaction principle
 
-Session 2 uses the same visible three-step Core workflow grammar as Session 1. Dense activities reveal their next sub-task progressively instead of displaying every interaction at once.
+Session 2 uses the same visible three-step Core workflow grammar as Session 1. Dense activities avoid hidden answer-key gates. Progressive disclosure is used only when it clarifies the reasoning sequence; reference material remains visible when hiding it would create unnecessary clicks.
 
-Session 2 deliberately avoids worksheet-style prose entry in the Core route. Students build inspectable artefacts: conversation contracts, a message choreography, responsibility stack, protocol evidence maps, an interoperability scope map, complete stacks, delivery contracts and a failure trace. Optional Challenge-me routes may still ask for a short defended response.
+Session 2 deliberately avoids worksheet-style prose entry in the Core route. Students build inspectable artefacts: conversation-pattern decisions, a message choreography, responsibility stack, lower-stack classifications, application service choices, an interoperability repair, complete stacks, a scoped retry/crash analysis and a failure trace. Reference boards can be explored without becoming completion gates. Optional Challenge-me routes may still ask for a short defended response.
 
 ### Restitution structure
 
