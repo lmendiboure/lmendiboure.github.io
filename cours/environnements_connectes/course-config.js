@@ -7,48 +7,10 @@ window.ENV_COURSE_CONFIG = {
     subtitle: "Un même dossier, cinq étapes : observer, connecter, représenter, décider puis éprouver le système dans la durée."
   },
   sessions: [
-    {
-      id: 1, number: "01", kicker: "OBSERVER", episode: "ÉPISODE 1", timecode: "LUNDI · 08:42",
-      title: "On vous demande de voir.",
-      question: "De quelles informations la vallée a-t-elle réellement besoin, et que peut-on observer ?",
-      story: "Le dossier arrive sans liste de capteurs ni solution préconçue. Votre première responsabilité est de décider ce qui mérite d'être connu.",
-      summary: "Partir des décisions, identifier observables et sources, qualifier une observation puis réviser la stratégie quand une hypothèse du terrain tombe.",
-      objectives: ["besoin → observation", "sources & métadonnées", "qualité & représentativité"],
-      storageKey: "environnements-connectes-session1-v4",
-      progressKind: "activity-frontier",
-      progressLabels: ["Besoin", "Décision", "Observable", "Sources", "Direct / proxy", "Contexte", "Espace & temps", "Qualité", "Stratégie", "Stress-test"]
-    },
-    {
-      id: 2, number: "02", kicker: "CONNECTER", episode: "ÉPISODE 2", timecode: "MARDI · 07:56",
-      title: "Faites arriver l'information.",
-      question: "Comment récupérer des observations dispersées dans un territoire montagneux ?",
-      story: "Votre stratégie d'observation est acceptée. Le responsable technique pose alors une question simple : comment ces données atteignent-elles réellement l'endroit où elles seront utiles ?",
-      summary: "Construire une architecture de collecte, comparer les familles de connectivité, raisonner sur les volumes, l'intermittence et le placement local/edge/cloud.",
-      objectives: ["chaîne de collecte", "contraintes de communication", "local · edge · cloud"]
-    },
-    {
-      id: 3, number: "03", kicker: "REPRÉSENTER", episode: "ÉPISODE 3", timecode: "MERCREDI · 10:21",
-      title: "Votre tableau de bord ment.",
-      question: "Les données affichées décrivent-elles vraiment le même état du territoire ?",
-      story: "Les flux arrivent. Pourtant l'écran mélange des mesures récentes, des observations plus anciennes, des modèles et des informations humaines comme s'ils décrivaient tous le même instant.",
-      summary: "Combiner données temporelles, spatiales et hétérogènes, remettre provenance et contexte au centre, puis traiter les incohérences et l'incertitude.",
-      objectives: ["temps & espace", "interopérabilité", "fusion & incertitude"]
-    },
-    {
-      id: 4, number: "04", kicker: "DÉCIDER", episode: "ÉPISODE 4", timecode: "JEUDI · 14:08",
-      title: "Le système recommande d'agir.",
-      question: "Quand faut-il visualiser, alerter, prédire, optimiser — ou laisser un humain décider ?",
-      story: "Pour la première fois, le système ne se contente plus de décrire : il recommande une action. Une recommandation plausible n'est pourtant pas encore une bonne décision.",
-      summary: "Construire la boucle décision/action, comparer règles et modèles, raisonner sur les erreurs et faire émerger le rôle potentiel d'un jumeau numérique.",
-      objectives: ["détection & prédiction", "human-in-the-loop", "jumeau numérique"]
-    },
-    {
-      id: 5, number: "05", kicker: "ÉPROUVER", episode: "ÉPISODE 5", timecode: "SIX MOIS PLUS TARD",
-      title: "Le prototype fonctionne. Maintenant, exploitez-le.",
-      question: "Que reste-t-il de votre architecture quand arrivent pannes, factures, maintenance, sécurité et obsolescence ?",
-      story: "La démonstration a convaincu. Puis viennent les batteries, les dérives de capteurs, les droits d'accès, les fournisseurs qui changent de service et l'obligation de tenir dans la durée.",
-      summary: "Attaquer le système par ses pannes, sa maintenance, sa gouvernance, sa cybersécurité, son coût et son obsolescence, puis supprimer ce qui n'apporte pas assez de valeur.",
-      objectives: ["résilience", "maintenance & sécurité", "coût & sobriété"]
-    }
+    {id:1,number:"01",kicker:"OBSERVER",episode:"ÉPISODE 1",timecode:"LUNDI · 08:42",title:"Que faut-il vraiment connaître ?",question:"Avant de choisir des capteurs ou un réseau, quelles informations peuvent réellement aider à décider ?",story:"Vous partez du terrain et de quelques situations concrètes. Vous choisissez ce qui mérite d’être observé, puis vous rendez visibles les limites de cette première vision.",inherits:"Dossier terrain initial",deliverable:"Stratégie d’observation v2",objectives:["besoin → observation","sources & contexte","qualité & limites"],storageKey:"environnements-connectes-session1-v4",progressKind:"activity-frontier",progressLabels:["Besoin","Décision","Observable","Sources","Direct / proxy","Contexte","Espace & temps","Qualité","Stratégie","Stress-test"]},
+    {id:2,number:"02",kicker:"CONNECTER",episode:"ÉPISODE 2",timecode:"MARDI · 07:56",title:"Comment l’information arrive-t-elle ?",question:"Vos sources existent maintenant sur le papier. Comment leurs données rejoignent-elles réellement l’endroit où elles seront utiles ?",story:"Vous repartez des sources, fréquences et limites retenues en S1. Cette fois, il faut tracer le chemin des données et décider ce qui se passe lorsque la liaison n’est pas permanente.",inherits:"Sources + fréquences + limites de S1",deliverable:"Architecture de collecte v2",objectives:["chaîne de collecte","contraintes de communication","local · edge · cloud"]},
+    {id:3,number:"03",kicker:"REPRÉSENTER",episode:"ÉPISODE 3",timecode:"MERCREDI · 10:21",title:"Que signifie vraiment « état actuel » ?",question:"Les flux de S2 arrivent, mais pas tous au même instant ni avec le même contexte. Peut-on les afficher comme un seul état du territoire ?",story:"Vous repartez des chemins, délais et traitements choisis en S2. Le problème n’est plus de faire arriver les données, mais de savoir ce qu’elles décrivent réellement ensemble.",inherits:"Flux + délais + traitements de S2",deliverable:"État numérique qualifié",objectives:["temps & espace","interopérabilité","fusion & incertitude"]},
+    {id:4,number:"04",kicker:"DÉCIDER",episode:"ÉPISODE 4",timecode:"JEUDI · 14:08",title:"Que peut-on faire de cet état ?",question:"Votre représentation de S3 est enfin explicite. Quand suffit-il d’informer, et quand peut-on recommander ou déclencher une action ?",story:"Vous repartez d’un état dont les limites sont visibles. Il faut maintenant distinguer alerte, prédiction, décision et automatisation — et savoir qui reste responsable.",inherits:"État + confiance + incertitude de S3",deliverable:"Boucle de décision v2",objectives:["détection & prédiction","human-in-the-loop","jumeau numérique"]},
+    {id:5,number:"05",kicker:"ÉPROUVER",episode:"ÉPISODE 5",timecode:"SIX MOIS PLUS TARD",title:"Le système mérite-t-il de durer ?",question:"La chaîne complète fonctionne. Que reste-t-il quand arrivent maintenance, sécurité, coût, obsolescence et pannes ?",story:"Vous repartez de tout le système construit en S1–S4. Cette fois, ajouter une technologie n’est plus l’objectif : vous devez défendre ce qui mérite réellement de rester.",inherits:"Système complet S1–S4",deliverable:"Architecture finale défendable",objectives:["résilience","maintenance & sécurité","coût & sobriété"]}
   ]
 };

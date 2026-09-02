@@ -1,14 +1,11 @@
-# Environnements connectés et données — Séance 1
+# Séance 1 — surfaces enseignant
 
-## Mission
+- `index.html` — **Mode projection**, conçu pour être projeté.
+- `notes.html` — **notes enseignant privées** : réponses acceptables, misconceptions, précision technique, transitions et pacing.
 
-**Épisode 1 — Lundi 08:42 : observer la vallée des Aldudes sans commencer par la technologie.**
+## Invariant structurel
 
-Le territoire est réel (Banca, Les Aldudes, Urepel) ; la cellule d’étude, les personnages et les incidents sont scénarisés. La séance est une mission interactive de 1h30 utilisant le même pattern MACU que le cours IoT :
-
-**Découvrir → Externaliser → Comparer → Éprouver → Formaliser → Transférer → Réviser → Récupérer**
-
-## 10 activités canoniques
+Espace étudiant, Projection et Notes utilisent exactement les dix activités canoniques suivantes :
 
 1. Que voudriez-vous savoir ?
 2. Partir de la décision
@@ -21,15 +18,19 @@ Le territoire est réel (Banca, Les Aldudes, Urepel) ; la cellule d’étude, le
 9. Construire une stratégie d'observation
 10. Incident : votre vision du réel est fausse
 
-## Artefact persistant
+Le Projection possède un écran **TRAVAIL** pour chaque activité. Les activités 1, 3, 5, 7, 9 et 10 ont également un écran **RESTITUTION**. Les activités 2, 4, 6 et 8 sont volontairement TRAVAIL-only.
 
-Le **dossier d'observation** accumule les décisions de la séance. La stratégie d'observation est figée en **v1** avant le stress-test final ; les modifications sont ensuite enregistrées en **v2** au lieu d'écraser l'artefact initial.
+## Restitution collective
 
-## Navigation et sauvegarde
+Les mêmes primitives que dans le cours IoT sont conservées :
 
-- progression douce : futur verrouillé, passé revisitable ;
-- Guide de terrain débloqué après les restitutions ;
-- stockage local : `environnements-connectes-session1-v2` ;
-- dossier de mission inter-séances (`environnements-connectes-mission-v1`) ;
-- export/import JSON du bundle de mission ;
-- aucun backend requis.
+- **Capture** : faire émerger des idées récurrentes ;
+- **Structure** : construire une représentation collective ;
+- **Compare** : visualiser une distribution après engagement des groupes.
+
+Toujours appliquer : **commit → aggregate → discuss**. La majorité n'est jamais présentée comme la bonne réponse.
+
+## Réinitialisation
+
+- `Nouvelle classe` efface uniquement l'état du Projection stocké dans `sessionStorage`.
+- Cela n'affecte jamais les espaces étudiants ni leur `localStorage`.
