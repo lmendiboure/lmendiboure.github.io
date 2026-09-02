@@ -590,3 +590,13 @@ h2{letter-spacing:-.035em}.lead{font-size:1.05rem;line-height:1.6}
 .session-cast-person>.case-avatar{width:34px;height:34px;flex-basis:34px;font-size:.68rem}
 .optional-extension{border-style:dashed;background:rgba(255,255,255,.35)}
 .optional-extension .depth-badge-inline{display:inline-flex;margin-left:8px;padding:2px 6px;border:1px solid var(--border);font:850 .58rem ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+
+
+/* v1.7 — French intervention copy: allow longer labels without collision. */
+.case-impact{grid-template-columns:max-content minmax(0,1fr);column-gap:14px;align-items:start}
+.case-impact b{white-space:normal;max-width:12rem;line-height:1.35}
+.case-impact span{min-width:0;overflow-wrap:anywhere}
+.case-context{align-items:start}
+.case-context b{flex:0 0 auto}
+.case-context span{min-width:0;overflow-wrap:anywhere}
+@media(max-width:760px){.case-impact{grid-template-columns:1fr;gap:4px}.case-impact b{max-width:none}}

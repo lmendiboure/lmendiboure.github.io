@@ -187,6 +187,9 @@ Un champ libre n'est justifié que s'il apporte quelque chose qu'une interaction
 
 ### 1 bis. Une interaction doit être évidente avant le premier clic
 
+**Microcopy étudiant :** distinguer les libellés fonctionnels des phrases de mission. Les compteurs et verbes d’action peuvent rester courts (`SÉLECTIONNER`, `2 / 4`, `PLACÉ`). En revanche, les phrases `POINT DE DÉPART`, `IMPACT SUR LA MISSION`, feedbacks et transitions doivent être rédigées comme des phrases professionnelles naturelles. Éviter les états télégraphiques du type « votre Top 3 existe », « stratégie complète » ou « contexte incomplet » lorsqu’une formulation causale et lisible peut dire ce qui est acquis et ce qui reste à résoudre.
+
+
 Une interaction structurée n’est utile que si son **affordance** est immédiatement lisible. La surface étudiant doit donc montrer, sans explication orale de l’enseignant :
 
 - ce qui est manipulable ;
