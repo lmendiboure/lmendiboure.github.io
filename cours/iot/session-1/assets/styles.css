@@ -429,3 +429,47 @@ h2{letter-spacing:-.035em}.lead{font-size:1.05rem;line-height:1.6}
 .activity-move-label{color:var(--blue,#1557d5);margin-bottom:5px}
 .activity-intro{padding-top:1px}
 @media(max-width:620px){.case-voice{grid-template-columns:1fr}.case-voice>.case-avatar.large{margin:14px 14px 0}.case-voice-main{padding:0 14px 14px}.case-impact{grid-template-columns:1fr;gap:3px}.case-context{display:grid;gap:2px}}
+
+/* v1.26 · interaction clarity */
+.work-sequence{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0 20px;padding:7px;border:1px solid var(--border);border-radius:14px;background:#f7f9fc}
+.work-sequence span{display:flex;align-items:center;gap:9px;min-height:42px;padding:9px 12px;border-radius:10px;color:#536477;font-size:.88rem;font-weight:760}
+.work-sequence b{width:24px;height:24px;border-radius:999px;display:grid;place-items:center;background:#e6edf5;color:#304863;font-size:.76rem;flex:0 0 auto}
+.work-sequence span:first-child{background:#fff;color:#263a50;box-shadow:0 1px 0 rgba(31,50,73,.05)}
+.work-sequence span:first-child b{background:var(--accent,#3157c8);color:#fff}
+
+.loop-choice-grid{display:grid;gap:14px}
+.loop-choice-group{border:1px solid var(--border);border-radius:15px;padding:13px;background:#fbfcfe}
+.loop-choice-group-head{display:flex;justify-content:space-between;gap:18px;align-items:baseline;margin-bottom:10px}
+.loop-choice-group-head b{font-size:.72rem;letter-spacing:.08em;color:#40556c}
+.loop-choice-group-head span{font-size:.8rem;color:var(--muted);text-align:right;max-width:590px}
+.loop-choice-group-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.loop-choice-group:first-child .loop-choice-group-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.loop-coverage{margin-top:12px;padding:15px 16px}
+.loop-coverage-head{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.loop-coverage-head strong{display:block;margin-top:3px}
+.loop-ready{font-size:.7rem;font-weight:900;letter-spacing:.08em;border-radius:999px;padding:7px 10px;background:#eef2f6;color:#68798b}
+.loop-ready.ready{background:#e6f4ec;color:#17663f}
+.loop-coverage-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:11px}
+.loop-coverage-grid>div{padding:10px 11px;border-radius:10px;background:#f2f5f8;border:1px solid transparent}
+.loop-coverage-grid>div.covered{background:#f0f7f3;border-color:#cfe6d8}
+.loop-coverage-grid b,.loop-coverage-grid span{display:block}.loop-coverage-grid b{font-size:.78rem}.loop-coverage-grid span{font-size:.74rem;color:var(--muted);margin-top:2px}
+
+.secondary-lens,.reference-drawer{border:1px solid var(--border);border-radius:15px;background:#fff;margin-top:14px;overflow:hidden}
+.secondary-lens>summary,.reference-drawer>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:20px;font-weight:760}
+.secondary-lens>summary::-webkit-details-marker,.reference-drawer>summary::-webkit-details-marker{display:none}
+.secondary-lens>summary:after,.reference-drawer>summary:after{content:'＋';font-size:1.1rem;color:#75869a}
+.secondary-lens[open]>summary:after,.reference-drawer[open]>summary:after{content:'−'}
+.secondary-lens>summary span,.reference-drawer>summary span{font-size:.78rem;color:var(--muted);font-weight:650}
+.secondary-lens .satellite-primer{margin:0;border:0;border-top:1px solid var(--border);border-radius:0;box-shadow:none}
+.reference-drawer-body{padding:0 16px 16px;border-top:1px solid var(--border)}
+.reference-drawer .library-section-head{margin-top:16px}
+.decision-locked{display:inline-flex;align-items:center;min-height:37px;padding:8px 11px;border-radius:9px;background:#eef4f1;color:#2c6549;font-size:.78rem;font-weight:850}
+.transfer-challenge{margin-top:12px}
+
+@media (max-width:780px){
+  .work-sequence{grid-template-columns:1fr}.work-sequence span{min-height:36px}
+  .loop-choice-group:first-child .loop-choice-group-grid,.loop-choice-group-grid{grid-template-columns:1fr}
+  .loop-choice-group-head{display:block}.loop-choice-group-head span{display:block;text-align:left;margin-top:4px}
+  .loop-coverage-grid{grid-template-columns:1fr}
+  .secondary-lens>summary,.reference-drawer>summary{align-items:flex-start}.secondary-lens>summary span,.reference-drawer>summary span{display:none}
+}

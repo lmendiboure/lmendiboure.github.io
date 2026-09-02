@@ -384,25 +384,36 @@
     const host=$('#loopChoiceGrid');
     if(host){
       const chosen=new Set(state.loopClosure.elements);
-      host.innerHTML=loopElements.map(([id,name,copy])=>`<button type="button" class="loop-choice ${chosen.has(id)?'active':''}" data-loop-element="${id}" aria-pressed="${chosen.has(id)?'true':'false'}"><strong>${esc(name)}</strong><span>${esc(copy)}</span></button>`).join('');
+      const groups=[
+        ['ACTION PATH',['telemetry','decision','command','actuator'],'What must exist for the system to observe, decide and act?'],
+        ['EVIDENCE',['ack','feedback'],'What tells you whether the digital request — and then the physical effect — occurred?'],
+        ['AUTHORITY + RESILIENCE',['override','safe'],'Who retains authority, and what happens when control information is unavailable?']
+      ];
+      host.innerHTML=groups.map(([label,ids,help])=>`<section class="loop-choice-group"><div class="loop-choice-group-head"><b>${label}</b><span>${help}</span></div><div class="loop-choice-group-grid">${ids.map(id=>{const def=loopElements.find(x=>x[0]===id),name=def?.[1]||id,copy=def?.[2]||'';return `<button type="button" class="loop-choice ${chosen.has(id)?'active':''}" data-loop-element="${id}" aria-pressed="${chosen.has(id)?'true':'false'}"><strong>${esc(name)}</strong><span>${esc(copy)}</span></button>`}).join('')}</div></section>`).join('');
       host.querySelectorAll('[data-loop-element]').forEach(b=>b.addEventListener('click',()=>{
         const id=b.dataset.loopElement, set=new Set(state.loopClosure.elements||[]);
         if(set.has(id))set.delete(id);else set.add(id);
         state.loopClosure.elements=[...set]; saveState(); renderClosedLoop(); renderStopSnapshots();
       }));
     }
-    const ta=$('#loopRationale');
-    if(ta){
-      if(document.activeElement!==ta)ta.value=state.loopClosure.rationale||'';
-      ta.oninput=e=>{state.loopClosure.rationale=e.target.value;saveState();updateClosedLoopGate();renderStopSnapshots();};
+    const chosen=new Set(state.loopClosure.elements||[]);
+    const coverage=$('#loopCoverage');
+    if(coverage){
+      const action=['telemetry','decision','command','actuator'].filter(x=>chosen.has(x)).length;
+      const evidence=['ack','feedback'].filter(x=>chosen.has(x)).length;
+      const authority=['override','safe'].filter(x=>chosen.has(x)).length;
+      const ready=action>=3&&evidence>=1&&authority>=1&&chosen.size>=5;
+      coverage.innerHTML=`<div class="loop-coverage-head"><div><span class="eyebrow">Loop check</span><strong>${ready?'Enough structure to defend':'Cover the three dimensions before the STOP'}</strong></div><span class="loop-ready ${ready?'ready':''}">${ready?'READY':'BUILDING'}</span></div><div class="loop-coverage-grid"><div class="${action>=3?'covered':''}"><b>Action path</b><span>${action}/4 elements</span></div><div class="${evidence>=1?'covered':''}"><b>Outcome evidence</b><span>${evidence?'covered':'missing'}</span></div><div class="${authority>=1?'covered':''}"><b>Authority / resilience</b><span>${authority?'covered':'missing'}</span></div></div>`;
     }
     updateClosedLoopGate();
   }
   function updateClosedLoopGate(){
     const next=$('#loopNext'); if(!next)return;
-    const selected=(state.loopClosure?.elements||[]).length;
-    const rationale=(state.loopClosure?.rationale||'').trim();
-    next.disabled=selected<5||rationale.length<40;
+    const chosen=new Set(state.loopClosure?.elements||[]);
+    const action=['telemetry','decision','command','actuator'].filter(x=>chosen.has(x)).length;
+    const evidence=['ack','feedback'].some(x=>chosen.has(x));
+    const authority=['override','safe'].some(x=>chosen.has(x));
+    next.disabled=chosen.size<5||action<3||!evidence||!authority;
   }
 
 
@@ -676,14 +687,11 @@
   function renderMysteries() {
     const host=$('#mysteryGrid');
     host.innerHTML=mysteryTechs.map((m,i)=>{
-      const s=state.mystery[m.id]||{clues:1};
-      const clueCount=Math.max(1,Math.min(3,s.clues||1));
-      return `<article class="mystery-card ${s.revealed?'revealed':''}"><div class="mystery-number">Mystery ${String.fromCharCode(65+i)}</div><div>${m.clues.slice(0,clueCount).map((c,idx)=>`<div class="mystery-clue ${idx===clueCount-1?'new':''}"><strong>Clue ${idx+1}</strong><br>${c}</div>`).join('')}</div><div class="mystery-options">${mysteryOptions.map(o=>`<button type="button" data-mid="${m.id}" data-answer="${esc(o)}" class="mystery-option ${s.choice===o?'chosen':''}" ${s.revealed?'disabled':''}>${o}</button>`).join('')}</div>${!s.revealed&&s.choice?`<div class="confidence-row"><span>How confident are you?</span>${['Low','Medium','High'].map(x=>`<button type="button" class="confidence-button ${s.confidence===x?'active':''}" data-confidence="${x}" data-mid="${m.id}">${x}</button>`).join('')}</div>`:''}${s.revealed?`<div class="mystery-result visible"><strong>${s.choice===m.answer?'Good inference.':'Not quite.'}</strong> This is <b>${m.answer}</b>.<span class="clue-score">${s.confidence||'Unknown'} confidence · ${clueCount} clue${clueCount>1?'s':''}. ${m.explain}${s.confidence==='High'&&s.choice!==m.answer?' High confidence + wrong answer is especially useful: identify which clue you over-weighted.':''}</span></div>`:''}<div class="mystery-actions">${!s.revealed&&clueCount<3?`<button type="button" class="btn ghost more-clue" data-mid="${m.id}">Reveal another clue</button>`:''}${!s.revealed?`<button type="button" class="btn soft commit-mystery" data-mid="${m.id}" ${(s.choice&&s.confidence)?'':'disabled'}>Commit inference</button>`:''}</div></article>`;
+      const st=state.mystery[m.id]||{};
+      return `<article class="mystery-card ${st.revealed?'revealed':''}"><div class="mystery-number">Evidence card ${String.fromCharCode(65+i)}</div><div class="mystery-evidence">${m.clues.map((c,idx)=>`<div class="mystery-clue"><strong>Evidence ${idx+1}</strong><br>${c}</div>`).join('')}</div><div class="mystery-options">${mysteryOptions.map(o=>`<button type="button" data-mid="${m.id}" data-answer="${esc(o)}" class="mystery-option ${st.choice===o?'chosen':''}" ${st.revealed?'disabled':''}>${o}</button>`).join('')}</div>${st.revealed?`<div class="mystery-result visible"><strong>${st.choice===m.answer?'Evidence aligned.':'Revisit the strongest evidence.'}</strong> Reference family: <b>${m.answer}</b>.<span class="clue-score">${m.explain}</span></div>`:`<div class="mystery-actions"><button type="button" class="btn soft commit-mystery" data-mid="${m.id}" ${st.choice?'':'disabled'}>Commit from evidence</button></div>`}</article>`;
     }).join('');
-    host.querySelectorAll('.mystery-option').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.mid; const prev=state.mystery[id]||{clues:1}; state.mystery[id]={...prev,choice:b.dataset.answer};saveState();renderMysteries();}));
-    host.querySelectorAll('[data-confidence]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.mid;const prev=state.mystery[id]||{clues:1};state.mystery[id]={...prev,confidence:b.dataset.confidence};saveState();renderMysteries();}));
-    host.querySelectorAll('.more-clue').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.mid; const prev=state.mystery[id]||{clues:1}; state.mystery[id]={...prev,clues:Math.min(3,(prev.clues||1)+1)};saveState();renderMysteries();}));
-    host.querySelectorAll('.commit-mystery').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.mid; const prev=state.mystery[id]||{clues:1}; if(!prev.choice)return; state.mystery[id]={...prev,revealed:true};saveState();renderMysteries();}));
+    host.querySelectorAll('.mystery-option').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.mid; const prev=state.mystery[id]||{}; state.mystery[id]={...prev,choice:b.dataset.answer};saveState();renderMysteries();}));
+    host.querySelectorAll('.commit-mystery').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.mid; const prev=state.mystery[id]||{}; if(!prev.choice)return; state.mystery[id]={...prev,revealed:true};saveState();renderMysteries();}));
     const count=mysteryTechs.filter(m=>state.mystery[m.id]?.revealed).length; $('#mysteryScore').textContent=`${count} / 5`;
     renderLayerTrap(); renderStopSnapshots(); renderFamilyMapStrip();
   }
@@ -737,12 +745,11 @@
     host.innerHTML=scenarioDefs.map(s=>{
       const st=state.scenarios[s.id]||{};
       const choice=st.choice||null, committed=!!st.committed, twist=!!st.twist;
-      return `<article class="scenario-card"><div class="scenario-top"><span class="scenario-icon">${s.icon}</span><div><div class="eyebrow">Deployment case</div><h3>${s.title}</h3></div></div><div class="fact-chip-row decision-driver">${s.facts.map((f,i)=>`<button type="button" class="fact-chip ${st.driver===i?'driver':''}" data-driver="${i}" data-sid="${s.id}" ${committed?'disabled':''}>${f}${st.driver===i?' · decisive':''}</button>`).join('')}</div><div class="scenario-options ${committed?'locked':''}">${s.options.map(o=>`<button type="button" class="scenario-option ${choice===o?'selected':''}" data-sid="${s.id}" data-choice="${esc(o)}" ${committed?'disabled':''}>${o}</button>`).join('')}</div>${!committed?`<p class="driver-hint">Choose a technology <b>and</b> the assumption doing most of the work in your decision.</p>`:''}<div class="scenario-action-row">${!committed?`<button type="button" class="btn soft commit-scenario" data-sid="${s.id}" ${(choice&&Number.isInteger(st.driver))?'':'disabled'}>Commit decision</button>`:`<button type="button" class="btn ghost twist-scenario" data-sid="${s.id}">${twist?'Hide changed assumption':'Change one assumption'}</button>`}</div>${committed?`<div class="scenario-rationale ${choice===s.best?'good':'challenge'}"><strong>${choice===s.best?'Strongest fit among these options.':'Worth discussing, but not the strongest fit here.'}</strong><span>${s.why}</span><small class="driver-feedback">You treated “${esc(s.facts[st.driver])}” as decisive. ${st.driver===s.driver?'That is also one of the assumptions carrying most weight in the reference reasoning.':`One plausible reference reading gives especially high weight to “${esc(s.facts[s.driver])}”. Your choice may still be defensible if you can explain the trade-off.`}</small></div>`:''}${twist?`<div class="scenario-twist"><strong>New assumption</strong><span>${s.twist}</span><strong style="margin-top:7px">What changes?</strong><span>${s.twistImpact}</span></div>`:''}</article>`;
+      return `<article class="scenario-card"><div class="scenario-top"><span class="scenario-icon">${s.icon}</span><div><div class="eyebrow">Deployment case</div><h3>${s.title}</h3></div></div><div class="fact-chip-row decision-driver">${s.facts.map((f,i)=>`<button type="button" class="fact-chip ${st.driver===i?'driver':''}" data-driver="${i}" data-sid="${s.id}" ${committed?'disabled':''}>${f}${st.driver===i?' · decisive':''}</button>`).join('')}</div><div class="scenario-options ${committed?'locked':''}">${s.options.map(o=>`<button type="button" class="scenario-option ${choice===o?'selected':''}" data-sid="${s.id}" data-choice="${esc(o)}" ${committed?'disabled':''}>${o}</button>`).join('')}</div>${!committed?`<p class="driver-hint">Choose a technology <b>and</b> the assumption doing most of the work in your decision.</p>`:''}<div class="scenario-action-row">${!committed?`<button type="button" class="btn soft commit-scenario" data-sid="${s.id}" ${(choice&&Number.isInteger(st.driver))?'':'disabled'}>Commit decision</button>`:`<span class="decision-locked">Decision committed</span>`}</div>${committed?`<div class="scenario-rationale ${choice===s.best?'good':'challenge'}"><strong>${choice===s.best?'Strongest fit among these options.':'Worth discussing, but not the strongest fit here.'}</strong><span>${s.why}</span><small class="driver-feedback">You treated “${esc(s.facts[st.driver])}” as decisive. ${st.driver===s.driver?'That is also one of the assumptions carrying most weight in the reference reasoning.':`One plausible reference reading gives especially high weight to “${esc(s.facts[s.driver])}”. Your choice may still be defensible if you can explain the trade-off.`}</small></div>`:''}</article>`;
     }).join('');
     host.querySelectorAll('[data-driver]').forEach(b=>b.addEventListener('click',()=>{const prev=state.scenarios[b.dataset.sid]||{};state.scenarios[b.dataset.sid]={...prev,driver:+b.dataset.driver};saveState();renderScenarios();}));
     host.querySelectorAll('.scenario-option').forEach(b=>b.addEventListener('click',()=>{const prev=state.scenarios[b.dataset.sid]||{};state.scenarios[b.dataset.sid]={...prev,choice:b.dataset.choice,committed:false};saveState();renderScenarios();renderDesignDrawer();}));
     host.querySelectorAll('.commit-scenario').forEach(b=>b.addEventListener('click',()=>{const prev=state.scenarios[b.dataset.sid]||{};if(!prev.choice)return;state.scenarios[b.dataset.sid]={...prev,committed:true};saveState();renderScenarios();renderDesignDrawer();}));
-    host.querySelectorAll('.twist-scenario').forEach(b=>b.addEventListener('click',()=>{const prev=state.scenarios[b.dataset.sid]||{};state.scenarios[b.dataset.sid]={...prev,twist:!prev.twist};saveState();renderScenarios();renderStopSnapshots();}));
     renderMissingInfoChallenge(); renderCampusDecision(); renderStopSnapshots();
   }
 

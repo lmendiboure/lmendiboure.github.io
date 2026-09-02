@@ -34,6 +34,16 @@ The ICAP framework distinguishes Passive, Active, Constructive and Interactive e
 
 Design implication: a click is not enough. Important interactions should produce a claim, explanation, comparison, prediction or revision.
 
+### Interaction grammar: one dominant gesture per activity
+Rich interaction is not the same as many interaction mechanisms. A Core activity should have one **dominant student gesture** that is obvious within a few seconds: build/classify an artefact, inspect evidence, or commit a decision. If the learner must successively discover a new UI grammar (select → star → confidence → reveal → commit → twist), interface learning starts competing with conceptual learning.
+
+Authoring rule:
+- show a short **Core workflow** when an activity has multiple substeps;
+- keep the main path to at most 2–3 clearly ordered actions;
+- move glossaries, reference libraries, research trails and special cases into secondary drawers/details;
+- prefer oral defence at the STOP to another mandatory textarea when the artefact already externalises the reasoning;
+- optional depth may use a different interaction grammar because it is explicitly entered by choice.
+
 - Chi & Wylie, Educational Psychologist, 2014: https://doi.org/10.1080/00461520.2014.965823
 
 ### Novice scaffolding before independent problem solving
@@ -178,7 +188,7 @@ Every STOP should have the same visual and instructional grammar.
 Display exactly what the group produced.
 
 ### 2 · COMPARE
-Ask one question where different defensible answers are likely.
+Ask one question where different defensible answers are likely. On the Projector, keep facilitation prompts **face-down by default** and turn one card only when the room needs it. The class artefact should remain the starting point; the prompt deck is support, not a checklist.
 
 Useful forms:
 - “Which group made a different assumption?”
@@ -474,7 +484,7 @@ This is student-facing even though it lives under the instructor path. It must b
 For every canonical activity, it should expose **one or at most two navigable public screens**:
 
 1. **WORK** — always present: the task, expected artifact, defence prompt and one guardrail to leave visible while groups work;
-2. **RESTITUTION** — optional: one stable whole-class surface containing the appropriate collective representation (when useful), 2–3 discussion questions, one counterexample, and an in-place conclusion dock for **What to keep / Reference Plate** and optional **Reality Check**.
+2. **RESTITUTION** — optional: one stable whole-class surface containing the appropriate collective representation (when useful), a small **face-down discussion deck** (typically 2–3 prompts + one stress-test card), and an in-place conclusion dock for **What to keep / Reference Plate** and optional **Reality Check**. Turn prompts as needed; do not expose the whole facilitation script before the discussion.
 
 Omitting RESTITUTION does not omit or merge the activity. The next public screen is simply the next canonical activity's WORK screen.
 

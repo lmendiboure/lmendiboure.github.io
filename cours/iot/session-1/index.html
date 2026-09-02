@@ -170,12 +170,13 @@
 <h2>Extend Architecture v1 only where the amended contract forces a change.</h2>
 <p>Preserve what still works. Add the minimum responsibilities and flows needed to support controlled actuation, operator authority and evidence that distinguishes digital handling from physical outcome.</p>
 </div>
+<div class="work-sequence" aria-label="Core workflow"><span><b>1</b> Build the loop</span><span><b>2</b> Check evidence + authority</span><span><b>3</b> Defend at STOP</span></div>
 <div class="loop-scenario card flat">
 <div class="loop-story"><span class="eyebrow">Scenario</span><h3>Room CO₂ crosses a threshold.</h3><p>The service may command ventilation. A human operator can override the automation. The actuator can fail mechanically even when the command was delivered correctly.</p></div>
 <div aria-label="Closed-loop design elements" class="loop-choice-grid" id="loopChoiceGrid"></div>
 </div>
-<label class="loop-rationale card flat"><span class="label">Your reasoning</span><textarea id="loopRationale" maxlength="700" placeholder="Explain the minimum loop you would defend. What proves that the action occurred, and where does human override fit?"></textarea></label>
-<div class="reflection-strip"><strong>Before you stop:</strong><span>Is “command sent” the same as “action performed”?</span><span>What information must travel back?</span><span>Who is allowed to override automation?</span></div>
+<div class="loop-coverage card flat" id="loopCoverage" aria-live="polite"></div>
+<div class="reflection-strip"><strong>Defend orally at the STOP:</strong><span>Is “command sent” the same as “action performed”?</span><span>What information must travel back?</span><span>Who is allowed to override automation?</span></div>
 <button class="btn primary next-activity" data-next="5" disabled="" id="loopNext" type="button">Closed loop defended → STOP</button>
 </section>
 <!-- STOP 3 -->
@@ -199,8 +200,9 @@
 <div class="mission-context"><span class="mission-context-tag">Design basis</span><strong>Architecture v1 + service outcomes stay fixed.</strong><span>Use your own flows as evidence. Only the assumptions governing each communication link are being reopened.</span></div>
 <div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
 <h2>Annotate your own communication flows with decision-driving constraints.</h2>
-<p>First select every dimension that could materially change a flow. Then star the <strong>three that dominate this scenario</strong> and justify at least one priority from the field evidence.</p>
+<p>First select every dimension that could materially change a flow. Then star the <strong>three that dominate this scenario</strong>. The oral defence happens at the STOP, not in a text box.</p>
 </div>
+<div class="work-sequence" aria-label="Core workflow"><span><b>1</b> Select relevant dimensions</span><span><b>2</b> Star exactly 3 priorities</span><span><b>3</b> Compare at STOP</span></div>
 <div class="choice-grid requirement-choice-grid" id="requirementCards"></div>
 <div class="selection-summary card flat">
 <div><strong>Your shortlist</strong><p class="section-copy">Step 1: select relevant dimensions. Step 2: use the stars below to choose exactly three priorities.</p></div>
@@ -235,6 +237,7 @@
 <h2>Build a map of network shapes from the evidence.</h2>
 <p>For each shape, identify the distance, traffic, device-budget and infrastructure assumptions it is designed around. Technology names stay hidden until that reasoning is explicit.</p>
 </div>
+<div class="work-sequence" aria-label="Core workflow"><span><b>1</b> Read the network shape</span><span><b>2</b> Reveal the family name</span><span><b>3</b> Build the 5-shape map</span></div>
 <div class="decision-compass card flat">
 <div class="decision-compass-head"><span class="eyebrow">Before naming a technology</span><strong>Ask four concrete questions</strong></div>
 <div class="decision-question-grid">
@@ -247,7 +250,7 @@
 <div class="guided-tech-head"><div><span class="eyebrow">Guided discovery</span><h3>Five network shapes</h3><p class="section-copy">Read the plain-language description first. Then reveal the technology name and the minimum vocabulary attached to it.</p></div><span class="guided-progress" id="techDiscoveryProgress">0 / 5 revealed</span></div>
 <div class="tech-discovery-grid" id="techDiscoveryGrid"></div>
 <details class="term-shelf"><summary><strong>New words, in plain English</strong><span>Open this whenever a term blocks you.</span></summary><div class="plain-glossary" id="plainGlossary"></div></details>
-<div class="satellite-primer card flat"><div class="eyebrow">Special path · Satellite / non-terrestrial network (NTN)</div><h3>Where can a satellite link fit?</h3><div class="satellite-primer-grid"><div><strong>Direct access</strong><span>device → non-terrestrial access → network</span></div><div><strong>Backhaul</strong><span>device → local gateway → satellite path → network</span></div></div><p class="section-copy">These are different architectures. Keep both in mind for later.</p></div>
+<details class="secondary-lens"><summary><strong>Special path · Satellite / NTN</strong><span>Open only when you want to test where a non-terrestrial link fits.</span></summary><div class="satellite-primer card flat"><h3>Where can a satellite link fit?</h3><div class="satellite-primer-grid"><div><strong>Direct access</strong><span>device → non-terrestrial access → network</span></div><div><strong>Backhaul</strong><span>device → local gateway → satellite path → network</span></div></div><p class="section-copy">These are different architectures. Keep both in mind for later.</p></div></details>
 <details class="adaptive-depth" data-depth-id="discover"><summary><span class="challenge-mark">↗</span><span><strong>Challenge me · Design before naming</strong><small>Build a communication shape from constraints without using a technology name.</small></span><span class="depth-badge">0/3 support</span></summary><div class="adaptive-depth-body" id="depthDiscover"></div></details>
 <button class="btn primary next-activity" data-next="9" disabled="" id="discoveryNext" type="button">Five families revealed →</button>
 </section>
@@ -257,16 +260,17 @@
 <div class="mission-context"><span class="mission-context-tag">Decision basis</span><strong>Your Top 3 requirements now become test criteria.</strong><span>Inspect each candidate against a concrete campus flow and record the infrastructure or architectural commitments it introduces.</span></div>
 <div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
 <h2>Now test the map you just built.</h2>
-<p>The detective is now a consolidation exercise, not a prior-knowledge test. If a term is unfamiliar, use the reference map rather than guessing blindly.</p>
+<p>The detective is a consolidation exercise, not a prior-knowledge test. Commit from the evidence you recognise; open the reference drawer only when a term blocks you.</p>
 </div>
+<div class="work-sequence" aria-label="Core workflow"><span><b>1</b> Audit the shortlist</span><span><b>2</b> Use reference only if needed</span><span><b>3</b> Continue to decisions</span></div>
 <div class="family-map-strip" id="familyMapStrip"></div>
 <div class="mystery-grid" id="mysteryGrid"></div>
-<div class="score-panel"><span>Investigated</span><strong aria-live="polite" id="mysteryScore">0 / 5</strong><small>Calibrate your confidence, not just your answer. A confident mistake is useful evidence.</small></div>
-<div class="library-section-head"><div><span class="eyebrow">Reference library</span><h3>Go from essential → architecture → technical vocabulary.</h3><p class="section-copy">The cards are grouped by the communication problem they usually address. Start with the essential idea; open the technical vocabulary when you need more precision.</p></div></div>
+<div class="score-panel"><span>Audited</span><strong aria-live="polite" id="mysteryScore">0 / 5</strong><small>Use the evidence cards first. Open the reference drawer only when a term or boundary blocks you.</small></div>
+<details class="reference-drawer"><summary><strong>Reference drawer · open only if needed</strong><span>Essential idea → architecture → technical vocabulary</span></summary><div class="reference-drawer-body"><div class="library-section-head"><div><span class="eyebrow">Reference library</span><h3>Use the cards to resolve uncertainty, not as a second activity.</h3><p class="section-copy">Start with the essential idea; open technical vocabulary only when you need more precision.</p></div></div>
 <div class="tech-workspace">
 <div class="rich-tech-grid" id="technologyLibrary"></div>
 <div class="card tech-panel" id="technologyPanel"><div class="tech-empty-panel">Choose a technology card to inspect what the choice actually implies.</div></div>
-</div>
+</div></div></details>
 <section aria-labelledby="researchTrailsTitle" class="research-trails">
 <div class="research-head"><div><span class="eyebrow">Optional · Research trail</span><h3 id="researchTrailsTitle">Use a real source to settle a technical claim.</h3><p class="section-copy">Make a prediction first. Then open the official source and record what changed in your reasoning.</p></div><span class="research-note">3 trails · external sources</span></div>
 <div class="research-grid" id="researchTrailGrid"></div>
@@ -282,14 +286,16 @@
 <div class="mission-context transfer"><span class="mission-context-tag">Transfer rule</span><strong>Keep the reasoning criteria; change the deployment context.</strong><span>A rule that works only because of one campus-specific assumption is not yet a transferable engineering rule.</span></div>
 <div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
 <h2>Which candidate is the best fit <em>given these assumptions</em>?</h2>
-<p>There may be several feasible solutions. Complete <strong>at least two deployment cases</strong>: choose one candidate, commit your answer, then reveal the reasoning. Additional cases are optional if you have time. Afterwards, return to the campus checkpoint and test whether your position survives missing information.</p>
+<p>Complete <strong>at least two deployment cases</strong>: choose the candidate and the assumption carrying most weight, then commit. Afterwards, return to campus and take one position.</p>
 </div>
+<div class="work-sequence" aria-label="Core workflow"><span><b>1</b> Commit 2 deployment cases</span><span><b>2</b> Return to campus</span><span><b>3</b> Defend at STOP</span></div>
 <div class="scenario-grid" id="scenarioGrid"></div>
 <section class="campus-checkpoint card flat">
 <div class="checkpoint-head"><div><span class="eyebrow">Mission checkpoint · back to campus</span><h3>Would you force one communication family onto every campus link?</h3></div><span class="checkpoint-mark">↩</span></div>
 <p class="section-copy">Commit to a position, then identify the piece of information that would most change your answer. More than one position can be defensible if the assumptions and argument are explicit.</p>
 <div class="campus-decision" id="campusDecision"></div>
 </section>
+<details class="help-compact transfer-challenge"><summary>Optional · change one assumption orally</summary><p>Pick one committed case. Reverse the fact you treated as decisive and predict which part of your decision would change first. No extra form to fill in.</p></details>
 <div class="reflection-strip"><strong>Important:</strong><span>“Best” only means best among these candidates under the stated requirements.</span><span>Change one assumption and the answer may change.</span></div>
 <button class="btn primary next-activity" data-next="11" type="button">Decisions ready → STOP</button>
 </section>
@@ -317,6 +323,7 @@
 <h2>Trace the incident through the design, then edit a copy of v1.</h2>
 <p>Identify the broken assumption, the requirement put under pressure and the responsibility affected before making one structural Architecture v2 change.</p>
 </div>
+<div class="work-sequence" aria-label="Core workflow"><span><b>1</b> Trace the failure</span><span><b>2</b> Edit Architecture v2</span><span><b>3</b> File the handover</span></div>
 <div class="event-grid rich-events" id="stressGrid"></div>
 <div class="stress-response card flat" hidden="" id="stressResponse">
 <div class="stress-prompt"><span class="stress-number">1</span><div><strong>Broken assumption</strong><p id="brokenPrompt"></p></div></div>
