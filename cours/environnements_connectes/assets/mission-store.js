@@ -14,10 +14,8 @@
       createdAt: null,
       updatedAt: null,
       territory: {
-        real: true,
         name: 'Vallée des Aldudes',
-        places: ['Banca', 'Les Aldudes', 'Urepel'],
-        scenarioNote: 'Lieux et données terrain sourcés ; interlocuteurs et incidents de mission scénarisés.'
+        places: ['Banca', 'Les Aldudes', 'Urepel']
       },
       team: {name: ''},
       progress: {lastEpisodeTouched: 0, lastEpisodeCompleted: 0, episodes: {}},

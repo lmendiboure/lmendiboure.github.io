@@ -1,9 +1,3 @@
-/*
-  Environnements connectés — configuration de publication
-  Modifier uniquement releasedThrough lorsqu'une nouvelle séance est publiée.
-
-  Cadre narratif : territoire réel (vallée des Aldudes), mission et personnages fictifs.
-*/
 window.ENV_COURSE_CONFIG = {
   missionStorageKey: "environnements-connectes-mission-v1",
   release: { releasedThrough: 1 },
