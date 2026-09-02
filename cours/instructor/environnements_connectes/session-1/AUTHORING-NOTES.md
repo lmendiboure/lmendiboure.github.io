@@ -33,3 +33,11 @@ Le **dossier d'observation** accumule les décisions de la séance. La stratégi
 - dossier de mission inter-séances (`environnements-connectes-mission-v1`) ;
 - export/import JSON du bundle de mission ;
 - aucun backend requis.
+
+
+## Mise à jour v1.13 — alignement IoT v1.27
+
+- A4 : le panorama de 8 familles est désormais replié par défaut ; la carte espace × rythme reste le geste principal.
+- A10 : suppression de la note libre et passage de 4 maillons cliqués à 3 repères structurants ; l'information menacée est discutée au STOP.
+- Projector : questions de restitution sous forme de cartes à retourner, verso = ancrage pédagogique ; conclusion réduite à `À retenir` puis `Retour au réel`.
+- Correctifs CSS : wrapping défensif des libellés français et des traces de classe, `min-width:0` sur les composants de restitution.

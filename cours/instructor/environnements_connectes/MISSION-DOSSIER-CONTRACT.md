@@ -4,7 +4,7 @@
 
 Chaque séance conserve son **état pédagogique interne** (écran courant, Unlocks, réponses intermédiaires, retrieval, etc.) dans une clé locale propre. En parallèle, elle publie uniquement ses **décisions structurantes** dans un dossier de mission commun.
 
-- État S1 : `environnements-connectes-session1-v4`
+- État S1 : `environnements-connectes-session1-v5`
 - Dossier partagé : `environnements-connectes-mission-v1`
 
 Les futures S2–S5 doivent **lire le dossier partagé**, et non dépendre de la structure interne de S1.
@@ -27,7 +27,10 @@ mission
 
 ### `observation` (S1)
 
-Contient notamment : priorités, besoins d'information, chaîne d'observation, sources explorées, profils espace/temps, transferts, contexte temporel, diagnostics de qualité et stratégies v1/v2 avec leurs limites.
+La version publiée par la refonte S1 actuelle porte `observation.schemaVersion = 3`. Les séances suivantes doivent lire les champs structurants ci-dessous, et non les détails de l’état pédagogique interne.
+
+
+Contient notamment : priorités, information demandée en premier pour chaque décision, chaîne d’observation, comparaison espace × rythme de quelques sources, distinctions direct/proxy/inférence/externe, contexte temporel, choix d’observation sous contraintes, aptitude à l’usage et stratégies v1/v2 avec leurs limites. Pour la révision v2, le dossier partagé conserve les trois repères structurants `hypothesis`, `action`, `weakness`; l’information menacée est désormais un point de restitution oral plutôt qu’une interaction obligatoire.
 
 Le schéma doit stocker des données **auto-descriptives** lorsque les séances suivantes doivent les afficher (par exemple `{id, label, role, limit}` pour une source), afin que S2 n'ait pas à importer les constantes JavaScript de S1.
 

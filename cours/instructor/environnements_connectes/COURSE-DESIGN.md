@@ -282,3 +282,63 @@ Le même workflow est résumé dans les Notes enseignant sous **Parcours étudia
 Pour les activités comportant plusieurs manipulations, ne pas afficher quatre formulaires actifs simultanément. La prochaine sous-étape peut rester visible comme destination, mais elle reste verrouillée jusqu'à ce que l'artefact précédent soit suffisamment construit. Le contrat visuel est : **action courante → compteur/feedback → sous-étape suivante verrouillée → déblocage → engagement suivant**.
 
 Une interaction est retenue seulement si elle change l'artefact, une hypothèse, une classification ou une décision. Les clics purement décoratifs sont interdits.
+
+
+## Variation du rythme interactif
+
+Le cours ne doit pas appliquer mécaniquement le même mini-workflow à chaque activité. S1 fixe désormais le rythme de référence : certaines activités sont un seul classement ou filtre, quelques-unes combinent deux gestes, et seules les activités de synthèse (stratégie / révision) deviennent plus riches. La profondeur vient des choix et des restitutions, pas du nombre de widgets.
+
+**Règle :** une activité ne gagne une sous-étape que si celle-ci produit un nouvel artefact ou une distinction indispensable. Les transferts peuvent être apportés au STOP plutôt que répétés sous forme d’un second widget.
+
+## Parité d'interaction avec le cours IoT — règle renforcée après S1 v1.12
+
+La variété ne se mesure pas au nombre de boutons. Deux activités qui présentent chacune une grille de cartes, un compteur et un verrouillage sont perçues comme la même interaction même si leur contenu conceptuel diffère.
+
+S1 fixe désormais une grammaire de gestes volontairement variée :
+
+- A1 : sélectionner puis prioriser ;
+- A2 : choisir une information en premier ;
+- A3 : ordonner une chaîne ;
+- A4 : placer des sources sur une carte à deux axes ;
+- A5 : ranger des cartes dans des bacs ;
+- A6 : enrichir une valeur puis ordonner ses temps ;
+- A7 : choisir un dispositif sous contraintes ;
+- A8 : comparer la même donnée dans deux usages ;
+- A9 : composer un artefact de stratégie ;
+- A10 : réviser une version après incident.
+
+**Règle pour S2–S5 :** ne pas répéter plus de deux fois de suite le même geste cognitif ou la même géométrie d'interface. Une activité simple peut n'avoir ni compteur visible ni verrouillage si son état est évident. Les mécanismes de progression guidée sont réservés aux artefacts réellement cumulatifs.
+
+### Continuité sans personnage
+
+Quand aucune nouvelle information ne justifie l'intervention d'un personnage, ne pas laisser pour autant l'activité apparaître comme un chapitre abstrait. Utiliser un repère court :
+
+**CE QUE VOUS AVEZ ÉTABLI → CE QU'IL RESTE À RÉSOUDRE**
+
+Ce repère doit tenir en deux phrases et relier directement l'artefact précédent à la nouvelle question. Il remplace une intervention artificielle, sans introduire de méta-discours pédagogique côté étudiant.
+
+
+## Alignement v1.27 IoT — simplicité et restitution
+
+À conserver pour S2–S5 :
+
+- une référence secondaire doit être **repliée par défaut** si elle n'est pas nécessaire pour réaliser le geste principal ;
+- supprimer une saisie écrite dès qu'un choix structuré + une défense orale produisent le même apprentissage ;
+- pour une activité riche, afficher un **parcours en trois mouvements maximum** sans ajouter de nouveaux clics ;
+- côté Projector, une restitution suit **question visible → réponse de la salle → carte retournée avec l'ancrage à garder → À retenir → Retour au réel** ;
+- le verso d'une carte de discussion n'est pas « la bonne réponse » mais le repère conceptuel à conserver après l'échange ;
+- les traces de classe et libellés français doivent toujours accepter `min-width:0` et le retour à la ligne ; aucune carte ne doit élargir la colonne de restitution.
+
+
+## Contrat Projector v1.31 — ancrage par cartes
+
+Pour les restitutions de S1 à S5 :
+
+- afficher d’abord l’artefact ou la représentation de classe sur toute la largeur utile ;
+- placer ensuite les cartes de discussion en pleine largeur ;
+- le recto contient la question ; le verso contient l’ancrage local à conserver ;
+- ne pas dupliquer ces ancrages dans un panneau séparé « À retenir » ;
+- réserver « Retour au réel » à un exemple, une donnée, un ordre de grandeur ou un transfert qui apporte réellement quelque chose de plus ;
+- sur l’écran WORK du Projector, une intervention ne montre que la nouvelle information utile, puis « À vous ». Le détail point de départ / impact appartient à l’écran étudiant et aux notes Instructor.
+
+Pour les activités étudiantes riches, préférer quelques groupes visuels larges et des libellés courts à une grille dense de petites cartes. La profondeur doit venir du choix et de la défense, non du volume de micro-contrôles.
