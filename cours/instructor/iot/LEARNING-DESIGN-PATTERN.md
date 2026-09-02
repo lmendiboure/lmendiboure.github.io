@@ -39,6 +39,7 @@ Rich interaction is not the same as many interaction mechanisms. A Core activity
 
 Authoring rule:
 - show a short **Core workflow** when an activity has multiple substeps;
+- when those substeps depend on one another, use **progressive disclosure inside the activity**: reveal the next work surface only after the prerequisite artefact is complete;
 - keep the main path to at most 2–3 clearly ordered actions;
 - move glossaries, reference libraries, research trails and special cases into secondary drawers/details;
 - prefer oral defence at the STOP to another mandatory textarea when the artefact already externalises the reasoning;

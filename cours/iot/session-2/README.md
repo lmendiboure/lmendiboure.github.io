@@ -76,6 +76,8 @@ The student workspace keeps pedagogical progress (screens, unlocks, retrieval, h
 
 ## v1.22 interaction principle
 
+Session 2 uses the same visible three-step Core workflow grammar as Session 1. Dense activities reveal their next sub-task progressively instead of displaying every interaction at once.
+
 Session 2 deliberately avoids worksheet-style prose entry in the Core route. Students build inspectable artefacts: conversation contracts, a message choreography, responsibility stack, protocol evidence maps, an interoperability scope map, complete stacks, delivery contracts and a failure trace. Optional Challenge-me routes may still ask for a short defended response.
 
 ### Restitution structure

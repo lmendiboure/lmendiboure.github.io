@@ -71,3 +71,13 @@
 
 /* Session 2 recalls the established team without replaying Session 1 onboarding. */
 .returning-team{padding:11px 14px;margin:12px 0 6px;border-left-width:3px}.returning-team .case-roster-head{margin-bottom:8px}.returning-team .case-roster-head>strong{font-size:.88rem;color:var(--muted);font-weight:720}.returning-team .case-person{padding:7px 9px;align-items:center}.returning-team .case-person em{display:none}.returning-team .case-avatar{width:30px;height:30px;font-size:.62rem}.returning-team .case-person small{font-size:.7rem}
+
+/* v1.28 · Core workflow clarity */
+.work-sequence{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0 20px;padding:7px;border:1px solid var(--border);border-radius:14px;background:#f7f9fc}
+.work-sequence span{display:flex;align-items:center;gap:9px;min-height:42px;padding:9px 12px;border-radius:10px;color:#536477;font-size:.88rem;font-weight:760}
+.work-sequence b{width:24px;height:24px;border-radius:999px;display:grid;place-items:center;background:#e6edf5;color:#304863;font-size:.76rem;flex:0 0 auto}
+.work-sequence span:first-child{background:#fff;color:#263a50;box-shadow:0 1px 0 rgba(31,50,73,.05)}
+.work-sequence span:first-child b{background:var(--accent,#3157c8);color:#fff}
+.progressive-stage{animation:screenIn .22s ease-out}
+.progressive-stage[hidden]{display:none!important}
+@media(max-width:650px){.work-sequence{grid-template-columns:1fr}.work-sequence span{min-height:36px}}
