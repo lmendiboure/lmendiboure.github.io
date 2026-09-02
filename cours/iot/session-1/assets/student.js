@@ -368,14 +368,14 @@
 
   /* ---------- Close the loop ---------- */
   const loopElements = [
-    ['telemetry','Telemetry / sensed state','Bring CO₂ and relevant physical state into the digital system.'],
-    ['decision','Decision / control policy','Decide whether and how the system should act.'],
-    ['command','Command path','Carry the requested action toward the actuator/controller.'],
+    ['telemetry','Telemetry / state','Bring CO₂ and other sensed state into the system.'],
+    ['decision','Control policy','Decide whether the system should act and how.'],
+    ['command','Command path','Carry the requested action to the controller or actuator.'],
     ['actuator','Physical actuator','Change the physical process, here ventilation.'],
-    ['ack','Command acknowledgement','Confirm receipt/handling at a digital endpoint — not physical success.'],
-    ['feedback','Measured state feedback','Observe the resulting physical state after the command.'],
-    ['override','Human override / authority','Make explicit who may supersede automation.'],
-    ['safe','Safe/default behaviour','Define what should happen when control or feedback is unavailable.']
+    ['ack','Digital acknowledgement','Confirm digital receipt or handling — not physical success.'],
+    ['feedback','State feedback','Observe the physical state after the command.'],
+    ['override','Human override','Make explicit who may supersede automation.'],
+    ['safe','Safe fallback','Define what should happen when control or feedback is unavailable.']
   ];
 
   function renderClosedLoop(){
@@ -386,8 +386,8 @@
       const chosen=new Set(state.loopClosure.elements);
       const groups=[
         ['ACTION PATH',['telemetry','decision','command','actuator'],'What must exist for the system to observe, decide and act?'],
-        ['EVIDENCE',['ack','feedback'],'What tells you whether the digital request — and then the physical effect — occurred?'],
-        ['AUTHORITY + RESILIENCE',['override','safe'],'Who retains authority, and what happens when control information is unavailable?']
+        ['EVIDENCE',['ack','feedback'],'What tells you whether the request was handled digitally, and whether the physical effect really happened?'],
+        ['AUTHORITY + RESILIENCE',['override','safe'],'Who retains authority, and what should happen when control information is unavailable?']
       ];
       host.innerHTML=groups.map(([label,ids,help])=>`<section class="loop-choice-group"><div class="loop-choice-group-head"><b>${label}</b><span>${help}</span></div><div class="loop-choice-group-grid">${ids.map(id=>{const def=loopElements.find(x=>x[0]===id),name=def?.[1]||id,copy=def?.[2]||'';return `<button type="button" class="loop-choice ${chosen.has(id)?'active':''}" data-loop-element="${id}" aria-pressed="${chosen.has(id)?'true':'false'}"><strong>${esc(name)}</strong><span>${esc(copy)}</span></button>`}).join('')}</div></section>`).join('');
       host.querySelectorAll('[data-loop-element]').forEach(b=>b.addEventListener('click',()=>{
