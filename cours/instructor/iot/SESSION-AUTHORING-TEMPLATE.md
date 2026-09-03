@@ -89,13 +89,13 @@ Repeat for each STOP.
 | | | | |
 | | | | |
 
-## G. v1 → v2 revision
+## G. Baseline → revision record
 
-**Artifact frozen as v1:** ...
+**Defended baseline preserved as evidence:** ...
 
 **Changed assumption / incident:** ...
 
-**Minimum concrete v2 edit required:** ...
+**Minimum concrete design change required:** ...
 
 **Final comparison shown to students:** ...
 
@@ -115,7 +115,7 @@ Checklist:
 - [ ] Review mode is visually explicit.
 - [ ] There is a one-click return to the current frontier.
 - [ ] Commit-before-reveal answers are preserved.
-- [ ] Important artifacts use v1 → v2 rather than overwrite.
+- [ ] Important artifacts preserve the baseline and record an explicit revision rather than overwriting history.
 
 ## I. Adaptive depth
 

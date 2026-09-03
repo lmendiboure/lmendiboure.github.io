@@ -8,11 +8,11 @@
 Student, Projector and Notes use exactly the same eight canonical activities:
 
 1. Map the IoT landscape
-2. Build architecture v1
-3. Close the loop
+2. Build a defensible baseline design
+3. From monitoring to control
 4. Expose communication requirements
 5. Discover network shapes
-6. Investigate technologies
+6. Audit technology scope
 7. Choose under constraints
 8. Stress-test and revise
 
@@ -63,7 +63,7 @@ Use the same student-facing reading order everywhere: **STARTING POINT → NEW I
 
 ## Mission dossier across sessions
 
-The student workspace keeps pedagogical progress (screens, unlocks, retrieval, hints) inside the session state, but publishes only a small structured **Mission dossier** across sessions. Session 1 records the classified Architecture v2 pattern, Top-3 communication requirements, campus access stance, key open uncertainty, and the incident that triggered revision. Session 2 reads those fields when available and otherwise uses a generic fallback. Free-text answers are never interpreted to drive the next session. The export file contains the Mission dossier plus the current session progress so it can also be moved to another browser.
+The student workspace keeps pedagogical progress (screens, unlocks, retrieval, hints) inside the session state, but publishes only a small structured **Mission dossier** across sessions. Session 1 records the classified current defended design pattern, Top-3 communication requirements, campus access stance, key open uncertainty, and the incident that triggered revision. Session 2 reads those fields when available and otherwise uses a generic fallback. Free-text answers are never interpreted to drive the next session. The export file contains the Mission dossier plus the current session progress so it can also be moved to another browser.
 
 
 ## Publication boundary

@@ -22,7 +22,7 @@
       <div class="hero-copy">
         <div class="eyebrow">Assignment brief · Campus IoT programme</div>
         <h1>You are the<br/>systems design team.</h1>
-        <p class="lead">Campus operations has a connected-system programme to deliver. Your job is not to pick fashionable technologies: it is to turn operational needs into an architecture you can explain, defend and revise when the evidence changes.</p>
+        <p class="lead">Campus operations has a connected-system programme to deliver. Your job is not to pick fashionable technologies: it is to turn operational needs into a design you can explain, defend and revise when the evidence changes.</p>
         <div class="hero-actions">
           <a class="btn primary hero-primary" id="primaryMissionAction" href="session-1/">Enter Mission 01 →</a>
           <span class="hero-status" id="heroMissionStatus">No mission work filed yet on this device.</span>
@@ -88,7 +88,7 @@
     <div class="section-head"><div><div class="eyebrow">Your mandate</div><h2 id="mandateTitle">Four responsibilities. One system.</h2><p>The missions are successive engineering responsibilities, not four independent chapters.</p></div></div>
     <div class="outcome-grid">
       <div class="outcome"><span>01</span><strong>Establish the system</strong><small>Translate a physical-world need into responsibilities, components, flows and explicit communication requirements.</small></div>
-      <div class="outcome"><span>02</span><strong>Make exchanges work</strong><small>Define interaction patterns, protocol responsibilities, shared meaning and scoped delivery guarantees.</small></div>
+      <div class="outcome"><span>02</span><strong>Make exchanges work</strong><small>Define interaction patterns, protocol responsibilities, protocol composition and shared data meaning.</small></div>
       <div class="outcome"><span>03</span><strong>Place computation</strong><small>Decide what belongs on the device, nearby, at the edge or in the cloud as constraints change.</small></div>
       <div class="outcome"><span>04</span><strong>Break your own design</strong><small>Expose failure assumptions, challenge dependencies and revise the architecture beyond nominal conditions.</small></div>
     </div>
@@ -97,6 +97,10 @@
   <section class="shell mission-section" aria-labelledby="missionTitle">
     <div class="section-head"><div><div class="eyebrow">Operations board</div><h2 id="missionTitle">Your current mission.</h2><p>Each operation changes the same campus system. Completed missions remain available as evidence; later missions open as the programme advances.</p></div><span id="courseProgress" class="course-progress">Mission status</span></div>
     <div id="missionGrid" class="mission-grid"></div>
+    <div class="debrief-home-card locked" id="finalDebriefCard">
+      <div><span>FINAL DEBRIEF</span><strong>Your reusable system design map</strong><small>Mission → architecture → communication → guarantees → revision. Opens as the course-level synthesis after Mission 04.</small></div>
+      <a class="btn" id="finalDebriefAction" href="final-debrief/" aria-disabled="true">Final debrief · locked</a>
+    </div>
     <noscript><div class="course-note"><strong>JavaScript is required for the interactive operations board.</strong> Released missions are available from this hub when JavaScript is enabled.</div></noscript>
   </section>
 </main>

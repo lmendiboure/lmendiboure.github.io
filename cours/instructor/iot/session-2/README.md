@@ -9,7 +9,7 @@
 3. Separate four communication jobs
 4. Read one complete stack, then complete a partial stack
 5. Choose among MQTT, CoAP and HTTP from service behaviour
-6. Compose two end-to-end protocol paths
+6. Compose one protocol path, audit compatibility, then transfer one lower-layer change
 7. Repair a data contract so the payload is understandable
 8. Defend one implementable campus exchange
 
@@ -74,7 +74,7 @@ Session 2 publishes only compact design state for later sessions:
 - interaction-pattern choices;
 - the partial worked-stack completion;
 - application-protocol choices;
-- two composed protocol paths;
+- one composed path plus a compatibility audit and a lower-path transfer test;
 - the semantic contract elements selected;
 - the final defended exchange.
 

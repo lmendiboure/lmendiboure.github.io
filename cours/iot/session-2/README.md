@@ -2,84 +2,80 @@
 
 **Mission:** How do things communicate?
 
-Canonical nine-activity skeleton shared by Student / Projector / Instructor Notes:
+## Canonical eight-activity sequence
 
-1. Describe the conversations
-2. Draw a message choreography
-3. Build the stack by responsibility
-4. Audit network and transport evidence
-5. Build an application-protocol evidence map
-6. Repair the interoperability contract
-7. Compose complete stacks
-8. Build scoped delivery contracts
-9. Build an auditable failure trace
+1. Describe the conversation
+2. Make message order visible
+3. Separate four communication jobs
+4. Read one complete stack, then complete a partial stack
+5. Choose among MQTT, CoAP and HTTP from service behaviour
+6. Compose one end-to-end path, audit compatibility, then transfer a lower-path change
+7. Repair a data contract so the payload is understandable
+8. Defend one implementable campus exchange
 
 Core reasoning loop:
 
-**service need → interaction pattern → choreography → message meaning → stack responsibilities → protocol composition → delivery semantics → failure test**
+**service behaviour → message order → communication responsibilities → worked stack → application protocol → composition → shared meaning → defended design**
 
-Design principle: students reason about roles, scopes and interaction patterns before protocol names are treated as design answers.
+## Scope decision
 
-## Discussion and institutionalisation
+Session 2 deliberately stops before delivery-semantics and failure-analysis material.
 
-Activities 1, 2, 3, 6, 7, 8 and 9 include a full student STOP aligned with the Projector restitution:
+The following concepts are **deferred to Session 4 — Robustness**:
 
-**LOOK → COMPARE → CHALLENGE → UNLOCK**
+- protocol-level QoS and acknowledgement semantics;
+- at-most-once / at-least-once / exactly-once claims;
+- retry crash windows and duplicate operation effects;
+- end-to-end failure tracing;
+- physical-state confirmation as a robustness mechanism.
 
-At each STOP, the student's own artifact remains visible. The counterexample is revealed during discussion, then the formal concept is explicitly consolidated before the next activity unlocks. The resulting compact reference map is added to the persistent **Field guide**.
+They are important, but they create a second conceptual arc. Keeping them in Session 2 forces novices to build too many interdependent mental models in one sitting. Session 3 remains focused on device / edge / cloud placement and therefore is not the right destination for this material.
 
-Activities 4 and 5 remain WORK-only on purpose. They use predict-before-reveal cards to introduce concrete protocol names without interrupting the discovery sequence with premature whole-class correction. Their protocol map is institutionalised during the Activity 7 composition STOP.
+## Design rationale
 
-The Core route remains sufficient for novices. Four optional **Challenge me** routes add deeper reasoning at genuine bottlenecks: multi-row suites, schema/semantic mapping, MQTT over Thread, and duplicate-operation crash windows. They rejoin the same activity progression and do not reveal future protocol answers.
+The session now uses three instructional moves repeatedly:
 
-The Field guide accumulates seven reusable reference maps:
+1. **Problem before term.** Students first see the engineering need in ordinary language.
+2. **Worked example before independent completion.** Activity 1 and Activity 4 provide a complete example before students complete a related case.
+3. **Progressive disclosure.** Technical detail appears when it answers the current question; optional mechanisms such as 6LoWPAN are not part of the core decision set.
 
-- interaction patterns;
-- topology vs message choreography;
-- stack responsibilities;
-- protocol vs semantic interoperability;
-- protocol composition across abstraction levels;
-- scoped delivery guarantees;
-- end-to-end failure tracing.
+The initial stack model contains four responsibilities only:
 
-## Navigation model
+- Application
+- Transport
+- Network
+- Local access
 
-The session uses the same soft-linearity principle as Session 1:
+6LoWPAN is introduced as an adaptation mechanism used under IPv6 on constrained IEEE 802.15.4 links, not as a fifth mental category students must manipulate in the core route.
 
-- future work stays gated;
-- already reached activities remain reviewable;
-- review mode is explicit;
-- a one-click action returns to the furthest unlocked point;
-- STOP conclusions must be consolidated before the next activity opens.
+## Page-density rule
 
-## Session close
+A core activity should normally contain only:
 
-Activity 9 now has its own explicit STOP rather than collapsing failure discussion into the final screen. The session then finishes with a six-question **Memory Lock**. Students retrieve each answer before revealing it; only after all six prompts does the final synthesis appear.
+- one short problem statement;
+- one worked example or compact reference when required;
+- one main student manipulation;
+- one short takeaway / boundary.
 
-This preserves the intended rule:
+Avoid stacking stakeholder story + glossary + workflow + interaction + reflection + optional challenge on the same screen. Optional depth belongs in a `<details>` reference or instructor discussion, not in the main visual hierarchy.
 
-**retrieve first → reveal → synthesise**.
+## Discussion rhythm
 
-Session 2 is intentionally longer than Session 1. Activity count is determined by conceptual work, not visual symmetry. The dedicated delivery-semantics activity prevents the final failure test from introducing reliability, retries, duplicate effects and offline persistence for the first time.
+Five STOPs are retained, after Activities 1, 3, 5, 7 and 8. Each STOP uses:
 
-## Running case
+**student artifact → one comparison/challenge question → concise “what to keep” reveal**
 
-This session is part of one continuous campus engineering case. Stakeholder interventions introduce only decision-relevant information: service needs, field constraints, architecture claims, integration problems or incidents. The narrative is therefore functional rather than decorative.
+There is no hidden answer-key gate. Students must commit to a decision, but an incorrect decision is discussion evidence rather than a progression failure.
 
-**Trigger / dossier / task separation:** the stakeholder intervention introduces the change or decision tension; the dossier/state block carries factual evidence; the activity prompt states the student task. These three surfaces must not restate the same information.
+## Mission dossier
 
+Session 2 publishes only compact design state for later sessions:
 
-## Mission dossier across sessions
+- interaction-pattern choices;
+- the partial worked-stack completion;
+- application-protocol choices;
+- two composed protocol paths;
+- the semantic contract elements selected;
+- the final defended exchange.
 
-The student workspace keeps pedagogical progress (screens, unlocks, retrieval, hints) inside the session state, but publishes only a small structured **Mission dossier** across sessions. Session 1 records the classified Architecture v2 pattern, Top-3 communication requirements, campus access stance, key open uncertainty, and the incident that triggered revision. Session 2 reads those fields when available and otherwise uses a generic fallback. Free-text answers are never interpreted to drive the next session. The export file contains the Mission dossier plus the current session progress so it can also be moved to another browser.
-
-
-## v1.22 interaction principle
-
-Session 2 uses the same visible three-step Core workflow grammar as Session 1. Dense activities reveal their next sub-task progressively instead of displaying every interaction at once.
-
-Session 2 deliberately avoids worksheet-style prose entry in the Core route. Students build inspectable artefacts: conversation contracts, a message choreography, responsibility stack, protocol evidence maps, an interoperability scope map, complete stacks, delivery contracts and a failure trace. Optional Challenge-me routes may still ask for a short defended response.
-
-### Restitution structure
-
-Activities 4–5 form a deliberate **protocol evidence block**: students audit lower-stack evidence, then application-protocol evidence, without a full class STOP between them. Their interfaces contain embedded factual audits. The Activity 3 STOP must therefore stay protocol-name neutral, and the complete protocol map is institutionalised later at the **Compose complete stacks** STOP. A short 60–90 s instructor calibration is acceptable if a shared misconception survives an embedded audit; it is not a separate concept unlock.
+Pedagogical navigation state remains local to the session.

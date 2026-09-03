@@ -37,7 +37,7 @@ window.IOT_COURSE_CONFIG = {
       question: "What must a connected system do before we can defend a communication choice?",
       summary: "Map the IoT landscape, build and close the loop of a campus architecture, expose requirements, discover communication families and revise the design when assumptions change.",
       objectives: ["architecture & flows", "requirements", "communication choices"],
-      storageKey: "iot-systems-design-session1-v18",
+      storageKey: "iot-systems-design-session1-v19",
       progressKind: "screen-frontier"
     },
     {
@@ -46,11 +46,11 @@ window.IOT_COURSE_CONFIG = {
       kicker: "INFORMATION EXCHANGE",
       title: "How do things communicate?",
       question: "Once connectivity exists, how should devices and services exchange information?",
-      summary: "Build interaction patterns and protocol stacks from communication responsibilities, make messages interoperable, compose MQTT, CoAP, TCP/UDP, Thread and IP pieces, then make delivery guarantees explicit without confusing abstraction levels.",
-      objectives: ["message choreography", "protocol stacks", "meaning & delivery semantics"],
-      storageKey: "iot-systems-design-session2-v3",
+      summary: "Describe service conversations, make message order explicit, build protocol paths from four communication responsibilities, compare MQTT/CoAP/HTTP, and make exchanged data understandable across systems.",
+      objectives: ["interaction & choreography", "protocol stacks & composition", "shared data meaning"],
+      storageKey: "iot-systems-design-session2-v4",
       progressKind: "activity-frontier",
-      progressLabels: ["Conversations","Choreography","Stack roles","Network + transport","Application protocols","Interoperability","Compose","Delivery semantics","Stress-test"]
+      progressLabels: ["Conversation","Message order","Stack jobs","Worked stack","Application protocols","Compose paths","Shared meaning","Defend design"]
     },
     {
       id: 3,
@@ -67,8 +67,8 @@ window.IOT_COURSE_CONFIG = {
       kicker: "ROBUSTNESS",
       title: "How do we make the system robust?",
       question: "What happens when scale, failures, mobility or dependencies change?",
-      summary: "Challenge an IoT architecture, reason about failure and adaptation, and make the system survive beyond its nominal assumptions.",
-      objectives: ["failure & adaptation", "lifecycle", "system trade-offs"]
+      summary: "Challenge an IoT architecture, reason about delivery guarantees, retries, duplicate effects, failures and adaptation, and make the system survive beyond its nominal assumptions.",
+      objectives: ["scoped guarantees & failure", "adaptation", "lifecycle & system trade-offs"]
     }
   ]
 };

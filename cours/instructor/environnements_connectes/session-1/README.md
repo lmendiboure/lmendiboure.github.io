@@ -11,7 +11,7 @@ Espace étudiant, Projection et Notes utilisent exactement les dix activités ca
 2. Partir de la décision
 3. Ce que l'on peut réellement observer
 4. D'où viennent les données ?
-5. Observer directement ou par proxy ?
+5. Observer, indiquer ou inférer ?
 6. Une valeur ne suffit pas
 7. Où et quand observer ?
 8. Une donnée est-elle « bonne » ?
@@ -34,3 +34,8 @@ Toujours appliquer : **commit → aggregate → discuss**. La majorité n'est ja
 
 - `Nouvelle classe` efface uniquement l'état du Projection stocké dans `sessionStorage`.
 - Cela n'affecte jamais les espaces étudiants ni leur `localStorage`.
+
+
+## Règle de progression
+
+Les activités cumulatives peuvent imposer de **compléter une tentative** avant d’ouvrir la sous-étape suivante, mais ne doivent pas imposer la **bonne réponse** pour progresser. A3, A4 et A6 appliquent explicitement ce principe : les erreurs deviennent matière de feedback ou de restitution, pas des verrous.

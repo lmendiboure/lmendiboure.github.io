@@ -53,21 +53,6 @@ These links support the technical facts used in the student workspace, Projector
   https://www.w3.org/TR/wot-thing-description11/  
   W3C Recommendation describing metadata and interfaces of Things, including Properties, Actions and Events.
 
+## Scope note
 
-## Delivery semantics and guarantee boundaries
-
-- **OASIS MQTT Version 5.0 — QoS semantics**  
-  https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html  
-  Defines QoS 0 as at-most-once message delivery, QoS 1 as at-least-once (duplicates can occur), and QoS 2 as exactly-once at the MQTT message-delivery scope. MQTT expects an ordered, lossless, bidirectional underlying connection.
-
-- **RFC 7252 — CoAP message reliability**  
-  https://www.rfc-editor.org/rfc/rfc7252.html  
-  Confirmable messages are acknowledged and retransmitted; CoAP includes duplicate detection. An acknowledgement confirms receipt of a Confirmable message and does not, by itself, prove successful physical actuation.
-
-- **RFC 9293 — TCP**  
-  https://www.rfc-editor.org/rfc/rfc9293.html  
-  TCP provides applications with a reliable, in-order byte-stream service. This is a transport guarantee, not an application exactly-once-operation guarantee.
-
-- **RFC 768 — UDP**  
-  https://www.rfc-editor.org/rfc/rfc768.html  
-  UDP is datagram-oriented; delivery and duplicate protection are not guaranteed by the protocol.
+Delivery-semantics, QoS, retry and exactly-once/failure-boundary sources are intentionally deferred to Session 4 — Robustness in the focused Session 2 design.

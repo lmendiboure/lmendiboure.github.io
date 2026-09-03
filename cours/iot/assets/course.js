@@ -58,10 +58,11 @@
       if(!raw) return {pct:0,label:'Not started on this device',action:'Enter mission'};
       const state = JSON.parse(raw);
       if(session.progressKind === 'activity-frontier'){
-        const frontier=Math.max(0,Math.min(6,Number(state.frontier)||0));
-        const pct=Math.round(frontier/6*100);
         const labels=session.progressLabels||[];
-        if(Number(state.screen)>=11) return {pct:100,label:'Final debrief reached on this device',action:'Review mission'};
+        const maxIndex=Math.max(0,labels.length-1);
+        const frontier=Math.max(0,Math.min(maxIndex,Number(state.frontier)||0));
+        if(state.completed) return {pct:100,label:'Session completed on this device',action:'Review mission'};
+        const pct=labels.length?Math.min(95,Math.round(frontier/labels.length*100)):0;
         return {pct,label:`In progress · ${labels[frontier]||`Activity ${frontier+1}`}`,action:'Continue mission'};
       }
       const frontier = Math.max(Number(state.maxUnlockedScreen)||0, Number(state.screen)||0);
@@ -113,4 +114,14 @@
   const available = releasedThrough;
   const pill = document.querySelector('#courseProgress');
   if(pill) pill.textContent = available > 0 ? `${available} / ${cfg.sessions.length} mission${available===1?'':'s'} available · Mission ${available} current` : `No mission open yet`;
+
+  const debriefCard=document.querySelector('#finalDebriefCard');
+  const debriefAction=document.querySelector('#finalDebriefAction');
+  const debriefOpen=releasedThrough>=cfg.sessions.length && cfg.sessions.length>0;
+  if(debriefCard && debriefAction){
+    debriefCard.classList.toggle('locked',!debriefOpen);
+    debriefAction.textContent=debriefOpen?'Open final debrief →':'Final debrief · locked';
+    debriefAction.setAttribute('aria-disabled',debriefOpen?'false':'true');
+    if(!debriefOpen) debriefAction.addEventListener('click',e=>e.preventDefault());
+  }
 })();

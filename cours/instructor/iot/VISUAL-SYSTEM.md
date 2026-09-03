@@ -102,7 +102,7 @@ Examples:
 - architecture → graph / labelled flows;
 - requirements → structured matrix or tally;
 - technology families → network-shape strip;
-- design revision → v1 → changed assumption → v2.
+- design revision → defended baseline → changed assumption → justified design change.
 
 Do not put a diagram inside a decorative card merely because a card component exists.
 

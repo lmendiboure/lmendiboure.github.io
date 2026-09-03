@@ -167,12 +167,12 @@ Implementation implications:
 - provide a one-click `Return to current mission`;
 - never reveal a future STOP, answer or concept through backward navigation;
 - freeze historically meaningful artifacts or decisions after commitment/reveal;
-- if later evidence changes the learner's view, record a revision (`v1 → v2`, `initial → revised`) rather than replacing the original trace.
+- if later evidence changes the learner's view, record a revision (`baseline → justified delta`, `initial → revised`) rather than replacing the original trace.
 
 This supports reflection and self-regulation without destroying the evidential value of commit-before-reveal activities. It is a design synthesis rather than a claim that this exact navigation pattern has been experimentally isolated as a unit.
 
 ### I. Learning should alter an artifact
-Freeze an early version (v1), then require a later revision (v2). This creates a concrete before/after representation of conceptual change.
+Preserve an early defended baseline, then require a later justified revision. This creates a concrete before/after representation of conceptual change without implying that every local change is a complete new architecture version.
 
 ### J. Retrieve before summarising
 Do not finish by displaying the takeaway immediately.
@@ -279,7 +279,7 @@ Recommended mechanics because they have an instructional role:
 - **Adaptive depth / Challenge me** — same objective, less assistance, optional and not ranking.
 - **Research trail** — prediction → authentic source → reflection on a disciplinary claim.
 - **Field Guide unlocks** — visible conceptual progression.
-- **v1 → v2 artifact** — visible design progression.
+- **baseline → revision artifact** — visible design progression.
 
 Use sparingly:
 - scores;
@@ -437,7 +437,7 @@ Collect lightweight evidence across iterations:
 - **Concept accuracy at STOPs:** common misconceptions before/after UNLOCK.
 - **Transfer success:** percentage of groups applying a concept correctly to a new surface case.
 - **Confidence calibration:** confident wrong answers versus low-confidence correct answers.
-- **Revision quality:** whether v2 changes address the failed assumption rather than merely add complexity.
+- **Revision quality:** whether the recorded revision addresses the failed assumption rather than merely adding complexity.
 - **Retrieval success:** Memory Lock accuracy without reopening the Field Guide.
 - **Student workload:** where groups stall, not only where they spend time.
 - **Accessibility failures:** mobile interaction, keyboard navigation, readability and external-network dependencies.

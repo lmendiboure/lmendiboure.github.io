@@ -20,13 +20,13 @@ If two of these simply repeat each other, merge or rewrite them. The narrative i
 
 1. **Landscape** — students classify connected physical systems before receiving a working view of IoT.
 2. **Campus mission** — they receive an explicit dossier with known facts, intentionally missing facts, and a design role.
-3. **Architecture v1** — they build responsibilities and information flows before naming communication technologies.
+3. **Defended baseline** — they build responsibilities and information flows before naming communication technologies.
 4. **Requirements** — they reason in plain language first; formal vocabulary is unlocked after discussion.
 5. **Communication discovery** — network shapes are understood before technology names and deeper jargon.
 6. **Investigation** — students retrieve those families, calibrate confidence, and inspect technical depth on demand.
 7. **Transfer** — non-campus cases test whether the decision logic generalises.
 8. **Return to campus** — students identify the missing assumption most likely to change their connectivity stance.
-9. **Incident + architecture v2** — a changed assumption forces one concrete structural revision of the frozen v1.
+9. **Incident + revision record** — a changed assumption forces one concrete structural change relative to the preserved baseline.
 10. **Memory Lock** — retrieval comes before the final synthesis.
 
 ## STOP ritual used throughout
@@ -47,9 +47,9 @@ Every classroom STOP follows:
 3. **Engineering vocabulary** — Range, data volume/throughput, latency, reliability, energy, scale, mobility, infrastructure, cost.
 4. **Technology decision rule** — communication problem → network shape → technology family; technology choice implies infrastructure and dependencies.
 
-## Why architecture v1 is frozen
+## Why the defended baseline is preserved
 
-After STOP 2, v1 is stored separately. Later edits do not erase the original artifact. During the incident, students edit a copy to create v2. The final screen shows v1 and v2 side-by-side.
+After STOP 2, the defended baseline is stored separately. Later evidence does not erase the original artifact. During the incident, students record the structural change forced by the broken assumption. The final screen keeps the baseline and the justified revision visible side-by-side.
 
 This makes the central learning claim observable:
 
@@ -61,7 +61,7 @@ See `LEARNING-DESIGN-PATTERN.md` for the evidence synthesis and reusable authori
 
 ## Navigation rule added in V10.1
 
-The session now separates the **learning frontier** from the **screen currently viewed**. Students may revisit any already unlocked stage, while future stages remain gated. A visible Review mode and one-click return to the current mission reduce disorientation. Historically meaningful commitments are preserved: architecture v1 becomes read-only after STOP 2, while later changes are represented as v2.
+The session now separates the **learning frontier** from the **screen currently viewed**. Students may revisit any already unlocked stage, while future stages remain gated. A visible Review mode and one-click return to the current mission reduce disorientation. Historically meaningful commitments are preserved: the defended baseline becomes read-only after STOP 2, while later evidence is represented as an explicit revision record.
 
 This is intentionally **structured learner control**, not unrestricted hypermedia navigation. Reviews of learner control report mixed or near-zero average effects and warn that additional navigation choices can increase metacognitive/cognitive demands, especially when learners lack prior knowledge. The design therefore gives students review freedom but not freedom to expose future concepts or silently rewrite committed artifacts.
 
@@ -112,7 +112,7 @@ Do **not** force different sessions to contain the same number of activities. Sy
 
 ## Cross-session Mission dossier
 
-The running case uses a deliberately small cross-session record. Do **not** turn it into a transcript of student work. Session-internal state (screen, unlocks, retrieval, optional depth, hints) stays separate. The shared dossier contains only structured engineering decisions that are safe to reuse: Architecture v2 class, Top-3 requirements, access stance, one unresolved uncertainty, and the revision trigger. Session 2 personalises its handover from these fields but must always remain fully teachable with the generic fallback. Free text and diagrams may be exported for the student, but they must not be parsed or used to control later pedagogy.
+The running case uses a deliberately small cross-session record. Do **not** turn it into a transcript of student work. Session-internal state (screen, unlocks, retrieval, optional depth, hints) stays separate. The shared dossier contains only structured engineering decisions that are safe to reuse: current defended design class, Top-3 requirements, access stance, one unresolved uncertainty, and the revision trigger. Session 2 personalises its handover from these fields but must always remain fully teachable with the generic fallback. Free text and diagrams may be exported for the student, but they must not be parsed or used to control later pedagogy.
 
 
 ## Instructor cockpit rule
