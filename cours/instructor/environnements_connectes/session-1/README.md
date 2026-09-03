@@ -1,41 +1,41 @@
 # Séance 1 — surfaces enseignant
 
-- `index.html` — **Mode projection**, conçu pour être projeté.
+- `index.html` — **Mode projection**, conçu pour conduire la séance sans dupliquer l’interface étudiante.
 - `notes.html` — **notes enseignant privées** : réponses acceptables, misconceptions, précision technique, transitions et pacing.
 
 ## Invariant structurel
 
-Espace étudiant, Projection et Notes utilisent exactement les dix activités canoniques suivantes :
+Espace étudiant, Projection et Notes suivent les dix activités canoniques suivantes :
 
 1. Que voudriez-vous savoir ?
 2. Partir de la décision
-3. Ce que l'on peut réellement observer
-4. D'où viennent les données ?
+3. Du besoin à la mesure
+4. Profils d’observation
 5. Observer, indiquer ou inférer ?
 6. Une valeur ne suffit pas
-7. Où et quand observer ?
-8. Une donnée est-elle « bonne » ?
-9. Construire une stratégie d'observation
-10. Incident : votre vision du réel est fausse
+7. Dimensionner l’observation
+8. Qualité relative à la décision
+9. Construire une stratégie d’observation
+10. Incident : décider en mode dégradé
 
-Le Projection possède un écran **TRAVAIL** pour chaque activité. Les activités 1, 3, 5, 7, 9 et 10 ont également un écran **RESTITUTION**. Les activités 2, 4, 6 et 8 sont volontairement TRAVAIL-only.
+Le Projector possède un écran **TRAVAIL** pour chaque activité. Les activités 1, 3, 5, 7, 9 et 10 ont aussi un écran **DISCUSSION**. Les activités 2, 4, 6 et 8 sont volontairement travail-only.
 
-## Restitution collective
+## Contrat du Projector
 
-Les mêmes primitives que dans le cours IoT sont conservées :
+Le Projector n’est pas une deuxième interface de restitution. Les étudiants ont déjà leur production et leur formalisation sur leur propre appareil. Le tableau sert uniquement à conduire l’échange collectif :
 
-- **Capture** : faire émerger des idées récurrentes ;
-- **Structure** : construire une représentation collective ;
-- **Compare** : visualiser une distribution après engagement des groupes.
+1. **remémorer la question centrale** ;
+2. **poser 2–3 relances maximum** à partir des productions des groupes ;
+3. **retourner une seule carte** avec quelques éléments complémentaires qui ne dupliquent pas leur restitution.
 
-Toujours appliquer : **commit → aggregate → discuss**. La majorité n'est jamais présentée comme la bonne réponse.
+Il n’y a plus de tableau de classe à remplir, de vote, de compteur ni de saisie au vidéoprojecteur. Si une distribution de réponses est utile, la faire apparaître oralement ou à main levée.
 
-## Réinitialisation
-
-- `Nouvelle classe` efface uniquement l'état du Projection stocké dans `sessionStorage`.
-- Cela n'affecte jamais les espaces étudiants ni leur `localStorage`.
-
+Le verso n’est pas la « bonne réponse » à la question. Il ajoute ce que la discussion seule risque de ne pas faire émerger : cas limite, dépendance, ordre de grandeur, conséquence d’ingénierie ou transfert.
 
 ## Règle de progression
 
-Les activités cumulatives peuvent imposer de **compléter une tentative** avant d’ouvrir la sous-étape suivante, mais ne doivent pas imposer la **bonne réponse** pour progresser. A3, A4 et A6 appliquent explicitement ce principe : les erreurs deviennent matière de feedback ou de restitution, pas des verrous.
+Les activités cumulatives peuvent imposer de **compléter une tentative** avant d’ouvrir la sous-étape suivante, mais ne doivent pas imposer la **bonne réponse** pour progresser. Les erreurs deviennent matière à feedback ou discussion, pas des verrous.
+
+## Clôture
+
+Après A10, le Projector affiche une synthèse courte : quatre gestes d’ingénierie, l’introduction du terme **IoT** comme sous-ensemble de l’environnement connecté, puis la question qui ouvre S2 sur le transport des observations.

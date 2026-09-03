@@ -95,6 +95,8 @@ All alternative prompts, misconceptions, accepted answer families, examples, ref
 
 Authoring rule: **students produce and discuss the reasoning; the student takeaway formalises it; the single Projector reveal only completes it.**
 
+After the final restitution, close with one **static Projector synthesis**: at most three durable ideas, one visual model that compresses the session, and one forward question that creates the need for the next session. This screen has no interaction and is not a ninth activity.
+
 
 ## Activity count is curriculum-driven
 

@@ -521,7 +521,7 @@ The two surfaces should contain the **same conceptual destination** but differen
 
 > **The class sees the intellectual problem and its consolidation. The instructor sees the facilitation logic and answer space.**
 
-This separation is especially important in a no-slides course: projector pages replace both the **work prompt** and the **public explanatory/evidence function** of slides, while notes replace presenter notes. The default public rhythm is **WORK → optional RESTITUTION → next canonical activity**. LOOK → COMPARE → CHALLENGE → UNLOCK → GROUND remains the instructor-facing facilitation logic, but the formal concept is revealed on the student surface; the single Projector flip adds only complementary consolidation, while additional grounding stays in Notes.
+This separation is especially important in a no-slides course: projector pages replace both the **work prompt** and the **public explanatory/evidence function** of slides, while notes replace presenter notes. The default public rhythm is **WORK → optional RESTITUTION → next canonical activity**. After the final restitution only, append one **static session conclusion** (≤3 takeaways → one visual model → one forward question); it is not a canonical activity and contains no interaction. LOOK → COMPARE → CHALLENGE → UNLOCK → GROUND remains the instructor-facing facilitation logic, but the formal concept is revealed on the student surface; the single Projector flip adds only complementary consolidation, while additional grounding stays in Notes.
 
 
 ## Visual-system invariant

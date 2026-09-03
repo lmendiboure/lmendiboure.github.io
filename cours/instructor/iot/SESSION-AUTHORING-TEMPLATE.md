@@ -251,6 +251,7 @@ For each canonical activity, author Student + Projector + Notes before consideri
 - [ ] Are activity numbers, order and short titles identical across all three surfaces?
 - [ ] Does every Projector activity have exactly one WORK screen and zero or one RESTITUTION screen?
 - [ ] Does every restitution have exactly one content interaction: the full-width flip card?
+- [ ] After the final restitution, is there exactly one static conclusion screen with ≤3 takeaways, one visual model and one transition question?
 - [ ] Are work-only activities still represented explicitly?
 
 **Projection audit**

@@ -16,7 +16,6 @@
       </section>`;
   }
 
-
   function rest(a){
     const s=a.stop;
     const probes=Array.isArray(s.probe)?s.probe:(s.probe?[s.probe]:[]);
@@ -40,12 +39,42 @@
       </button>`;
   }
 
+  function conclusion(){
+    const c=D.conclusion||{};
+    const points=Array.isArray(c.takeaways)?c.takeaways:[];
+    const model=Array.isArray(c.model)?c.model:[];
+    return `
+      <div class="shell conclusion-head">
+        <div class="eyebrow">Session ${esc(D.session)} · Conclusion</div>
+        <h1>${esc(c.title||'What we keep')}</h1>
+        <p>${esc(c.subtitle||'')}</p>
+      </div>
+      <div class="shell conclusion-stage">
+        <section class="conclusion-takeaways" aria-label="Key ideas from the session">
+          ${points.map((x,n)=>`<article><span>${n+1}</span><p>${esc(x)}</p></article>`).join('')}
+        </section>
+        ${model.length?`<section class="conclusion-model"><div class="panel-kicker">${esc(c.modelLabel||'THE MODEL WE KEEP')}</div><div class="model-chain">${model.map((x,n)=>`${n?'<b aria-hidden="true">→</b>':''}<span>${esc(x)}</span>`).join('')}</div></section>`:''}
+        ${c.next?`<section class="conclusion-next"><span>${esc(c.nextLabel||'NEXT')}</span><strong>${esc(c.next)}</strong></section>`:''}
+      </div>`;
+  }
+
   function renderProgress(){
     const p=$('#progress');
-    p.innerHTML=D.activities.map((a,n)=>`<span class="progress-step ${n<i?'done':''} ${n===i?'active':''}" aria-hidden="true"></span>`).join('');
+    const finished=mode==='conclusion';
+    p.innerHTML=D.activities.map((a,n)=>`<span class="progress-step ${finished||n<i?'done':''} ${!finished&&n===i?'active':''}" aria-hidden="true"></span>`).join('');
   }
 
   function render(){
+    if(mode==='conclusion'){
+      scene.innerHTML=conclusion();
+      $('#screenCount').textContent='Conclusion';
+      $('#back').disabled=false;
+      $('#next').textContent='Session complete';
+      $('#next').disabled=true;
+      renderProgress();
+      return;
+    }
+
     const a=D.activities[i],st=mode==='stop'&&a.stop;
     scene.innerHTML=`
       <div class="shell scene-head">
@@ -55,20 +84,27 @@
       <div class="shell stage">${st?rest(a):work(a)}</div>`;
     $('#screenCount').textContent=`${i+1}/${D.activities.length} · ${st?'DISCUSSION':'ACTIVITY'}`;
     $('#back').disabled=i===0&&mode==='work';
-    $('#next').textContent=mode==='work'?(a.stop?'Discuss together →':(i===D.activities.length-1?'Session complete':'Next activity →')):(i===D.activities.length-1?'Session complete':'Next activity →');
-    $('#next').disabled=mode==='stop'&&i===D.activities.length-1;
+    const final=i===D.activities.length-1;
+    if(mode==='work') $('#next').textContent=a.stop?'Discuss together →':(final?'Conclusion →':'Next activity →');
+    else $('#next').textContent=final?'Conclusion →':'Next activity →';
+    $('#next').disabled=false;
     renderProgress();
   }
 
   function advance(){
+    if(mode==='conclusion')return;
     const a=D.activities[i];
-    if(mode==='work'&&a.stop) mode='stop';
+    if(mode==='work'&&a.stop){mode='stop';}
     else if(i<D.activities.length-1){i++;mode='work';}
+    else{mode='conclusion';}
     render();
   }
 
   function back(){
-    if(mode==='stop') mode='work';
+    if(mode==='conclusion'){
+      i=D.activities.length-1;
+      mode=D.activities[i].stop?'stop':'work';
+    }else if(mode==='stop') mode='work';
     else if(i>0){i--;mode=D.activities[i].stop?'stop':'work';}
     render();
   }

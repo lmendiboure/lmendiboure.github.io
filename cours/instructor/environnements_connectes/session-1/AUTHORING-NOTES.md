@@ -35,32 +35,19 @@ Le **dossier d'observation** accumule les décisions de la séance. La stratégi
 - aucun backend requis.
 
 
-## Mise à jour v1.13 — alignement IoT v1.27
+## Projector — règle v1.24
 
-- A4 : le panorama de 8 familles est désormais replié par défaut ; la carte espace × rythme reste le geste principal.
-- A10 : historique v1.13, désormais supersédé par la chaîne causale simplifiée de la v1.21.
-- Projector : `COMPARER` reste une question ouverte non retournable ; `PRÉCISER / ÉPROUVER` deviennent les cartes à retourner, verso = ancrage pédagogique ; `Retour au réel` seulement s’il apporte un transfert.
-- Correctifs CSS : wrapping défensif des libellés français et des traces de classe, `min-width:0` sur les composants de restitution.
+Le Projector suit désormais le même modèle minimal que le cours IoT :
 
+- écran TRAVAIL : question centrale + contexte court + 2–3 productions attendues ;
+- écran DISCUSSION : une question de reprise ;
+- face avant : 2–3 relances maximum ;
+- face arrière : 2–3 compléments qui ajoutent quelque chose à la restitution étudiante ;
+- aucune saisie de classe, aucun compteur, aucun tableau collectif obligatoire.
 
-## Restitution — règle v1.15
-- **COMPARER** est une question ouverte projetée, jamais une carte à retourner : elle sert à mettre les artefacts en regard et à faire apparaître les divergences.
-- **PRÉCISER / ÉPROUVER** peuvent être retournés après échange ; leur verso contient l’ancrage à conserver.
-- Ne pas dupliquer le verso dans un panneau « À retenir ».
-- Le **Retour au réel** n’est utilisé que s’il apporte un cas, une donnée, un ordre de grandeur ou un transfert supplémentaire.
-- En fin de séance : 3 questions de synthèse sans score, puis une synthèse courte des capacités acquises, l’introduction du terme IoT comme sous-ensemble de l’environnement connecté, et la transition vers S2.
+Les `guardrails`, réponses acceptables, misconceptions et indications de conduite restent dans `notes.html`. Ils ne doivent pas apparaître au tableau.
 
+Le verso n’est pas une correction. Les étudiants possèdent déjà leur formalisation locale. Il sert à apporter un **step further** : ordre de grandeur, dépendance, cas limite, conséquence de conception ou transfert vers un autre contexte.
 
-## Mise à jour v1.20 — clarté étudiant et niveau ingénieur
+En fin de séance, conserver un écran de synthèse très court : quatre gestes d’ingénierie, le mot **IoT** posé sur la partie instrumentée/connectée du système, puis le pont vers S2.
 
-- **IoT nommé explicitement**, mais positionné comme sous-ensemble d’un environnement connecté : objets instrumentés et connectés d’un côté ; imagerie, services externes, traces métier et humains de l’autre.
-- **A1 ≠ A2 rendu explicite** : A1 ouvre le champ depuis le territoire ; A2 inverse le raisonnement depuis une décision imposée vers l’information à demander en premier.
-- **A2 test rapide** : l’information CRUE choisie est retirée ; le groupe décide agir / confirmer / différer et voit l’hypothèse implicite associée.
-- **A3** : cinq niveaux nommés sur un cas BTP concret. La seconde partie n’est plus un exercice à refaire : elle montre la même chaîne dans le sens d’exploitation afin de comparer les deux directions.
-- **A4** : après placement sur étendue × rythme, trois besoins concrets servent à utiliser la carte. Suppression du quiz méta sur « ce que la carte ne montre pas ».
-- **A5** : revue fournisseur contextualisée ; trois relations sémantiques (direct / proxy / inférence) + provenance interne/externe comme axe séparé.
-- **A6** : trois questions opérationnelles avant le vocabulaire technique ; introduire d’abord « horodatage », puis « timestamp », et distinguer temps du phénomène, temps du résultat et temps d’arrivée. Progression non bloquante sur la justesse.
-- **A7** : Peio revient du terrain avec trois dynamiques incompatibles. A7 dimensionne un plan d’observation (cadence + granularité) et ne doit pas être confondue avec A4, qui décrit seulement les capacités espace × temps des familles de sources. Les ordres de grandeur Sentinel-2 / LiDAR HD servent à casser l’intuition « plus de données = meilleure observation ».
-- **A8** : désaccord de mission explicite ; même donnée, décisions différentes. Les trois dossiers sont traités séquentiellement avec un retour de référence explicatif après chaque dossier.
-- **A10** : v1 visible, incident pertinent, effet sur la décision, diagnostic filtré, une règle de fonctionnement minimale, risque résiduel. Pas de réédition complète des sources.
-- Les **ordres de grandeur d’observation** sont donnés en S1 lorsqu’ils éclairent un raisonnement (Sentinel-2, LiDAR HD). Les **portées radio** sont réservées à S2 et seront toujours présentées comme ordres de grandeur dépendant du relief, du débit, de l’énergie et du déploiement — jamais comme distances garanties.

@@ -174,7 +174,12 @@ Do not place Live Boards, secondary-question decks, multiple KEEP cards, referen
 
 The public reading order is **student artefacts → discuss → student takeaway → flip once for complements**.
 
-## Conclusion focus on Projector
+## Session conclusion on Projector
 
-Rich `REALITY CHECK` plates must remain readable without turning the Projector into a scrolling document. When the Reality Check opens, the top restitution context may enter a compact **conclusion focus** state so the external evidence remains legible. KEEP cards must never be clipped or treated as a second hidden reference plate.
+After the last restitution, show one **static conclusion screen**. It is student-facing and contains only:
 
+1. **Three takeaways maximum** — durable ideas, not a recap of every activity.
+2. **One visual model** — the smallest representation that compresses the session's reasoning.
+3. **One forward question** — the unresolved problem that naturally opens the next session.
+
+There is no flip, reveal, board, reference panel or extra navigation interaction on this screen. The conclusion is not a canonical activity and must not change activity numbering.
