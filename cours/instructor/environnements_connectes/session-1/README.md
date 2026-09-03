@@ -38,4 +38,4 @@ Les activités cumulatives peuvent imposer de **compléter une tentative** avant
 
 ## Clôture
 
-Après A10, le Projector affiche une synthèse courte : quatre gestes d’ingénierie, l’introduction du terme **IoT** comme sous-ensemble de l’environnement connecté, puis la question qui ouvre S2 sur le transport des observations.
+Après A10, le Projector affiche une synthèse conceptuelle courte : l’environnement connecté construit une vision partielle, située et orientée vers une décision du réel ; la qualité est relative à l’usage ; plusieurs sources ne suppriment pas les dépendances ni les angles morts. Le terme **IoT** est ensuite posé sur la partie instrumentée/connectée de cet ensemble, avant la question qui ouvre S2 sur le transport des observations.

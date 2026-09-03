@@ -49,5 +49,5 @@ Les `guardrails`, réponses acceptables, misconceptions et indications de condui
 
 Le verso n’est pas une correction. Les étudiants possèdent déjà leur formalisation locale. Il sert à apporter un **step further** : ordre de grandeur, dépendance, cas limite, conséquence de conception ou transfert vers un autre contexte.
 
-En fin de séance, conserver un écran de synthèse très court : quatre gestes d’ingénierie, le mot **IoT** posé sur la partie instrumentée/connectée du système, puis le pont vers S2.
+En fin de séance, conserver un écran de synthèse très court centré sur quatre compréhensions : la donnée n’est pas le réel ; toute observation est partielle ; la qualité dépend de l’usage ; plusieurs sources ne suppriment ni dépendances ni angles morts. Poser ensuite le mot **IoT** sur la partie instrumentée/connectée du système, puis ouvrir S2.
 
