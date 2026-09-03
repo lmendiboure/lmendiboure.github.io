@@ -54,27 +54,25 @@
 <h2>Build a deliberately diverse test set.</h2>
 <p>You do not need to classify everything. Map <strong>four cases that seem meaningfully different</strong>, spanning at least three domains. The purpose is to make the later IoT definition survive difficult examples rather than one familiar use case.</p>
 </div>
+<div class="interaction-guide"><b>DO THIS</b><span>1 · Select four contrasting systems. 2 · Mark the one that most stretches a simple definition of IoT.</span><small>Done when four cases span at least three domains and one boundary case is marked.</small></div>
 <div class="landscape-summary card flat">
-<div><span class="landscape-kicker">Your test set</span><strong aria-live="polite" id="landscapeProgress">0 / 4 cases mapped</strong></div>
+<div><span class="landscape-kicker">Step 1 of 2 · build the test set</span><strong aria-live="polite" id="landscapeProgress">0 / 4 cases selected</strong></div>
 <div class="landscape-domain-preview" id="landscapeDomainPreview"></div>
 </div>
 <div aria-label="Potential IoT systems" class="usecase-grid" id="useCaseGrid"></div>
-<div class="reflection-strip">
-<strong>Do not optimise the classification:</strong>
-<span>What common system property survives across very different domains?</span><span>Which constraint clearly does <em>not</em> survive across them?</span><span>Where does “connected” stop being a useful definition?</span>
-</div>
-<button class="btn primary next-activity" data-next="1" disabled="" id="landscapeNext" type="button">Diverse test set ready → STOP</button>
+<div class="boundary-pick card flat" id="boundaryCasePicker" hidden></div>
+<button class="btn primary next-activity" data-next="1" disabled="" id="landscapeNext" type="button">Select four cases first</button>
 </section>
 <!-- STOP 1 -->
 <section class="activity-screen" data-screen="1" hidden="">
 <div class="stop-screen">
 <div class="stop-orbit">STOP</div>
 <div class="eyebrow">Class discussion</div>
-<h2>Use your map to discuss.</h2>
-<p>Use your own map below during the discussion. Your teacher will then compare it with a broader landscape.</p>
+<h2>Use your test set to discuss.</h2>
+<p>Start from the four cases you selected and the boundary case you marked. Your teacher will then compare the class reasoning with a broader landscape.</p>
 <div aria-label="Discussion rhythm" class="stop-rhythm"><span class="active">1 · LOOK</span><span>2 · COMPARE</span><span>3 · CHALLENGE</span><span>4 · UNLOCK</span></div>
 <div class="stop-snapshot" id="stopLandscapeSnapshot"></div>
-<button class="text-button review-activity" data-review-screen="0" type="button">← Review / edit our map</button>
+<button class="text-button review-activity" data-review-screen="0" type="button">← Review / edit our test set</button>
 <div class="student-stop-question"><span>2 · Compare</span><strong>If these systems live in such different environments, what could possibly make them part of the same field?</strong></div>
 <div class="teacher-challenge-slot" data-stop-challenge="landscape"></div>
 <div class="concept-unlock-slot" data-concept="iot"></div>
@@ -384,16 +382,6 @@
 </section>
 </div>
 </main>
-<div class="domain-picker-scrim" hidden="" id="domainPickerScrim"></div>
-<div aria-hidden="true" aria-labelledby="domainPickerTitle" aria-modal="true" class="domain-picker" id="domainPicker" role="dialog">
-<div class="domain-picker-head">
-<div><div class="eyebrow">Map the system</div><h2 id="domainPickerTitle">Choose domains</h2></div>
-<button aria-label="Close domain picker" class="icon-button drawer-close" id="closeDomainPicker" type="button">×</button>
-</div>
-<p class="section-copy" id="domainPickerCopy"></p>
-<div class="domain-picker-grid" id="domainPickerChoices"></div>
-<div class="domain-picker-foot"><span id="domainPickerHint">Choose a primary domain.</span><button class="btn primary" id="doneDomainPicker" type="button">Done</button></div>
-</div>
 <div class="design-scrim" hidden="" id="designScrim"></div>
 <aside aria-hidden="true" aria-label="Our design summary" class="design-drawer" id="designDrawer">
 <div class="design-drawer-head"><div><div class="eyebrow">Persistent workspace</div><h2>Our design</h2></div><button aria-label="Close design panel" class="icon-button drawer-close" id="closeDesign" type="button">×</button></div>

@@ -2,10 +2,10 @@
   const root = document.querySelector('.student-page');
   if (!root) return;
 
-  const STORAGE_KEY = 'iot-systems-design-session1-v19';
+  const STORAGE_KEY = 'iot-systems-design-session1-v20';
   const MISSION_KEY = 'iot-systems-design-campus-mission-v1';
   const defaultState = {
-    version: 19,
+    version: 20,
     screen: 0,
     maxUnlockedScreen: 0,
     conceptUnlocks: {},
@@ -13,6 +13,7 @@
     architectureV1: null,
     architectureV2: null,
     landscape: {},
+    landscapeBoundary: null,
     borderline: {},
     challengeProgress: {},
     adaptiveDepth: {},
@@ -166,17 +167,17 @@
   function renderStopRitual(){
     document.querySelectorAll('[data-stop-challenge]').forEach(host=>{
       const id=host.dataset.stopChallenge,d=stopChallengeDefs[id],shown=!!state.stopChallenges?.[id]; if(!d)return;
-      host.innerHTML=`<div class="ritual-card challenge"><span class="ritual-kicker">3 · Challenge</span><strong>${d.title}</strong>${shown?`<p>${d.prompt}</p>`:`<p>When your teacher asks, reveal one counterexample that tests the class rule.</p><button type="button" class="btn soft reveal-stop-challenge" data-id="${id}">Reveal teacher challenge</button>`}</div>`;
+      host.innerHTML=`<div class="ritual-card challenge"><span class="ritual-kicker">COUNTEREXAMPLE FOR DISCUSSION</span><strong>${d.title}</strong><p>${d.prompt}</p></div>`;
     });
     document.querySelectorAll('.reveal-stop-challenge').forEach(b=>b.addEventListener('click',()=>{state.stopChallenges={...(state.stopChallenges||{}),[b.dataset.id]:true};saveState();renderStopRitual();}));
     document.querySelectorAll('[data-concept]').forEach(host=>{
       const id=host.dataset.concept,d=conceptDefs[id],unlocked=!!state.conceptUnlocks?.[id]; if(!d)return;
-      host.innerHTML=`<div class="ritual-card unlock ${unlocked?'unlocked':''}"><span class="ritual-kicker">4 · Unlock</span>${unlocked?`<strong>${d.title}</strong><div class="unlock-sequence"><section><span>From your discussion</span><p>${d.bridge}</p></section><section><span>Formalise it</span><p>${d.formal}</p></section><section class="carry"><span>Carry it forward</span><p>${d.carry}</p></section></div><div class="chip-row unlock-tags">${d.tags.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:`<strong>Consolidate what the class just discovered.</strong><p>After the comparison and counterexample, connect your observations to the formal concept before moving on.</p><button type="button" class="btn primary unlock-concept" data-id="${id}">Consolidate what we keep</button>`}</div>`;
+      host.innerHTML=`<div class="ritual-card unlock ${unlocked?'unlocked':''}"><span class="ritual-kicker">AFTER DISCUSSION · ONE ACTION</span>${unlocked?`<strong>${d.title}</strong><div class="unlock-sequence"><section><span>From your discussion</span><p>${d.bridge}</p></section><section><span>Formalise it</span><p>${d.formal}</p></section><section class="carry"><span>Carry it forward</span><p>${d.carry}</p></section></div><div class="chip-row unlock-tags">${d.tags.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:`<strong>Show the class takeaway.</strong><p>This is the only action required to unlock Continue. Use it after the comparison has been discussed.</p><button type="button" class="btn primary unlock-concept" data-id="${id}">Show takeaway + unlock Continue</button>`}</div>`;
     });
     document.querySelectorAll('.unlock-concept').forEach(b=>b.addEventListener('click',()=>{state.conceptUnlocks={...(state.conceptUnlocks||{}),[b.dataset.id]:true};saveState();renderStopRitual();renderFieldGuide();updateStopNextButtons();}));
     updateStopNextButtons();
   }
-  function updateStopNextButtons(){document.querySelectorAll('[data-requires-unlock]').forEach(b=>{const conceptReady=!!state.conceptUnlocks?.[b.dataset.requiresUnlock];const handoverReady=b.dataset.requiresHandover?!!state.handoverArchitecture:true;b.disabled=!(conceptReady&&handoverReady);});}
+  function updateStopNextButtons(){document.querySelectorAll('[data-requires-unlock]').forEach(b=>{const conceptReady=!!state.conceptUnlocks?.[b.dataset.requiresUnlock];const handoverReady=b.dataset.requiresHandover?!!state.handoverArchitecture:true;const ready=conceptReady&&handoverReady;b.disabled=!ready;b.textContent=ready?'Takeaway saved → continue':'Show the takeaway above to continue';});}
   function renderFieldGuide(){
     const count=conceptOrder.filter(id=>state.conceptUnlocks?.[id]).length;
     const btn=$('#fieldGuideBtn'),counter=$('#fieldGuideCount'); if(btn)btn.hidden=count===0;if(counter)counter.textContent=`${count}/6`;
@@ -297,16 +298,15 @@
   ];
 
   const landscapeCases = [
-    {id:'vaccine', icon:'A', title:'Refrigerated vaccine shipment', clue:'Reports temperature and location while travelling between a hospital supplier and care sites.'},
-    {id:'worker', icon:'B', title:'Connected worker safety badge', clue:'Detects falls and hazardous gases on an industrial site and can raise an alert.'},
-    {id:'ev', icon:'C', title:'Adaptive EV charging point', clue:'Publishes availability and changes charging power according to electricity-grid conditions.'},
-    {id:'bridge', icon:'D', title:'Railway bridge condition monitor', clue:'Measures structural vibration on infrastructure used by a transport network.'},
-    {id:'irrigation', icon:'E', title:'Weather-aware irrigation controller', clue:'Combines soil and weather measurements to decide when agricultural watering is useful.'},
-    {id:'battery', icon:'F', title:'Grid-responsive home battery', clue:'Stores household energy but can also react to requests from the electricity system.'},
-    {id:'schoolair', icon:'G', title:'Air-quality sensing around schools', clue:'Measures pollution in public space where environmental conditions can affect people.'},
-    {id:'warehouse', icon:'H', title:'Autonomous warehouse robot fleet', clue:'Moves goods, senses its surroundings and coordinates operations inside a logistics facility.'}
+    {id:'vaccine', icon:'A', title:'Refrigerated vaccine shipment', clue:'Reports temperature and location while travelling between a hospital supplier and care sites.', primary:'logistics', secondary:'health'},
+    {id:'worker', icon:'B', title:'Connected worker safety badge', clue:'Detects falls and hazardous gases on an industrial site and can raise an alert.', primary:'industry', secondary:'health'},
+    {id:'ev', icon:'C', title:'Adaptive EV charging point', clue:'Publishes availability and changes charging power according to electricity-grid conditions.', primary:'mobility', secondary:'energy'},
+    {id:'bridge', icon:'D', title:'Railway bridge condition monitor', clue:'Measures structural vibration on infrastructure used by a transport network.', primary:'mobility', secondary:'industry'},
+    {id:'irrigation', icon:'E', title:'Weather-aware irrigation controller', clue:'Combines soil and weather measurements to decide when agricultural watering is useful.', primary:'agriculture', secondary:'environment'},
+    {id:'battery', icon:'F', title:'Grid-responsive home battery', clue:'Stores household energy but can also react to requests from the electricity system.', primary:'home', secondary:'energy'},
+    {id:'schoolair', icon:'G', title:'Air-quality sensing around schools', clue:'Measures pollution in public space where environmental conditions can affect people.', primary:'environment', secondary:'cities'},
+    {id:'warehouse', icon:'H', title:'Autonomous warehouse robot fleet', clue:'Moves goods, senses its surroundings and coordinates operations inside a logistics facility.', primary:'logistics', secondary:'industry'}
   ];
-  let activeLandscapeCase = null;
 
   function landscapeSelection(caseId){
     const v=state.landscape?.[caseId];
@@ -315,64 +315,53 @@
     return {primary:null,secondary:null};
   }
   function selectedDomainsFor(caseId){const x=landscapeSelection(caseId);return [x.primary,x.secondary].filter(Boolean);}
-
   function domainName(id){const d=landscapeDomains.find(x=>x[0]===id);return d?d[2]:id||'';}
   function domainIcon(id){const d=landscapeDomains.find(x=>x[0]===id);return d?d[1]:'';}
+  function selectedLandscapeCases(){return landscapeCases.filter(c=>landscapeSelection(c.id).primary);}
+
+  function toggleLandscapeCase(caseId){
+    const c=landscapeCases.find(x=>x.id===caseId); if(!c)return;
+    const selected=!!landscapeSelection(caseId).primary;
+    if(selected){
+      delete state.landscape[caseId];
+      if(state.landscapeBoundary===caseId) state.landscapeBoundary=null;
+    } else {
+      if(selectedLandscapeCases().length>=4){flashMessage('You already have four cases. Deselect one before replacing it.');return;}
+      state.landscape[caseId]={primary:c.primary,secondary:c.secondary||null};
+    }
+    saveState(); renderLandscape();
+  }
+
+  function renderBoundaryPicker(mapped){
+    const host=$('#boundaryCasePicker'); if(!host)return;
+    if(mapped.length<4){host.hidden=true;host.innerHTML='';return;}
+    host.hidden=false;
+    host.innerHTML=`<div class="boundary-pick-head"><span class="landscape-kicker">Step 2 of 2 · test your definition</span><strong>Which selected case most stretches a simple definition of IoT?</strong><small>There is no hidden correct answer. Pick the case you expect will be hardest to defend at the STOP.</small></div><div class="boundary-options">${mapped.map(c=>`<button type="button" class="boundary-option ${state.landscapeBoundary===c.id?'active':''}" data-boundary-case="${c.id}"><span>${c.icon}</span><b>${esc(c.title)}</b></button>`).join('')}</div>`;
+    host.querySelectorAll('[data-boundary-case]').forEach(b=>b.addEventListener('click',()=>{state.landscapeBoundary=b.dataset.boundaryCase;saveState();renderLandscape();}));
+  }
 
   function renderLandscape(){
     const host=$('#useCaseGrid'); if(!host)return;
+    const mapped=selectedLandscapeCases();
     host.innerHTML=landscapeCases.map(c=>{
-      const sel=landscapeSelection(c.id), selected=selectedDomainsFor(c.id);
-      const chips=sel.primary?`<span class="domain-chip primary"><b>Main</b> ${domainIcon(sel.primary)} ${domainName(sel.primary)}</span>${sel.secondary?`<span class="domain-chip secondary"><b>Also</b> ${domainIcon(sel.secondary)} ${domainName(sel.secondary)}</span>`:''}`:'<span class="domain-unlinked">No main domain chosen yet</span>';
-      return `<button type="button" class="usecase-card ${sel.primary?'linked':''}" data-case="${c.id}"><span class="usecase-icon">${c.icon}</span><span class="usecase-copy"><span class="usecase-case">Case ${c.icon}</span><strong>${c.title}</strong><small>${c.clue}</small><span class="usecase-domains">${chips}</span></span><span class="usecase-action">${selected.length?'Edit':'Map it'} →</span></button>`;
+      const selected=!!landscapeSelection(c.id).primary;
+      const tags=`<span class="domain-chip primary">${domainIcon(c.primary)} ${domainName(c.primary)}</span>`;
+      return `<button type="button" class="usecase-card ${selected?'linked selected':''}" data-case="${c.id}" aria-pressed="${selected?'true':'false'}"><span class="usecase-icon">${selected?'✓':c.icon}</span><span class="usecase-copy"><span class="usecase-case">Case ${c.icon}</span><strong>${c.title}</strong><small>${c.clue}</small><span class="usecase-domains">${tags}</span></span><span class="usecase-action">${selected?'Selected · click to remove':'Select case'}</span></button>`;
     }).join('');
-    host.querySelectorAll('.usecase-card').forEach(b=>b.addEventListener('click',()=>openDomainPicker(b.dataset.case)));
-    const mapped=landscapeCases.filter(c=>landscapeSelection(c.id).primary);
-    const linked=mapped.length, uniqueDomains=new Set(mapped.map(c=>landscapeSelection(c.id).primary)).size;
-    const progress=$('#landscapeProgress'); if(progress)progress.textContent=`${Math.min(linked,4)} / 4 cases mapped · ${uniqueDomains} domain${uniqueDomains===1?'':'s'}`;
+    host.querySelectorAll('.usecase-card').forEach(b=>b.addEventListener('click',()=>toggleLandscapeCase(b.dataset.case)));
+    const uniqueDomains=new Set(mapped.map(c=>landscapeSelection(c.id).primary)).size;
+    const progress=$('#landscapeProgress');
+    if(progress)progress.textContent=mapped.length<4?`${mapped.length} / 4 cases selected`:`4 / 4 selected · ${uniqueDomains} main domains`;
     const preview=$('#landscapeDomainPreview');
-    if(preview){preview.innerHTML=landscapeDomains.map(([id,icon,name])=>{const count=landscapeCases.filter(c=>selectedDomainsFor(c.id).includes(id)).length;return `<span class="landscape-domain-count ${count?'used':''}"><b>${icon}</b>${name}<small>${count}</small></span>`;}).join('');}
-    const next=$('#landscapeNext'); if(next){const ready=linked>=4&&uniqueDomains>=3;next.disabled=!ready;next.textContent=ready?'Diverse test set ready → STOP':linked<4?'Map four contrasting cases →':'Span at least three main domains →';}
+    if(preview){preview.innerHTML=landscapeDomains.map(([id,icon,name])=>{const count=mapped.filter(c=>landscapeSelection(c.id).primary===id).length;return count?`<span class="landscape-domain-count used"><b>${icon}</b>${name}<small>${count}</small></span>`:'';}).join('')||'<span class="landscape-empty-domain">Domain coverage appears here as you select cases.</span>';}
+    renderBoundaryPicker(mapped);
+    const next=$('#landscapeNext'); if(next){
+      const ready=mapped.length===4&&uniqueDomains>=3&&!!state.landscapeBoundary;
+      next.disabled=!ready;
+      next.textContent=ready?'Test set + boundary case ready → STOP':mapped.length<4?`Select ${4-mapped.length} more contrasting case${4-mapped.length===1?'':'s'}`:uniqueDomains<3?'Replace one case to span at least three domains':!state.landscapeBoundary?'Now mark the hardest boundary case above':'Ready → STOP';
+    }
     renderBorderlineChallenge(); renderStopSnapshots();
   }
-
-  function openDomainPicker(caseId){
-    activeLandscapeCase=caseId;
-    const c=landscapeCases.find(x=>x.id===caseId); if(!c)return;
-    $('#domainPickerTitle').textContent=c.title;
-    $('#domainPickerCopy').textContent='First choice = main domain. Add one secondary domain only if it genuinely captures another side of the system.';
-    renderDomainPickerChoices();
-    $('#domainPicker').classList.add('open'); $('#domainPicker').setAttribute('aria-hidden','false'); $('#domainPickerScrim').hidden=false;
-  }
-
-  function renderDomainPickerChoices(){
-    if(!activeLandscapeCase)return;
-    const sel=landscapeSelection(activeLandscapeCase), host=$('#domainPickerChoices');
-    host.innerHTML=landscapeDomains.map(([id,icon,name])=>{
-      const role=sel.primary===id?'primary':sel.secondary===id?'secondary':'';
-      return `<button type="button" class="domain-choice ${role?'selected '+role:''}" data-domain="${id}"><span>${icon}</span><strong>${name}</strong><small>${role==='primary'?'MAIN DOMAIN':role==='secondary'?'SECONDARY':'Choose'}</small></button>`;
-    }).join('');
-    host.querySelectorAll('.domain-choice').forEach(b=>b.addEventListener('click',()=>{
-      const id=b.dataset.domain, current=landscapeSelection(activeLandscapeCase);
-      if(current.primary===id){current.primary=current.secondary;current.secondary=null;}
-      else if(current.secondary===id){current.secondary=null;}
-      else if(!current.primary){current.primary=id;}
-      else if(!current.secondary){current.secondary=id;}
-      else {flashMessage('Two domains are enough: one main and one secondary.');return;}
-      state.landscape[activeLandscapeCase]=current; saveState(); renderDomainPickerChoices(); renderLandscape();
-    }));
-    const n=[sel.primary,sel.secondary].filter(Boolean).length;
-    $('#domainPickerHint').textContent=!sel.primary?'Choose a main domain.':sel.secondary?'Main + secondary selected.':'Main selected. A secondary domain is optional.';
-    $('#doneDomainPicker').disabled=!sel.primary;
-  }
-
-  function closeDomainPicker(){
-    if(activeLandscapeCase && !landscapeSelection(activeLandscapeCase).primary){flashMessage('Choose a main domain first.');return;}
-    $('#domainPicker').classList.remove('open'); $('#domainPicker').setAttribute('aria-hidden','true'); $('#domainPickerScrim').hidden=true; activeLandscapeCase=null;
-  }
-  $('#closeDomainPicker')?.addEventListener('click',()=>{if(activeLandscapeCase && !landscapeSelection(activeLandscapeCase).primary){state.landscape[activeLandscapeCase]={primary:null,secondary:null};}$('#domainPicker').classList.remove('open');$('#domainPicker').setAttribute('aria-hidden','true');$('#domainPickerScrim').hidden=true;activeLandscapeCase=null;renderLandscape();});
-  $('#doneDomainPicker')?.addEventListener('click',closeDomainPicker);
-  $('#domainPickerScrim')?.addEventListener('click',()=>$('#closeDomainPicker')?.click());
 
   const borderlineCases=[
     {id:'webpi',title:'A Raspberry Pi only hosts a website',copy:'It is networked, but it does not sense or act on a physical process.',prompt:'Connected computer ≠ automatically IoT. What extra relationship with the physical world would change your answer?'},
@@ -418,6 +407,8 @@
     updateClosedLoopGate();
   }
   function updateClosedLoopGate(){const next=$('#loopNext');if(!next)return;const a=state.loopClosure?.answers||{};const n=['ackscope','proof','authority'].filter(k=>a[k]).length;next.disabled=n<3;next.textContent=n<3?`Follow the claim trace · ${n}/3 →`:'Claim trace ready → STOP';}
+
+  function architectureIsFrozen(){return !!state.architectureV1;}
 
   function removeComponent(id) {
     if(architectureIsFrozen()){flashMessage('The defended baseline is frozen. Review it here; later changes belong in the revision record.');return;}
@@ -929,9 +920,9 @@
   };
   function renderDoubleFailure(){const host=$('#doubleFailureChallenge');if(!host)return;if(!state.selectedStress){host.innerHTML='<p class="challenge-copy">Complete the main stress test first, then add a second event.</p>';return;}const first=stressDefs.find(x=>x.id===state.selectedStress);const others=stressDefs.filter(x=>x.id!==state.selectedStress);const second=state.doubleStress?stressDefs.find(x=>x.id===state.doubleStress):null;const key=second?[first.id,second.id].sort().join('|'):null;host.innerHTML=`<p class="challenge-copy">Your first event is <b>${first.title}</b>. Add one more. Then assume you are allowed <b>one architectural change only</b>.</p><div class="challenge-chip-row">${others.map(x=>`<button type="button" class="chip-button ${second?.id===x.id?'active':''}" data-double="${x.id}">${x.title}</button>`).join('')}</div>${second?`<div class="impact-card compound"><span class="impact-number">2×</span><div><strong>${first.title} + ${second.title}</strong><p>${compoundInsights[key]||'The two events change more than one design dimension at once. Revisit which assumption, requirement and component becomes the actual bottleneck.'}</p></div></div><div class="expert-decision"><strong>One-change budget</strong><div class="challenge-chip-row">${responseChoices.map(([id,name])=>`<button type="button" class="chip-button ${state.doubleResponse===id?'active':''}" data-double-response="${id}">${name}</button>`).join('')}</div>${state.doubleResponse?`<p>Now attack your own answer: which of the two failures is still only partially handled?</p>`:''}</div>`:''}`;host.querySelectorAll('[data-double]').forEach(b=>b.addEventListener('click',()=>{state.doubleStress=state.doubleStress===b.dataset.double?null:b.dataset.double;state.doubleResponse=null;saveState();renderDoubleFailure();}));host.querySelectorAll('[data-double-response]').forEach(b=>b.addEventListener('click',()=>{state.doubleResponse=b.dataset.doubleResponse;markChallenge('stress');renderDoubleFailure();}));}
 
-  function landscapeSnapshotMarkup(){const mapped=landscapeCases.filter(c=>landscapeSelection(c.id).primary);return `<div class="snapshot-landscape">${mapped.map(c=>{const x=landscapeSelection(c.id);return `<div><span class="snapshot-case">${c.icon}</span><span><strong>${esc(c.title)}</strong><small>${domainName(x.primary)}${x.secondary?' + '+domainName(x.secondary):''}</small></span></div>`}).join('')}</div>`;}
+  function landscapeSnapshotMarkup(){const mapped=landscapeCases.filter(c=>landscapeSelection(c.id).primary);return `<div class="snapshot-landscape">${mapped.map(c=>{const x=landscapeSelection(c.id),boundary=state.landscapeBoundary===c.id;return `<div class="${boundary?'boundary-highlight':''}"><span class="snapshot-case">${c.icon}</span><span><strong>${esc(c.title)}${boundary?' · boundary test':''}</strong><small>${domainName(x.primary)}</small></span></div>`}).join('')}</div>`;}
   function renderStopSnapshots(){
-    const l=$('#stopLandscapeSnapshot');if(l){const mapped=landscapeCases.filter(c=>landscapeSelection(c.id).primary),cross=mapped.filter(c=>landscapeSelection(c.id).secondary).length,domains=new Set(mapped.map(c=>landscapeSelection(c.id).primary)).size;l.innerHTML=`<div class="snapshot-head"><strong>Our IoT test set</strong><span>${mapped.length} cases · ${domains} main domains</span></div>${landscapeSnapshotMarkup()}<div class="snapshot-signal"><b>Discussion signal</b>${cross===0?'Your four examples span different domains but none was marked as cross-domain. Pick the pair that most challenges your definition of IoT.':`${cross} mapped case${cross===1?'':'s'} crossed a domain boundary. Pick the hardest boundary to defend.`}</div>`;}
+    const l=$('#stopLandscapeSnapshot');if(l){const mapped=landscapeCases.filter(c=>landscapeSelection(c.id).primary),domains=new Set(mapped.map(c=>landscapeSelection(c.id).primary)).size,boundary=landscapeCases.find(c=>c.id===state.landscapeBoundary);l.innerHTML=`<div class="snapshot-head"><strong>Our IoT test set</strong><span>${mapped.length} cases · ${domains} main domains</span></div>${landscapeSnapshotMarkup()}<div class="snapshot-signal"><b>Discussion signal</b>${boundary?`You marked <strong>${esc(boundary.title)}</strong> as the boundary test. What makes it harder to fit a simple IoT definition than the other three?`:'Which selected case most challenges your definition of IoT — and why?'}</div>`;}
     const a=$('#stopArchitectureSnapshot');if(a){const degrees=state.components.map(c=>[c,state.flows.filter(f=>f.from===c.id||f.to===c.id).length]).sort((x,y)=>y[1]-x[1]);const hot=degrees[0];a.innerHTML=`<div class="snapshot-head"><strong>Our defended baseline</strong><span>${state.components.length} components · ${state.flows.length} flows</span></div>${miniGraphMarkup()}${state.flows.length?`<div class="snapshot-flow-list">${state.flows.slice(0,6).map(f=>{const x=state.components.find(c=>c.id===f.from),y=state.components.find(c=>c.id===f.to);return `<span>${esc(x?.name||'?')} → ${esc(y?.name||'?')}${f.label?' · '+esc(f.label):''}</span>`}).join('')}</div>`:''}${hot?`<div class="snapshot-signal"><b>Discussion signal</b>${esc(hot[0].name)} touches ${hot[1]} flow${hot[1]===1?'':'s'}. Is that architectural centrality intentional?</div>`:''}`;}
     const cl=$('#stopLoopSnapshot');if(cl){const a=state.loopClosure?.answers||{},labels={proof:{feedback:'Measured physical-state feedback',ack:'Another acknowledgement',log:'Server-side log'},ack:{digital:'Digital receipt / handling',physical:'Physical change',policy:'Policy correctness'},authority:{operator:'Operator',network:'Network/controller',actuator:'Actuator'}};cl.innerHTML=`<div class="snapshot-head"><strong>Our command claim trace</strong><span>${Object.keys(a).length}/3 explicit</span></div><div class="revision-stop-cause"><span><small>What ACK establishes</small><strong>${esc(labels.ack[a.ackscope]||'Not selected')}</strong></span><b>→</b><span><small>Evidence of physical outcome</small><strong>${esc(labels.proof[a.proof]||'Not selected')}</strong></span><b>→</b><span><small>Override authority</small><strong>${esc(labels.authority[a.authority]||'Not selected')}</strong></span></div>`;}
     const r=$('#stopRequirementsSnapshot');if(r){const top=requirementDefs.filter(([id])=>state.requirements[id]===2);r.innerHTML=`<div class="snapshot-head"><strong>Two rankings, one architecture</strong><span>system vs flow</span></div><div class="snapshot-requirements"><div><small>Campus overall · Top 3</small><div class="chip-row">${top.map(([id,,n])=>`<span class="chip priority">${esc(n)}</span>`).join('')||'<span class="empty-copy">Not ranked yet</span>'}</div></div>${state.flowLens?.requirements?.length?(()=>{const f=state.flows[state.flowLens.flowIndex??0],a=state.components.find(x=>x.id===f?.from),b=state.components.find(x=>x.id===f?.to),label=f?`${a?.name||'?'} → ${b?.name||'?'}${f.label?' · '+f.label:''}`:'selected flow';return `<div><small>${esc(label)} · Top 3</small><div class="chip-row">${state.flowLens.requirements.map(id=>requirementDefs.find(x=>x[0]===id)?.[2]).filter(Boolean).map(n=>`<span class="chip">${esc(n)}</span>`).join('')}</div></div>`})():'<div><small>Selected flow · Top 3</small><span class="empty-copy">Not ranked yet</span></div>'}</div><div class="snapshot-insight"><b>Discussion task</b> Which design pressure changed when you zoomed from the whole system to one flow, and what physical fact explains that change?</div>`;}
