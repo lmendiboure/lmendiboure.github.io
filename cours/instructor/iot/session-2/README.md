@@ -79,3 +79,8 @@ Session 2 publishes only compact design state for later sessions:
 - the final defended exchange.
 
 Pedagogical navigation state remains local to the session.
+
+## Projector grammar (v1.42)
+
+Both sessions use the same deliberately minimal public sequence: **WORK → DISCUSS → FLIP ONCE → NEXT**. WORK shows one question, short context and the expected artefact. A RESTITUTION shows one discussion question and one full-width card; the card back contains at most 2–3 essential complementary points that are not already on the student takeaway. Follow-up prompts, references, metrics, counterexamples and optional depth stay in `notes.html`, not on the Projector.
+

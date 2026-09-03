@@ -84,25 +84,16 @@ The student-facing **UNLOCK** is deliberately richer than the Field Guide card. 
 
 ## Collective restitution / visible thinking
 
-V14 adds a lightweight instructor-entered **Live Board** rather than a classroom-response backend. The purpose is to make selected student thinking externally visible in a representation matched to the task: short ideas (Capture), relations (Structure), or committed distributions (Compare). This follows the broader visible-thinking/documentation rationale: externalise thinking so the class can inspect and revise it, rather than treating responses as ephemeral talk.
+The Projector should not become a classroom-response dashboard. Student work already exists on student devices and in group discussion; the projected surface only needs to focus the room. For each important restitution, use **one discussion question** and then **one full-width flip card**.
 
-For class distributions, use **commit → aggregate → discuss**. Peer-instruction research has shown that exposing a class histogram before a second response can pull students toward the majority; therefore the collective tally should appear only after groups have committed their own reasoning. The board is evidence about the room, not an answer key.
+The card back has two functions only:
 
-Design restraint matters: multiple representations can support learning when they clarify complementary information, but unnecessary representations can add processing demands. The Live Board is therefore optional and limited to three stable primitives rather than a bespoke widget per activity.
+1. **Student takeaway first** — students reveal the formal concept on their own surface after discussion.
+2. **Essential complements on Projector** — at most 2–3 important facts, distinctions or boundaries that are not already on the student takeaway and that the room should still leave with.
 
-### Reusing the same session
+All alternative prompts, misconceptions, accepted answer families, examples, references, measurements and reality checks remain in `notes.html`. This preserves pedagogical depth without making the projected interface carry the whole instructor script.
 
-Live Board content is classroom-specific, not course content. Keep it session-scoped and resettable. Use **Clear board** when one collective restitution needs to be rebuilt; use **New class** before teaching the same session to another group. This prevents a previous cohort's ideas, tallies or collective architecture from becoming accidental prompts for the next cohort.
-
-
-## Institutionalisation after restitution
-
-For every important restitution, distinguish two instructor-facing functions without adding a new navigation screen:
-
-1. **WHAT TO KEEP / Reference Plate** — institutionalise knowledge that a competent student should leave with even if no group spontaneously mentioned it. Include one principle plus a compact canonical map (typically 3–7 items, distinctions or families). This is not required to be “discovered” by students.
-2. **REALITY CHECK** — ground the reference map with a concrete architecture, worked order of magnitude, payload, standard, or official technical fact and ask students to interpret it.
-
-Authoring rule: **students discover the reasoning; they are not expected to discover the entire discipline.** Reference Plates should be selective maps, not claims of exhaustiveness.
+Authoring rule: **students produce and discuss the reasoning; the student takeaway formalises it; the single Projector reveal only completes it.**
 
 
 ## Activity count is curriculum-driven

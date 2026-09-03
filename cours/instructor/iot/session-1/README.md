@@ -23,9 +23,9 @@ The Projector gives every activity one WORK screen. Activities 1, 2, 3, 4, 7 and
 - Right arrow / Space: advance to RESTITUTION when the current activity has one; otherwise advance directly to the next activity WORK screen.
 - Left arrow: go back one public screen.
 - `F`: fullscreen.
-- Eight progress markers represent the same eight activities and open their WORK screen.
+- Eight progress markers show position only; navigation stays on Back / Next.
 
-**WORK** states the task, deliverable/defence prompt and guardrail. **RESTITUTION** is one stable class screen: optional Live Board first; a static **COMPARE THE ROOM** prompt when the class artefact must simply be read across groups; then only the deeper discussion/test questions become flippable cards with a local **KEEP** anchor. Flipping is optional, not a checklist. An optional **Reality check** grounds or transfers the result after discussion.
+**WORK** shows one question, short context and the expected student artefact. **RESTITUTION** shows one discussion question, then one full-width card that is flipped after students reveal their own takeaway; the Projector card contains only essential complementary points. All additional facilitation depth stays in `notes.html`.
 
 The instructor-facing sequence **LOOK → COMPARE → CHALLENGE → FORMALISE → GROUND** lives in `notes.html`, not in projector navigation. Do not project `notes.html`.
 
@@ -33,17 +33,10 @@ The instructor-facing sequence **LOOK → COMPARE → CHALLENGE → FORMALISE �
 
 Two pacing modes are explicit in `notes.html`: a strict **90-minute Core run** (10 / 14 / 12 / 11 / 5 / 7 / 16 / 15 min) and the existing **101–122 minute full-depth envelope**. The Core run preserves all six restitutions and timeboxes work/discussion; it does not delete conceptual steps.
 
-## Collective restitution
-
-Capture, Structure and Compare are the only Live Board primitives. Use **commit → aggregate → discuss**. No backend is required.
-
 ## Reusing Session 1
 
-The Projector stores class-entered Live Board state only for the current browser session.
+The Projector no longer stores class-entered board state. Reloading the page starts a clean run at Activity 1; there is no separate class-board reset workflow.
 
-- **Clear board** resets the current Capture / Structure / Compare board.
-- **New class** clears all class-entered boards and tallies, closes What-to-keep/Reality reveals, and returns to Activity 1 / WORK.
-- Student progress is separate and is never changed by either instructor reset.
 
 ## Running operational case
 
@@ -69,3 +62,8 @@ The student workspace keeps pedagogical progress (screens, unlocks, retrieval, h
 ## Publication boundary
 
 `notes.html` is **instructor-facing, not access-controlled**. If `cours/instructor/` is deployed on public GitHub Pages, anyone who knows the path can open it. The Projector is designed to be student-safe; keep the instructor tree local/private if facilitation answers must genuinely remain unavailable.
+
+## Projector grammar (v1.42)
+
+Both sessions use the same deliberately minimal public sequence: **WORK → DISCUSS → FLIP ONCE → NEXT**. WORK shows one question, short context and the expected artefact. A RESTITUTION shows one discussion question and one full-width card; the card back contains at most 2–3 essential complementary points that are not already on the student takeaway. Follow-up prompts, references, metrics, counterexamples and optional depth stay in `notes.html`, not on the Projector.
+

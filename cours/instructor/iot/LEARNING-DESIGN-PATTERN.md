@@ -189,7 +189,7 @@ Every STOP should have the same visual and instructional grammar.
 Display exactly what the group produced.
 
 ### 2 · COMPARE
-Start from the class artefact. If the first move is simply to compare group outputs, show that as a **static compare prompt** with no hidden answer. Reserve flippable cards for questions where revealing a local **KEEP** anchor genuinely helps formalise the reasoning. The deck is support, not a checklist, and cards do not need to be flipped systematically.
+Start from student artefacts or committed decisions. The public Projector shows **one discussion question only**. Compare two or three productions and identify the disagreement, invariant or boundary worth resolving before any formal answer is shown.
 
 Useful forms:
 - “Which group made a different assumption?”
@@ -484,46 +484,23 @@ This is student-facing even though it lives under the instructor path. It must b
 
 For every canonical activity, it should expose **one or at most two navigable public screens**:
 
-1. **WORK** — always present: the task, expected artifact, defence prompt and one guardrail to leave visible while groups work;
-2. **RESTITUTION** — optional: one stable whole-class surface containing the appropriate collective representation (when useful), followed by a static comparison prompt when needed and a small full-width deck of deeper discussion/test cards. Only those deeper cards are flippable: the front shows the question and the back shows a local KEEP anchor. An optional in-place **Reality Check** follows after discussion. The Projector does not duplicate card takeaways in a separate `What to keep` panel.
+1. **WORK** — always present: one question, short context and the expected student artefact. Instructor guardrails stay in Notes, not on the projected screen;
+2. **RESTITUTION** — optional: one discussion question followed by **one full-width flip card**. The front remains neutral until discussion has happened. Students reveal the formal takeaway on their own surface first; the Projector back then adds at most 2–3 essential complementary points that do not duplicate it.
 
 Omitting RESTITUTION does not omit or merge the activity. The next public screen is simply the next canonical activity's WORK screen.
 
-The richer facilitation sequence **LOOK → COMPARE → CHALLENGE → UNLOCK → GROUND** remains an instructor mental model and belongs in the instructor-facing notes. Do not translate each pedagogical move into a projector navigation step.
-
-### Lightweight collective restitution: Live Boards
-
-The Projector may temporarily become the **external memory of the room** during RESTITUTION, but this is not a new public phase. Use at most three reusable representation primitives:
-
-- **Capture** — short ideas, claims or recurring features when the reasoning unit is verbal;
-- **Structure** — boxes + labelled flows when relationships, responsibilities or architecture are the reasoning unit;
-- **Compare** — a simple tally or categorical distribution when variation between committed group decisions is the reasoning unit.
-
-Choose the representation that matches the task. Do not add a board merely for interactivity. A representation should expose something that prose alone would hide: recurrence, structure, or variation.
-
-For response distributions, follow **commit → aggregate → discuss**. Groups must record their own decision before the class tally is visible; the aggregate describes the room and must not be framed as a correctness signal. The teacher should capture a small number of discriminating responses rather than transcribing the whole discussion.
-
-Live Board invariants:
-
-- no backend, student accounts or device polling is required; the instructor enters the collective response;
-- the board lives inside the single RESTITUTION screen, so it creates no additional navigation transition;
-- Capture is not a word cloud: frequency is not treated as semantic importance;
-- Structure is a collective model, not a hidden reference answer;
-- Compare is a discussion trigger, not an assessment result;
-- preserve the student artifact as primary evidence; the collective board supplements rather than replaces it;
-- omit the board when the student artifacts themselves are already easy to compare.
-
-The Reality Check is not mandatory filler and is not a mini-lecture. Use it when a concrete external or worked artifact can answer a question created by the preceding reasoning. Prefer **one strong piece of evidence + one interpretation question** over a dense fact slide. If the evidence would require a second projector state or dense scrolling, compress it or move the detail to instructor-facing notes. Clearly label worked assumptions, distinguish measured values from illustrative calculations, and link official sources when technical numbers are shown.
+The richer facilitation sequence **LOOK → COMPARE → CHALLENGE → UNLOCK → GROUND** remains an instructor mental model and belongs in the instructor-facing notes. Do not translate those pedagogical moves into projector buttons or separate reveals.
 
 Projector invariants:
 
 - large, sparse, high-contrast typography;
-- exactly one WORK screen per canonical activity and at most one RESTITUTION screen; use a static compare prompt for simple cross-group inspection, optional card flips only for local **KEEP** anchors worth formalising, and an in-place **Reality Check** rather than additional phases;
+- exactly one WORK screen per canonical activity and at most one RESTITUTION screen;
+- exactly one content interaction on a restitution screen: the full-width flip card;
+- no editable class board, secondary-question deck, Reality Check control or reference panel on the public Projector;
 - no teaching-method commentary, GitHub/publication details, answer-key language, or authoring notes;
-- no instructor-only cues such as “do not tell students…”;
-- the projected challenge must be discussable before its formalisation is shown;
-- the public sequence must not end at abstraction: when useful, a Reality Check should connect the concept to a concrete system, output, calculation or authoritative technical fact;
-- the final public screen should contain either the concrete evidence students should be able to interpret or the concept they are expected to retain.
+- the discussion question must be answerable from student work before the card is flipped;
+- the card back adds only important knowledge missing from the student takeaway, rather than repeating the formal concept or reproducing the full instructor script.
+
 
 ### Instructor-facing facilitation notes
 
@@ -544,21 +521,8 @@ The two surfaces should contain the **same conceptual destination** but differen
 
 > **The class sees the intellectual problem and its consolidation. The instructor sees the facilitation logic and answer space.**
 
-This separation is especially important in a no-slides course: projector pages replace both the **work prompt** and the **public explanatory/evidence function** of slides, while notes replace presenter notes. The default public rhythm is **WORK → optional RESTITUTION → next canonical activity**. LOOK → COMPARE → CHALLENGE → UNLOCK remains the instructor-facing facilitation logic inside RESTITUTION; Reality is revealed in-place when useful.
+This separation is especially important in a no-slides course: projector pages replace both the **work prompt** and the **public explanatory/evidence function** of slides, while notes replace presenter notes. The default public rhythm is **WORK → optional RESTITUTION → next canonical activity**. LOOK → COMPARE → CHALLENGE → UNLOCK → GROUND remains the instructor-facing facilitation logic, but the formal concept is revealed on the student surface; the single Projector flip adds only complementary consolidation, while additional grounding stays in Notes.
 
-### Resettable instructor state
-
-Any class-entered state on the Projector must be **ephemeral and explicitly resettable**. Reusing a session with another cohort must never require browser-storage tools or manual cleanup.
-
-Required controls:
-- **Clear board** — clears only the current Live Board (Capture, Structure or Compare).
-- **New class** — clears every instructor-entered Live Board/tally/collective structure, closes any open What-to-keep/Reality reveal, returns to Activity 1 / WORK, and leaves all static course content unchanged.
-
-Reset invariants:
-- clearing instructor state must never erase student-side progress or modify course content;
-- destructive resets require a confirmation;
-- interactive instructor state should use session-scoped browser storage unless persistence across browser sessions is explicitly required;
-- every new Instructor interaction primitive must define both a local reset and its behavior under **New class**.
 
 ## Visual-system invariant
 

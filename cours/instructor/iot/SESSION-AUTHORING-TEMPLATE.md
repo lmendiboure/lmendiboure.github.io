@@ -234,68 +234,43 @@ Rules:
 - [ ] A work-only activity remains visible as its own activity rather than being merged into a neighbouring instructor block.
 - [ ] Student-only substeps may exist inside an activity, but they do not create new canonical activity numbers.
 
-## Collective restitution choice
-
-Choose **zero or one** Live Board for an activity that has RESTITUTION. It is embedded in RESTITUTION and is not a separate phase.
-
-| Reasoning to make visible | Use | Authoring prompt |
-|---|---|---|
-| Short recurring ideas / claims | **Capture** | What 4–8 short entries would help the room see recurrence or disagreement? |
-| Components / responsibilities / relations / flows | **Structure** | What minimal boxes and labelled connections can be built from student contributions? |
-| Distribution of already-committed choices | **Compare** | Which small set of categories is worth tallying, and what question will the divergence answer? |
-| None of the above | **No board** | Can student artifacts already be compared directly? |
-
-Before using Compare, specify what students must commit privately/in groups **before** the tally is shown. Never frame the majority as the correct answer.
-
 ## Projector + instructor-notes checklist
 
 For each canonical activity, author Student + Projector + Notes before considering the session complete. Add RESTITUTION only when a whole-class stop is useful.
 
 | Surface | Projector (student-visible) | Instructor notes (private) |
 |---|---|---|
-| WORK | task + expected artifact + defence prompt + one guardrail | what not to pre-teach; what counts as enough progress |
-| RESTITUTION | optional Capture/Structure/Compare board + 2–3 questions + one counterexample | LOOK/COMPARE logic, likely answer families, what evidence to inspect |
-| What-to-keep reveal | principle + canonical reference map | precision, caveats, acceptable variants |
-| Reality reveal | one concrete artifact/number/calculation/source + interpretation question | provenance, assumptions, caveats, what conclusion is justified |
-| Next activity | one primary button; no extra phase | transition/fallback phrasing |
+| WORK | one question + short context + expected student artefact | guardrails, accepted progress, likely misconceptions |
+| RESTITUTION | one discussion question + one static “discuss first” cue | comparison logic, follow-up questions, counterexamples |
+| Single flip card | at most 2–3 essential complements that do not duplicate the student takeaway | precision, caveats, examples, references, optional depth |
+| Next activity | one primary navigation action | transition / fallback phrasing |
 
 **Structural alignment audit**
 
 - [ ] Do Student, Projector and Notes expose the same canonical activity count?
 - [ ] Are activity numbers, order and short titles identical across all three surfaces?
-- [ ] Are work-only activities still represented explicitly on the Projector and in Notes?
-- [ ] Have I avoided merging multiple student activities into one instructor checkpoint merely for convenience?
+- [ ] Does every Projector activity have exactly one WORK screen and zero or one RESTITUTION screen?
+- [ ] Does every restitution have exactly one content interaction: the full-width flip card?
+- [ ] Are work-only activities still represented explicitly?
 
 **Projection audit**
 
-- [ ] Could this entire page be screen-shared without revealing internal design notes?
-- [ ] Is the current question readable from the back of a classroom?
-- [ ] Does every canonical activity have exactly one WORK screen and zero or one RESTITUTION screen?
-- [ ] Are What-to-keep/Reality revealed in-place rather than implemented as extra screens?
-- [ ] Does every WORK screen make the expected artifact obvious without revealing the answer?
-- [ ] When a Reality Check is used, is every number/source traceable and are worked assumptions labelled?
-- [ ] Does the Reality Check ask students to interpret evidence rather than merely read it?
-- [ ] When an activity has RESTITUTION, does it end with a public concept or concrete interpretation worth remembering?
-- [ ] If a Live Board is used, does its representation match the reasoning task (Capture / Structure / Compare)?
-- [ ] For Compare, did groups commit before the class distribution became visible?
-- [ ] Could the same discussion work better by comparing student artifacts directly? If yes, omit the Live Board.
+- [ ] Could the page be screen-shared without revealing internal design notes?
+- [ ] Is the current question readable from the back of the room?
+- [ ] Is the expected student artefact obvious on WORK without exposing the answer?
+- [ ] Does RESTITUTION begin from student artefacts/decisions rather than a pre-filled instructor representation?
+- [ ] Is there only one discussion question?
+- [ ] Does the card back add no more than 2–3 genuinely important complements, without repeating the student takeaway?
+- [ ] Have secondary prompts, references, metrics and reality checks been kept in Notes rather than projected?
 
 **Notes audit**
 
 - [ ] Do I know what answers I am prepared to accept?
 - [ ] Do I know which misconception I must correct?
 - [ ] Do I have one useful counterexample if discussion is shallow?
-- [ ] Do I have enough technical precision to answer the predictable follow-up questions?
+- [ ] Do I have enough technical precision to answer predictable follow-up questions?
 - [ ] Can I run the session without creating separate slides?
 
-### Reuse / reset contract
-
-If the Projector contains instructor-entered state:
-- [ ] every Live Board has a **Clear board** control;
-- [ ] the Projector has one global **New class** control;
-- [ ] **New class** clears all instructor-entered state and reveals, then returns to Activity 1 / WORK;
-- [ ] reset never affects the Student workspace;
-- [ ] reset behavior is tested before publication.
 
 ## Visual-system check
 

@@ -164,13 +164,15 @@ If horizontal space becomes constrained, stack the tab above its explanatory tex
 
 ## Restitution reading order
 
-A restitution screen must expose a clear vertical hierarchy:
+A projected restitution must be intentionally sparse. The public sequence is:
 
-1. **Artifact / class representation** — the main visual surface, full width.
-2. **Compare, then discuss** — when a restitution starts by comparing class artefacts, show that comparison prompt as a static strip below the board. Only questions that benefit from an explicit teaching anchor become flippable cards: the question stays visible first; the back reveals the local KEEP anchor.
-3. **Reality check** — optional, below the deck, used only to ground or transfer the result.
+1. **Discussion question** — one large question grounded in student artefacts or decisions.
+2. **Discuss first** — a short static instruction to compare two or three student productions before any formal answer appears.
+3. **One full-width flip card** — the only content interaction on the restitution screen. The front asks students to reveal their own takeaway first; the back then adds at most 2–3 important complementary points that are not already present on the student card.
 
-Do not add a second `What to keep` panel on the Projector. A static compare prompt has no hidden answer; the optional flippable cards carry only the local takeaways that genuinely need formalisation. The public reading order is **artifact → compare → discuss/test → optional KEEP → reality check**.
+Do not place Live Boards, secondary-question decks, multiple KEEP cards, reference plates or Reality Check controls on the public Projector. Those belong in instructor notes. The Projector is a shared visual focus, not an instructor dashboard.
+
+The public reading order is **student artefacts → discuss → student takeaway → flip once for complements**.
 
 ## Conclusion focus on Projector
 
