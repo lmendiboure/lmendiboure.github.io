@@ -7,11 +7,11 @@
 
   function work(a){
     return `
-      <span class="mode">WORK</span>
+      <span class="mode">YOUR TASK</span>
       <div class="question">${esc(a.work.question)}</div>
       <p class="support">${esc(a.work.support)}</p>
       <section class="task-panel">
-        <div class="panel-kicker">Students produce</div>
+        <div class="panel-kicker">Your group should produce</div>
         <div class="produce">${a.work.produce.map((x,n)=>`<div><b>${n+1}</b><span>${esc(x)}</span></div>`).join('')}</div>
       </section>`;
   }
@@ -19,23 +19,21 @@
 
   function rest(a){
     const s=a.stop;
+    const probes=Array.isArray(s.probe)?s.probe:(s.probe?[s.probe]:[]);
     return `
-      <span class="mode">RESTITUTION · DISCUSS → FLIP ONCE</span>
+      <span class="mode">CLASS DISCUSSION</span>
       <div class="question">${esc(s.question)}</div>
-      <div class="discuss-strip">
-        <b>Discuss first</b>
-        <span>${esc(s.compare)}</span>
-      </div>
-      <button class="flip-card" type="button" data-flip aria-pressed="false" aria-label="Flip the teaching card">
+      <button class="flip-card" type="button" data-flip aria-pressed="false" aria-label="Turn the discussion card">
         <span class="flip-inner">
           <span class="flip-face flip-front">
-            <span class="flip-kicker">After the discussion</span>
-            <strong>Students reveal their own takeaway first. Then flip once for the additions.</strong>
-            <small>The Projector adds what matters; it does not repeat their card.</small>
+            <span class="flip-kicker">Before we turn it</span>
+            <strong>${esc(s.probeTitle||'A little further: what do you think about these points?')}</strong>
+            ${probes.length?`<ul class="probe-list">${probes.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
+            <small>Discuss these points together, then turn the card.</small>
           </span>
           <span class="flip-face flip-back">
-            <span class="flip-kicker">Important complements</span>
-            <strong class="addition-title">Add these points to the student takeaway.</strong>
+            <span class="flip-kicker">What to keep</span>
+            <strong class="addition-title">Add these ideas to what you have already established.</strong>
             ${s.complements?.length?`<ul class="complement-list">${s.complements.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
           </span>
         </span>
@@ -51,13 +49,13 @@
     const a=D.activities[i],st=mode==='stop'&&a.stop;
     scene.innerHTML=`
       <div class="shell scene-head">
-        <div><div class="eyebrow">Activity ${i+1} of ${D.activities.length} · ${st?'RESTITUTION':'WORK'}</div><h1>${esc(a.title)}</h1></div>
+        <div><div class="eyebrow">Activity ${i+1} of ${D.activities.length} · ${st?'DISCUSSION':'ACTIVITY'}</div><h1>${esc(a.title)}</h1></div>
         <div class="time">${esc(st?(a.stopTime||'restitution'):(a.workTime||'work'))}</div>
       </div>
       <div class="shell stage">${st?rest(a):work(a)}</div>`;
-    $('#screenCount').textContent=`${i+1}/${D.activities.length} · ${st?'STOP':'WORK'}`;
+    $('#screenCount').textContent=`${i+1}/${D.activities.length} · ${st?'DISCUSSION':'ACTIVITY'}`;
     $('#back').disabled=i===0&&mode==='work';
-    $('#next').textContent=mode==='work'?(a.stop?'Start restitution →':(i===D.activities.length-1?'Session complete':'Next activity →')):(i===D.activities.length-1?'Session complete':'Next activity →');
+    $('#next').textContent=mode==='work'?(a.stop?'Discuss together →':(i===D.activities.length-1?'Session complete':'Next activity →')):(i===D.activities.length-1?'Session complete':'Next activity →');
     $('#next').disabled=mode==='stop'&&i===D.activities.length-1;
     renderProgress();
   }
