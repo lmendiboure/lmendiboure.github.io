@@ -48,7 +48,7 @@ Le **dossier d'observation** accumule les décisions de la séance. La stratégi
 - **PRÉCISER / ÉPROUVER** peuvent être retournés après échange ; leur verso contient l’ancrage à conserver.
 - Ne pas dupliquer le verso dans un panneau « À retenir ».
 - Le **Retour au réel** n’est utilisé que s’il apporte un cas, une donnée, un ordre de grandeur ou un transfert supplémentaire.
-- En fin de séance : 5 questions flash sans score, puis un résumé explicite des capacités acquises et une transition vers S2.
+- En fin de séance : 3 questions de synthèse sans score, puis une synthèse courte des capacités acquises, l’introduction du terme IoT comme sous-ensemble de l’environnement connecté, et la transition vers S2.
 
 
 ## Mise à jour v1.20 — clarté étudiant et niveau ingénieur
@@ -59,7 +59,7 @@ Le **dossier d'observation** accumule les décisions de la séance. La stratégi
 - **A3** : cinq niveaux nommés sur un cas BTP concret. La seconde partie n’est plus un exercice à refaire : elle montre la même chaîne dans le sens d’exploitation afin de comparer les deux directions.
 - **A4** : après placement sur étendue × rythme, trois besoins concrets servent à utiliser la carte. Suppression du quiz méta sur « ce que la carte ne montre pas ».
 - **A5** : revue fournisseur contextualisée ; trois relations sémantiques (direct / proxy / inférence) + provenance interne/externe comme axe séparé.
-- **A6** : trois questions opérationnelles avant les noms des timestamps ; progression non bloquante sur la justesse.
+- **A6** : trois questions opérationnelles avant le vocabulaire technique ; introduire d’abord « horodatage », puis « timestamp », et distinguer temps du phénomène, temps du résultat et temps d’arrivée. Progression non bloquante sur la justesse.
 - **A7** : Peio revient du terrain avec trois dynamiques incompatibles. A7 dimensionne un plan d’observation (cadence + granularité) et ne doit pas être confondue avec A4, qui décrit seulement les capacités espace × temps des familles de sources. Les ordres de grandeur Sentinel-2 / LiDAR HD servent à casser l’intuition « plus de données = meilleure observation ».
 - **A8** : désaccord de mission explicite ; même donnée, décisions différentes. Les trois dossiers sont traités séquentiellement avec un retour de référence explicatif après chaque dossier.
 - **A10** : v1 visible, incident pertinent, effet sur la décision, diagnostic filtré, une règle de fonctionnement minimale, risque résiduel. Pas de réédition complète des sources.
