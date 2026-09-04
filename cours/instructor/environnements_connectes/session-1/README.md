@@ -30,7 +30,7 @@ Le Projector n’est pas une deuxième interface de restitution. Les étudiants 
 
 Il n’y a plus de tableau de classe à remplir, de vote, de compteur ni de saisie au vidéoprojecteur. Si une distribution de réponses est utile, la faire apparaître oralement ou à main levée.
 
-Le verso n’est pas la « bonne réponse » à la question. Il ajoute ce que la discussion seule risque de ne pas faire émerger : cas limite, dépendance, ordre de grandeur, conséquence d’ingénierie ou transfert.
+Le verso n’est pas la « bonne réponse » à la question. Il doit effectuer le saut **cas → propriété générale** : cadrage du besoin, valeur de l’information et observabilité, hypothèses d’interprétation, échantillonnage espace-temps, qualité relative et indépendance des défaillances, ou fonctionnement dégradé. Un ordre de grandeur ou un cas limite n’est utile que s’il sert cette abstraction.
 
 ## Règle de progression
 
@@ -38,4 +38,4 @@ Les activités cumulatives peuvent imposer de **compléter une tentative** avant
 
 ## Clôture
 
-Après A10, le Projector affiche une synthèse conceptuelle courte : l’environnement connecté construit une vision partielle, située et orientée vers une décision du réel ; la qualité est relative à l’usage ; plusieurs sources ne suppriment pas les dépendances ni les angles morts. Le terme **IoT** est ensuite posé sur la partie instrumentée/connectée de cet ensemble, avant la question qui ouvre S2 sur le transport des observations.
+Après A10, le Projector décontextualise explicitement la vallée : **un environnement connecté est un système d’observation du monde physique**. Les quatre propriétés finales sont : ce qui n’est pas observable reste inconnu ; toute observation est un échantillon spatio-temporel ; toute information interprétée repose sur des hypothèses et sa qualité est relative à l’usage ; la robustesse dépend des dépendances et d’un comportement dégradé défini. Le terme **IoT** est ensuite posé sur la partie instrumentée/connectée de cet ensemble, avant la question qui ouvre S2 sur le transport des observations.

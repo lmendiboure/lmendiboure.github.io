@@ -35,7 +35,7 @@ Le **dossier d'observation** accumule les décisions de la séance. La stratégi
 - aucun backend requis.
 
 
-## Projector — règle v1.24
+## Projector — règle v1.27
 
 Le Projector suit désormais le même modèle minimal que le cours IoT :
 
@@ -47,7 +47,7 @@ Le Projector suit désormais le même modèle minimal que le cours IoT :
 
 Les `guardrails`, réponses acceptables, misconceptions et indications de conduite restent dans `notes.html`. Ils ne doivent pas apparaître au tableau.
 
-Le verso n’est pas une correction. Les étudiants possèdent déjà leur formalisation locale. Il sert à apporter un **step further** : ordre de grandeur, dépendance, cas limite, conséquence de conception ou transfert vers un autre contexte.
+Le verso n’est pas une correction. Les étudiants possèdent déjà leur formalisation locale. Il sert à faire un **saut d’abstraction** : partir du cas traité pour stabiliser une propriété générale transférable à d’autres systèmes. Pour S1, les six sauts d’abstraction sont : **cadrage du besoin** ; **valeur informationnelle + observabilité** ; **chaîne d’hypothèses** ; **échantillonnage spatio-temporel** ; **qualité relative + indépendance** ; **dégradation maîtrisée**. Les ordres de grandeur et cas limites ne sont que des preuves ou illustrations de ces propriétés.
 
-En fin de séance, conserver un écran de synthèse très court centré sur quatre compréhensions : la donnée n’est pas le réel ; toute observation est partielle ; la qualité dépend de l’usage ; plusieurs sources ne suppriment ni dépendances ni angles morts. Poser ensuite le mot **IoT** sur la partie instrumentée/connectée du système, puis ouvrir S2.
+En fin de séance, conserver un écran de synthèse très court qui décontextualise explicitement la vallée : un environnement connecté est un **système d’observation** ; ce qui n’est pas observable reste inconnu ; toute observation est un échantillon ; toute information interprétée repose sur des hypothèses ; la robustesse dépend de l’indépendance des défaillances et d’un comportement dégradé défini. Poser ensuite le mot **IoT** sur la partie instrumentée/connectée du système, puis ouvrir S2.
 
