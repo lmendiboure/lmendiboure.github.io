@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Interactive student workspace for IoT Systems Design — Session 3"/>
+<title>Session 3 — Where should the work happen?</title>
+<link href="assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="student-page s3-focused">
+<a class="skip-link" href="#mainContent">Skip to main content</a>
+<header class="topbar no-print"><div class="shell topbar-inner">
+<a aria-label="Back to IoT course hub" class="brand" href="../"><div class="brand-mark">IoT</div><div><div class="brand-title">Systems Design</div><div class="brand-sub">Session 3 · Student workspace</div></div></a>
+<div class="actions"><button class="btn" id="designBtn" type="button">Our placement</button><span class="save-pill" id="saveState">Saved on this device</span></div>
+</div></header>
+<main id="mainContent">
+<section class="shell hero s3-hero"><div class="hero-grid"><div><div class="eyebrow">IoT Systems Design · Session 3</div><h1>Where should the work<br/>actually happen?</h1><p class="lead">Your communication path exists. Now decide where sensing, filtering, decisions, storage and analysis should run — on the device, nearby, or remotely — and defend each placement from explicit constraints.</p></div>
+<div class="placement-hero" role="img" aria-label="Placement continuum from device to nearby edge to remote cloud"><div><b>DEVICE</b><span>closest to the physical world</span></div><i>→</i><div><b>NEARBY</b><span>site / gateway / edge</span></div><i>→</i><div><b>REMOTE</b><span>cloud / data centre</span></div></div></div>
+<div class="session-bridge" id="missionHandover"><span>SESSION 2 HANDOVER</span><div><strong>Your exchange already has a behaviour and a communication path.</strong><p>Today we keep that exchange and decide where each function should execute.</p></div><b>FUNCTION → CONSTRAINT → PLACEMENT</b></div>
+<div class="session-roadmap three"><div><b>01</b><span>Place the work</span><small>Activities 1–3</small></div><div><b>02</b><span>Test the constraints</span><small>Activities 4–6</small></div><div><b>03</b><span>Build a split pipeline</span><small>Activities 7–8</small></div></div>
+<div class="stepper" id="stepper" aria-label="Session progression"></div><nav class="history-nav" id="historyNav" hidden></nav></section>
+<div class="shell activity-stage">
+
+<section class="activity-screen" data-screen="0">
+<div class="activity-label"><span>Activity 1</span><span class="pill-neutral">Place functions, not whole applications</span></div>
+<div class="activity-intro compact-intro"><div class="activity-move-label">START FROM THE WORK</div><h2>Which functions really need to live in the same place?</h2><p>Use three plain deployment zones first: <strong>on the device</strong>, <strong>near the site</strong>, or <strong>remote infrastructure</strong>. Place each function independently.</p></div>
+<div class="zone-key"><div><b>DEVICE</b><span>sensor / actuator hardware</span></div><div><b>NEARBY</b><span>gateway or site compute</span></div><div><b>REMOTE</b><span>cloud or remote data centre</span></div></div>
+<div id="functionPlacement" class="placement-list"></div>
+<div class="gate-status" id="a1GateStatus">Place all six functions.</div>
+<button class="btn primary next-activity" id="a1Next" data-next="1" disabled>Place all functions → STOP</button>
+</section>
+
+<section class="activity-screen" data-screen="1" hidden><div class="stop-screen focused-stop"><div class="stop-orbit">STOP</div><div class="eyebrow">Class discussion</div><h2>The application does not have to live in one box.</h2><div class="stop-snapshot" id="stop1Snapshot"></div><div class="student-stop-question"><span>COMPARE</span><strong>Which functions were easy to place, and which depended on assumptions you have not checked yet?</strong></div><button class="btn reveal-keep" data-reveal="placement">After discussion · reveal what to keep</button><div class="stop-keep" data-keep="placement" hidden><strong>Placement is function-by-function.</strong><p>“Device”, “edge/nearby” and “cloud/remote” are deployment zones. A single IoT service can legitimately span all three.</p></div><button class="btn primary stop-next" data-next="2" data-after="placement" disabled>Continue</button></div></section>
+
+<section class="activity-screen" data-screen="2" hidden>
+<div class="activity-label"><span>Activity 2</span><span class="pill-neutral">Move data or transform it first?</span></div>
+<div class="activity-intro compact-intro"><div class="activity-move-label">DATA MOVEMENT IS PART OF THE DESIGN</div><h2>What should cross the network?</h2><p>For this exercise, 200 sensors each produce one application record every 5 seconds. Compare three handling strategies before deciding where aggregation should run.</p></div>
+<div class="data-volume-board"><div class="data-assumption"><span>SCENARIO</span><strong>200 sensors · 1 record / 5 s</strong><small>We count application records only, not protocol/link overhead.</small></div><div id="volumeChoices" class="volume-choices"></div><div id="volumeResult" class="volume-result"></div></div>
+<div class="decision-row"><label><span>What drives your choice most?</span><select id="volumeReason"><option value="">Choose one reason…</option><option value="fidelity">Keep high time resolution</option><option value="bandwidth">Reduce transferred data</option><option value="events">Keep immediate events but compress routine telemetry</option></select></label></div>
+<div class="gate-status" id="a2GateStatus">Choose one handling strategy and one reason.</div>
+<button class="btn primary next-activity" id="a2Next" data-next="3" disabled>Data strategy recorded → continue</button>
+</section>
+
+<section class="activity-screen" data-screen="3" hidden>
+<div class="activity-label"><span>Activity 3</span><span class="pill-neutral">Place decisions against a response budget</span></div>
+<div class="activity-intro compact-intro"><div class="activity-move-label">PROXIMITY ONLY MATTERS WHEN A CONSTRAINT MAKES IT MATTER</div><h2>How far away can the decision run?</h2><p>Use the <strong>planning envelope for this campus exercise</strong>. These numbers are scenario assumptions, not universal Internet latency values.</p></div>
+<div class="latency-envelope"><div><b>DEVICE</b><strong>5–15 ms</strong><span>local sensing + compute</span></div><div><b>NEARBY</b><strong>20–60 ms</strong><span>site network + nearby compute</span></div><div><b>REMOTE</b><strong>90–220 ms</strong><span>remote path + compute</span></div></div>
+<div id="latencyCases" class="focus-grid"></div>
+<div class="gate-status" id="a3GateStatus">Make all three placement decisions.</div>
+<button class="btn primary next-activity" id="a3Next" data-next="4" disabled>Response budgets tested → STOP</button>
+</section>
+
+<section class="activity-screen" data-screen="4" hidden><div class="stop-screen focused-stop"><div class="stop-orbit">STOP</div><div class="eyebrow">Class discussion</div><h2>Low latency is not a synonym for “edge”.</h2><div class="stop-snapshot" id="stop3Snapshot"></div><div class="student-stop-question"><span>BOUNDARY</span><strong>When did proximity actually constrain your placement — and when was remote execution still perfectly acceptable?</strong></div><button class="btn reveal-keep" data-reveal="latency">After discussion · reveal what to keep</button><div class="stop-keep" data-keep="latency" hidden><strong>Start from the response budget, not from a preferred zone.</strong><p>Nearer execution can reduce communication delay, but only a stated latency or locality requirement makes that advantage decisive.</p></div><button class="btn primary stop-next" data-next="5" data-after="latency" disabled>Continue</button></div></section>
+
+<section class="activity-screen" data-screen="5" hidden>
+<div class="activity-label"><span>Activity 4</span><span class="pill-neutral">Check feasibility before optimisation</span></div>
+<div class="activity-intro compact-intro"><div class="activity-move-label">CAN IT EVEN RUN THERE?</div><h2>A placement is impossible before it is suboptimal.</h2><p>Use the exercise resource envelopes below. Choose the <strong>closest zone that is still feasible</strong> for each workload.</p></div>
+<div class="resource-envelope"><div><b>DEVICE</b><span>low compute · small memory · strict energy budget</span></div><div><b>NEARBY</b><span>medium compute · GB-scale memory · mains powered</span></div><div><b>REMOTE</b><span>high compute · large storage · elastic resources</span></div></div>
+<div id="feasibilityCases" class="placement-list compact"></div>
+<div class="gate-status" id="a4GateStatus">Classify all four workloads.</div>
+<button class="btn primary next-activity" id="a4Next" data-next="6" disabled>Feasibility checked → continue</button>
+</section>
+
+<section class="activity-screen" data-screen="6" hidden>
+<div class="activity-label"><span>Activity 5</span><span class="pill-neutral">Minimise what crosses a boundary</span></div>
+<div class="activity-intro compact-intro"><div class="activity-move-label">TRANSFER CASE · OCCUPANCY CAMERA</div><h2>Raw data does not always need to leave the site.</h2><p>New requirement: estimate room occupancy from a camera. <strong>Raw images may not leave the building</strong>, the camera device cannot run the model, and a small building server is available.</p></div>
+<div id="privacyChoices" class="privacy-grid"></div>
+<div class="decision-row"><label><span>What should the remote service receive?</span><select id="privacyPayload"><option value="">Choose the minimum useful output…</option><option value="raw">Raw frames</option><option value="count">Occupancy count + timestamp + confidence + source</option><option value="features">Intermediate image features</option></select></label></div>
+<div class="gate-status" id="a5GateStatus">Choose a pipeline and the data that crosses the building boundary.</div>
+<button class="btn primary next-activity" id="a5Next" data-next="7" disabled>Boundary designed → STOP</button>
+</section>
+
+<section class="activity-screen" data-screen="7" hidden><div class="stop-screen focused-stop"><div class="stop-orbit">STOP</div><div class="eyebrow">Class discussion</div><h2>Placement also decides what data leaves a trust boundary.</h2><div class="stop-snapshot" id="stop5Snapshot"></div><div class="student-stop-question"><span>COMPARE</span><strong>What did you gain by moving computation toward the data source — and what new local resource did you have to rely on?</strong></div><button class="btn reveal-keep" data-reveal="privacy">After discussion · reveal what to keep</button><div class="stop-keep" data-keep="privacy" hidden><strong>Data minimisation can be a placement objective.</strong><p>Processing near the source can replace high-volume or sensitive raw data with smaller derived information — but it consumes local compute and creates a new execution dependency.</p></div><button class="btn primary stop-next" data-next="8" data-after="privacy" disabled>Continue</button></div></section>
+
+<section class="activity-screen" data-screen="8" hidden>
+<div class="activity-label"><span>Activity 6</span><span class="pill-neutral">What changes when a gateway starts computing?</span></div>
+<div class="activity-intro compact-intro"><div class="activity-move-label">NAME THE ROLE AFTER YOU SEE THE WORK</div><h2>The same nearby box can play very different roles.</h2><p>Compare two deployments. Mark which application functions moved from remote infrastructure into the nearby node.</p></div>
+<div class="edge-compare"><article><span>DEPLOYMENT A</span><h3>Gateway forwards</h3><div class="mini-flow">sensor → gateway → remote service</div><p>The gateway translates/forwards traffic. Filtering, decisions and short-term state remain remote.</p></article><article><span>DEPLOYMENT B</span><h3>Nearby node computes</h3><div class="mini-flow">sensor → nearby node → remote service</div><p>The nearby node filters, detects local conditions and keeps a short cache before forwarding summaries.</p></article></div>
+<div class="edge-moves" id="edgeMoves"></div>
+<div class="edge-term" id="edgeTerm" hidden><strong>Now we can name the idea.</strong><p>In Deployment B, the nearby node is taking an <strong>edge-computing role</strong>: application work is executed closer to the data source instead of only in remote infrastructure. “Edge” describes a placement role; it is not one mandatory box or protocol.</p></div>
+<div class="gate-status" id="a6GateStatus">Identify the three functions that moved.</div>
+<button class="btn primary next-activity" id="a6Next" data-next="9" disabled>Edge role identified → continue</button>
+</section>
+
+<section class="activity-screen" data-screen="9" hidden>
+<div class="activity-label"><span>Activity 7</span><span class="pill-neutral">Build one split pipeline</span></div>
+<div class="activity-intro compact-intro"><div class="activity-move-label">INTEGRATE THE CONSTRAINTS</div><h2>Place the complete CO₂ service.</h2><p>Now combine what you learned. Place each function, then choose what representation should cross from the nearby zone to remote infrastructure.</p></div>
+<div id="pipelinePlacement" class="placement-list"></div>
+<div class="decision-row"><label><span>What crosses nearby → remote?</span><select id="pipelinePayload"><option value="">Choose one…</option><option value="raw">Every raw 5-second sample</option><option value="summary">1-minute summaries + immediate events</option><option value="events">Events only</option></select></label></div>
+<div class="gate-status" id="a7GateStatus">Place all six functions and choose the boundary payload.</div>
+<button class="btn primary next-activity" id="a7Next" data-next="10" disabled>Pipeline built → STOP</button>
+</section>
+
+<section class="activity-screen" data-screen="10" hidden><div class="stop-screen focused-stop"><div class="stop-orbit">STOP</div><div class="eyebrow">Class discussion</div><h2>A placement boundary is also a data/interface boundary.</h2><div class="stop-snapshot" id="stop7Snapshot"></div><div class="student-stop-question"><span>DEFEND</span><strong>Where did your pipeline change representation or responsibility, and which constraint justified that cut?</strong></div><button class="btn reveal-keep" data-reveal="pipeline">After discussion · reveal what to keep</button><div class="stop-keep" data-keep="pipeline" hidden><strong>Split systems need explicit cut points.</strong><p>At each placement boundary, state what crosses it, in what form, and which function/state remains on each side. Otherwise “edge + cloud” is only a diagram, not a design.</p></div><button class="btn primary stop-next" data-next="11" data-after="pipeline" disabled>Continue</button></div></section>
+
+<section class="activity-screen" data-screen="11" hidden>
+<div class="activity-label"><span>Activity 8</span><span class="pill-neutral">Change one assumption</span></div>
+<div class="activity-intro compact-intro"><div class="activity-move-label">FINAL TEST</div><h2>Does your placement survive when the operating assumption changes?</h2><p>Choose one change, then make the <strong>minimum justified revision</strong> to your current pipeline.</p></div>
+<div id="changeCases" class="change-grid"></div>
+<div class="revision-board" id="revisionBoard" hidden><label><span>Which function do you revise?</span><select id="revisionFunction"><option value="">Choose function…</option></select></label><label><span>Where does it move?</span><select id="revisionZone"><option value="">Choose zone…</option><option value="device">Device</option><option value="nearby">Nearby</option><option value="remote">Remote</option></select></label><label><span>Why?</span><select id="revisionReason"><option value="">Choose reason…</option><option value="data">Reduce transferred data</option><option value="latency">Meet a tighter response budget</option><option value="resource">Respect compute / memory / energy feasibility</option><option value="privacy">Keep sensitive/raw data local</option><option value="scale">Absorb larger fleet / workload scale</option></select></label></div>
+<div class="gate-status" id="a8GateStatus">Choose one changed assumption, then revise one placement decision.</div>
+<button class="btn primary next-activity" id="a8Next" data-next="12" disabled>Revision defended → FINAL STOP</button>
+</section>
+
+<section class="activity-screen" data-screen="12" hidden><div class="stop-screen focused-stop final-stop"><div class="stop-orbit">STOP</div><div class="eyebrow">Final restitution</div><h2>Placement is an argument, not a three-column diagram.</h2><div class="stop-snapshot" id="stop8Snapshot"></div><div class="student-stop-question"><span>DEFEND</span><strong>Function → constraint → zone → data crossing the boundary. Which part of your reasoning is most sensitive to the changed assumption?</strong></div><button class="btn reveal-keep" data-reveal="synthesis">After discussion · reveal session synthesis</button><div class="stop-keep synthesis-keep" data-keep="synthesis" hidden><strong>Session 3 mental model</strong><div class="final-chain"><span>Function</span><b>→</b><span>Constraints</span><b>→</b><span>Feasible zones</span><b>→</b><span>Data boundary</span><b>→</b><span>Defended placement</span></div><p>Do not start with “edge” or “cloud”. Start with what must execute, what constrains it, and what must cross between zones.</p></div><button class="btn primary stop-next" data-next="13" data-after="synthesis" disabled>Memory lock</button></div></section>
+
+<section class="activity-screen" data-screen="13" hidden><div class="finish-card"><div class="finish-mark">↺</div><div class="eyebrow">Session 3 · Retrieval before synthesis</div><h2>Can you reconstruct the placement argument?</h2><p class="lead">Say the answer first. Reveal only after your group commits.</p><div class="memory-lock" id="memoryLock"></div><div class="session-synthesis" id="sessionSynthesis" hidden><div class="synthesis-rule"><span></span><strong>Session complete</strong><span></span></div><div class="takeaway-grid"><div><strong>Functions</strong><span>Place work function-by-function, not application-by-application.</span></div><div><strong>Data</strong><span>Moving data has a cost; transformation can change what needs to cross the network.</span></div><div><strong>Latency</strong><span>Proximity matters when a response/locality constraint makes it matter.</span></div><div><strong>Feasibility</strong><span>Compute, memory and energy can rule out a zone before optimisation begins.</span></div><div><strong>Boundaries</strong><span>A split pipeline must define what crosses each placement boundary.</span></div></div><div class="finish-actions"><button class="btn" id="finishExport" type="button">Export mission dossier</button><a class="btn" href="../">Return to course hub</a></div></div></div></section>
+
+</div></main>
+<div class="drawer-scrim" id="drawerScrim" hidden></div><aside class="stack-drawer" id="designDrawer" aria-hidden="true"><div class="drawer-head"><div><div class="eyebrow">Session artifact</div><h2>Our placement design</h2></div><button class="icon-btn" id="drawerClose" aria-label="Close" type="button">×</button></div><div class="drawer-body" id="drawerBody"></div><div class="drawer-tools"><button class="btn" id="drawerExport" type="button">Export dossier</button><label class="btn" for="importInput">Import dossier</label><input id="importInput" type="file" accept="application/json,.json" hidden><button class="btn danger" id="resetBtn" type="button">Reset Session 3</button></div></aside>
+<div class="toast" id="toast"></div>
+<script src="assets/student.js"></script>
+</body></html>

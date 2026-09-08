@@ -5,13 +5,13 @@
   const STORAGE_KEY = 'iot-systems-design-session1-v20';
   const MISSION_KEY = 'iot-systems-design-campus-mission-v1';
   const defaultState = {
-    version: 20,
+    version: 21,
     screen: 0,
     maxUnlockedScreen: 0,
     conceptUnlocks: {},
     stopChallenges: {},
-    architectureV1: null,
-    architectureV2: null,
+    defendedBaseline: null,
+    baselineAssumption: null,
     landscape: {},
     landscapeBoundary: null,
     borderline: {},
@@ -83,7 +83,7 @@
       revisionRequirement: state.stressRequirement||null,
       revisionMove: state.stressResponse||null,
       revisionRecorded: !!state.stressResponse,
-      architectureV2Completed: !!state.stressResponse,
+      baselineAssumption: state.baselineAssumption||null,
       updatedAt: new Date().toISOString()
     };
   }
@@ -193,10 +193,19 @@
     const finish=$('#expertFinish'); if(finish) finish.innerHTML=`<span>Optional depth trail</span><strong>${n} / 4 explored</strong><small>Challenge routes use the same concepts with less guidance. They are optional and not graded.</small>`;
   }
 
+  function migrateSessionState(candidate={}) {
+    const migrated={...candidate};
+    if(!migrated.defendedBaseline && migrated.architectureV1) migrated.defendedBaseline=migrated.architectureV1;
+    delete migrated.architectureV1;
+    delete migrated.architectureV2;
+    delete migrated.architectureV2Completed;
+    return migrated;
+  }
+
   function loadState() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) state = {...structuredClone(defaultState), ...JSON.parse(saved)};
+      if (saved) state = {...structuredClone(defaultState), ...migrateSessionState(JSON.parse(saved))};
       state.maxUnlockedScreen = Math.max(Number(state.maxUnlockedScreen)||0, Number(state.screen)||0);
       nextComponentId = Math.max(1, ...state.components.map(c => Number(c.id) || 0)) + 1;
     } catch (_) {}
@@ -267,7 +276,7 @@
     const frontier=Math.max(Number(state.maxUnlockedScreen)||0,Number(state.screen)||0);
     if(index>frontier && !unlock){flashMessage('That stage is still locked. Continue from your current mission first.');return false;}
     const previousScreen=state.screen;
-    if(previousScreen===3 && index===4 && !state.architectureV1){captureArchitectureV1();}
+    if(previousScreen===3 && index===4 && !state.defendedBaseline){captureDefendedBaseline();}
     if(unlock && index>frontier) state.maxUnlockedScreen=index;
     else state.maxUnlockedScreen=frontier;
     state.screen = index;
@@ -408,7 +417,43 @@
   }
   function updateClosedLoopGate(){const next=$('#loopNext');if(!next)return;const a=state.loopClosure?.answers||{};const n=['ackscope','proof','authority'].filter(k=>a[k]).length;next.disabled=n<3;next.textContent=n<3?`Follow the claim trace · ${n}/3 →`:'Claim trace ready → STOP';}
 
-  function architectureIsFrozen(){return !!state.architectureV1;}
+  const canvas=$('#canvas');
+  const flowSvg=$('#flowSvg');
+  const componentInput=$('#componentInput');
+  const flowFrom=$('#flowFrom');
+  const flowTo=$('#flowTo');
+
+  const baselineAssumptionOptions=[
+    ['placement','Exact device placement / physical conditions'],
+    ['infrastructure','Available communication infrastructure'],
+    ['operations','Power, maintenance or device operating constraints'],
+    ['timing','Service timing / operational conditions']
+  ];
+
+  function architectureIsFrozen(){return !!state.defendedBaseline;}
+
+  function addComponent(rawName){
+    if(architectureIsFrozen()){flashMessage('The defended baseline is frozen. Later evidence belongs in the revision record.');return;}
+    const name=String(rawName||'').trim();
+    if(!name){flashMessage('Name a responsibility or component first.');return;}
+    state.components.push({id:nextComponentId++,name,x:null,y:null});
+    saveState();
+    renderArchitecture();
+  }
+
+  function renderBaselineAssumption(){
+    const host=$('#baselineAssumptionChoices'),status=$('#baselineAssumptionStatus');
+    if(!host)return;
+    host.innerHTML=baselineAssumptionOptions.map(([id,label])=>`<button type="button" class="chip-button ${state.baselineAssumption===id?'active':''}" data-baseline-assumption="${id}">${label}</button>`).join('');
+    host.querySelectorAll('[data-baseline-assumption]').forEach(b=>b.addEventListener('click',()=>{
+      if(architectureIsFrozen())return;
+      state.baselineAssumption=b.dataset.baselineAssumption;
+      saveState();renderBaselineAssumption();updateArchitectureGate();renderStopSnapshots();
+    }));
+    const chosen=baselineAssumptionOptions.find(([id])=>id===state.baselineAssumption);
+    host.querySelectorAll('[data-baseline-assumption]').forEach(b=>b.disabled=architectureIsFrozen());
+    if(status)status.innerHTML=chosen?`<b>Open assumption recorded:</b> ${esc(chosen[1])}. <span>Keep it open until evidence resolves it.</span>`:'<span>No open assumption recorded yet.</span>';
+  }
 
   function removeComponent(id) {
     if(architectureIsFrozen()){flashMessage('The defended baseline is frozen. Review it here; later changes belong in the revision record.');return;}
@@ -470,9 +515,11 @@
     renderMobileComponents();
     renderMobileGraph();
     renderFlowSelectors();
+    renderBaselineAssumption();
     renderFlowList();
-    const lockIds=['componentInput','flowFrom','flowTo','flowLabel','addFlow','clearArchitecture'];
+    const lockIds=['componentInput','flowFrom','flowTo','flowLabel','clearArchitecture'];
     lockIds.forEach(id=>{const el=$('#'+id);if(el)el.disabled=frozen;});
+    const addFlowBtn=$('#addFlow');if(addFlowBtn){addFlowBtn.disabled=frozen||state.components.length<2;addFlowBtn.textContent=state.components.length<2?'Add 2 components first':'Add flow';}
     const componentSubmit=$('#componentForm button[type="submit"]');if(componentSubmit)componentSubmit.disabled=frozen;
     requestAnimationFrame(drawFlows);
     renderDesignDrawer();
@@ -481,9 +528,9 @@
   function updateArchitectureGate(){
     const next=$('#architectureNext'); if(!next)return;
     const labelled=state.flows.filter(f=>String(f.label||'').trim()).length;
-    const ready=state.components.length>=3&&labelled>=2;
+    const ready=state.components.length>=3&&labelled>=2&&!!state.baselineAssumption;
     next.disabled=!ready;
-    next.textContent=ready?'Baseline ready to discuss → STOP':state.components.length<3?'Add at least 3 responsibilities / components →':'Name at least 2 information flows →';
+    next.textContent=ready?'Baseline + open assumption ready → STOP':state.components.length<3?'Add at least 3 responsibilities / components →':labelled<2?'Name at least 2 information flows →':'Expose one unresolved assumption →';
   }
 
   function renderMobileComponents() {
@@ -543,7 +590,8 @@
   $('#addFlow').addEventListener('click', () => {
     if(architectureIsFrozen()){flashMessage('The defended baseline is frozen. Later changes belong in the revision record.');return;}
     const from=+flowFrom.value, to=+flowTo.value, label=$('#flowLabel').value.trim();
-    if (!from || !to || from===to) return;
+    if (!from || !to || from===to){flashMessage('Choose a source and a different destination.');return;}
+    if(!label){flashMessage('Name what is exchanged on this flow.');return;}
     state.flows.push({from,to,label}); $('#flowLabel').value=''; saveState(); renderArchitecture();
   });
   $('#clearArchitecture').addEventListener('click', () => { if(architectureIsFrozen()){flashMessage('The defended baseline is frozen.');return;} if(confirm('Clear the current architecture?')){state.components=[];state.flows=[];saveState();renderArchitecture();}});
@@ -649,13 +697,13 @@
       cellular:{vals:['Wide area','Small / moderate','Constrained to moderate','Operator coverage + service'],works:'works if operator coverage/service is available where devices operate',breaks:'weakens where provider coverage, subscription or device energy assumptions fail'}
     };
     const probe=state.techDiscoveryProbe;
-    host.innerHTML=discoveryFamilies.map((f,i)=>{const u=use[f.id];const primary=probe.primary===f.id,challenger=probe.challenger===f.id;return `<article class="discovery-card revealed ${primary?'probe-primary':''} ${challenger?'probe-challenger':''}"><div class="discovery-top"><span class="discovery-icon">${f.icon}</span><div><span class="eyebrow">Network shape ${i+1}</span><h3>${f.title}</h3></div></div><p>${f.question}</p><div class="shape-chain">${f.shape.map((x,j)=>`${j?'<span class="shape-arrow">→</span>':''}<span>${x}</span>`).join('')}</div><div class="family-reveal"><span class="family-name">Example family · ${f.name}</span><p>${f.essential}</p></div><div class="shape-use-grid"><span><b>Distance</b>${u.vals[0]}</span><span><b>Traffic</b>${u.vals[1]}</span><span><b>Device budget</b>${u.vals[2]}</span><span><b>Infrastructure</b>${u.vals[3]}</span></div><div class="shape-assumption-pair"><span><b>Works if…</b>${u.works}</span><span><b>Breaks if…</b>${u.breaks}</span></div><div class="probe-role-row"><button type="button" class="shortlist-toggle ${primary?'active':''}" data-probe-role="primary" data-probe-shape="${f.id}">${primary?'✓ Leading hypothesis':'Use as leading hypothesis'}</button><button type="button" class="shortlist-toggle secondary ${challenger?'active':''}" data-probe-role="challenger" data-probe-shape="${f.id}">${challenger?'✓ Challenger':'Use as challenger'}</button></div></article>`}).join('');
+    host.innerHTML=discoveryFamilies.map((f,i)=>{const u=use[f.id];const primary=probe.primary===f.id,challenger=probe.challenger===f.id;return `<article class="discovery-card revealed ${primary?'probe-primary':''} ${challenger?'probe-challenger':''}"><div class="discovery-top"><span class="discovery-icon">${f.icon}</span><div><span class="eyebrow">Network shape ${i+1}</span><h3>${f.title}</h3></div></div><p>${f.question}</p><div class="shape-chain">${f.shape.map((x,j)=>`${j?'<span class="shape-arrow">→</span>':''}<span>${x}</span>`).join('')}</div><div class="shape-use-grid"><span><b>Distance</b>${u.vals[0]}</span><span><b>Traffic</b>${u.vals[1]}</span><span><b>Device budget</b>${u.vals[2]}</span><span><b>Infrastructure</b>${u.vals[3]}</span></div><div class="shape-assumption-pair"><span><b>Works if…</b>${u.works}</span><span><b>Breaks if…</b>${u.breaks}</span></div><div class="probe-role-row"><button type="button" class="shortlist-toggle ${primary?'active':''}" data-probe-role="primary" data-probe-shape="${f.id}">${primary?'✓ Leading hypothesis':'Use as leading hypothesis'}</button><button type="button" class="shortlist-toggle secondary ${challenger?'active':''}" data-probe-role="challenger" data-probe-shape="${f.id}">${challenger?'✓ Challenger':'Use as challenger'}</button></div></article>`}).join('');
     host.querySelectorAll('[data-probe-role]').forEach(b=>b.addEventListener('click',()=>{const role=b.dataset.probeRole,id=b.dataset.probeShape;const other=role==='primary'?'challenger':'primary';if(state.techDiscoveryProbe[other]===id)state.techDiscoveryProbe[other]=null;state.techDiscoveryProbe[role]=state.techDiscoveryProbe[role]===id?null:id;saveState();renderTechDiscovery();renderDesignDrawer();}));
     const board=$('#shapeReasoningBoard');
     if(board){
       const primary=discoveryFamilies.find(x=>x.id===probe.primary), challenger=discoveryFamilies.find(x=>x.id===probe.challenger);
       const reqTop=requirementDefs.filter(([id])=>state.requirements?.[id]===2).map(([, ,n])=>n);
-      board.innerHTML=`<div class="shape-reasoning-head"><div><span class="eyebrow">Campus hypothesis test</span><h3>${primary&&challenger?'Now explain why the ranking is provisional.':'Choose two different shapes to compare.'}</h3><p>${reqTop.length?`Your earlier system Top 3: <strong>${reqTop.map(esc).join(' · ')}</strong>. `:''}Use the comparison table above rather than protocol familiarity.</p></div><span class="reasoning-pair">${primary?esc(primary.title):'?' } <b>vs</b> ${challenger?esc(challenger.title):'?'}</span></div>${primary&&challenger?`<div class="shape-probe-questions"><div><strong>Which campus fact is doing most of the work in your ranking?</strong><div class="challenge-chip-row">${discoveryProbeDrivers.map(([id,l])=>`<button type="button" class="chip-button ${probe.driver===id?'active':''}" data-probe-driver="${id}">${l}</button>`).join('')}</div></div><div><strong>Which missing fact could most easily reverse the ranking?</strong><div class="challenge-chip-row">${discoveryProbeUncertainties.map(([id,l])=>`<button type="button" class="chip-button ${probe.uncertainty===id?'active':''}" data-probe-uncertainty="${id}">${l}</button>`).join('')}</div></div></div>${probe.driver&&probe.uncertainty?`<div class="campus-feedback"><b>Defensible hypothesis, not final selection.</b> You have named both the evidence carrying the current ranking and the observation that could falsify it. Activity 6 can now investigate concrete technology families without pretending the site survey is complete.</div>`:''}`:'<p class="section-copy">The challenger is not a second favourite. It should be the alternative most likely to win if one important assumption changes.</p>'}`;
+      board.innerHTML=`<div class="shape-reasoning-head"><div><span class="eyebrow">Campus hypothesis test</span><h3>${primary&&challenger?'Now explain why the ranking is provisional.':'Choose two different shapes to compare.'}</h3><p>${reqTop.length?`Your earlier system Top 3: <strong>${reqTop.map(esc).join(' · ')}</strong>. `:''}Use the comparison table above rather than protocol familiarity.</p></div><span class="reasoning-pair">${primary?esc(primary.title):'?' } <b>vs</b> ${challenger?esc(challenger.title):'?'}</span></div>${primary&&challenger?`<div class="shape-probe-questions"><div><strong>Which campus fact is doing most of the work in your ranking?</strong><div class="challenge-chip-row">${discoveryProbeDrivers.map(([id,l])=>`<button type="button" class="chip-button ${probe.driver===id?'active':''}" data-probe-driver="${id}">${l}</button>`).join('')}</div></div><div><strong>Which missing fact could most easily reverse the ranking?</strong><div class="challenge-chip-row">${discoveryProbeUncertainties.map(([id,l])=>`<button type="button" class="chip-button ${probe.uncertainty===id?'active':''}" data-probe-uncertainty="${id}">${l}</button>`).join('')}</div></div></div>${probe.driver&&probe.uncertainty?`<div class="campus-feedback"><b>Defensible hypothesis, not final selection.</b> You have named both the evidence carrying the current ranking and the observation that could falsify it. Activity 6 can now introduce concrete technology names without pretending the site survey is complete.</div>`:''}`:'<p class="section-copy">The challenger is not a second favourite. It should be the alternative most likely to win if one important assumption changes.</p>'}`;
       board.querySelectorAll('[data-probe-driver]').forEach(b=>b.addEventListener('click',()=>{state.techDiscoveryProbe.driver=b.dataset.probeDriver;saveState();renderTechDiscovery();}));
       board.querySelectorAll('[data-probe-uncertainty]').forEach(b=>b.addEventListener('click',()=>{state.techDiscoveryProbe.uncertainty=b.dataset.probeUncertainty;saveState();renderTechDiscovery();}));
     }
@@ -813,7 +861,7 @@
   function renderStress() {
     const host=$('#stressGrid');
     host.innerHTML=stressDefs.map(s=>`<button type="button" class="event ${state.selectedStress===s.id?'selected':''}" data-stress="${s.id}"><span class="event-icon">${s.icon}</span><span><strong>${s.title}</strong><small>${s.short}</small></span></button>`).join('');
-    host.querySelectorAll('.event').forEach(b=>b.addEventListener('click',()=>{state.selectedStress=b.dataset.stress;state.stressTarget=null;state.stressRequirement=null;state.stressResponse=null;state.brokenAssumptionRevealed=false;state.doubleStress=null;state.handoverArchitecture=null;if(state.architectureV1)state.architectureV2=cloneArchitecture(state.architectureV1);saveState();renderStress();renderStressResponse();renderRevisionStudio();renderDoubleFailure();}));
+    host.querySelectorAll('.event').forEach(b=>b.addEventListener('click',()=>{state.selectedStress=b.dataset.stress;state.stressTarget=null;state.stressRequirement=null;state.stressResponse=null;state.brokenAssumptionRevealed=false;state.doubleStress=null;state.handoverArchitecture=null;saveState();renderStress();renderStressResponse();renderRevisionStudio();renderDoubleFailure();}));
     renderStressResponse(); renderDoubleFailure();
   }
 
@@ -821,7 +869,7 @@
     if(!target)return null;
     const broad={device:'Device / local access',local:'Gateway / local service',upstream:'Upstream / remote service'};
     if(broad[target])return broad[target];
-    const model=state.architectureV1||currentArchitectureModel();
+    const model=state.defendedBaseline||currentArchitectureModel();
     const [kind,raw]=String(target).split(':');
     if(kind==='component') return model.components.find(c=>String(c.id)===String(raw))?.name||null;
     if(kind==='flow'){
@@ -923,7 +971,7 @@
   function landscapeSnapshotMarkup(){const mapped=landscapeCases.filter(c=>landscapeSelection(c.id).primary);return `<div class="snapshot-landscape">${mapped.map(c=>{const x=landscapeSelection(c.id),boundary=state.landscapeBoundary===c.id;return `<div class="${boundary?'boundary-highlight':''}"><span class="snapshot-case">${c.icon}</span><span><strong>${esc(c.title)}${boundary?' · boundary test':''}</strong><small>${domainName(x.primary)}</small></span></div>`}).join('')}</div>`;}
   function renderStopSnapshots(){
     const l=$('#stopLandscapeSnapshot');if(l){const mapped=landscapeCases.filter(c=>landscapeSelection(c.id).primary),domains=new Set(mapped.map(c=>landscapeSelection(c.id).primary)).size,boundary=landscapeCases.find(c=>c.id===state.landscapeBoundary);l.innerHTML=`<div class="snapshot-head"><strong>Our IoT test set</strong><span>${mapped.length} cases · ${domains} main domains</span></div>${landscapeSnapshotMarkup()}<div class="snapshot-signal"><b>Discussion signal</b>${boundary?`You marked <strong>${esc(boundary.title)}</strong> as the boundary test. What makes it harder to fit a simple IoT definition than the other three?`:'Which selected case most challenges your definition of IoT — and why?'}</div>`;}
-    const a=$('#stopArchitectureSnapshot');if(a){const degrees=state.components.map(c=>[c,state.flows.filter(f=>f.from===c.id||f.to===c.id).length]).sort((x,y)=>y[1]-x[1]);const hot=degrees[0];a.innerHTML=`<div class="snapshot-head"><strong>Our defended baseline</strong><span>${state.components.length} components · ${state.flows.length} flows</span></div>${miniGraphMarkup()}${state.flows.length?`<div class="snapshot-flow-list">${state.flows.slice(0,6).map(f=>{const x=state.components.find(c=>c.id===f.from),y=state.components.find(c=>c.id===f.to);return `<span>${esc(x?.name||'?')} → ${esc(y?.name||'?')}${f.label?' · '+esc(f.label):''}</span>`}).join('')}</div>`:''}${hot?`<div class="snapshot-signal"><b>Discussion signal</b>${esc(hot[0].name)} touches ${hot[1]} flow${hot[1]===1?'':'s'}. Is that architectural centrality intentional?</div>`:''}`;}
+    const a=$('#stopArchitectureSnapshot');if(a){const degrees=state.components.map(c=>[c,state.flows.filter(f=>f.from===c.id||f.to===c.id).length]).sort((x,y)=>y[1]-x[1]);const hot=degrees[0],open=baselineAssumptionOptions.find(([id])=>id===state.baselineAssumption);a.innerHTML=`<div class="snapshot-head"><strong>Our defended baseline</strong><span>${state.components.length} components · ${state.flows.length} flows</span></div>${miniGraphMarkup()}${state.flows.length?`<div class="snapshot-flow-list">${state.flows.slice(0,6).map(f=>{const x=state.components.find(c=>c.id===f.from),y=state.components.find(c=>c.id===f.to);return `<span>${esc(x?.name||'?')} → ${esc(y?.name||'?')}${f.label?' · '+esc(f.label):''}</span>`}).join('')}</div>`:''}${open?`<div class="snapshot-insight"><b>Open assumption</b>${esc(open[1])}</div>`:''}${hot?`<div class="snapshot-signal"><b>Discussion signal</b>${esc(hot[0].name)} touches ${hot[1]} flow${hot[1]===1?'':'s'}. Is that architectural centrality intentional?</div>`:''}`;}
     const cl=$('#stopLoopSnapshot');if(cl){const a=state.loopClosure?.answers||{},labels={proof:{feedback:'Measured physical-state feedback',ack:'Another acknowledgement',log:'Server-side log'},ack:{digital:'Digital receipt / handling',physical:'Physical change',policy:'Policy correctness'},authority:{operator:'Operator',network:'Network/controller',actuator:'Actuator'}};cl.innerHTML=`<div class="snapshot-head"><strong>Our command claim trace</strong><span>${Object.keys(a).length}/3 explicit</span></div><div class="revision-stop-cause"><span><small>What ACK establishes</small><strong>${esc(labels.ack[a.ackscope]||'Not selected')}</strong></span><b>→</b><span><small>Evidence of physical outcome</small><strong>${esc(labels.proof[a.proof]||'Not selected')}</strong></span><b>→</b><span><small>Override authority</small><strong>${esc(labels.authority[a.authority]||'Not selected')}</strong></span></div>`;}
     const r=$('#stopRequirementsSnapshot');if(r){const top=requirementDefs.filter(([id])=>state.requirements[id]===2);r.innerHTML=`<div class="snapshot-head"><strong>Two rankings, one architecture</strong><span>system vs flow</span></div><div class="snapshot-requirements"><div><small>Campus overall · Top 3</small><div class="chip-row">${top.map(([id,,n])=>`<span class="chip priority">${esc(n)}</span>`).join('')||'<span class="empty-copy">Not ranked yet</span>'}</div></div>${state.flowLens?.requirements?.length?(()=>{const f=state.flows[state.flowLens.flowIndex??0],a=state.components.find(x=>x.id===f?.from),b=state.components.find(x=>x.id===f?.to),label=f?`${a?.name||'?'} → ${b?.name||'?'}${f.label?' · '+f.label:''}`:'selected flow';return `<div><small>${esc(label)} · Top 3</small><div class="chip-row">${state.flowLens.requirements.map(id=>requirementDefs.find(x=>x[0]===id)?.[2]).filter(Boolean).map(n=>`<span class="chip">${esc(n)}</span>`).join('')}</div></div>`})():'<div><small>Selected flow · Top 3</small><span class="empty-copy">Not ranked yet</span></div>'}</div><div class="snapshot-insight"><b>Discussion task</b> Which design pressure changed when you zoomed from the whole system to one flow, and what physical fact explains that change?</div>`;}
     const t=$('#stopTechnologySnapshot');if(t){const mystery=mysteryTechs.map(m=>{const x=state.mystery[m.id];return `<span class="snapshot-tech ${x?.revealed?(x.choice===m.answer?'correct':'wrong'):''}">${x?.revealed?(x.choice===m.answer?'✓':'↺'):'·'} ${m.name}</span>`}).join('');const dec=scenarioDefs.map(x=>{const st=state.scenarios[x.id]||{};return st.committed?`<div><strong>${esc(x.title)}</strong><span>${esc(st.choice||'')}</span>${st.twist?'<small>assumption challenged</small>':''}</div>`:''}).filter(Boolean).join('');const cp=state.campusDecision?.position?campusDecisionPositions.find(x=>x[0]===state.campusDecision.position):null;const cu=state.campusDecision?.uncertainty?campusUncertainties.find(x=>x[0]===state.campusDecision.uncertainty):null;t.innerHTML=`<div class="snapshot-head"><strong>Our technology reasoning</strong><span>${Object.values(state.scenarios||{}).filter(x=>x?.committed).length} transfer decisions</span></div><div class="snapshot-tech-row">${mystery}</div><div class="snapshot-decisions">${dec||'<p class="empty-copy">No deployment decision committed yet.</p>'}</div>${cp?`<div class="snapshot-campus-return"><small>Back to campus</small><strong>${esc(cp[1])}</strong>${cu?`<span>Most decision-sensitive missing fact: ${esc(cu[1])}</span>`:''}</div>`:''}`;}
@@ -963,8 +1011,7 @@
   function currentArchitectureModel(){return {components:state.components,flows:state.flows};}
   function miniGraphMarkup(){return miniGraphMarkupFor(currentArchitectureModel());}
   function cloneArchitecture(model){return JSON.parse(JSON.stringify(model));}
-  function captureArchitectureV1(){state.architectureV1=cloneArchitecture(currentArchitectureModel());state.architectureV2=cloneArchitecture(state.architectureV1);saveState();}
-  function ensureArchitectureV2(){if(!state.architectureV1)captureArchitectureV1();if(!state.architectureV2)state.architectureV2=cloneArchitecture(state.architectureV1);return state.architectureV2;}
+  function captureDefendedBaseline(){state.defendedBaseline=cloneArchitecture(currentArchitectureModel());saveState();}
   function renderMobileGraph(){const host=$('#mobileGraph');if(host)host.innerHTML=miniGraphMarkup();}
 
   function renderDesignDrawer(){
@@ -974,9 +1021,9 @@
     const tech=state.lastTechnology&&technologies[state.lastTechnology]?technologies[state.lastTechnology].name:null;
     const committed=Object.values(state.scenarios||{}).filter(v=>v&&v.committed).length;
     const cp=state.campusDecision?.position?campusDecisionPositions.find(x=>x[0]===state.campusDecision.position):null;
-    const v1=state.architectureV1||currentArchitectureModel(), v2=state.architectureV2;
+    const baseline=state.defendedBaseline||currentArchitectureModel();
     const dossier=loadMissionDossier(), hand=dossier.session1||{}, arch=handoverArchitectureChoices.find(x=>x[0]===state.handoverArchitecture);
-    host.innerHTML=`<section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Mission handover</strong><span class="design-stat">shared with S2</span></div><div class="drawer-mission-facts"><span>Architecture: ${esc(arch?.[1]||'not classified yet')}</span><span>Top constraints: ${esc(hand.priorityRequirements?.map(x=>x.label).join(' · ')||'not fixed yet')}</span><span>Key uncertainty: ${esc(hand.keyUncertainty?.label||'not fixed yet')}</span></div></section><section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Campus mission</strong><span class="design-stat">30 points</span></div><div class="drawer-mission-facts"><span>Buildings + outdoor</span><span>Temperature · humidity · CO₂ · noise</span><span>History + alerts</span></div>${cp?`<div class="drawer-flow">Current connectivity stance: <strong>${esc(cp[1])}</strong></div>`:''}</section><section class="design-section"><div class="design-section-head"><strong>${state.architectureV1?'Defended baseline':'Working design'}</strong><span class="design-stat">${v1.components.length} components · ${v1.flows.length} flows</span></div>${miniGraphMarkupFor(v1)}</section>${v2&&architectureChanged()?`<section class="design-section design-v2-section"><div class="design-section-head"><strong>Current defended design</strong><span class="design-stat">after incident</span></div>${miniGraphMarkupFor(v2)}</section>`:''}<section class="design-section"><div class="design-section-head"><strong>Requirements</strong><span class="design-stat">${selected.length} selected</span></div>${priorities.length?`<div class="chip-row">${priorities.map(x=>`<span class="chip priority">★ ${esc(x)}</span>`).join('')}</div>`:'<p class="drawer-empty">No top-three priorities yet.</p>'}</section><section class="design-section"><div class="design-section-head"><strong>Current investigation</strong></div>${tech?`<div class="drawer-flow">Last technology opened: <strong>${esc(tech)}</strong></div>`:'<p class="drawer-empty">No technology card opened yet.</p>'}<div class="drawer-flow" style="margin-top:6px">Committed transfer decisions: <strong>${committed}</strong></div></section>`;
+    host.innerHTML=`<section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Mission handover</strong><span class="design-stat">shared with S2</span></div><div class="drawer-mission-facts"><span>Architecture: ${esc(arch?.[1]||'not classified yet')}</span><span>Top constraints: ${esc(hand.priorityRequirements?.map(x=>x.label).join(' · ')||'not fixed yet')}</span><span>Key uncertainty: ${esc(hand.keyUncertainty?.label||'not fixed yet')}</span></div></section><section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Campus mission</strong><span class="design-stat">30 points</span></div><div class="drawer-mission-facts"><span>Buildings + outdoor</span><span>Temperature · humidity · CO₂ · noise</span><span>History + alerts</span></div>${cp?`<div class="drawer-flow">Current connectivity stance: <strong>${esc(cp[1])}</strong></div>`:''}</section><section class="design-section"><div class="design-section-head"><strong>${state.defendedBaseline?'Defended baseline':'Working design'}</strong><span class="design-stat">${baseline.components.length} components · ${baseline.flows.length} flows</span></div>${miniGraphMarkupFor(baseline)}${state.baselineAssumption?`<div class="drawer-flow" style="margin-top:8px">Open assumption: <strong>${esc(baselineAssumptionOptions.find(([id])=>id===state.baselineAssumption)?.[1]||state.baselineAssumption)}</strong></div>`:''}</section>${state.stressResponse?`<section class="design-section"><div class="design-section-head"><strong>Revision record</strong><span class="design-stat">after incident</span></div><div class="drawer-flow">Justified change: <strong>${esc(responseChoices.find(x=>x[0]===state.stressResponse)?.[1]||state.stressResponse)}</strong></div></section>`:''}<section class="design-section"><div class="design-section-head"><strong>Requirements</strong><span class="design-stat">${selected.length} selected</span></div>${priorities.length?`<div class="chip-row">${priorities.map(x=>`<span class="chip priority">★ ${esc(x)}</span>`).join('')}</div>`:'<p class="drawer-empty">No top-three priorities yet.</p>'}</section><section class="design-section"><div class="design-section-head"><strong>Current investigation</strong></div>${tech?`<div class="drawer-flow">Last technology opened: <strong>${esc(tech)}</strong></div>`:'<p class="drawer-empty">No technology card opened yet.</p>'}<div class="drawer-flow" style="margin-top:6px">Committed transfer decisions: <strong>${committed}</strong></div></section>`;
   }
 
   function openDesign(){renderDesignDrawer();$('#designDrawer').classList.add('open');$('#designDrawer').setAttribute('aria-hidden','false');$('#designScrim').hidden=false;}
@@ -1076,10 +1123,6 @@
 
 
   /* ---------- Baseline → revision studio ---------- */
-  function architectureChanged(){
-    if(!state.architectureV1||!state.architectureV2)return false;
-    return JSON.stringify(state.architectureV1)!==JSON.stringify(state.architectureV2);
-  }
   function renderRevisionStudio(){
     const studio=$('#revisionStudio');if(!studio)return;
     const ready=!!(state.selectedStress&&state.stressTarget&&state.stressRequirement&&state.stressResponse);studio.hidden=!ready;
@@ -1087,28 +1130,17 @@
     if(!ready)return;
     const incident=stressDefs.find(x=>x.id===state.selectedStress),req=requirementDefs.find(x=>x[0]===state.stressRequirement),move=responseChoices.find(x=>x[0]===state.stressResponse);
     const target={device:'Device / local access',local:'Gateway / local service',upstream:'Upstream / remote service'}[state.stressTarget]||state.stressTarget;
-    $('#revisionV1Graph').innerHTML=miniGraphMarkupFor(state.architectureV1||currentArchitectureModel());
-    $('#revisionV2Graph').innerHTML=`<div class="v2-move-card"><strong>${esc(move?.[1]||'')}</strong><span>${esc(move?.[2]||'')}</span></div>`;
+    $('#revisionBaselineGraph').innerHTML=miniGraphMarkupFor(state.defendedBaseline||currentArchitectureModel());
+    $('#revisionChangeCard').innerHTML=`<div class="revision-move-card"><strong>${esc(move?.[1]||'')}</strong><span>${esc(move?.[2]||'')}</span></div>`;
     const cause=$('#revisionCauseStrip');if(cause)cause.innerHTML=`<span><small>Incident</small><strong>${esc(incident?.title||'')}</strong></span><b>→</b><span><small>Hits first</small><strong>${esc(target)}</strong></span><b>→</b><span><small>Requirement</small><strong>${esc(req?.[2]||'')}</strong></span><b>→</b><span><small>Design change</small><strong>${esc(move?.[1]||'')}</strong></span>`;
     const summary=$('#revisionSummary');if(summary)summary.innerHTML=`<strong>What the STOP must test</strong><span>Does this move actually address the broken assumption? What new dependency or trade-off does it introduce? What failure remains?</span>`;
   }
 
-  $('#v2ComponentForm')?.addEventListener('submit',e=>{e.preventDefault();const inp=$('#v2ComponentInput'),name=inp.value.trim();if(!name)return;const v2=ensureArchitectureV2();const ids=v2.components.map(c=>Number(c.id)).filter(Number.isFinite);const id=(ids.length?Math.max(...ids):0)+1;v2.components.push({id,name,x:0,y:0});inp.value='';saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();renderStopSnapshots();});
-  $('#v2RemoveComponentBtn')?.addEventListener('click',()=>{const id=+$('#v2RemoveComponent').value;if(!id)return;const v2=ensureArchitectureV2();v2.components=v2.components.filter(c=>c.id!==id);v2.flows=v2.flows.filter(f=>f.from!==id&&f.to!==id);saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();renderStopSnapshots();});
-  $('#v2FlowForm')?.addEventListener('submit',e=>{e.preventDefault();const from=+$('#v2FlowFrom').value,to=+$('#v2FlowTo').value,label=$('#v2FlowLabel').value.trim();if(!from||!to||from===to){flashMessage('Choose two different components.');return;}const v2=ensureArchitectureV2();v2.flows.push({from,to,label});$('#v2FlowLabel').value='';saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();renderStopSnapshots();});
-  $('#resetV2')?.addEventListener('click',()=>{if(!state.architectureV1)return;state.architectureV2=cloneArchitecture(state.architectureV1);saveState();renderRevisionStudio();renderDesignDrawer();renderDesignEvolution();renderStopSnapshots();});
-  function architectureDelta(){
-    const v1=state.architectureV1,v2=state.architectureV2;if(!v1||!v2)return {added:[],removed:[],addedFlows:0,removedFlows:0};
-    const m1=new Map(v1.components.map(c=>[String(c.id),c.name])),m2=new Map(v2.components.map(c=>[String(c.id),c.name]));
-    const added=[...m2].filter(([id])=>!m1.has(id)).map(([,n])=>n),removed=[...m1].filter(([id])=>!m2.has(id)).map(([,n])=>n);
-    const sig=f=>`${f.from}|${f.to}|${f.label||''}`,s1=new Set(v1.flows.map(sig)),s2=new Set(v2.flows.map(sig));
-    return {added,removed,addedFlows:[...s2].filter(x=>!s1.has(x)).length,removedFlows:[...s1].filter(x=>!s2.has(x)).length};
-  }
   function renderDesignEvolution(){
     const host=$('#designEvolution');if(!host)return;
-    if(!state.architectureV1){host.innerHTML='';return;}
+    if(!state.defendedBaseline){host.innerHTML='';return;}
     const incident=stressDefs.find(x=>x.id===state.selectedStress),req=requirementDefs.find(x=>x[0]===state.stressRequirement),target=stressTargetLabel(),move=responseChoices.find(x=>x[0]===state.stressResponse);
-    host.innerHTML=`<div class="evolution-head"><span class="eyebrow">Visible learning artifact</span><h3>Baseline → revision reasoning</h3><p>${move?'The defended baseline remains visible as evidence. The revision is recorded as the structural change forced by a broken assumption, rather than as an unexplained redraw.':'The defended baseline is frozen. Complete the stress-test chain to record the justified design change.'}</p></div>${incident&&req&&target&&move?`<div class="evolution-cause"><span>Incident</span><strong>${esc(incident.title)}</strong><b>→</b><span>Affected first</span><strong>${esc(target)}</strong><b>→</b><span>Requirement under pressure</span><strong>${esc(req[2])}</strong><b>→</b><span>Design change</span><strong>${esc(move[1])}</strong></div>`:''}<div class="evolution-grid"><div><span>Defended baseline · evidence</span>${miniGraphMarkupFor(state.architectureV1)}</div><div><span>Revision record · explicit design change</span><div class="v2-move-card">${move?`<strong>${esc(move[1])}</strong><span>${esc(move[2])}</span><small>Residual question: what dependency or failure does this move still leave open?</small>`:'<span>No justified design change recorded yet.</span>'}</div></div></div>`;
+    host.innerHTML=`<div class="evolution-head"><span class="eyebrow">Visible learning artifact</span><h3>Baseline → revision reasoning</h3><p>${move?'The defended baseline remains visible as evidence. The revision is recorded as the structural change forced by a broken assumption, rather than as an unexplained redraw.':'The defended baseline is frozen. Complete the stress-test chain to record the justified design change.'}</p></div>${incident&&req&&target&&move?`<div class="evolution-cause"><span>Incident</span><strong>${esc(incident.title)}</strong><b>→</b><span>Affected first</span><strong>${esc(target)}</strong><b>→</b><span>Requirement under pressure</span><strong>${esc(req[2])}</strong><b>→</b><span>Design change</span><strong>${esc(move[1])}</strong></div>`:''}<div class="evolution-grid"><div><span>Defended baseline · evidence</span>${miniGraphMarkupFor(state.defendedBaseline)}</div><div><span>Revision record · explicit design change</span><div class="revision-move-card">${move?`<strong>${esc(move[1])}</strong><span>${esc(move[2])}</span><small>Residual question: what dependency or failure does this move still leave open?</small>`:'<span>No justified design change recorded yet.</span>'}</div></div></div>`;
   }
 
   /* ---------- Retrieval checkpoint ---------- */
@@ -1140,7 +1172,7 @@
   $('#importInput').addEventListener('change', e=>{
     const file=e.target.files?.[0]; if(!file)return;
     const reader=new FileReader();
-    reader.onload=()=>{try{const parsed=JSON.parse(reader.result);const candidate=parsed.sessionProgress?.session1||parsed.data||parsed;if(!Array.isArray(candidate.components)||!Array.isArray(candidate.flows))throw new Error();if(parsed.missionDossier)localStorage.setItem(MISSION_KEY,JSON.stringify(parsed.missionDossier));state={...structuredClone(defaultState),...candidate};state.maxUnlockedScreen=Math.max(Number(state.maxUnlockedScreen)||0,Number(state.screen)||0);nextComponentId=Math.max(1,...state.components.map(c=>+c.id||0))+1;saveState();renderAll();showScreen(state.screen,{scroll:false});}catch(_){alert('This is not a valid Session 1 export.');}};
+    reader.onload=()=>{try{const parsed=JSON.parse(reader.result);const candidate=parsed.sessionProgress?.session1||parsed.data||parsed;if(!Array.isArray(candidate.components)||!Array.isArray(candidate.flows))throw new Error();if(parsed.missionDossier)localStorage.setItem(MISSION_KEY,JSON.stringify(parsed.missionDossier));state={...structuredClone(defaultState),...migrateSessionState(candidate)};state.maxUnlockedScreen=Math.max(Number(state.maxUnlockedScreen)||0,Number(state.screen)||0);nextComponentId=Math.max(1,...state.components.map(c=>+c.id||0))+1;saveState();renderAll();showScreen(state.screen,{scroll:false});}catch(_){alert('This is not a valid Session 1 export.');}};
     reader.readAsText(file); e.target.value='';
   });
   $('#resetBtn').addEventListener('click',()=>{if(!confirm('Reset all work stored for this session on this device?'))return;state=structuredClone(defaultState);nextComponentId=1;try{const d=loadMissionDossier();d.session1={};localStorage.setItem(MISSION_KEY,JSON.stringify(d));}catch(_){}saveState();renderAll();showScreen(0);});

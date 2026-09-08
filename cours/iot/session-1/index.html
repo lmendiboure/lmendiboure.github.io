@@ -137,12 +137,17 @@
 </div>
 <div class="list" id="flowList"></div>
 </div>
+<section class="card flat baseline-assumption-card" aria-labelledby="baselineAssumptionTitle">
+<div class="section-head"><div><span class="eyebrow">Before STOP · expose one uncertainty</span><h3 id="baselineAssumptionTitle">Which unresolved assumption could most change your baseline?</h3><p class="section-copy">Choose one. You are not resolving it yet; you are making the uncertainty visible so later evidence can challenge it.</p></div></div>
+<div class="challenge-chip-row" id="baselineAssumptionChoices"></div>
+<div class="baseline-assumption-status" id="baselineAssumptionStatus" aria-live="polite"></div>
+</section>
 <div class="reflection-strip">
 <strong>Before you stop:</strong>
-<span>Can you point to where data is created?</span><span>Where can it be stored?</span><span>Who ultimately uses it?</span>
+<span>Can you point to where data is created?</span><span>Where can it be stored?</span><span>Who ultimately uses it?</span><span>Which assumption remains deliberately open?</span>
 </div>
 <details class="adaptive-depth" data-depth-id="architecture"><summary><span class="challenge-mark">↗</span><span><strong>Challenge me · Architecture under attack</strong><small>Same objective, less guidance. Try it before opening support.</small></span><span class="depth-badge">0/3 support</span></summary><div class="adaptive-depth-body" id="depthArchitecture"></div></details>
-<button class="btn primary next-activity" data-next="3" id="architectureNext" type="button" disabled>Build enough evidence to discuss →</button>
+<button class="btn primary next-activity" data-next="3" id="architectureNext" type="button" disabled>Build the baseline + expose one assumption →</button>
 </section>
 <!-- STOP 2 -->
 <section class="activity-screen" data-screen="3" hidden="">
@@ -154,7 +159,7 @@
 <div aria-label="Discussion rhythm" class="stop-rhythm"><span class="active">1 · LOOK</span><span>2 · COMPARE</span><span>3 · CHALLENGE</span><span>4 · UNLOCK</span></div>
 <div class="stop-snapshot" id="stopArchitectureSnapshot"></div>
 <button class="text-button review-activity" data-review-screen="2" type="button">← Review / edit our architecture</button>
-<div class="student-stop-question"><span>2 · Compare</span><strong>Did you draw components, functions, technologies — or a mixture of all three?</strong></div>
+<div class="student-stop-question"><span>2 · Compare</span><strong>What in your diagram is a responsibility rather than a product — and which assumption did you deliberately leave open?</strong></div>
 <div class="teacher-challenge-slot" data-stop-challenge="architecture"></div>
 <div class="concept-unlock-slot" data-concept="architecture"></div>
 <button class="btn primary next-activity stop-next" data-next="4" data-requires-unlock="architecture" disabled="" type="button">Concept unlocked → continue</button>
@@ -240,7 +245,7 @@
 <div><span>⌂</span><strong>What infrastructure exists?</strong><small>Phone, local network, gateway, operator coverage, none?</small></div>
 </div>
 </div>
-<div class="guided-tech-head"><div><span class="eyebrow">Guided discovery</span><h3>Five network shapes</h3><p class="section-copy">Keep the five shapes visible together. Compare their structural path and operating assumptions, then use the campus shortlist only to mark where deeper investigation is worth your time.</p></div><span class="guided-progress" id="techDiscoveryProgress">Build a defended pair</span></div>
+<div class="guided-tech-head"><div><span class="eyebrow">Guided discovery</span><h3>Five network shapes</h3><p class="section-copy">Keep the five shapes visible together. Compare their structural path and operating assumptions. Keep technology names out of the decision until the next activity.</p></div><span class="guided-progress" id="techDiscoveryProgress">Build a defended pair</span></div>
 <div class="tech-discovery-grid" id="techDiscoveryGrid"></div>
 <div class="shape-reasoning-board card flat" id="shapeReasoningBoard"></div>
 <details class="term-shelf"><summary><strong>New words, in plain English</strong><span>Open this whenever a term blocks you.</span></summary><div class="plain-glossary" id="plainGlossary"></div></details>
@@ -251,12 +256,12 @@
 <!-- ACTIVITY 6 -->
 <section class="activity-screen" data-screen="9" hidden="">
 <div class="activity-label"><span>Activity 6</span><span class="pill-neutral">Audit technology scope</span></div><aside class="case-voice"><div class="case-avatar large">YN</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Yanis</strong><span>Network architect</span><em>Integrator shortlist</em></div><div class="case-context"><b>STARTING POINT</b><span>Network shapes are explicit · concrete technology families have not yet been evaluated.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“The integrator has sent five candidate families: Wi-Fi, Bluetooth LE, IEEE 802.15.4, LoRaWAN and NB-IoT. The shortlist contains names but almost no architectural commitments.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>The five names do not describe the same kind of object. Expose the architectural commitment and abstraction level hidden behind each name.</span></div></div></aside>
-<div class="mission-context"><span class="mission-context-tag">Starting evidence</span><strong>Your leading network-shape hypothesis and challenger from Activity 5.</strong><span>Audit those two families first, then one contrasting family. The full reference remains available without forcing five mini-quizzes.</span></div>
+<div class="mission-context"><span class="mission-context-tag">New information from the integrator</span><strong>One concrete candidate has now been mapped to each of the five network shapes.</strong><span>Your leading shape and challenger from Activity 5 are highlighted below. Audit those two candidates first, then one contrasting family. The full reference remains available without forcing five mini-quizzes.</span></div>
 <div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
 <h2>For each technology name, ask what else you are choosing.</h2>
 <p>Audit your leading hypothesis, its challenger and <strong>one contrasting family</strong>. Match each name to the structural commitment it implies; only then reveal the formal scope. The goal is not acronym recall.</p>
 </div>
-<div aria-label="Core workflow" class="work-sequence"><span><b>1</b> Audit hypothesis + challenger</span><span><b>2</b> Add one contrast</span><span><b>3</b> Use the full reference only if needed</span></div>
+<div aria-label="Core workflow" class="work-sequence"><span><b>1</b> Find the candidates tied to your two shapes</span><span><b>2</b> Audit their hidden commitments</span><span><b>3</b> Add one contrast</span></div>
 <div class="mystery-grid" id="mysteryGrid"></div>
 <div class="score-panel"><span>Scope audits</span><strong aria-live="polite" id="mysteryScore">0 / 3</strong><small>Three contrasting audits are enough for the core route. The reference drawer contains all five families.</small></div>
 <details class="reference-drawer"><summary><strong>Reference drawer · open only if needed</strong><span>Essential idea → architecture → technical vocabulary</span></summary><div class="reference-drawer-body"><div class="library-section-head"><div><span class="eyebrow">Reference library</span><h3>Use the cards to resolve uncertainty, not as a second activity.</h3><p class="section-copy">Start with the essential idea; open technical vocabulary only when you need more precision.</p></div></div>
@@ -326,7 +331,7 @@
 <section class="revision-studio card flat" hidden="" id="revisionStudio">
 <div class="revision-head"><div><span class="eyebrow">Baseline → revision reasoning artifact</span><h3>Your revision must show a causal design change, not a generic “robustness” add-on.</h3></div><span class="revision-status changed" id="revisionStatus">Reasoning chain</span></div>
 <div class="revision-cause-strip" id="revisionCauseStrip"></div>
-<div class="revision-compare"><div><span class="revision-label">Defended baseline</span><div id="revisionV1Graph"></div></div><div><span class="revision-label">Justified design change</span><div id="revisionV2Graph"></div></div></div>
+<div class="revision-compare"><div><span class="revision-label">Defended baseline</span><div id="revisionBaselineGraph"></div></div><div><span class="revision-label">Justified design change</span><div id="revisionChangeCard"></div></div></div>
 <div class="revision-summary" id="revisionSummary"></div>
 </section>
 <details class="adaptive-depth" data-depth-id="stress"><summary><span class="challenge-mark">↗</span><span><strong>Challenge me · Two failures, one move</strong><small>Combine incidents and defend one architectural response.</small></span><span class="depth-badge">0/3 support</span></summary><div class="adaptive-depth-body" id="depthStress"></div></details>

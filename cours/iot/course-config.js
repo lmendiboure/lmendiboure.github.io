@@ -5,11 +5,14 @@
 
       releasedThrough: 2
 
-  When Session 3 is ready:
-    1. add cours/iot/session-3/
-    2. add cours/instructor/iot/session-3/
-    3. change releasedThrough from 2 to 3
-    4. commit + push
+  WORKING PACKAGE NOTE: Session 3 draft files are present for review, but
+  releasedThrough remains 2. Before public deployment, either remove the
+  draft student folder or accept that its direct URL can be opened.
+
+  When Session 3 is ready to publish:
+    1. keep cours/iot/session-3/ and cours/instructor/iot/session-3/
+    2. change releasedThrough from 2 to 3
+    3. commit + push
 
   The hub derives states automatically:
     id < releasedThrough  -> Review
@@ -56,10 +59,13 @@ window.IOT_COURSE_CONFIG = {
       id: 3,
       number: "03",
       kicker: "PLACEMENT",
-      title: "Where does the IoT application live?",
-      question: "What belongs on the device, nearby, at the edge or in the cloud?",
-      summary: "Reason about where computation, storage and decisions should happen as constraints and system scale change.",
-      objectives: ["device / edge / cloud", "compute & storage", "placement trade-offs"]
+      title: "Where should the work happen?",
+      question: "Which functions belong on the device, nearby or remotely — and why?",
+      summary: "Place sensing, transformation, decisions, state and analytics across device, nearby and remote zones from latency, resource, data, privacy and scale constraints.",
+      objectives: ["function placement", "data & resource trade-offs", "device / edge / cloud boundaries"],
+      storageKey: "iot-systems-design-session3-v1",
+      progressKind: "activity-frontier",
+      progressLabels: ["Place functions","Data movement","Response budget","Feasibility","Data minimisation","Edge role","Split pipeline","Revise placement"]
     },
     {
       id: 4,
