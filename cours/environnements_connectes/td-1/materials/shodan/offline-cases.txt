@@ -1,0 +1,38 @@
+CAS DE SECOURS SHODAN — DONNÉES FICTIVES À DES FINS PÉDAGOGIQUES
+Les adresses IP utilisent des plages réservées à la documentation (RFC 5737). N'essayez pas de vous connecter à ces adresses.
+
+CAS A — AUTOMATISATION DE BÂTIMENT
+IP: 203.0.113.27
+Port: 47808/udp
+Service détecté: BACnet/IP
+Banner extrait:
+  Object_Name: BLDG_A_AHU_CTRL
+  Model_Name: BCtrl-X
+  Firmware_Revision: 4.2.1
+  Vendor_ID: 999
+  Device_Instance: 21001
+  Description: Air Handling Unit Controller - Building A
+
+CAS B — BROKER DE MESSAGES
+IP: 198.51.100.44
+Port: 1883/tcp
+Service détecté: MQTT
+Banner extrait:
+  Server: mosquitto version 2.0.18
+  Protocol: MQTT 3.1.1 / 5.0
+  Connection response: accepted
+
+CAS C — INTERFACE WEB D'UN CONTRÔLEUR
+IP: 203.0.113.55
+Port: 443/tcp
+HTTP title: Facility Controller
+Headers:
+  Server: GoAhead-Webs/5.2.0
+  Content-Type: text/html
+  X-Frame-Options: SAMEORIGIN
+Page title: Facility Controller — Sign in
+
+Pour chaque cas, distinguez strictement :
+1) ce qui est effectivement observé dans le banner ;
+2) ce que vous pouvez raisonnablement inférer ;
+3) ce que vous ne pouvez pas conclure sans interaction supplémentaire.
