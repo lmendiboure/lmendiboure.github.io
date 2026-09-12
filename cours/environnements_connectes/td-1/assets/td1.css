@@ -45,3 +45,4 @@ h2{font-size:1.75rem;line-height:1.15;margin:0 0 7px}h3{font-size:1.04rem;margin
 .query-grid span{display:block;font-size:.74rem;color:var(--muted)}
 @media(max-width:650px){.query-grid{grid-template-columns:1fr}}
 .image-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0 18px;max-width:94ch}.image-grid figure{margin:0;background:var(--paper);border:1px solid var(--line);padding:9px;display:flex;flex-direction:column}.image-grid img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:#ddd}.image-grid figcaption{font-size:.72rem;color:var(--muted);padding:7px 2px 2px}.image-grid figcaption b{color:var(--ink)}@media(max-width:700px){.image-grid{grid-template-columns:1fr}}
+.plain-list{max-width:94ch;margin:10px 0 14px;padding-left:22px}.plain-list li{margin:6px 0;color:#354047}.plain-list strong{color:var(--ink)}
