@@ -7,7 +7,7 @@
 1. Describe the conversation
 2. Make message order visible
 3. Separate four communication jobs
-4. Read one complete stack, then complete a partial stack
+4. Read one complete stack, then complete a partial stack without choosing the application-protocol name
 5. Choose among MQTT, CoAP and HTTP from service behaviour
 6. Compose one protocol path, audit compatibility, then transfer one lower-layer change
 7. Repair a data contract so the payload is understandable
@@ -72,7 +72,7 @@ There is no hidden answer-key gate. Students must commit to a decision, but an i
 Session 2 publishes only compact design state for later sessions:
 
 - interaction-pattern choices;
-- the partial worked-stack completion;
+- the partial worked-stack completion (application behaviour + transport, before application-protocol naming);
 - application-protocol choices;
 - one composed path plus a compatibility audit and a lower-path transfer test;
 - the semantic contract elements selected;

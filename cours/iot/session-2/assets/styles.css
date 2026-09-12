@@ -136,3 +136,6 @@
 
 .sequence-task.completed{padding:14px 16px}.sequence-task.completed .sequence-palette{display:none}.sequence-task.completed .sequence-line{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:10px}.sequence-task.completed .sequence-line>div{grid-template-columns:24px 1fr;gap:7px;padding:8px}.sequence-task.completed .sequence-line small{grid-column:2;font-size:.72rem}.sequence-task.completed .sequence-feedback{margin-top:8px}.sequence-task.completed .task-step{color:#176545}
 @media(max-width:760px){.sequence-task.completed .sequence-line{grid-template-columns:1fr}.sequence-task.completed .sequence-line small{display:block}}
+
+/* v1.50 · visible learning thread between activities */
+.narrative-bridge{margin:8px 0 16px;border-top:1px solid var(--line,#cfd8e3);border-bottom:1px solid var(--line,#cfd8e3);padding:10px 0;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}.narrative-bridge span{font:850 .66rem ui-monospace,monospace;letter-spacing:.08em;color:var(--blue,#1557d5)}.narrative-bridge strong{font-size:.9rem;font-weight:750;color:#2d4056}@media(max-width:650px){.narrative-bridge{grid-template-columns:1fr;gap:4px}}

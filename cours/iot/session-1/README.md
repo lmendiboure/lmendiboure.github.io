@@ -26,26 +26,28 @@ The student site uses no backend or database. Work is saved in browser `localSto
 
 ## Pedagogical flow
 
-1. map the IoT landscape without being told the conclusion;
-2. enter a persistent campus mission brief, then build an architecture from functions and information flows;
-3. move from monitoring to control through one progressive claim trace: what an acknowledgement proves, what evidence is needed for physical effect, and where override authority sits;
-4. rank communication constraints at system level, then challenge that ranking on one real defended-baseline flow before the STOP;
-5. compare five network shapes side by side using distance, traffic, device budget and infrastructure, then defend one leading campus hypothesis, one challenger and the missing fact most likely to reverse the ranking;
-6. audit the architectural scope hidden behind technology names, using the Activity 5 hypothesis/challenger plus one contrast; the full five-family map remains available as reference;
-7. choose technologies under explicit assumptions, sample transfer cases as useful practice, then return to the campus mission without a form-completion gate;
-8. stress-test the frozen design baseline by tracing incident → challenged assumption → affected architectural scope → requirement → one explicit justified design change, defend its residual dependency at a dedicated STOP, then finish with retrieval before synthesis. NTN is introduced only when the incident removes terrestrial coverage, where direct satellite access and satellite backhaul become distinct design choices.
+1. test a useful IoT boundary across contrasting physical systems;
+2. build a defended campus baseline from responsibilities, labelled flows and one explicit open assumption;
+3. move from monitoring to control by separating command acknowledgement, physical-state evidence and operator authority;
+4. derive communication requirements at system level and for one concrete flow;
+5. **two-step technology activity:** compare network shapes without technology names, then reveal candidate families and audit the infrastructure / abstraction commitments hidden behind those names;
+6. test one technology fit under a counterfactual, return to campus, and defend a one-family / mixed / insufficient-evidence stance together with the missing fact that could reverse it.
 
-At collective restitutions, students first compare what they produced. The instructor then opens **WHAT TO KEEP** to institutionalise a compact canonical reference map and, when useful, **REALITY CHECK** to ground it with an architecture, standard, worked example or technical order of magnitude. These are in-place conclusion panels, not extra navigation screens.
+The former Session-1 stress-test/revision activity has moved to **Session 4 — Robustness**, where failures, retries, degraded behaviour, connectivity loss and architecture revision form one coherent arc.
+
+### Returning after a split class
+
+Session 1 is deliberately resumable. The activity bar is always open; unfinished earlier work never blocks a direct jump to a later activity. For a class resuming at the technology comparison, open `?activity=5`. Activity 5 begins with a compact reconstruction of the reasoning chain from the previous class.
 
 ## Navigation model
 
-The session uses **soft linearity**:
+Session 1 uses **resumable navigation**:
 
-- future stages remain locked until reached normally;
-- every already-unlocked stage can be revisited from the progression bar;
-- review mode is explicit and provides a one-click return to the current mission;
-- meaningful commitments are preserved rather than silently rewritten;
-- The defended design baseline becomes read-only after STOP 2; later evidence is recorded as an explicit causal revision while the baseline remains visible as evidence.
+- all six canonical activity entries are always reachable from the activity bar;
+- local completion gates still help students finish the current interaction, but they never prevent a teacher-led class from resuming at a later activity;
+- `?activity=N` opens a specific activity directly;
+- meaningful commitments are still saved locally and can be revisited;
+- the defended design baseline remains evidence rather than being silently rewritten later.
 
 ## Running case
 
@@ -56,4 +58,4 @@ This session is part of one continuous campus engineering case. Stakeholder inte
 
 ## Mission dossier across sessions
 
-The student workspace keeps pedagogical progress (screens, unlocks, retrieval, hints) inside the session state, but publishes only a small structured **Mission dossier** across sessions. Session 1 records the classified current defended architecture pattern, Top-3 communication requirements, campus access stance, key open uncertainty, and the incident that triggered revision. Session 2 reads those fields when available and otherwise uses a generic fallback. Free-text answers are never interpreted to drive the next session. The export file contains the Mission dossier plus the current session progress so it can also be moved to another browser.
+The student workspace keeps pedagogical progress (screens, unlocks, retrieval, hints) inside the session state, but publishes only a small structured **Mission dossier** across sessions. Session 1 records the classified communication-path pattern, Top-3 communication requirements, campus access stance and key open uncertainty. Session 2 reads those fields when available and otherwise uses a generic fallback. Free-text answers are never interpreted to drive the next session. The export file contains the Mission dossier plus the current session progress so it can also be moved to another browser.

@@ -79,3 +79,8 @@ Session 2 publishes only compact design state for later sessions:
 - the final defended exchange.
 
 Pedagogical navigation state remains local to the session.
+
+
+## Visible learning thread
+
+Each student activity begins with a short `SO FAR → NOW` bridge. It states the knowledge established by the previous activity and the new question that now becomes necessary. These bridges are intentionally explanatory rather than additional tasks and must not pre-teach the answer to the activity that follows.

@@ -18,3 +18,22 @@
 .conclusion-model{padding-top:2px}.model-chain{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:11px}.model-chain span{border:1px solid var(--line);background:#fbfcfd;padding:12px 15px;font-weight:850;font-size:clamp(.88rem,1.05vw,1.02rem);white-space:nowrap}.model-chain b{color:#82909d;font-size:1.15rem}
 .conclusion-next{border-left:6px solid var(--blue);background:var(--blue-soft);padding:18px 22px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}.conclusion-next span{font:900 .7rem ui-monospace,monospace;letter-spacing:.08em;color:var(--blue)}.conclusion-next strong{font-size:clamp(1.15rem,1.8vw,1.7rem);line-height:1.3;letter-spacing:-.02em}
 @media(max-width:900px){.conclusion-takeaways{grid-template-columns:1fr}.conclusion-takeaways article+article{border-left:0;border-top:1px solid var(--line)}.conclusion-next{grid-template-columns:1fr;gap:7px}.model-chain span{white-space:normal}}
+
+/* Restart recap: a single public teaching screen, not a quiz. */
+.recap-head{padding-top:28px;padding-bottom:14px;border-bottom:2px solid var(--ink)}
+.recap-head h1{font-size:clamp(2.6rem,4.4vw,5.2rem);line-height:.97;letter-spacing:-.055em;margin:7px 0 10px;max-width:1240px}
+.recap-head p{font-size:clamp(1rem,1.35vw,1.24rem);line-height:1.45;color:var(--muted);margin:0;max-width:1180px}
+.recap-stage{margin-top:16px;background:#fff;border:1px solid var(--line);border-top:6px solid var(--blue);box-shadow:var(--shadow);padding:clamp(20px,2.4vw,34px);display:grid;gap:20px}
+.recap-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.recap-card{border:1px solid var(--line);padding:17px 18px;background:#fbfcfd;min-height:0}
+.recap-card>span{font:900 .64rem ui-monospace,monospace;text-transform:uppercase;letter-spacing:.075em;color:var(--blue)}
+.recap-card h2{font-size:clamp(1.1rem,1.55vw,1.45rem);line-height:1.2;letter-spacing:-.025em;margin:7px 0 9px}
+.recap-card ul{margin:0;padding-left:19px;display:grid;gap:5px}
+.recap-card li{font-size:clamp(.84rem,1vw,.98rem);line-height:1.38;color:#435160}
+.recap-chain-projector{border-top:1px solid var(--line);padding-top:15px}
+.recap-chain-projector .model-chain{margin-top:8px}
+.model-chain .resume-focus{border-color:var(--blue);background:var(--blue-soft);color:var(--blue);box-shadow:inset 0 -3px 0 var(--blue)}
+.recap-focus{border-left:6px solid var(--green);background:var(--green-soft);padding:14px 18px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+.recap-focus span{font:900 .68rem ui-monospace,monospace;letter-spacing:.08em;color:var(--green)}
+.recap-focus strong{font-size:clamp(1rem,1.35vw,1.22rem);line-height:1.35;color:#2c4b3d}
+@media(max-width:900px){.recap-grid{grid-template-columns:1fr}.recap-card{padding:15px}.recap-focus{grid-template-columns:1fr;gap:5px}}

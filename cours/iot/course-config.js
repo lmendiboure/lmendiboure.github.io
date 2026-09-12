@@ -38,9 +38,9 @@ window.IOT_COURSE_CONFIG = {
       kicker: "FOUNDATIONS",
       title: "How do things connect?",
       question: "What must a connected system do before we can defend a communication choice?",
-      summary: "Map the IoT landscape, build and close the loop of a campus architecture, expose requirements, discover communication families and revise the design when assumptions change.",
-      objectives: ["architecture & flows", "requirements", "communication choices"],
-      storageKey: "iot-systems-design-session1-v19",
+      summary: "Map the IoT landscape, build and close the loop of a campus architecture, expose per-flow requirements, then move from network shape to a defended communication-family choice.",
+      objectives: ["architecture & flows", "per-flow requirements", "network shape & technology fit"],
+      storageKey: "iot-systems-design-session1-v20",
       progressKind: "screen-frontier"
     },
     {
@@ -73,7 +73,7 @@ window.IOT_COURSE_CONFIG = {
       kicker: "ROBUSTNESS",
       title: "How do we make the system robust?",
       question: "What happens when scale, failures, mobility or dependencies change?",
-      summary: "Challenge an IoT architecture, reason about delivery guarantees, retries, duplicate effects, failures and adaptation, and make the system survive beyond its nominal assumptions.",
+      summary: "Stress-test defended designs, reason about delivery guarantees, retries, duplicate effects, connectivity loss, failures and adaptation, and justify the minimum design change when assumptions break.",
       objectives: ["scoped guarantees & failure", "adaptation", "lifecycle & system trade-offs"]
     }
   ]

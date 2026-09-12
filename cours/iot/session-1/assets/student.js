@@ -5,7 +5,7 @@
   const STORAGE_KEY = 'iot-systems-design-session1-v20';
   const MISSION_KEY = 'iot-systems-design-campus-mission-v1';
   const defaultState = {
-    version: 21,
+    version: 22,
     screen: 0,
     maxUnlockedScreen: 0,
     conceptUnlocks: {},
@@ -71,18 +71,12 @@
     const top=requirementDefs?.filter?.(([id])=>state.requirements?.[id]===2).map(([id,,label])=>({id,label}))||[];
     const access=campusDecisionPositions?.find?.(x=>x[0]===state.campusDecision?.position);
     const uncertainty=campusUncertainties?.find?.(x=>x[0]===state.campusDecision?.uncertainty);
-    const incident=stressDefs?.find?.(x=>x.id===state.selectedStress);
     const architecture=handoverArchitectureChoices.find(x=>x[0]===state.handoverArchitecture);
     return {
       architectureClass: architecture?{id:architecture[0],label:architecture[1]}:null,
       priorityRequirements: top,
       accessStrategy: access?{id:access[0],label:access[1]}:null,
       keyUncertainty: uncertainty?{id:uncertainty[0],label:uncertainty[1]}:null,
-      revisionTrigger: incident?{id:incident.id,label:incident.title}:null,
-      revisionScope: state.stressTarget||null,
-      revisionRequirement: state.stressRequirement||null,
-      revisionMove: state.stressResponse||null,
-      revisionRecorded: !!state.stressResponse,
       baselineAssumption: state.baselineAssumption||null,
       updatedAt: new Date().toISOString()
     };
@@ -144,24 +138,14 @@
       fieldKeep:'A technology choice can also imply infrastructure, ownership and dependencies. Comparable choices need not sit at the same abstraction level.',
       tags:['problem → shape → family','implicit infrastructure','validity domain']
     },
-    revision:{
-      title:'Revision rule',
-      bridge:'A concrete incident invalidated an assumption behind the defended baseline. The useful artifact is not a new version number, but the causal chain that explains why one design change became necessary.',
-      formal:'A defensible architecture revision traces <strong>changed assumption → affected responsibility or flow → requirement under pressure → justified design change</strong>, then states the residual risk or new trade-off.',
-      carry:'Robustness is conditional. Preserve the previous design as evidence, make the minimum justified change, and name what the mitigation still does not solve.',
-      fieldSummary:'A revision is a causal design change, not a generic robustness add-on.',
-      fieldKeep:'Changed assumption → affected responsibility / flow → requirement → design change → residual risk.',
-      tags:['preserve the baseline','trace the cause','minimum justified change','residual risk']
-    }
   };
-  const conceptOrder=['iot','architecture','closedLoop','requirements','technology','revision'];
+  const conceptOrder=['iot','architecture','closedLoop','requirements','technology'];
   const stopChallengeDefs={
     landscape:{title:'Connected is not enough',prompt:'A Raspberry Pi hosts a normal web page but senses or controls nothing in the physical world. Would you call that IoT? Defend the boundary you are using.'},
     architecture:{title:'One box, many responsibilities',prompt:'Suppose one Raspberry Pi senses, stores, computes and serves the dashboard. How many architectural responsibilities exist — and how many physical boxes?'},
     requirements:{title:'Same system, different flow',prompt:'Now make the indoor sensor mains-powered while the outdoor node remains battery-powered. Should Energy still have the same importance for every communication flow?'},
     closedLoop:{title:'Delivery is not physical success',prompt:'The command reaches the ventilation controller and is acknowledged, but a jammed actuator never opens the damper. What evidence would expose this failure, and where should it appear in the loop?'},
-    technology:{title:'Access is not the whole system',prompt:'A LoRaWAN sensor can still reach its gateway, but the gateway loses its upstream Internet path. Which part of the architecture failed — and what does that tell you about “choosing a technology”?' },
-    revision:{title:'A mitigation moves the boundary',prompt:'Your revision survives the selected incident. Now remove the new component or dependency you introduced. What failure reappears, and what new dependency did the mitigation create?'}
+    technology:{title:'Access is not the whole system',prompt:'A LoRaWAN sensor can still reach its gateway, but the gateway loses its upstream Internet path. Which part of the architecture failed — and what does that tell you about “choosing a technology”?' }
   };
 
   function renderStopRitual(){
@@ -177,25 +161,27 @@
     document.querySelectorAll('.unlock-concept').forEach(b=>b.addEventListener('click',()=>{state.conceptUnlocks={...(state.conceptUnlocks||{}),[b.dataset.id]:true};saveState();renderStopRitual();renderFieldGuide();updateStopNextButtons();}));
     updateStopNextButtons();
   }
-  function updateStopNextButtons(){document.querySelectorAll('[data-requires-unlock]').forEach(b=>{const conceptReady=!!state.conceptUnlocks?.[b.dataset.requiresUnlock];const handoverReady=b.dataset.requiresHandover?!!state.handoverArchitecture:true;const ready=conceptReady&&handoverReady;b.disabled=!ready;b.textContent=ready?'Takeaway saved → continue':'Show the takeaway above to continue';});}
+  function updateStopNextButtons(){document.querySelectorAll('[data-requires-unlock]').forEach(b=>{const conceptReady=!!state.conceptUnlocks?.[b.dataset.requiresUnlock];const handoverReady=b.dataset.requiresHandover?!!state.handoverArchitecture:true;const ready=conceptReady&&handoverReady;b.disabled=!ready;if(ready)b.textContent=b.id==='finishSessionBtn'?'Handover saved → finish Session 1':'Takeaway saved → continue';else if(!conceptReady)b.textContent='Show the takeaway above to continue';else if(!handoverReady)b.textContent='Classify the handover above to finish';});}
   function renderFieldGuide(){
     const count=conceptOrder.filter(id=>state.conceptUnlocks?.[id]).length;
-    const btn=$('#fieldGuideBtn'),counter=$('#fieldGuideCount'); if(btn)btn.hidden=count===0;if(counter)counter.textContent=`${count}/6`;
+    const btn=$('#fieldGuideBtn'),counter=$('#fieldGuideCount'); if(btn)btn.hidden=count===0;if(counter)counter.textContent=`${count}/5`;
     const host=$('#fieldGuideContent');if(!host)return;
-    host.innerHTML=`<div class="field-guide-progress"><strong>${count} / 6 concepts unlocked</strong><span>Compact reference cards from concepts consolidated after discussion.</span></div>${conceptOrder.map((id,i)=>{const d=conceptDefs[id],on=!!state.conceptUnlocks?.[id];return `<section class="guide-entry ${on?'':'locked'}"><span class="guide-number">${i+1}</span><div>${on?`<strong>${d.title}</strong><p>${d.fieldSummary}</p><div class="guide-keep">${d.fieldKeep}</div><div class="chip-row">${d.tags.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:`<strong>Concept locked</strong><p>Complete the corresponding STOP discussion first.</p>`}</div></section>`}).join('')}`;
+    host.innerHTML=`<div class="field-guide-progress"><strong>${count} / 5 concepts unlocked</strong><span>Compact reference cards from concepts consolidated after discussion.</span></div>${conceptOrder.map((id,i)=>{const d=conceptDefs[id],on=!!state.conceptUnlocks?.[id];return `<section class="guide-entry ${on?'':'locked'}"><span class="guide-number">${i+1}</span><div>${on?`<strong>${d.title}</strong><p>${d.fieldSummary}</p><div class="guide-keep">${d.fieldKeep}</div><div class="chip-row">${d.tags.map(x=>`<span class="chip">${x}</span>`).join('')}</div>`:`<strong>Concept locked</strong><p>Complete the corresponding STOP discussion first.</p>`}</div></section>`}).join('')}`;
   }
 
-  const challengeIds=['architecture','requirements','discover','stress'];
+  const challengeIds=['architecture','requirements','discover'];
   function markChallenge(id){ if(!id)return; state.challengeProgress={...(state.challengeProgress||{}),[id]:true}; saveState(); renderExpertProgress(); }
   function renderExpertProgress(){
     const n=challengeIds.filter(id=>state.challengeProgress?.[id]).length;
-    const pill=$('#expertProgress'); if(pill){pill.textContent=`Depth trail ${n}/4`;pill.classList.toggle('active',n>0);}
-    const finish=$('#expertFinish'); if(finish) finish.innerHTML=`<span>Optional depth trail</span><strong>${n} / 4 explored</strong><small>Challenge routes use the same concepts with less guidance. They are optional and not graded.</small>`;
+    const pill=$('#expertProgress'); if(pill){pill.textContent=`Depth trail ${n}/3`;pill.classList.toggle('active',n>0);}
+    const finish=$('#expertFinish'); if(finish) finish.innerHTML=`<span>Optional depth trail</span><strong>${n} / 3 explored</strong><small>Challenge routes use the same concepts with less guidance. They are optional and not graded.</small>`;
   }
 
   function migrateSessionState(candidate={}) {
     const migrated={...candidate};
     if(!migrated.defendedBaseline && migrated.architectureV1) migrated.defendedBaseline=migrated.architectureV1;
+    if(Number(migrated.screen)>=12) migrated.screen=12;
+    if(Number(migrated.maxUnlockedScreen)>=12) migrated.maxUnlockedScreen=12;
     delete migrated.architectureV1;
     delete migrated.architectureV2;
     delete migrated.architectureV2Completed;
@@ -229,10 +215,10 @@
 
   /* ---------- Navigation ---------- */
   const stepLabels = [
-    ['1','Test the IoT boundary'], ['2','Design baseline'], ['3','Monitoring → control'], ['4','Requirements'], ['5','Network shapes'], ['6','Technologies'], ['7','Choose'], ['8','Stress-test']
+    ['1','IoT boundary'], ['2','Design baseline'], ['3','Monitoring → control'], ['4','Requirements'], ['5','Network → technology'], ['6','Defend choice']
   ];
-  const screenToStep = [0,0,1,1,2,2,3,3,4,5,6,6,7,7,7];
-  const stepEntryScreens = [0,2,4,6,8,9,10,12];
+  const screenToStep = [0,0,1,1,2,2,3,3,4,4,5,5,5];
+  const stepEntryScreens = [0,2,4,6,8,10];
 
   function renderStepper() {
     const host = $('#stepper');
@@ -241,23 +227,22 @@
     const frontierScreen = Math.max(Number(state.maxUnlockedScreen)||0, Number(state.screen)||0);
     const frontierStep = screenToStep[frontierScreen] ?? 0;
     host.innerHTML = stepLabels.map(([n,label], i) => {
-      const unlocked = stepEntryScreens[i] <= frontierScreen;
+      const visited = stepEntryScreens[i] <= frontierScreen;
       const isViewed = i === viewedStep;
       const isFrontier = i === frontierStep;
       const cls = [
-        'step-dot',
-        !unlocked ? 'locked' : '',
-        unlocked && i < frontierStep && !isViewed ? 'done' : '',
+        'step-dot','resume-open',
+        visited && i < frontierStep && !isViewed ? 'done' : '',
         isViewed && state.screen < frontierScreen ? 'reviewing' : '',
-        isViewed && state.screen === frontierScreen ? 'active' : '',
+        isViewed ? 'active' : '',
         isFrontier && state.screen < frontierScreen ? 'frontier' : ''
       ].filter(Boolean).join(' ');
-      const status = !unlocked ? 'locked' : (isViewed && state.screen < frontierScreen ? 'reviewing' : (isFrontier ? 'current mission' : 'completed'));
-      return `<button type="button" class="${cls}" data-step-target="${stepEntryScreens[i]}" ${unlocked?'':'disabled'} ${isViewed?'aria-current="step"':''} aria-label="${label}: ${status}">
-        <span>${unlocked && i < frontierStep ? '✓' : n}</span><small>${label}</small>
+      const status = isViewed ? 'currently open' : (visited ? 'visited' : 'available to resume here');
+      return `<button type="button" class="${cls}" data-step-target="${stepEntryScreens[i]}" ${isViewed?'aria-current="step"':''} aria-label="${label}: ${status}">
+        <span>${visited && i < frontierStep ? '✓' : n}</span><small>${label}</small>
       </button>`;
     }).join('');
-    host.querySelectorAll('[data-step-target]:not(:disabled)').forEach(b=>b.addEventListener('click',()=>showScreen(+b.dataset.stepTarget)));
+    host.querySelectorAll('[data-step-target]').forEach(b=>b.addEventListener('click',()=>showScreen(+b.dataset.stepTarget,{unlock:true})));
   }
 
   function renderHistoryNav(){
@@ -267,7 +252,7 @@
     if(state.screen===0 && frontier===0){host.hidden=true;host.innerHTML='';return;}
     host.hidden=false;
     const previous=state.screen>0?`<button type="button" class="btn ghost history-previous" data-history-target="${state.screen-1}">← Previous</button>`:'<span></span>';
-    host.innerHTML=`${previous}<div class="history-status ${reviewing?'reviewing':''}"><strong>${reviewing?'Review mode':'Current mission'}</strong><span>${reviewing?'You are revisiting work already completed. Future information stays gated.':'You are at the furthest point currently unlocked.'}</span></div>${reviewing?`<button type="button" class="btn soft history-return" data-history-target="${frontier}">Return to current mission →</button>`:'<span></span>'}`;
+    host.innerHTML=`${previous}<div class="history-status ${reviewing?'reviewing':''}"><strong>${reviewing?'Review mode':'Current mission'}</strong><span>${reviewing?'You are revisiting earlier work. Use the activity bar at any time to resume elsewhere.':'You are at the furthest point reached on this device. The activity bar remains open for class resumption.'}</span></div>${reviewing?`<button type="button" class="btn soft history-return" data-history-target="${frontier}">Return to current mission →</button>`:'<span></span>'}`;
     host.querySelectorAll('[data-history-target]').forEach(b=>b.addEventListener('click',()=>showScreen(+b.dataset.historyTarget)));
   }
 
@@ -859,7 +844,7 @@
   ];
 
   function renderStress() {
-    const host=$('#stressGrid');
+    const host=$('#stressGrid'); if(!host)return;
     host.innerHTML=stressDefs.map(s=>`<button type="button" class="event ${state.selectedStress===s.id?'selected':''}" data-stress="${s.id}"><span class="event-icon">${s.icon}</span><span><strong>${s.title}</strong><small>${s.short}</small></span></button>`).join('');
     host.querySelectorAll('.event').forEach(b=>b.addEventListener('click',()=>{state.selectedStress=b.dataset.stress;state.stressTarget=null;state.stressRequirement=null;state.stressResponse=null;state.brokenAssumptionRevealed=false;state.doubleStress=null;state.handoverArchitecture=null;saveState();renderStress();renderStressResponse();renderRevisionStudio();renderDoubleFailure();}));
     renderStressResponse(); renderDoubleFailure();
@@ -1023,7 +1008,7 @@
     const cp=state.campusDecision?.position?campusDecisionPositions.find(x=>x[0]===state.campusDecision.position):null;
     const baseline=state.defendedBaseline||currentArchitectureModel();
     const dossier=loadMissionDossier(), hand=dossier.session1||{}, arch=handoverArchitectureChoices.find(x=>x[0]===state.handoverArchitecture);
-    host.innerHTML=`<section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Mission handover</strong><span class="design-stat">shared with S2</span></div><div class="drawer-mission-facts"><span>Architecture: ${esc(arch?.[1]||'not classified yet')}</span><span>Top constraints: ${esc(hand.priorityRequirements?.map(x=>x.label).join(' · ')||'not fixed yet')}</span><span>Key uncertainty: ${esc(hand.keyUncertainty?.label||'not fixed yet')}</span></div></section><section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Campus mission</strong><span class="design-stat">30 points</span></div><div class="drawer-mission-facts"><span>Buildings + outdoor</span><span>Temperature · humidity · CO₂ · noise</span><span>History + alerts</span></div>${cp?`<div class="drawer-flow">Current connectivity stance: <strong>${esc(cp[1])}</strong></div>`:''}</section><section class="design-section"><div class="design-section-head"><strong>${state.defendedBaseline?'Defended baseline':'Working design'}</strong><span class="design-stat">${baseline.components.length} components · ${baseline.flows.length} flows</span></div>${miniGraphMarkupFor(baseline)}${state.baselineAssumption?`<div class="drawer-flow" style="margin-top:8px">Open assumption: <strong>${esc(baselineAssumptionOptions.find(([id])=>id===state.baselineAssumption)?.[1]||state.baselineAssumption)}</strong></div>`:''}</section>${state.stressResponse?`<section class="design-section"><div class="design-section-head"><strong>Revision record</strong><span class="design-stat">after incident</span></div><div class="drawer-flow">Justified change: <strong>${esc(responseChoices.find(x=>x[0]===state.stressResponse)?.[1]||state.stressResponse)}</strong></div></section>`:''}<section class="design-section"><div class="design-section-head"><strong>Requirements</strong><span class="design-stat">${selected.length} selected</span></div>${priorities.length?`<div class="chip-row">${priorities.map(x=>`<span class="chip priority">★ ${esc(x)}</span>`).join('')}</div>`:'<p class="drawer-empty">No top-three priorities yet.</p>'}</section><section class="design-section"><div class="design-section-head"><strong>Current investigation</strong></div>${tech?`<div class="drawer-flow">Last technology opened: <strong>${esc(tech)}</strong></div>`:'<p class="drawer-empty">No technology card opened yet.</p>'}<div class="drawer-flow" style="margin-top:6px">Committed transfer decisions: <strong>${committed}</strong></div></section>`;
+    host.innerHTML=`<section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Mission handover</strong><span class="design-stat">shared with S2</span></div><div class="drawer-mission-facts"><span>Architecture: ${esc(arch?.[1]||'not classified yet')}</span><span>Top constraints: ${esc(hand.priorityRequirements?.map(x=>x.label).join(' · ')||'not fixed yet')}</span><span>Key uncertainty: ${esc(hand.keyUncertainty?.label||'not fixed yet')}</span></div></section><section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Campus mission</strong><span class="design-stat">30 points</span></div><div class="drawer-mission-facts"><span>Buildings + outdoor</span><span>Temperature · humidity · CO₂ · noise</span><span>History + alerts</span></div>${cp?`<div class="drawer-flow">Current connectivity stance: <strong>${esc(cp[1])}</strong></div>`:''}</section><section class="design-section"><div class="design-section-head"><strong>${state.defendedBaseline?'Defended baseline':'Working design'}</strong><span class="design-stat">${baseline.components.length} components · ${baseline.flows.length} flows</span></div>${miniGraphMarkupFor(baseline)}${state.baselineAssumption?`<div class="drawer-flow" style="margin-top:8px">Open assumption: <strong>${esc(baselineAssumptionOptions.find(([id])=>id===state.baselineAssumption)?.[1]||state.baselineAssumption)}</strong></div>`:''}</section><section class="design-section"><div class="design-section-head"><strong>Requirements</strong><span class="design-stat">${selected.length} selected</span></div>${priorities.length?`<div class="chip-row">${priorities.map(x=>`<span class="chip priority">★ ${esc(x)}</span>`).join('')}</div>`:'<p class="drawer-empty">No top-three priorities yet.</p>'}</section><section class="design-section"><div class="design-section-head"><strong>Current investigation</strong></div>${tech?`<div class="drawer-flow">Last technology opened: <strong>${esc(tech)}</strong></div>`:'<p class="drawer-empty">No technology card opened yet.</p>'}<div class="drawer-flow" style="margin-top:6px">Committed transfer decisions: <strong>${committed}</strong></div></section>`;
   }
 
   function openDesign(){renderDesignDrawer();$('#designDrawer').classList.add('open');$('#designDrawer').setAttribute('aria-hidden','false');$('#designScrim').hidden=false;}
@@ -1139,8 +1124,9 @@
   function renderDesignEvolution(){
     const host=$('#designEvolution');if(!host)return;
     if(!state.defendedBaseline){host.innerHTML='';return;}
-    const incident=stressDefs.find(x=>x.id===state.selectedStress),req=requirementDefs.find(x=>x[0]===state.stressRequirement),target=stressTargetLabel(),move=responseChoices.find(x=>x[0]===state.stressResponse);
-    host.innerHTML=`<div class="evolution-head"><span class="eyebrow">Visible learning artifact</span><h3>Baseline → revision reasoning</h3><p>${move?'The defended baseline remains visible as evidence. The revision is recorded as the structural change forced by a broken assumption, rather than as an unexplained redraw.':'The defended baseline is frozen. Complete the stress-test chain to record the justified design change.'}</p></div>${incident&&req&&target&&move?`<div class="evolution-cause"><span>Incident</span><strong>${esc(incident.title)}</strong><b>→</b><span>Affected first</span><strong>${esc(target)}</strong><b>→</b><span>Requirement under pressure</span><strong>${esc(req[2])}</strong><b>→</b><span>Design change</span><strong>${esc(move[1])}</strong></div>`:''}<div class="evolution-grid"><div><span>Defended baseline · evidence</span>${miniGraphMarkupFor(state.defendedBaseline)}</div><div><span>Revision record · explicit design change</span><div class="revision-move-card">${move?`<strong>${esc(move[1])}</strong><span>${esc(move[2])}</span><small>Residual question: what dependency or failure does this move still leave open?</small>`:'<span>No justified design change recorded yet.</span>'}</div></div></div>`;
+    const cp=campusDecisionPositions.find(x=>x[0]===state.campusDecision?.position);
+    const cu=campusUncertainties.find(x=>x[0]===state.campusDecision?.uncertainty);
+    host.innerHTML=`<div class="evolution-head"><span class="eyebrow">Visible learning artifact</span><h3>Baseline → communication decision</h3><p>The architecture stays visible while the communication decision is added as a conditional claim, not as a redesign of the system.</p></div><div class="evolution-grid"><div><span>Defended baseline</span>${miniGraphMarkupFor(state.defendedBaseline)}</div><div><span>Campus communication stance</span><div class="revision-move-card"><strong>${esc(cp?.[1]||'Not fixed yet')}</strong><span>${cu?`Decision-sensitive missing fact: ${esc(cu[1])}`:'State the missing evidence that could still change this choice.'}</span></div></div></div>`;
   }
 
   /* ---------- Retrieval checkpoint ---------- */
@@ -1149,8 +1135,7 @@
     {id:'operator', q:'Which network shape makes operator coverage an explicit design assumption?', a:'Operator-managed wide-area / cellular IoT: the device relies on cellular base stations and an operator network.'},
     {id:'scope', q:'Why is IEEE 802.15.4 not the same kind of object as LoRaWAN?', a:'802.15.4 provides lower-level local radio/link building blocks; LoRaWAN defines a wider network architecture around devices, gateways and network services.'},
     {id:'feedback', q:'Why does an acknowledged command not prove that the physical action succeeded?', a:'An acknowledgement can confirm message or controller handling, while the actuator or physical process may still fail. Closed-loop control needs evidence of the resulting physical state.'},
-    {id:'transfer', q:'Tomorrow one CO₂ sensor is replaced by a camera sending frequent images. Which part of your reasoning should you revisit first?', a:'Revisit the requirements of that flow first — especially data volume/throughput, and potentially energy/latency — then re-evaluate the communication path and technology choice.'},
-    {id:'revision', q:'What makes a design revision defensible rather than just “more robust”?', a:'Trace the changed assumption to the responsibility or flow affected, the requirement under pressure, the justified structural design change, and the residual risk or new dependency.'}
+    {id:'transfer', q:'Tomorrow one CO₂ sensor is replaced by a camera sending frequent images. Which part of your reasoning should you revisit first?', a:'Revisit the requirements of that flow first — especially data volume/throughput, and potentially energy/latency — then re-evaluate the communication path and technology choice.'}
   ];
   function renderMemoryLock(){
     const host=$('#memoryLock'); if(!host)return;
@@ -1200,6 +1185,11 @@
   }
 
   loadState();
+  const requestedActivity=Number(new URLSearchParams(location.search).get('activity'));
+  if(Number.isInteger(requestedActivity)&&requestedActivity>=1&&requestedActivity<=stepEntryScreens.length){
+    state.screen=stepEntryScreens[requestedActivity-1];
+    state.maxUnlockedScreen=Math.max(Number(state.maxUnlockedScreen)||0,state.screen);
+  }
   renderAll();
-  showScreen(state.screen, {scroll:false});
+  showScreen(state.screen, {scroll:false,unlock:true});
 })();
