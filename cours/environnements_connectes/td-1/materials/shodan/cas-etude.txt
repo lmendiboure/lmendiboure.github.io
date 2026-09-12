@@ -1,0 +1,21 @@
+CAS D'ÉTUDE — DONNÉES PRÉPARÉES POUR LE TD
+
+Extrait simplifié d'un résultat d'indexation d'un système d'automatisation de bâtiment.
+
+Service observé : BACnet/IP
+Port : 47808/UDP
+Organisation : opérateur immobilier (anonymisé)
+Pays : France
+Informations annoncées par le service :
+- Vendor: Johnson Controls
+- Product name: Metasys
+- Model: ADS
+- Software revision: 14.1
+- Device instance: 41903
+
+Important :
+- Ces informations reproduisent le type de métadonnées que peut exposer un service.
+- Elles ne donnent ni identifiant, ni mot de passe, ni preuve d'accès au système.
+- Vous ne devez tenter aucune connexion, interrogation ou action sur un système réel trouvé sur Internet.
+
+Votre analyse doit distinguer ce qui est effectivement observé de ce qui n'est qu'une hypothèse.

@@ -1,93 +1,163 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="fr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TD1 · Explorer des technologies pour les environnements connectés</title>
-<link rel="stylesheet" href="assets/td1.css">
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>TD1 · Explorer, tester, décider</title>
+<link href="assets/td1.css" rel="stylesheet"/>
 </head>
 <body>
-<header class="topbar"><div class="shell topbar-inner"><a class="brand" href="../"><div class="mark">EC</div><div><strong>Environnements connectés</strong><span>TD1 · technologies, usages et limites</span></div></a><div class="time">3 h · travail en groupe · rapport</div></div></header>
+<header class="topbar"><div class="shell topbar-inner">
+<a class="brand" href="../"><div class="mark">EC</div><div><strong>Environnements connectés</strong><span>TD1 · exploration et évaluation</span></div></a>
+<div class="topmeta">3 h · travail autonome · navigateur</div>
+</div></header>
 <main>
 <section class="shell hero">
-<div class="eyebrow">TD1 · EXPLORATION TECHNOLOGIQUE</div>
-<h1>Observer, tester, comparer, décider.</h1>
-<p class="lead">Un environnement connecté combine des équipements, des logiciels, des services en ligne et, de plus en plus, des systèmes d'intelligence artificielle. Dans ce TD, vous allez examiner cinq situations concrètes. Pour chacune, vous devrez distinguer <strong>ce que l'outil montre réellement</strong>, <strong>ce que vous pouvez en déduire</strong> et <strong>la décision que vous seriez prêt à défendre</strong>.</p>
-<div class="brief"><div><span>Durée</span><strong>3 heures</strong></div><div><span>Organisation</span><strong>Travail en groupe</strong></div><div><span>Outils</span><strong>Navigateur uniquement</strong></div><div><span>Rendu</span><strong>Rapport de 6 pages max.</strong></div></div>
+<div class="eyebrow">TD1 · EXPLORER, TESTER, DÉCIDER</div>
+<h1>Trois technologies à mettre à l’épreuve.</h1>
+<p class="lead">Pendant cette séance, vous allez explorer des systèmes connectés visibles sur Internet, tester une IA de vision puis comparer plusieurs solutions commerciales destinées au bâtiment. À chaque étape, vous devrez distinguer ce que vous observez réellement de ce que vous supposez, puis prendre position à partir d’éléments vérifiables.</p>
+<div class="brief"><div><span>Durée</span><strong>3 heures</strong></div><div><span>Organisation</span><strong>3 dossiers</strong></div><div><span>Questions</span><strong>18 réponses</strong></div><div><span>Rendu</span><strong>5 pages max.</strong></div></div>
 </section>
-<section class="shell section compact-intro">
-<div class="section-head"><div class="numb">→</div><div><div class="eyebrow">MÉTHODE COMMUNE AUX CINQ ACTIVITÉS</div><h2>Ne vous contentez pas de faire fonctionner l'outil.</h2><p class="goal">Pour chaque activité, votre analyse doit suivre trois étapes : anticiper, expérimenter, puis décider.</p></div></div>
-<div class="grid3"><div class="card"><div class="meta">1 · AVANT</div><strong>Formulez une attente</strong><p>Que pensez-vous observer ? Quel résultat vous semblerait satisfaisant ou inquiétant ?</p></div><div class="card"><div class="meta">2 · PENDANT</div><strong>Conservez des preuves</strong><p>Résultats, captures utiles, documentation officielle, cas d'échec et éléments incertains.</p></div><div class="card"><div class="meta">3 · APRÈS</div><strong>Prenez position</strong><p>Que pouvez-vous conclure ? Qu'est-ce qui reste inconnu ? Quelle décision recommandez-vous ?</p></div></div>
-</section>
-<nav class="shell nav"><a href="#a1">01 · Exposition Internet</a><a href="#a2">02 · Vision par ordinateur</a><a href="#a3">03 · Apprentissage</a><a href="#a4">04 · Choix d'une solution</a><a href="#a5">05 · Assistant IA</a><a href="#rendu">Travail à rendre</a></nav>
-
-<section class="shell section" id="a1"><div class="section-head"><div class="numb">01</div><div><div class="eyebrow">EXPOSITION INTERNET · CYBERSÉCURITÉ</div><h2>Que révèle un système connecté lorsqu'il est visible depuis Internet ?</h2><p class="goal">À partir d'informations publiques, distinguez exposition, vulnérabilité documentée et risque réel.</p></div></div>
-<div class="rule"><strong>Cadre de travail.</strong> Utilisez uniquement les informations déjà collectées et affichées par Shodan. Ne ciblez ni l'Université, ni une organisation précise, ni une adresse IP déterminée. Ne vous connectez à aucun équipement, ne lancez aucun scan et ne testez aucune vulnérabilité.</div>
-<div class="tools"><a class="tool" href="https://www.shodan.io/" target="_blank" rel="noopener">Shodan ↗</a><a class="tool secondary" href="https://help.shodan.io/the-basics/search-query-fundamentals" target="_blank" rel="noopener">Aide Shodan ↗</a><a class="tool secondary" href="https://nvd.nist.gov/vuln/detail/CVE-2025-26385" target="_blank" rel="noopener">Cas CVE préparé ↗</a><a class="tool secondary" href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">CISA KEV ↗</a></div>
-<div class="grid2"><div class="card"><div class="meta">RECHERCHE 1</div><strong>Automatisation de bâtiment</strong><p>Explorez une recherche générique autour de <code>BACnet</code>. Choisissez un résultat représentatif et examinez uniquement les informations affichées par Shodan.</p></div><div class="card"><div class="meta">RECHERCHE 2</div><strong>Messagerie IoT</strong><p>Explorez une recherche générique autour de <code>MQTT</code>. Choisissez un résultat représentatif. Ne tentez jamais d'ouvrir une session sur le service identifié.</p></div></div>
-<h3>A · Lire sans surinterpréter</h3>
-<div class="steps"><div class="step"><p>Pour chacun de vos deux résultats, relevez le service, le port, le produit ou la version lorsqu'ils sont visibles, ainsi que les informations descriptives disponibles.</p></div><div class="step"><p>Classez vos constats en trois catégories : <strong>observé</strong>, <strong>inféré</strong>, <strong>non démontré</strong>. Justifiez au moins un élément dans chaque catégorie.</p></div><div class="step"><p>Identifiez l'information publique qui vous paraît la plus utile à un attaquant ou à un concurrent. Expliquez pourquoi, sans supposer qu'une attaque est possible.</p></div></div>
-<h3>B · Une vulnérabilité critique est-elle toujours prioritaire ?</h3>
-<p>Étudiez le cas <strong>CVE-2025-26385</strong> concernant Johnson Controls Metasys. Recherchez dans les sources officielles : composants et versions affectés, impact, conditions d'exploitation, correctif ou mesures de réduction du risque, et éventuelle preuve d'exploitation connue.</p>
-<table class="mini-table"><thead><tr><th>Contexte</th><th>Votre priorité</th><th>Justification attendue</th></tr></thead><tbody><tr><td>Système affecté directement accessible depuis Internet</td><td>À classer</td><td>Exposition + propriétés de la vulnérabilité</td></tr><tr><td>Même version sur un réseau technique segmenté, accès distant par VPN</td><td>À classer</td><td>Ce que la segmentation change — et ne change pas</td></tr><tr><td>Produit ancien, mais version explicitement hors de la plage affectée par cette CVE</td><td>À classer</td><td>Pourquoi « ancien » et « vulnérable à cette CVE » ne sont pas synonymes</td></tr></tbody></table>
-<div class="download-box"><strong>Si Shodan n'est pas disponible :</strong> utilisez les <a href="materials/shodan/offline-cases.txt">trois résultats préparés</a>. Les adresses employées sont réservées à la documentation.</div>
-<div class="questions"><strong>Analyse attendue</strong><ol><li>Quelles informations publiques réduisent le plus l'incertitude sur la nature d'un système connecté ?</li><li>Quelles preuves vous manqueraient encore pour affirmer qu'un équipement est réellement exploitable ?</li><li>Proposez deux mesures de réduction du risque pour un équipement exposé et indiquez ce que chacune protège réellement.</li></ol></div>
-</section>
-
-<section class="shell section" id="a2"><div class="section-head"><div class="numb">02</div><div><div class="eyebrow">VISION PAR ORDINATEUR</div><h2>Une caméra peut-elle décider qu'un chantier est conforme ?</h2><p class="goal">Évaluez un détecteur d'EPI sur des situations réelles et reliez ses erreurs au niveau d'automatisation acceptable.</p></div></div>
-<div class="tools"><a class="tool" href="https://universe.roboflow.com/use-cases/ppe-detection" target="_blank" rel="noopener">Tester le détecteur PPE ↗</a><a class="tool secondary" href="materials/vision/roboflow-test-log.csv">Grille de résultats ↓</a></div>
-<h3>A · Définissez d'abord ce que signifie « assez bon »</h3>
-<p>Choisissez <strong>un</strong> des usages suivants avant de lancer les tests : statistiques de conformité, assistance à un opérateur, alerte automatique, ou blocage automatique d'un accès. Indiquez quelle erreur serait la plus problématique pour cet usage : manquer une non-conformité ou générer une fausse alerte.</p>
-<h3>B · Testez le modèle</h3>
-<p>Utilisez au moins huit images. Pour chaque image, identifiez vous-même les personnes et EPI visibles avant de regarder le résultat du modèle. Notez ensuite les détections correctes, les faux positifs, les faux négatifs et les classes que le modèle ne sait pas représenter.</p>
-<div class="test-deck">
-<div class="test-item"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Residential_construction_worker_(9256407214).jpg?width=640" alt="Cas 1"><small>Cas 1 · personne isolée</small><a href="https://commons.wikimedia.org/wiki/File:Residential_construction_worker_(9256407214).jpg" target="_blank" rel="noopener">ouvrir la source ↗</a></div>
-<div class="test-item"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Construction_worker_harness_(9253634989).jpg?width=640" alt="Cas 2"><small>Cas 2 · plusieurs EPI visibles</small><a href="https://commons.wikimedia.org/wiki/File:Construction_worker_harness_(9253634989).jpg" target="_blank" rel="noopener">ouvrir la source ↗</a></div>
-<div class="test-item"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Rebar_Tying_in_Beijing.jpg?width=640" alt="Cas 3"><small>Cas 3 · occlusions et environnement dense</small><a href="https://commons.wikimedia.org/wiki/File:Rebar_Tying_in_Beijing.jpg" target="_blank" rel="noopener">ouvrir la source ↗</a></div>
-<div class="test-item"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Highway_construction_workers_using_concrete_saws_(9245787233).jpg?width=640" alt="Cas 4"><small>Cas 4 · plusieurs opérateurs</small><a href="https://commons.wikimedia.org/wiki/File:Highway_construction_workers_using_concrete_saws_(9245787233).jpg" target="_blank" rel="noopener">ouvrir la source ↗</a></div>
-<div class="test-item"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Worker_without_proper_safety_equipment.jpg?width=640" alt="Cas 5"><small>Cas 5 · non-conformité visible</small><a href="https://commons.wikimedia.org/wiki/File:Worker_without_proper_safety_equipment.jpg" target="_blank" rel="noopener">ouvrir la source ↗</a></div>
-<div class="test-item"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Construction_workers_not_wearing_fall_protection_equipment.jpg?width=640" alt="Cas 6"><small>Cas 6 · risque hors des classes principales</small><a href="https://commons.wikimedia.org/wiki/File:Construction_workers_not_wearing_fall_protection_equipment.jpg" target="_blank" rel="noopener">ouvrir la source ↗</a></div>
-<div class="test-item"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Sandblasting_without_proper_ppe.jpg?width=640" alt="Cas 7"><small>Cas 7 · EPI spécialisés</small><a href="https://commons.wikimedia.org/wiki/File:Sandblasting_without_proper_ppe.jpg" target="_blank" rel="noopener">ouvrir la source ↗</a></div>
-<div class="test-item"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Runway_construction_worker_operating_a_dowel_drilling_machine.jpg?width=640" alt="Cas 8"><small>Cas 8 · machine, distance et contexte</small><a href="https://commons.wikimedia.org/wiki/File:Runway_construction_worker_operating_a_dowel_drilling_machine.jpg" target="_blank" rel="noopener">ouvrir la source ↗</a></div>
+<nav aria-label="Navigation du TD" class="shell nav">
+<a href="#cadre">Cadre</a><a href="#dossier1">1 · Internet</a><a href="#dossier2">2 · Vision &amp; IA</a><a href="#dossier3">3 · Choix d’une solution</a><a href="#rendu">Rendu</a>
+</nav>
+<section class="shell intro" id="cadre">
+<div class="section-head"><div class="numb">→</div><div><div class="eyebrow">AVANT DE COMMENCER</div><h2>Une réponse par question, au fil des manipulations.</h2><p class="goal">Toutes les ressources et consignes sont disponibles ici. Avancez dans l’ordre : réalisez la manipulation demandée, observez le résultat, puis répondez à la question associée avant de poursuivre.</p></div></div>
+<div class="frame">
+<div><b>Observer</b><p>Ne transformez pas trop vite une information affichée en conclusion. Relevez ce qui est effectivement visible.</p></div>
+<div><b>Vérifier</b><p>Conservez les sources utilisées. Une documentation constructeur, une base officielle ou un test vaut davantage qu’une affirmation non sourcée.</p></div>
+<div><b>Décider</b><p>Une conclusion peut être conditionnelle : « avec les informations disponibles… ». Signalez ce qui vous manque.</p></div>
 </div>
-<h3>C · Décidez</h3>
-<div class="questions"><strong>Analyse attendue</strong><ol><li>Quels types d'erreurs dominent dans vos essais : petits objets, occlusions, classes absentes, contexte, autre ? Appuyez-vous sur des exemples précis.</li><li>Votre conclusion serait-elle la même pour les quatre usages proposés au début ? Construisez un tableau <em>usage / erreur critique / niveau d'automatisation acceptable</em>.</li><li>Imaginez un protocole de test plus sérieux avant déploiement : quelles images faudrait-il ajouter pour couvrir des conditions que votre essai n'a pas représentées ?</li></ol></div>
+<div class="method"><strong>Assistants IA autorisés.</strong> Vous pouvez vous en servir pour comprendre un terme ou trouver une piste. Ils ne constituent pas une source : toute affirmation technique importante doit être vérifiée dans une documentation ou par votre propre expérimentation.</div><div class="time-budget"><div><b>Dossier 1 · Internet</b><span>≈ 45 min</span></div><div><b>Dossier 2 · Vision &amp; IA</b><span>≈ 85 min</span></div><div><b>Dossier 3 · Choix</b><span>≈ 50 min</span></div></div>
 </section>
-
-<section class="shell section" id="a3"><div class="section-head"><div class="numb">03</div><div><div class="eyebrow">APPRENTISSAGE AUTOMATIQUE</div><h2>Quand un modèle apprend la mauvaise règle.</h2><p class="goal">Entraînez un classifieur simple, mettez-le à l'épreuve sur un jeu indépendant, puis corrigez la faiblesse que vous aurez identifiée.</p></div></div>
-<div class="tools"><a class="tool" href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener">Teachable Machine ↗</a><a class="tool secondary" href="materials/teachable-machine/jeu-entrainement.zip">Jeu d'entraînement ↓</a><a class="tool secondary" href="materials/teachable-machine/jeu-test.zip">Jeu de test ↓</a><a class="tool secondary" href="materials/teachable-machine/images-complementaires.zip">Images complémentaires ↓</a></div>
-<div class="work"><strong>Situation.</strong> Une équipe vous fournit un jeu d'images et affirme qu'il suffit pour apprendre à distinguer <em>helmet</em> et <em>no-helmet</em>. Votre travail consiste à tester cette affirmation sur des images indépendantes, puis à améliorer le jeu si nécessaire.</div>
-<div class="steps"><div class="step"><p>Décompressez le jeu d'entraînement. Dans Teachable Machine, créez deux classes <strong>helmet</strong> et <strong>no-helmet</strong>, importez les images correspondantes et entraînez le modèle avec les paramètres par défaut.</p></div><div class="step"><p>Testez quelques images d'entraînement, puis le <strong>jeu de test indépendant</strong>. Relevez le nombre de bonnes et mauvaises classifications dans chaque classe.</p></div><div class="step"><p>Inspectez les images et formulez une hypothèse précise : quel indice visuel, sans rapport direct avec le port du casque, pourrait expliquer les erreurs ? Donnez au moins deux observations qui soutiennent votre hypothèse.</p></div><div class="step"><p>À partir des images complémentaires, reconstruisez un jeu d'entraînement qui réduit ce biais. Expliquez votre choix avant de réentraîner.</p></div><div class="step"><p>Réentraînez le modèle et testez-le sur <strong>exactement le même jeu de test</strong>. Comparez avant/après. Une amélioration suffit-elle à démontrer une bonne généralisation ? Proposez un nouveau test indépendant qui pourrait encore mettre votre modèle en défaut.</p></div></div>
-<div class="download-box"><strong>Concept à retenir après l'expérience.</strong> Lorsqu'un modèle exploite un indice facile, corrélé aux classes mais non pertinent pour la tâche réelle, on parle souvent de <em>shortcut learning</em>. Un bon score sur des données proches de l'entraînement peut alors masquer une mauvaise généralisation.</div>
-<div class="questions"><strong>Analyse attendue</strong><ol><li>Présentez vos résultats avant et après correction, par classe.</li><li>Défendez votre diagnostic : quelle propriété du jeu initial a probablement guidé le modèle ?</li><li>Expliquez pourquoi votre second modèle reste insuffisant pour conclure qu'il fonctionnerait sur de vrais chantiers.</li></ol></div>
+<section class="shell section" id="dossier1">
+<div class="section-head"><div class="numb">01</div><div><div class="time-pill">≈ 45 min</div><div class="eyebrow">DOSSIER 1 · LE MONDE CONNECTÉ VISIBLE DEPUIS INTERNET</div><h2>Que peut apprendre quelqu’un sans entrer dans le système ?</h2><p class="goal">Shodan indexe des services accessibles depuis Internet. Vous allez d’abord comprendre ce qu’il montre, puis explorer plusieurs familles d’objets connectés avant d’analyser un cas de bâtiment.</p></div></div>
+<div class="primer"><h3>Repères</h3><p><strong>Shodan</strong> est un moteur de recherche spécialisé dans les services accessibles depuis Internet. Il enregistre les informations qu’un service rend visibles lorsqu’il répond, par exemple un produit, une version, un protocole ou certaines métadonnées. Un résultat Shodan ne signifie pas que l’on peut contrôler l’équipement.</p></div>
+<div class="terms">
+<div><b>Service</b><span>Fonction réseau proposée par un équipement ou un logiciel.</span></div>
+<div><b>Port</b><span>Numéro permettant d’identifier un service réseau sur une machine.</span></div>
+<div><b>Banner</b><span>Informations observées par Shodan lors de la réponse d’un service.</span></div>
+<div><b>CVE</b><span>Identifiant public d’une vulnérabilité connue et documentée.</span></div>
+</div>
+<div class="safety"><strong>Règle impérative.</strong> Restez exclusivement sur les informations déjà indexées par Shodan et sur des sources publiques. Ne vous connectez à aucun équipement trouvé, ne lancez aucun scan et ne testez aucune vulnérabilité. Ne recherchez pas une organisation précise.</div>
+<h3>Étape 1 · Comprendre ce que vous regardez</h3>
+<p>Lisez la courte présentation de Shodan, puis ouvrez le cas préparé. Il représente le type d’informations que l’on peut trouver dans un résultat relatif à un système d’automatisation de bâtiment.</p>
+<div class="tools"><a class="tool" href="https://help.shodan.io/the-basics/search-query-fundamentals" rel="noopener" target="_blank">Présentation de Shodan ↗</a><a class="tool secondary" href="materials/shodan/cas-etude.txt">Cas préparé ↓</a></div>
+<div class="case">Service observé : BACnet/IP
+Port : 47808/UDP
+Organisation : opérateur immobilier (anonymisé)
+Pays : France
+Vendor : Johnson Controls
+Product name : Metasys
+Model : ADS
+Software revision : 14.1</div>
+<div class="question-inline"><span>Q1</span><p><strong>Expliquez avec vos mots ce que fait Shodan.</strong> Quelle différence faites-vous entre « Shodan a trouvé ce service » et « ce service est contrôlable depuis Internet » ?</p></div>
+<h3>Étape 2 · Panorama express : jusqu’où va le monde connecté ?</h3>
+<p>Consacrez environ 10 minutes à cette exploration. Ouvrez au moins trois des recherches ci-dessous et restez sur les résultats Shodan : l’objectif est d’observer la variété des systèmes indexés et les informations visibles.</p>
+<div class="challenge"><strong>Défi panorama</strong><p>Essayez de trouver trois familles vraiment différentes. L’une d’elles doit être liée au bâtiment ou à l’énergie ; pour les deux autres, choisissez ce qui vous surprend le plus.</p></div>
+<div class="tools">
+<a class="tool secondary" href="https://www.shodan.io/search?query=BACnet" rel="noopener" target="_blank">Automatisation de bâtiment · BACnet ↗</a>
+<a class="tool secondary" href="https://www.shodan.io/search?query=webcam" rel="noopener" target="_blank">Caméras / webcams ↗</a>
+<a class="tool secondary" href="https://www.shodan.io/search?query=printer" rel="noopener" target="_blank">Imprimantes ↗</a>
+<a class="tool secondary" href="https://www.shodan.io/search?query=solar%20inverter" rel="noopener" target="_blank">Onduleurs solaires ↗</a>
+<a class="tool secondary" href="materials/shodan/panorama-secours.html">Panorama de secours ↓</a></div><div class="note"><strong>Si Shodan demande une authentification ou refuse l’accès.</strong> Utilisez le panorama de secours pour Q2. Pour Q3, utilisez le second exemple BACnet fourni dans ce panorama.</div>
+<div class="question-inline"><span>Q2</span><p>Pour les trois recherches retenues, indiquez <strong>le type de système observé, deux informations visibles</strong> et ce qui vous a le plus surpris. Que montre cette exploration sur l’étendue réelle des environnements connectés ?</p></div>
+<h3>Étape 3 · Revenir à un système de bâtiment</h3>
+<p>Recherchez maintenant <code>BACnet</code> dans Shodan et choisissez un résultat donnant plusieurs informations. Comparez-le au cas préparé. <strong>BACnet</strong> est un protocole utilisé dans l’automatisation des bâtiments ; vous n’avez pas besoin d’en connaître le fonctionnement ici. Si Shodan n’est pas accessible, utilisez le second exemple BACnet du panorama de secours.</p>
+<div class="tools"><a class="tool" href="https://www.shodan.io/search?query=BACnet" rel="noopener" target="_blank">Rechercher BACnet ↗</a></div>
+<div class="question-inline"><span>Q3</span><p>Sur le résultat choisi, séparez en deux listes : <strong>ce qui est directement observé</strong> et <strong>ce que vous êtes tenté d’en déduire</strong>. Donnez ensuite deux informations importantes que Shodan ne permet pas de connaître.</p></div>
+<h3>Étape 4 · Une vulnérabilité publique change-t-elle la conclusion ?</h3>
+<p>Le cas préparé mentionne Johnson Controls Metasys 14.1. Consultez la fiche officielle ci-dessous. Une <strong>CVE</strong> signale qu’un problème de sécurité a été documenté pour certaines versions ou configurations ; elle ne prouve pas automatiquement que tout équipement portant le même nom est vulnérable.</p>
+<div class="tools"><a class="tool" href="https://nvd.nist.gov/vuln/detail/CVE-2025-26385" rel="noopener" target="_blank">NVD · CVE-2025-26385 ↗</a></div>
+<div class="question-inline"><span>Q4</span><p>D’après la fiche, <strong>quelles informations faudrait-il vérifier</strong> avant d’affirmer que le système du cas préparé est réellement concerné ? La mention « Metasys 14.1 » suffit-elle ? Justifiez.</p></div>
+<div class="path"><span>exposé</span><i>≠</i><span>vulnérable</span><i>≠</i><span>compromis</span></div>
+<div class="question-inline"><span>Q5</span><p>Expliquez ces trois termes à partir du cas étudié. Si vous repreniez demain la responsabilité de ce système, quelles seraient vos <strong>trois premières vérifications ou actions</strong>, dans l’ordre ?</p></div>
 </section>
-
-<section class="shell section" id="a4"><div class="section-head"><div class="numb">04</div><div><div class="eyebrow">CHOIX TECHNOLOGIQUE · INTEROPÉRABILITÉ · CYCLE DE VIE</div><h2>Trois capteurs pour le même besoin : lequel choisiriez-vous ?</h2><p class="goal">Comparez des solutions réelles de suivi de la qualité de l'air intérieur. Le meilleur choix dépendra du bâtiment, de l'intégration attendue et de la durée d'exploitation.</p></div></div>
-<h3>Besoin</h3><p>Une collectivité souhaite suivre <strong>CO₂, température et humidité</strong> dans vingt salles pendant au moins dix ans. Les données doivent pouvoir être intégrées au système d'exploitation du bâtiment. L'organisation souhaite limiter les dépendances à un fournisseur unique et conserver un accès durable aux données.</p>
+<section class="shell section" id="dossier2">
+<div class="section-head"><div class="numb">02</div><div><div class="time-pill">≈ 85 min</div><div class="eyebrow">DOSSIER 2 · VISION ET INTELLIGENCE ARTIFICIELLE</div><h2>Faire fonctionner une IA est facile. Savoir quand lui faire confiance l’est beaucoup moins.</h2><p class="goal">Vous allez explorer deux usages de vision appliqués au chantier, mettre un modèle existant à l’épreuve, puis entraîner un petit classifieur pour comprendre ce que signifie réellement « généraliser ».</p></div></div>
+<div class="primer"><h3>Repères</h3><p>Un modèle de vision transforme une image en une sortie : une classe, une zone détectée, une segmentation, etc. Cette sortie n’est pas une décision métier. Détecter une fissure visible ne signifie pas diagnostiquer un ouvrage ; détecter un engin ne signifie pas connaître l’avancement d’un chantier.</p></div>
+<div class="terms">
+<div><b>Faux positif</b><span>Le système détecte quelque chose qui n’est pas réellement présent.</span></div>
+<div><b>Faux négatif</b><span>Le système manque quelque chose qui est réellement présent.</span></div>
+<div><b>Jeu de test</b><span>Images gardées à part pour évaluer le modèle sur des exemples non appris.</span></div>
+<div><b>Généralisation</b><span>Capacité du modèle à rester pertinent quand le contexte change.</span></div>
+</div>
+<h3>Étape 1 · Deux IA, deux promesses</h3>
+<p>Ouvrez les deux démonstrations. Regardez quelques exemples et les catégories détectées. Vous n’avez rien à entraîner à cette étape.</p>
+<div class="tools"><a class="tool" href="https://universe.roboflow.com/use-cases/concrete-crack-detection" rel="noopener" target="_blank">Détection de fissures ↗</a><a class="tool secondary" href="https://universe.roboflow.com/use-cases/construction-progress-monitoring" rel="noopener" target="_blank">Suivi de chantier ↗</a></div>
+<div class="question-inline"><span>Q6</span><p>Que produit réellement chacun des deux systèmes ? Pour chacun, donnez <strong>une décision que la sortie peut aider à prendre</strong> et <strong>une décision qu’elle ne permet pas de prendre seule</strong>.</p></div>
+<h3>Étape 2 · Benchmark : testez le détecteur de fissures</h3>
+<p>Téléchargez le jeu d’évaluation et passez les images dans la démonstration de détection de fissures. Pour chaque image, notez brièvement le résultat attendu et le résultat obtenu. Cherchez surtout les cas où le modèle hésite, manque une fissure ou détecte autre chose.</p>
+<div class="tools"><a class="tool" href="https://universe.roboflow.com/use-cases/concrete-crack-detection" rel="noopener" target="_blank">Tester le modèle ↗</a><a class="tool secondary" href="materials/vision/jeu-evaluation.zip">Jeu d’évaluation ↓</a></div>
+<figure class="figure"><img alt="Exemples du jeu d’évaluation" src="materials/vision/apercu-jeu-test.jpg"/><figcaption>Le corpus contient des textures, joints, ombres et traces susceptibles de compliquer la détection.</figcaption></figure>
+<div class="question-inline"><span>Q7</span><p>Quels <strong>types d’erreurs ou de limites</strong> observez-vous ? Présentez au moins deux cas réussis et deux cas problématiques. Si aucun échec net n’apparaît, retenez deux cas ambigus, peu convaincants ou sensibles au choix des classes. Les mêmes limites seraient-elles acceptables pour une aide à l’inspection et pour une décision automatique ?</p></div>
+<h3>Étape 3 · Essayez de le piéger</h3>
+<p>Consacrez <strong>10 minutes maximum</strong> à ce défi. Choisissez deux images supplémentaires trouvées en ligne : l’une que vous pensez facile, l’autre que vous pensez susceptible de tromper le modèle. Conservez l’URL de chaque image et notez votre prédiction avant de les tester.</p>
+<div class="challenge"><strong>Défi modèle</strong><p>Votre image « difficile » peut jouer sur la texture, une ombre, un joint, une fissure très fine, un matériau différent ou une prise de vue inhabituelle. Ne cherchez pas une image déjà issue du dataset du modèle.</p></div>
+<div class="question-inline"><span>Q8</span><p>Votre prédiction était-elle correcte ? Qu’est-ce que ce petit test vous apprend sur la difficulté d’évaluer une IA à partir de quelques démonstrations réussies ?</p></div>
+<h3>Étape 4 · Entraînez votre propre classifieur</h3>
+<p>Décompressez d’abord le jeu d’apprentissage. Ouvrez Teachable Machine, choisissez <strong>Image Project → Standard image model</strong>, créez deux classes <strong>fissure</strong> et <strong>sans fissure</strong>, puis importez les images correspondantes. Entraînez le modèle et testez d’abord quelques images issues de ce même jeu.</p>
+<div class="tools"><a class="tool" href="https://teachablemachine.withgoogle.com/" rel="noopener" target="_blank">Teachable Machine ↗</a><a class="tool secondary" href="materials/vision/jeu-apprentissage.zip">Jeu d’apprentissage ↓</a></div>
+<div class="question-inline"><span>Q9</span><p>Le modèle semble-t-il performant sur des images proches de celles utilisées pour l’apprentissage ? Pourquoi ce résultat <strong>ne suffit-il pas</strong> pour conclure qu’il fonctionnera bien sur le terrain ?</p></div>
+<h3>Étape 5 · Changez de données</h3>
+<p>Testez maintenant le modèle avec le <strong>jeu de test indépendant</strong>. Ne modifiez encore rien : observez d’abord la différence éventuelle.</p>
+<div class="tools"><a class="tool secondary" href="materials/vision/jeu-test-independant.zip">Jeu de test indépendant ↓</a></div>
+<div class="question-inline"><span>Q10</span><p>Comparez les résultats obtenus sur les images familières et sur le jeu indépendant. Proposez <strong>au moins deux hypothèses</strong> pouvant expliquer un écart de performance.</p></div>
+<h3>Étape 6 · Regardez les données comme un modèle pourrait les regarder</h3>
+<p>Examinez attentivement les images du jeu d’apprentissage : luminosité, fond, texture, contraste, cadrage… Cherchez une caractéristique qui pourrait aider à séparer les deux classes sans réellement « comprendre » la présence d’une fissure.</p>
+<div class="question-inline"><span>Q11</span><p>Identifiez une ou plusieurs <strong>régularités parasites</strong> possibles dans le jeu d’apprentissage. Expliquez comment un modèle pourrait les utiliser à la place du concept que vous vouliez lui apprendre.</p></div>
+<h3>Étape 7 · Corrigez puis retestez</h3>
+<p>Utilisez les images complémentaires pour modifier le jeu d’apprentissage dans le sens de votre hypothèse. Réentraînez le modèle et retestez-le sur le même jeu indépendant.</p>
+<div class="tools"><a class="tool secondary" href="materials/vision/images-complementaires.zip">Images complémentaires ↓</a></div>
+<div class="question-inline"><span>Q12</span><p>Votre modification améliore-t-elle les résultats ? Donnez des éléments chiffrés simples, puis proposez <strong>un nouveau test que votre modèle n’a encore jamais vu</strong> et qui pourrait encore le mettre en difficulté.</p></div>
+<h3>Étape 8 · Passer de la démonstration au déploiement</h3>
+<div class="question-inline"><span>Q13</span><p>Une entreprise souhaite utiliser ce type d’IA sur plusieurs sites. Définissez le <strong>protocole de validation</strong> que vous exigeriez avant déploiement : diversité des données, situations à tester, mesures de performance ou types d’erreurs à surveiller, et niveau d’automatisation que vous accepteriez.</p></div>
+</section>
+<section class="shell section" id="dossier3">
+<div class="section-head"><div class="numb">03</div><div><div class="time-pill">≈ 50 min</div><div class="eyebrow">DOSSIER 3 · CHOISIR UNE SOLUTION CONNECTÉE</div><h2>Trois produits corrects. Lequel choisir pour dix ans ?</h2><p class="goal">Vous devez équiper 20 salles pour suivre leur qualité d’air. Les trois produits proposés ne reposent pas sur la même logique d’installation ni d’intégration. Votre choix doit dépendre du contexte, pas du nombre de fonctionnalités affichées sur une fiche commerciale.</p></div></div>
+<div class="primer"><h3>Scénario</h3><p>Votre organisation souhaite suivre au minimum le CO₂ et la température dans 20 salles. Les données doivent pouvoir être consultées par l’équipe technique et, si nécessaire, intégrées à d’autres outils. L’installation doit rester exploitable plusieurs années.</p></div>
+<div class="terms">
+<div><b>Cloud</b><span>Service informatique distant exploité par un fournisseur ou un tiers.</span></div>
+<div><b>API</b><span>Interface permettant à un autre logiciel d’accéder aux données ou fonctions du système.</span></div>
+<div><b>Interopérabilité</b><span>Capacité à échanger des données avec d’autres systèmes sans rester enfermé dans une seule interface.</span></div>
+<div><b>Dépendance fournisseur</b><span>Ce qui devient difficile à exploiter ou remplacer si le fournisseur ou son service disparaît.</span></div>
+</div>
+<h3>Étape 1 · Construisez votre propre grille avant de regarder les produits</h3>
+<div class="question-inline"><span>Q14</span><p>Quels sont vos <strong>6 à 8 critères de choix</strong> pour équiper 20 salles pendant environ dix ans ? Classez-les en indispensables, importants et secondaires, et justifiez les deux critères que vous jugez les plus déterminants.</p></div>
+<h3>Étape 2 · Découvrez les trois solutions</h3>
 <div class="product-grid">
-<article class="product"><div class="meta">SOLUTION A · SANS FIL + CLOUD</div><h3>Airthings Space Plus</h3><p>Capteur sans fil connecté via Space Hub et plateforme Airthings for Business. API cloud disponible pour les intégrations.</p><div class="links"><a href="https://www.airthings.com/business/space-plus" target="_blank" rel="noopener">produit ↗</a><a href="https://developer-business.airthings.com/docs/api-getting-started" target="_blank" rel="noopener">API ↗</a></div></article>
-<article class="product"><div class="meta">SOLUTION B · LORAWAN</div><h3>Milesight AM319</h3><p>Capteur multi-paramètres LoRaWAN, stockage local et retransmission des données. Compatible avec des passerelles et serveurs réseau LoRaWAN standards.</p><div class="links"><a href="https://www.milesight.com/iot/product/lorawan-sensor/am300" target="_blank" rel="noopener">produit ↗</a><a href="https://www.milesight.com/support/resources/document-center" target="_blank" rel="noopener">documentation ↗</a></div></article>
-<article class="product"><div class="meta">SOLUTION C · BUS FILAIRE</div><h3>Vaisala GMW90</h3><p>Transmetteur CO₂/température/humidité pour CVC, avec sorties locales et communication Modbus RTU selon les modèles.</p><div class="links"><a href="https://www.vaisala.com/fr/products/instruments-sensors-and-other-measurement-devices/instruments-industrial-measurements/gmw90" target="_blank" rel="noopener">produit ↗</a><a href="https://docs.vaisala.com/r/M211659EN-D/en-US/GUID-8A324E81-4DC6-499D-B673-15B6ED3AA719" target="_blank" rel="noopener">Modbus ↗</a></div></article>
+<article class="product"><span class="tag">Solution A</span><h3>Airthings Space Plus</h3><p>Capteur sans fil pour bâtiments tertiaires. Cherchez notamment comment il est alimenté, comment les mesures quittent le capteur et comment un logiciel tiers peut récupérer les données.</p><div class="links"><a href="https://www.airthings.com/business/space-plus" rel="noopener" target="_blank">Produit ↗</a><a href="https://businesshelp.airthings.com/en/articles/79310-airthings-for-business-faq" rel="noopener" target="_blank">FAQ ↗</a><a href="https://developer-business.airthings.com/docs/api-getting-started" rel="noopener" target="_blank">API ↗</a></div></article>
+<article class="product"><span class="tag">Solution B</span><h3>Milesight AM319</h3><p>Capteur intérieur multi-paramètres. Identifiez ce qu’il mesure, comment il communique et ce qu’il faut ajouter pour récupérer et exploiter ses données.</p><div class="links"><a href="https://www.milesight.com/support/resources/document-center" rel="noopener" target="_blank">Documentation ↗</a><a href="https://resource.milesight.com/milesight/iot/document/am319-datasheet-en.pdf" rel="noopener" target="_blank">Datasheet ↗</a></div></article>
+<article class="product"><span class="tag">Solution C</span><h3>Vaisala GMW90</h3><p>Transmetteur destiné aux applications CVC. Regardez son alimentation, ses sorties et la manière dont ses mesures peuvent être intégrées au système technique du bâtiment.</p><div class="links"><a href="https://www.vaisala.com/fr/products/instruments-sensors-and-other-measurement-devices/instruments-industrial-measurements/gmw90" rel="noopener" target="_blank">Produit ↗</a><a href="https://docs.vaisala.com/r/M211659EN-D/en-US/GUID-8A324E81-4DC6-499D-B673-15B6ED3AA719" rel="noopener" target="_blank">Interface numérique ↗</a></div></article>
 </div>
-<div class="tools"><a class="tool secondary" href="materials/comparaison-solutions.csv">Grille de comparaison CSV ↓</a></div>
-<h3>A · Construisez votre propre grille de comparaison</h3>
-<p>Ne recopiez pas les pages commerciales. Cherchez dans les documentations officielles les éléments nécessaires pour comparer : alimentation et maintenance, paramètres mesurés, précision disponible, connectivité, dépendance à un service cloud, interfaces ou protocoles ouverts, récupération des données, mise à jour, calibration et durée de vie documentée. Signalez explicitement toute information importante que vous ne trouvez pas.</p>
-<h3>B · Deux bâtiments, deux choix ?</h3>
-<table class="mini-table"><thead><tr><th>Scénario</th><th>Contrainte dominante</th><th>Décision attendue</th></tr></thead><tbody><tr><td><strong>Bâtiment neuf</strong></td><td>Le câblage peut être prévu dès la conception ; intégration au système CVC prioritaire.</td><td>Classez les trois solutions et justifiez.</td></tr><tr><td><strong>Bâtiment existant occupé</strong></td><td>Travaux et câblage à minimiser ; déploiement rapide dans 20 salles.</td><td>Reclassez les solutions et justifiez les changements.</td></tr></tbody></table>
-<div class="questions"><strong>Analyse attendue</strong><ol><li>Quels critères ont réellement changé votre classement entre les deux scénarios ?</li><li>Quelle dépendance technique ou commerciale vous paraît la plus importante à clarifier avant achat ?</li><li>Formulez trois exigences que vous placeriez dans un cahier des charges avant de consulter un fournisseur.</li></ol></div>
+<div class="challenge"><strong>Défi documentation</strong><p>Vous n’avez pas besoin de comprendre chaque protocole rencontré. Votre objectif est de traduire la documentation en conséquences concrètes : que faut-il installer, alimenter, maintenir et connecter pour obtenir une donnée exploitable ?</p></div>
+<div class="question-inline"><span>Q15</span><p>Pour chaque solution, résumez en une phrase le chemin <strong>« mesure dans la salle → donnée exploitable par l’équipe technique »</strong>. Quels éléments doivent être installés ou maintenus entre les deux ?</p></div>
+<h3>Étape 3 · Cherchez les preuves qui permettent réellement de comparer</h3>
+<p>Reprenez vos critères de Q14 et cherchez les informations correspondantes dans les sources officielles. Utilisez la fiche CSV si elle vous aide à organiser votre recherche.</p>
+<div class="tools"><a class="tool secondary" href="materials/solutions/fiche-comparaison.csv">Fiche de collecte ↓</a></div>
+<div class="method"><strong>Trois statuts possibles.</strong> <b>Documenté</b> : vous avez une source explicite. <b>Déduit</b> : vous combinez plusieurs informations. <b>Non trouvé</b> : la documentation publique consultée ne permet pas de répondre.</div>
+<div class="question-inline"><span>Q16</span><p>Comparez les trois solutions sur <strong>au moins cinq de vos critères</strong>. Pour chaque critère, indiquez ce qui est documenté, déduit ou non trouvé. Quelle information importante a été la plus difficile à établir ?</p></div>
+<h3>Étape 4 · Le contexte change le classement</h3>
+<div class="frame">
+<div><b>Cas A · bâtiment neuf</b><p>Le câblage et l’infrastructure peuvent encore être adaptés. L’exploitant souhaite limiter les dépendances à long terme.</p></div>
+<div><b>Cas B · bâtiment existant occupé</b><p>Les travaux doivent être limités. L’installation doit être rapide et perturber le moins possible l’usage des locaux.</p></div>
+<div><b>Contrainte commune</b><p>Les données devront pouvoir être réutilisées par un logiciel tiers, pas seulement consultées dans l’interface du fournisseur.</p></div>
+</div>
+<div class="question-inline"><span>Q17</span><p>Quelle solution recommandez-vous dans le <strong>cas A</strong>, puis dans le <strong>cas B</strong> ? Votre classement change-t-il ? Justifiez en vous appuyant sur vos critères et sur les contraintes d’installation.</p></div>
+<h3>Étape 5 · Une exigence arrive après la présélection</h3>
+<div class="note"><strong>Nouvelle exigence du client.</strong> Il veut pouvoir continuer à accéder aux mesures même si, dans quelques années, le service cloud commercial associé à la solution choisie n’est plus disponible.</div>
+<div class="question-inline"><span>Q18</span><p>Cette nouvelle exigence modifie-t-elle votre recommandation ? Expliquez pourquoi et formulez <strong>trois questions précises</strong> que vous poseriez au fournisseur avant de signer.</p></div>
 </section>
-
-<section class="shell section" id="a5"><div class="section-head"><div class="numb">05</div><div><div class="eyebrow">ASSISTANT IA · DOCUMENTATION TECHNIQUE</div><h2>Un assistant IA peut-il lire une notice à votre place ?</h2><p class="goal">Testez un LLM sur une note technique et vérifiez systématiquement si ses réponses sont réellement soutenues par le document.</p></div></div>
-<div class="tools"><a class="tool" href="materials/llm/sitesense-guard-4-technical-note.txt">Note technique ↓</a><a class="tool secondary" href="materials/llm/llm-test-questions.md">Questions ↓</a></div>
-<p><strong>SiteSense Guard 4 est un cas d'étude fictif.</strong> Pour cette activité, considérez la note technique fournie comme la seule source autorisée sur le produit.</p>
-<div class="steps"><div class="step"><p>Lisez rapidement la note et repérez sa structure. Sans utiliser de LLM, répondez d'abord à deux questions de votre choix en citant les passages utiles.</p></div><div class="step"><p>Fournissez ensuite la note à un assistant LLM et demandez-lui de répondre aux sept questions uniquement à partir du document, avec une justification précise pour chaque réponse.</p></div><div class="step"><p>Vérifiez chaque réponse manuellement et classez-la : <strong>démontrée</strong>, <strong>plausible mais non démontrée</strong>, <strong>contradictoire</strong>, ou <strong>impossible à établir</strong>.</p></div><div class="step"><p>Choisissez une réponse insuffisamment prudente. Modifiez votre instruction pour exiger un meilleur comportement, puis retestez la même question.</p></div><div class="step"><p>Proposez enfin une règle qui devrait être appliquée par le système lui-même, et pas seulement écrite dans le prompt, pour éviter qu'une réponse non démontrée soit présentée comme un fait.</p></div></div>
-<div class="questions"><strong>Analyse attendue</strong><ol><li>Le principal problème rencontré vient-il d'une information absente, d'une ambiguïté du document ou du comportement du LLM ? Appuyez-vous sur un exemple.</li><li>Un meilleur prompt constitue-t-il une garantie suffisante ? Pourquoi ?</li><li>Définissez trois exigences vérifiables pour un assistant technique utilisé dans un contexte professionnel.</li></ol></div>
-</section>
-
-<section class="shell report" id="rendu"><div class="eyebrow">TRAVAIL À RENDRE</div><h2>Un rapport d'analyse, pas un journal de manipulations.</h2><p>Remettez un rapport de <strong>6 pages maximum hors références et annexes</strong>. Pour chaque activité, sélectionnez les résultats nécessaires pour soutenir votre raisonnement. Une capture ou un tableau n'a d'intérêt que s'il sert une conclusion.</p>
-<div class="tools"><a class="tool" href="materials/consignes-rendu.md">Consignes détaillées ↓</a><a class="tool secondary" href="SOURCES.md">Sources et crédits du TD ↓</a></div>
-<div class="report-grid"><div><b>1 · Exposition</b><span>faits, vulnérabilité, risque</span></div><div><b>2 · Vision</b><span>erreurs, usage, protocole de test</span></div><div><b>3 · Apprentissage</b><span>diagnostic, correction, limites</span></div><div><b>4 · Choix</b><span>comparaison et décision</span></div><div><b>5 · Assistant IA</b><span>réponse et preuve</span></div></div>
-<div class="deliver"><b>Synthèse finale :</b> proposez cinq principes que vous appliqueriez pour évaluer une nouvelle technologie destinée à un environnement connecté. Chacun doit être relié à au moins un résultat obtenu dans ce TD.</div>
+<section class="shell report" id="rendu">
+<div class="eyebrow">TRAVAIL À RENDRE</div><h2>Rapport · 5 pages maximum hors sources</h2>
+<p>Répondez à chacune des <strong>18 questions</strong>, dans l’ordre <strong>Q1 à Q18</strong>. Chaque question doit apparaître explicitement dans le rapport. Les réponses peuvent être courtes lorsqu’une observation suffit ; développez lorsque vous devez justifier un choix ou une conclusion. Les tableaux sont encouragés lorsqu’ils rendent la comparaison plus lisible. Toute affirmation technique importante doit être associée à sa source.</p>
+<div class="report-grid">
+<div><b>Q1–Q5</b><span>Internet, Shodan et exposition d’un système connecté.</span></div>
+<div><b>Q6–Q13</b><span>Vision, tests, apprentissage et validation d’une IA.</span></div>
+<div><b>Q14–Q18</b><span>Comparaison et choix d’une solution connectée.</span></div>
+</div>
+<div class="tools"><a class="tool secondary" href="materials/consignes-rendu.md">Consignes de rendu ↓</a></div><div class="deliver"><b>À joindre si utile :</b> captures ou tableaux synthétiques permettant de justifier vos réponses. Les captures ne remplacent jamais l’analyse.</div>
 </section>
 </main>
-<footer class="shell footer">TD1 · Environnements connectés · Les services externes peuvent évoluer ; un jeu de données de remplacement est fourni pour l'activité Shodan.</footer>
+<footer class="shell footer">TD1 · Environnements connectés · Explorer, vérifier, argumenter.</footer>
 </body></html>
