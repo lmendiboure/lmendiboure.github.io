@@ -19,23 +19,9 @@
 <div class="brief"><div><span>Parcours</span><strong>3 dossiers</strong></div><div><span>Questions</span><strong>18 étapes</strong></div><div><span>Approche</span><strong>outils réels</strong></div></div>
 </section>
 <nav aria-label="Navigation du TD" class="shell nav">
-<a href="#cadre">Cadre</a><a href="#dossier1">1 · Internet</a><a href="#dossier2">2 · Vision &amp; IA</a><a href="#dossier3">3 · Engins connectés</a>
+<a href="#dossier1">1 · Internet</a><a href="#dossier2">2 · Vision &amp; IA</a><a href="#dossier3">3 · Engins connectés</a>
 </nav>
-<section class="shell intro" id="cadre">
-<div class="section-head"><div class="numb">→</div><div><div class="eyebrow">AVANT DE COMMENCER</div><h2>Une manipulation, une observation, une question.</h2><p class="goal">Avancez dans l’ordre. Après chaque manipulation, répondez immédiatement à la question associée avant de poursuivre. Les réponses attendues ne sont pas des définitions récitées : appuyez-vous sur ce que vous avez réellement observé et sur les sources consultées.</p></div></div>
-<div class="frame">
-<div><b>Explorer</b><p>Utilisez les outils proposés et regardez ce qu’ils donnent réellement à voir.</p></div>
-<div><b>Vérifier</b><p>Distinguez une observation, une interprétation et une affirmation démontrée par une source.</p></div>
-<div><b>Décider</b><p>Expliquez ce que vous accepteriez d’utiliser dans un contexte réel, et sous quelles conditions.</p></div>
-</div>
-<div class="method"><strong>Assistants IA autorisés.</strong> Vous pouvez vous en servir pour comprendre un terme ou trouver une piste. Ils ne constituent pas une source : toute affirmation technique importante doit pouvoir être vérifiée dans une documentation, dans l’outil utilisé ou par votre propre expérimentation.</div>
-<div class="note prereq"><strong>Préparer les outils avant de commencer.</strong><br>
-<b>1 · Shodan :</b> créez un compte gratuit, validez l’adresse e-mail demandée puis connectez-vous avant la Q1. Le compte gratuit standard suffit pour les recherches textuelles de première page utilisées dans ce TD ; aucun abonnement payant n’est nécessaire.<br>
-<b>2 · Navigateur :</b> travaillez sur ordinateur. Utilisez de préférence <b>Google Chrome</b> pour Teachable Machine.<br>
-<b>3 · Comptes :</b> aucun compte n’est nécessaire pour tester les démonstrations Roboflow, utiliser la démonstration GPS MTS ou consulter les documentations Hilti et Caterpillar.</div>
-<div class="tools"><a class="tool" href="https://account.shodan.io/" rel="noopener" target="_blank">Créer / ouvrir son compte Shodan ↗</a><a class="tool secondary" href="https://www.shodan.io/" rel="noopener" target="_blank">Ouvrir Shodan ↗</a></div>
 
-</section>
 
 <section class="shell section" id="dossier1">
 <div class="section-head"><div class="numb">01</div><div><div class="eyebrow">DOSSIER 1 · LE MONDE CONNECTÉ VISIBLE DEPUIS INTERNET</div><h2>Une caméra, un automate, un onduleur ou un système de bâtiment : que peut-on voir depuis Internet ?</h2><p class="goal">Shodan est un moteur de recherche spécialisé dans les services accessibles depuis Internet. Vous allez d’abord comprendre ce qu’il indexe, puis explorer plusieurs familles de systèmes pour mesurer l’étendue des usages concernés.</p></div></div>
@@ -47,10 +33,10 @@
 <div><b>Avis de sécurité</b><span>Publication d’un constructeur ou d’une autorité décrivant un problème connu et les produits concernés.</span></div>
 </div>
 <div class="safety"><strong>Règle impérative.</strong> Votre travail s’arrête aux informations affichées par Shodan et aux documentations publiques. Ne vous connectez à aucun équipement trouvé, ne lancez aucun scan, ne testez aucun mot de passe ni aucune vulnérabilité, et ne ciblez pas une organisation précise.</div>
-<div class="tools"><a class="tool" href="https://www.shodan.io/" rel="noopener" target="_blank">Ouvrir Shodan ↗</a><a class="tool secondary" href="https://help.shodan.io/the-basics/search-query-fundamentals" rel="noopener" target="_blank">Comment fonctionne une recherche Shodan ? ↗</a></div>
+<div class="tools"><a class="tool" href="https://www.shodan.io/" rel="noopener" target="_blank">Ouvrir Shodan ↗</a><a class="tool secondary" href="https://help.shodan.io/the-basics/search-query-fundamentals" rel="noopener" target="_blank">Aide Shodan ↗</a></div>
 
-<h3>1.1 · Comprendre un résultat</h3>
-<p>Vérifiez d’abord que vous êtes <strong>connecté à votre compte Shodan</strong>. Dans la barre de recherche, saisissez exactement <code>Moxa Nport</code>, lancez la recherche puis ouvrez un résultat de la première page. Repérez le pays, l’organisation réseau, le port et le contenu de la banner. Regardez également les informations présentées autour du résultat : elles ne proviennent pas toutes nécessairement du même mécanisme.</p>
+<h3>1.1 · Première recherche</h3>
+<p>Une fois connecté, saisissez exactement <code>Moxa Nport</code> dans la barre de recherche, lancez la recherche puis ouvrez un résultat de la première page. Repérez le pays, l’organisation réseau, le port et le contenu de la banner. Regardez également les informations présentées autour du résultat : elles ne proviennent pas toutes nécessairement du même mécanisme.</p>
 <div class="question-inline"><span>Q1</span><p><strong>Expliquez avec vos mots ce que fait Shodan.</strong> Relevez ensuite quatre informations observables dans le résultat choisi et indiquez, pour chacune, ce qu’elle vous apprend réellement sur le système.</p></div>
 
 <h3>1.2 · Un tour rapide du monde connecté</h3>
@@ -96,7 +82,8 @@
 <figure><img alt="Grue sur un chantier urbain" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Crane_001.jpg/960px-Crane_001.jpg"/><figcaption><b>D · Autre point de vue.</b> Une même activité peut être observée à des échelles et angles très différents. <a href="https://commons.wikimedia.org/wiki/File:Crane_001.jpg" target="_blank" rel="noopener">Wikimedia Commons ↗</a></figcaption></figure>
 </div>
 <div class="question-inline"><span>Q5</span><p>Pour chaque image, proposez <strong>une information qu’un système automatique pourrait raisonnablement extraire</strong>. Distinguez ce qui relève d’une <strong>observation visuelle</strong> (présence, localisation, comptage, défaut visible…) de ce qui demanderait déjà une <strong>interprétation métier</strong> (gravité, conformité, avancement réel, décision à prendre).</p></div>
-<p>Ouvrez maintenant les deux démonstrations Roboflow. <strong>Aucun compte n’est nécessaire.</strong> Dans chaque page, descendez jusqu’au bloc <b>Run on custom image</b>, puis déposez l’image ou cliquez pour la sélectionner. Vous n’avez pas besoin de créer un projet ni d’utiliser <b>Deploy This Model</b>. Testez les images A à D lorsque cela a du sens et observez surtout <strong>la nature de la sortie produite</strong> : classe, objets, zones, scores, etc.</p>
+<div class="note"><strong>Pour les essais de vision.</strong> Aucun compte Roboflow n’est nécessaire. Sur chaque page, descendez jusqu’à la zone permettant de tester le modèle avec votre propre image (<em>Run on custom image</em> ou équivalent) et importez l’image demandée. Vous n’avez pas à entraîner ni déployer le modèle.</div>
+<p>Ouvrez maintenant les deux démonstrations Roboflow. Dans chaque page, descendez jusqu’au bloc <b>Run on custom image</b>, puis déposez l’image ou cliquez pour la sélectionner. Vous n’avez pas besoin de créer un projet ni d’utiliser <b>Deploy This Model</b>. Testez les images A à D lorsque cela a du sens et observez surtout <strong>la nature de la sortie produite</strong> : classe, objets, zones, scores, etc.</p>
 <div class="tools"><a class="tool" href="https://universe.roboflow.com/use-cases/concrete-crack-detection" rel="noopener" target="_blank">Détection de fissures ↗</a><a class="tool secondary" href="https://universe.roboflow.com/use-cases/construction-progress-monitoring" rel="noopener" target="_blank">Suivi de chantier ↗</a></div>
 <div class="question-inline"><span>Q6</span><p>Comparez vos attentes de Q5 avec les sorties obtenues. Que produit réellement chacun des deux systèmes ? Pour chacun, donnez <strong>une décision que sa sortie peut aider à préparer</strong> et <strong>une décision qu’elle ne permet pas de prendre seule</strong>.</p></div>
 <h3>2.2 · Tester un modèle existant sur des cas variés</h3>
@@ -109,7 +96,7 @@
 <div class="challenge"><strong>Défi modèle</strong><p>Votre image « difficile » peut jouer sur la texture, une ombre, un joint, une fissure très fine, un matériau différent ou une prise de vue inhabituelle.</p></div>
 <div class="question-inline"><span>Q8</span><p>Votre prédiction était-elle correcte ? Qu’est-ce que ce petit test vous apprend sur la difficulté d’évaluer une IA à partir de quelques démonstrations réussies ?</p></div>
 <h3>2.4 · Construire une petite expérience de validation</h3>
-<p>Téléchargez puis <strong>décompressez</strong> le jeu d’apprentissage. Ouvrez Teachable Machine sur ordinateur avec Chrome, puis choisissez <strong>Image Project → Standard image model</strong>. Renommez les deux classes <strong>fissure</strong> et <strong>sans fissure</strong>. Pour chaque classe, utilisez <strong>Upload</strong> — pas la webcam — et sélectionnez toutes les images du dossier correspondant. Cliquez ensuite sur <strong>Train Model</strong>. Lorsque l’entraînement est terminé, utilisez la zone de prévisualisation pour tester quelques images issues de ce même jeu.</p>
+<p>Ouvrez Teachable Machine sur ordinateur, de préférence avec <strong>Google Chrome</strong>, puis choisissez <strong>Image Project → Standard image model</strong>. Téléchargez et <strong>décompressez</strong> le jeu d’apprentissage avant de l’importer. Renommez les deux classes <strong>fissure</strong> et <strong>sans fissure</strong>. Pour chaque classe, utilisez <strong>Upload</strong> — pas la webcam — et sélectionnez toutes les images du dossier correspondant. Cliquez ensuite sur <strong>Train Model</strong>. Lorsque l’entraînement est terminé, utilisez la zone de prévisualisation pour tester quelques images issues de ce même jeu.</p>
 <div class="tools"><a class="tool" href="https://teachablemachine.withgoogle.com/train/image" rel="noopener" target="_blank">Teachable Machine ↗</a><a class="tool secondary" href="materials/vision/jeu-apprentissage.zip">Jeu d’apprentissage ↓</a></div>
 <div class="question-inline"><span>Q9</span><p>Testez le modèle sur plusieurs images issues du jeu d’apprentissage. <strong>Qu’avez-vous réellement validé avec ce test ?</strong> Indiquez ce que ce résultat permet d’affirmer et, surtout, ce qu’il ne permet pas encore d’évaluer.</p></div>
 <h3>2.5 · Tester sur des images réellement nouvelles</h3>
@@ -136,6 +123,7 @@
 </div>
 
 <h3>3.1 · De la position à une information exploitable</h3>
+<div class="note"><strong>Pour cette partie.</strong> Aucun compte n’est nécessaire. La démonstration MTS s’ouvre directement dans le navigateur ; utilisez simplement les menus indiqués ci-dessous.</div>
 <p>Ouvrez la démonstration publique MTS. Cliquez sur <strong>Open Full Demo</strong>, puis <strong>Objects</strong>. Sélectionnez un véhicule, observez les informations disponibles et utilisez le replay pour examiner un trajet.</p>
 <div class="tools"><a class="tool" href="https://www.mtsltd.com/map.html" rel="noopener" target="_blank">MTS · Live GPS Tracking Demo ↗</a></div>
 <div class="question-inline"><span>Q13</span><p>À partir de cette interface, distinguez <strong>ce qui est une donnée de position</strong>, <strong>ce qui est reconstruit à partir de plusieurs positions</strong> et <strong>ce qui devient une information utile à l’exploitation</strong>. Donnez trois exemples de décisions qu’un responsable de chantier ou de flotte pourrait préparer avec ces informations.</p></div>
