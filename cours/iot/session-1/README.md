@@ -30,8 +30,8 @@ The student site uses no backend or database. Work is saved in browser `localSto
 2. build a defended campus baseline from responsibilities, labelled flows and one explicit open assumption;
 3. move from monitoring to control by separating command acknowledgement, physical-state evidence and operator authority;
 4. derive communication requirements at system level and for one concrete flow;
-5. **two-step technology activity:** compare network shapes without technology names, then reveal candidate families and audit the infrastructure / abstraction commitments hidden behind those names;
-6. test one technology fit under a counterfactual, return to campus, and defend a one-family / mixed / insufficient-evidence stance together with the missing fact that could reverse it.
+5. **technology comparison:** read the five named families through the same four criteria, then apply the comparison to concrete deployment cases;
+6. test one technology fit after changing one important deployment fact, return to campus, and defend a one-family / mixed / insufficient-evidence stance together with the missing fact that could reverse it.
 
 The former Session-1 stress-test/revision activity has moved to **Session 4 — Robustness**, where failures, retries, degraded behaviour, connectivity loss and architecture revision form one coherent arc.
 

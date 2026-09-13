@@ -11,14 +11,14 @@ Session 1 now has six canonical activities:
 2. Build a defensible baseline
 3. From monitoring to control
 4. Expose per-flow communication requirements
-5. From network shape to technology family — one two-step activity
+5. Compare communication technologies — one map + concrete cases
 6. Defend the campus communication strategy
 
 The former stress-test/revision activity is intentionally relocated to Session 4 (Robustness).
 
 ## Split-class resumption
 
-The next class should resume with the dedicated **Projector recap**, then continue directly at **Activity 5**. The recap gives the prior learning explicitly, including a reference architecture and equipment roles; it does not quiz students on what they remember.
+The next class should resume with the dedicated **Projector recap**, then continue directly at **Activity 5**. The recap is a projector-ready teaching map: IoT definition, use cases, reference architecture, equipment roles, movable responsibilities, prior design rules, then today’s question. It does not quiz students on what they remember.
 
 - Student: `../../../iot/session-1/?activity=5` or click Activity 5 in the always-open activity bar.
 - Projector recap: open `?recap=1` or press `R`; its Next button goes directly to Activity 5.

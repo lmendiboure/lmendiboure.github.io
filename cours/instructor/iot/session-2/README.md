@@ -65,7 +65,7 @@ Five STOPs are retained, after Activities 1, 3, 5, 7 and 8. Each STOP uses:
 
 **student artifact → one comparison/challenge question → concise “what to keep” reveal**
 
-There is no hidden answer-key gate. Students must commit to a decision, but an incorrect decision is discussion evidence rather than a progression failure.
+Navigation is fully non-blocking. Students can open any activity and continue at any time. Objective questions use immediate green/red feedback; genuinely debatable design choices use neutral/amber feedback instead of pretending there is one correct answer.
 
 ## Mission dossier
 

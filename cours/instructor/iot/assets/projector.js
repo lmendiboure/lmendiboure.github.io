@@ -57,25 +57,47 @@
     const r=D.recap||{};
     const blocks=Array.isArray(r.blocks)?r.blocks:[];
     const chain=Array.isArray(r.chain)?r.chain:[];
-    const resume=Number(r.resumeActivity)||1;
-    const useCases=Array.isArray(r.useCases)?r.useCases:[];
     const architecture=Array.isArray(r.architecture)?r.architecture:[];
+    const useCases=Array.isArray(r.useCases)?r.useCases:[];
     const responsibilityRows=Array.isArray(r.responsibilityRows)?r.responsibilityRows:[];
     return `
-      <div class="shell recap-head">
-        <div class="eyebrow">Before we continue · Session ${esc(D.session)}</div>
+      <div class="shell recap-head recap-head-visual">
+        <div class="eyebrow">Session ${esc(D.session)} · common ground before we continue</div>
         <h1>${esc(r.title||'What we keep from last time')}</h1>
         <p>${esc(r.subtitle||'')}</p>
       </div>
-      <div class="shell recap-stage">
-        ${r.definition?`<section class="recap-definition"><div><span class="panel-kicker">WHAT WE MEAN BY IOT HERE</span><h2>${esc(r.definition.title||'')}</h2><p>${esc(r.definition.text||'')}</p></div></section>`:''}
-        ${useCases.length?`<section class="recap-usecases"><div class="panel-kicker">TYPICAL IOT USE CASES</div><div class="chip-cloud">${useCases.map(x=>`<span>${esc(x)}</span>`).join('')}</div></section>`:''}
-        ${architecture.length?`<section class="recap-architecture"><div class="panel-kicker">A REFERENCE ARCHITECTURE TO THINK WITH</div><div class="arch-columns">${architecture.map((x,n)=>`<article class="arch-col"><div class="arch-step">${n+1}</div><h3>${esc(x.level||'')}</h3>${x.equipment?`<p><b>Typical equipment:</b> ${esc(x.equipment)}</p>`:''}${Array.isArray(x.roles)&&x.roles.length?`<ul>${x.roles.map(v=>`<li>${esc(v)}</li>`).join('')}</ul>`:''}</article>${n<architecture.length-1?'<div class="arch-arrow" aria-hidden="true">→</div>':''}`).join('')}</div>${r.architectureNote?`<p class="recap-note">${esc(r.architectureNote)}</p>`:''}</section>`:''}
-        ${responsibilityRows.length?`<section class="recap-responsibilities"><div class="panel-kicker">RESPONSIBILITIES CAN MOVE</div><div class="responsibility-table">${responsibilityRows.map(x=>`<article><h3>${esc(x.label||'')}</h3><p>${esc(x.text||'')}</p></article>`).join('')}</div></section>`:''}
-        <section class="recap-grid" aria-label="Key ideas from the previous class">
-          ${blocks.map(b=>`<article class="recap-card"><span>${esc(b.label||'')}</span><h2>${esc(b.title||'')}</h2>${Array.isArray(b.points)&&b.points.length?`<ul>${b.points.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}</article>`).join('')}
+      <div class="shell recap-stage recap-stage-visual">
+        <section class="recap-overview-row">
+          <article class="iot-definition-card">
+            <span class="panel-kicker">WHAT IS AN IOT SYSTEM?</span>
+            <h2>${esc(r.definition?.title||'')}</h2>
+            <p>${esc(r.definition?.text||'')}</p>
+          </article>
+          <article class="iot-usecase-card">
+            <span class="panel-kicker">WHY DO WE BUILD THEM?</span>
+            <div class="usecase-cloud">${useCases.map(x=>`<span>${esc(x)}</span>`).join('')}</div>
+          </article>
         </section>
-        ${chain.length?`<section class="recap-chain-projector"><div class="panel-kicker">${esc(r.chainLabel||'THE CHAIN WE CONTINUE')}</div><div class="model-chain">${chain.map((x,n)=>`${n?'<b aria-hidden="true">→</b>':''}<span class="${n===resume-1?'resume-focus':''}">${esc(x)}</span>`).join('')}</div></section>`:''}
+
+        <section class="iot-architecture-card">
+          <div class="architecture-title-row"><div><span class="panel-kicker">REFERENCE ARCHITECTURE</span><h2>One system, several levels — and explicit flows between them</h2></div><span class="architecture-caveat">Reference model, not a mandatory pipeline</span></div>
+          <div class="iot-architecture-map">
+            ${architecture.map((x,n)=>`${n?`<div class="iot-link"><b>${esc(x.linkFromPrevious||'↔')}</b><small>${esc(x.linkLabel||'')}</small></div>`:''}<article class="iot-level"><span class="iot-level-index">${esc(x.badge||String(n+1))}</span><h3>${esc(x.level||'')}</h3><p class="iot-equipment">${esc(x.equipment||'')}</p>${Array.isArray(x.roles)&&x.roles.length?`<div class="iot-role-list">${x.roles.map(v=>`<span>${esc(v)}</span>`).join('')}</div>`:''}</article>`).join('')}
+          </div>
+          ${r.architectureNote?`<div class="architecture-note"><b>Important:</b><span>${esc(r.architectureNote)}</span></div>`:''}
+        </section>
+
+        <section class="responsibility-mobility-card">
+          <div><span class="panel-kicker">RESPONSIBILITIES DO NOT BELONG TO ONE FIXED BOX</span><h2>The equipment changes; the responsibilities remain useful.</h2></div>
+          <div class="responsibility-lanes">${responsibilityRows.map(x=>`<article><strong>${esc(x.label||'')}</strong>${x.where?`<span class="where-pill">${esc(x.where)}</span>`:''}<p>${esc(x.text||'')}</p></article>`).join('')}</div>
+          ${r.crossCutting?`<div class="crosscut-strip"><b>Across the whole system</b><span>${esc(r.crossCutting)}</span></div>`:''}
+        </section>
+
+        <section class="recap-principles">
+          ${blocks.map((b,n)=>`<article><span>${n+1}</span><div><strong>${esc(b.title||'')}</strong>${Array.isArray(b.points)&&b.points.length?`<p>${esc(b.points[0])}</p>`:''}</div></article>`).join('')}
+        </section>
+
+        ${chain.length?`<section class="recap-chain-projector"><div class="panel-kicker">THE REASONING CHAIN ALREADY BUILT</div><div class="model-chain">${chain.map((x,n)=>`${n?'<b aria-hidden="true">→</b>':''}<span>${esc(x)}</span>`).join('')}</div></section>`:''}
         ${r.focus?`<section class="recap-focus"><span>TODAY</span><strong>${esc(r.focus)}</strong></section>`:''}
       </div>`;
   }

@@ -229,65 +229,45 @@
 </section>
 <!-- ACTIVITY 5 -->
 <section class="activity-screen" data-screen="8" hidden="">
-<div class="activity-label"><span>Activity 5 · Step 1 of 2</span><span class="pill-neutral">Network shape → technology</span></div><div class="narrative-bridge"><span>NEW QUESTION</span><strong>The communication requirements are now explicit. Which network structures could actually satisfy them?</strong></div><aside class="case-voice"><div class="case-avatar large">YN</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Yanis</strong><span>Network architect</span><em>Evidence gap</em></div><div class="case-context"><b>STARTING POINT</b><span>Communication requirements are explicit · site coverage and infrastructure evidence remain incomplete.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“We know what the links must achieve, but we still do not have a complete site survey or coverage answer. Choosing a standard now would hide assumptions we have not validated.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>Reason first about network shapes and operating assumptions, before comparing technology names.</span></div></div></aside>
-<div class="mission-context"><span class="mission-context-tag">Evidence available</span><strong>Your baseline flows + Top 3 requirements + Sam’s field observations.</strong><span>Exact coverage and provider availability are still unknown. Use the evidence you have to identify a defensible network shape before attaching a standard name.</span></div>
-<div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
-<h2>Start from requirements, not technology names.</h2>
-<p>Compare the five network shapes against the requirements you already established. Keep one <strong>leading hypothesis</strong> and one <strong>challenger</strong>, then identify the known fact carrying the ranking and the missing fact that could overturn it.</p>
+<div class="activity-label"><span>Activity 5 · Step 1 of 2</span><span class="pill-neutral">Compare the technologies</span></div>
+<div class="narrative-bridge"><span>NEW QUESTION</span><strong>We know what the flows need. What does each communication family actually provide?</strong></div>
+<div class="activity-intro compact-intro"><div class="activity-move-label">FIRST · READ THE MAP</div>
+<h2>Compare five communication families.</h2>
+<p>Do not choose yet. For each family, look at the same four things: <strong>distance/context, traffic, device constraints and required infrastructure</strong>. Also look at the small architecture chain: it shows who talks to whom.</p>
 </div>
-<div aria-label="Core workflow" class="work-sequence"><span><b>1</b> Compare the 5 shapes</span><span><b>2</b> Pick hypothesis + challenger</span><span><b>3</b> Expose the decisive assumption</span></div>
-<section aria-label="Reasoning chain from the previous class" class="recap-chain card flat">
-<div class="recap-head"><span class="eyebrow">What we keep from the previous class</span><strong>This is the reasoning chain you can use as a reference.</strong></div>
-<div class="recap-steps"><span>Service need</span><b>→</b><span>Responsibilities + flows</span><b>→</b><span>Control evidence</span><b>→</b><span>Per-flow requirements</span><b>→</b><span class="current">Network shape</span><b>→</b><span>Technology family</span></div>
-<p>You do not need to reconstruct the earlier activities. Start from the requirements you already established and use them to compare network shapes.</p>
-</section><div class="decision-compass card flat">
-<div class="decision-compass-head"><span class="eyebrow">Before naming a technology</span><strong>Ask four concrete questions</strong></div>
-<div class="decision-question-grid">
-<div><span>↔</span><strong>How far?</strong><small>Nearby, one site, wide area, isolated?</small></div>
-<div><span>▥</span><strong>How much data?</strong><small>Tiny messages, regular sensing, images?</small></div>
-<div><span>ϟ</span><strong>What can the device afford?</strong><small>Tight battery, normal battery, mains power?</small></div>
-<div><span>⌂</span><strong>What infrastructure exists?</strong><small>Phone, local network, gateway, operator coverage, none?</small></div>
-</div>
-</div>
-<div class="guided-tech-head"><div><span class="eyebrow">Guided discovery</span><h3>Five network shapes</h3><p class="section-copy">Keep the five shapes visible together. Compare their structural path and operating assumptions. Keep technology names out of the decision until the next activity.</p></div><span class="guided-progress" id="techDiscoveryProgress">Build a defended pair</span></div>
+<div aria-label="Core workflow" class="work-sequence"><span><b>1</b> Read the architecture</span><span><b>2</b> Compare the four criteria</span><span><b>3</b> Notice the infrastructure required</span></div>
+<div class="guided-tech-head"><div><span class="eyebrow">Technology map</span><h3>Five families, five different system implications</h3><p class="section-copy">There is no universal winner. The useful question is: <em>which one fits the deployment we actually have?</em></p></div><span class="guided-progress" id="techDiscoveryProgress">Read the map</span></div>
 <div class="tech-discovery-grid" id="techDiscoveryGrid"></div>
 <div class="shape-reasoning-board card flat" id="shapeReasoningBoard"></div>
-<details class="term-shelf"><summary><strong>New words, in plain English</strong><span>Open this whenever a term blocks you.</span></summary><div class="plain-glossary" id="plainGlossary"></div></details>
-<div class="ntn-context-note"><strong>Why no satellite/NTN family here?</strong><span>The campus brief has not removed terrestrial access. NTN belongs in the later robustness session when a concrete coverage failure gives direct satellite access or satellite backhaul an architectural reason to enter the design.</span></div>
-<details class="adaptive-depth" data-depth-id="discover"><summary><span class="challenge-mark">↗</span><span><strong>Challenge me · Design before naming</strong><small>Build a communication shape from constraints without using a technology name.</small></span><span class="depth-badge">0/3 support</span></summary><div class="adaptive-depth-body" id="depthDiscover"></div></details>
-<button class="btn primary next-activity" data-next="9" disabled="" id="discoveryNext" type="button">Hypothesis ready → reveal technology families</button>
+<details class="term-shelf"><summary><strong>Plain-language glossary</strong><span>Only open this if a word blocks you.</span></summary><div class="plain-glossary" id="plainGlossary"></div></details>
+<button class="btn primary next-activity" data-next="9" id="discoveryNext" type="button">I have the map → try concrete cases</button>
 </section>
-<!-- ACTIVITY 6 -->
+<!-- ACTIVITY 5 · STEP 2 -->
 <section class="activity-screen" data-screen="9" hidden="">
-<div class="activity-label"><span>Activity 5 · Step 2 of 2</span><span class="pill-neutral">Reveal technology families</span></div><div class="narrative-bridge"><span>STEP 2 OF 2</span><strong>You have a leading network shape and a challenger. Now reveal the technology families behind those shapes and inspect what each name commits you to.</strong></div><aside class="case-voice"><div class="case-avatar large">YN</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Yanis</strong><span>Network architect</span><em>Integrator shortlist</em></div><div class="case-context"><b>STARTING POINT</b><span>Network shapes are explicit · concrete technology families have not yet been evaluated.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“The integrator has sent five candidate families: Wi-Fi, Bluetooth LE, IEEE 802.15.4, LoRaWAN and NB-IoT. The shortlist contains names but almost no architectural commitments.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>The five names do not describe the same kind of object. Expose the architectural commitment and abstraction level hidden behind each name.</span></div></div></aside>
-<div class="mission-context"><span class="mission-context-tag">New information from the integrator</span><strong>One concrete candidate has now been mapped to each of the five network shapes.</strong><span>Your leading shape and challenger from Step 1 are highlighted below. Audit those two candidates first, then one contrasting family. The full reference remains available without forcing five mini-quizzes.</span></div>
-<div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
-<h2>Reveal the names — then audit what each choice actually implies.</h2>
-<p>The integrator has finally attached technology names to the network shapes. Start with the two shapes you just defended, then add one contrasting family. For each one, ask: <strong>what infrastructure, ownership or stack responsibility did we implicitly choose?</strong></p>
+<div class="activity-label"><span>Activity 5 · Step 2 of 2</span><span class="pill-neutral">Use the comparison</span></div>
+<div class="narrative-bridge"><span>NOW APPLY IT</span><strong>Use the same four criteria on concrete deployments.</strong></div>
+<div class="activity-intro compact-intro"><div class="activity-move-label">YOUR MOVE</div>
+<h2>Choose a suitable technology for any three cases.</h2>
+<p>For each case, choose the family that seems the best fit <strong>among the proposed options</strong>. Feedback appears immediately. You do not need to find a “perfect” technology — just connect the deployment facts to the technology characteristics.</p>
 </div>
-<div aria-label="Core workflow" class="work-sequence"><span><b>1</b> Find the candidates tied to your two shapes</span><span><b>2</b> Audit their hidden commitments</span><span><b>3</b> Add one contrast</span></div>
-<div class="mystery-grid" id="mysteryGrid"></div>
-<div class="score-panel"><span>Scope audits</span><strong aria-live="polite" id="mysteryScore">0 / 3</strong><small>Three contrasting audits are enough for the core route. The reference drawer contains all five families.</small></div>
-<details class="reference-drawer"><summary><strong>Reference drawer · open only if needed</strong><span>Essential idea → architecture → technical vocabulary</span></summary><div class="reference-drawer-body"><div class="library-section-head"><div><span class="eyebrow">Reference library</span><h3>Use the cards to resolve uncertainty, not as a second activity.</h3><p class="section-copy">Start with the essential idea; open technical vocabulary only when you need more precision.</p></div></div>
-<div class="tech-workspace">
-<div class="rich-tech-grid" id="technologyLibrary"></div>
-<div class="card tech-panel" id="technologyPanel"><div class="tech-empty-panel">Choose a technology card to inspect what the choice actually implies.</div></div>
-</div></div></details>
-<details class="reference-drawer research-trails"><summary><strong>Optional · verify a technical claim from an official source</strong><span>3 research trails · prediction → source → revised claim</span></summary><div class="reference-drawer-body"><div class="research-grid" id="researchTrailGrid"></div></div></details>
+<div aria-label="Core workflow" class="work-sequence"><span><b>1</b> Pick a case</span><span><b>2</b> Choose a family</span><span><b>3</b> Read why the fit is strong or weak</span></div>
+<div class="mystery-grid simplified-audit-grid" id="mysteryGrid"></div>
+<div class="score-panel"><span>Cases compared</span><strong aria-live="polite" id="mysteryScore">0 / 3</strong><small>Any three cases are enough.</small></div>
 <div class="concept-banner">
-<div class="concept-icon">≠</div><div><strong>Same decision table does not mean same abstraction level.</strong><p>Some names describe local radio/link rules, some a complete network architecture, and some an operator-provided access service. You can compare them for a deployment decision without pretending they are identical objects.</p></div>
+<div class="concept-icon">≠</div><div><strong>The five names do not all describe exactly the same technical level.</strong><p>For example, IEEE 802.15.4 is mainly a local PHY/MAC building block, while LoRaWAN and cellular IoT imply a wider network architecture. You only need to understand that difference — not memorise every layer.</p></div>
 </div>
-<button class="btn primary next-activity" data-next="10" disabled="" id="technologyAuditNext" type="button">Technology scope clear → final decision</button>
+<details class="reference-drawer"><summary><strong>Optional reference · inspect any family in more detail</strong><span>Use this only if you want the technical vocabulary.</span></summary><div class="reference-drawer-body"><div class="tech-workspace"><div class="rich-tech-grid" id="technologyLibrary"></div><div class="card tech-panel" id="technologyPanel"><div class="tech-empty-panel">Choose a technology card to inspect its architecture and technical vocabulary.</div></div></div></div></details>
+<button class="btn primary next-activity" data-next="10" disabled="" id="technologyAuditNext" type="button">Compare three cases → final campus decision</button>
 </section>
 <!-- ACTIVITY 7 -->
 <section class="activity-screen" data-screen="10" hidden="">
 <div class="activity-label"><span>Activity 6</span><span class="pill-neutral">Defend the campus strategy</span></div><div class="narrative-bridge"><span>SO FAR</span><strong>You have compared network structures and technology scope. Now defend a campus strategy and state what evidence could still change it.</strong></div><aside class="case-voice"><div class="case-avatar large">AM</div><div class="case-voice-main"><div class="case-voice-meta"><strong>Amina</strong><span>Campus operations lead</span><em>Procurement pressure</em></div><div class="case-context"><b>STARTING POINT</b><span>Candidate families and their validity domains are now visible.</span></div><div class="case-signal-label">NEW INPUT</div><blockquote>“Procurement would prefer one communication family everywhere. That would simplify purchasing, but I do not know whether it is an engineering rule or merely convenient for this campus.”</blockquote><div class="case-impact"><b>DESIGN IMPACT</b><span>Test whether one family survives different deployment assumptions before committing the campus strategy.</span></div></div></aside>
 <div class="mission-context transfer"><span class="mission-context-tag">Transfer rule</span><strong>Keep the reasoning criteria; change the deployment context.</strong><span>A rule that works only because of one campus-specific assumption is not yet a transferable engineering rule.</span></div>
 <div class="activity-intro"><div class="activity-move-label">YOUR MOVE</div>
-<h2>Test one choice, then return to the campus decision.</h2>
-<p>Commit <strong>one</strong> transfer-case choice, identify the assumption doing most of the work, then flip that assumption and judge again. Use what you learned to return to the campus: one family, a mixed design, or not enough evidence yet?</p>
+<h2>Make one choice, change one important fact, then return to the campus decision.</h2>
+<p>Choose <strong>one</strong> deployment case and the fact that matters most for your choice. Then change that fact and decide whether you would keep the same technology. Finally return to the campus: one family, a mixed design, or not enough information yet?</p>
 </div>
-<div aria-label="Core workflow" class="work-sequence"><span><b>1</b> Commit one case</span><span><b>2</b> Flip its decisive assumption</span><span><b>3</b> Return to campus</span></div>
+<div aria-label="Core workflow" class="work-sequence"><span><b>1</b> Commit one case</span><span><b>2</b> Change one important fact</span><span><b>3</b> Return to campus</span></div>
 <div class="scenario-grid" id="scenarioGrid"></div>
 <section class="campus-checkpoint card flat">
 <div class="checkpoint-head"><div><span class="eyebrow">Mission checkpoint · back to campus</span><h3>Would you force one communication family onto every campus link?</h3></div><span class="checkpoint-mark">↩</span></div>
@@ -304,7 +284,7 @@
 <div class="stop-orbit">STOP</div>
 <div class="eyebrow">Final discussion · Session 1</div>
 <h2>Defend the campus communication decision — and its validity domain.</h2>
-<p>Use the network shape, technology scope and counterfactual you just explored. The goal is not one universal winner; it is a decision whose assumptions are visible.</p>
+<p>Use the technology comparison and the changed fact you just explored. The goal is not one universal winner; it is a decision whose important conditions are visible.</p>
 <div aria-label="Discussion rhythm" class="stop-rhythm"><span class="active">1 · LOOK</span><span>2 · COMPARE</span><span>3 · CHALLENGE</span><span>4 · UNLOCK</span></div>
 <div class="stop-snapshot" id="stopTechnologySnapshot"></div>
 <button class="text-button review-activity" data-review-screen="10" type="button">← Review our campus decision</button>
