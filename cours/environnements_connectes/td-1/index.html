@@ -25,198 +25,178 @@
 
 
 <section class="shell section" id="dossier1">
-<div class="section-head"><div class="numb">01</div><div><div class="eyebrow">DOSSIER 1 · LE MONDE CONNECTÉ VISIBLE DEPUIS INTERNET</div><h2>Que peut-on réellement apprendre sur un système connecté depuis Internet ?</h2><p class="goal">Vous allez utiliser Shodan pour passer de la simple observation d’un résultat à trois raisonnements différents : comprendre un usage, mesurer l’information exposée, puis vérifier si un problème de sécurité documenté concerne réellement un système.</p></div></div>
-<div class="primer"><h3>Repères</h3><p>Shodan est un moteur de recherche spécialisé dans les services accessibles depuis Internet. Il collecte les informations renvoyées par ces services — produit, version, protocole, organisation réseau, etc. — dans des <strong>banners</strong>. Un résultat Shodan indique qu’un service a été observé depuis Internet. Il ne prouve ni qu’il est vulnérable, ni qu’il a été compromis.</p></div>
+<div class="section-head"><div class="numb">01</div><div><div class="eyebrow">DOSSIER 1 · LE MONDE CONNECTÉ VISIBLE DEPUIS INTERNET</div><h2>Que peut-on réellement apprendre sur un système connecté depuis Internet ?</h2><p class="goal">Les bâtiments, installations techniques et chantiers s'appuient sur des caméras, automates, systèmes de gestion technique, équipements énergétiques ou outils de supervision reliés à des réseaux IP. Lorsqu'un service est accessible depuis Internet, certaines informations techniques peuvent être observées à distance. Vous allez utiliser Shodan pour comprendre ce qui devient visible, relier ces informations à des usages réels, puis apprendre à ne pas tirer de conclusion excessive.</p></div></div>
+<div class="primer"><h3>Repères</h3><p><strong>Shodan</strong> est un moteur de recherche spécialisé dans les services accessibles depuis Internet. Il enregistre les informations renvoyées par ces services dans des <strong>banners</strong>. Un résultat Shodan indique qu'un service a été observé depuis Internet ; il ne dit pas, à lui seul, pourquoi il est accessible ni s'il présente un problème de sécurité.</p></div>
 <div class="terms">
 <div><b>Service</b><span>Fonction réseau proposée par un équipement ou un logiciel.</span></div>
-<div><b>Banner</b><span>Informations observées par Shodan lorsqu’un service répond.</span></div>
-<div><b>Version</b><span>Révision précise d’un produit ou logiciel, utile pour savoir si un avis technique s’applique.</span></div>
+<div><b>Banner</b><span>Informations renvoyées par un service et enregistrées par Shodan.</span></div>
+<div><b>Version</b><span>Révision précise d'un produit ou logiciel.</span></div>
 <div><b>Vulnérabilité</b><span>Défaut technique connu pouvant affecter certains produits ou certaines versions.</span></div>
 </div>
-<div class="safety"><strong>Règle impérative.</strong> Votre travail s’arrête aux informations affichées par Shodan et aux documentations publiques. Ne vous connectez à aucun équipement trouvé, ne lancez aucun scan, ne testez aucun mot de passe ni aucune vulnérabilité, et ne ciblez pas une organisation précise.</div>
+<div class="safety"><strong>Règle impérative.</strong> Votre travail s'arrête aux informations affichées par Shodan et aux documentations publiques. Ne vous connectez à aucun équipement trouvé, ne lancez aucun scan, ne testez aucun mot de passe ni aucune vulnérabilité, et ne ciblez pas une organisation précise.</div>
 
 <h3>1.1 · Prendre en main Shodan</h3>
-<p><strong>Commencez par vous connecter à Shodan.</strong> Si vous n’avez pas encore de compte, créez un compte gratuit et validez votre adresse e-mail. Aucun abonnement payant ni Academic Membership n’est nécessaire pour les recherches demandées ici.</p>
-<div class="tools"><a class="tool" href="https://account.shodan.io/" rel="noopener" target="_blank">Créer un compte / se connecter ↗</a><a class="tool secondary" href="https://help.shodan.io/the-basics/search-query-fundamentals" rel="noopener" target="_blank">Aide Shodan ↗</a></div>
-<p>Dans la barre de recherche, saisissez exactement <code>Moxa Nport</code>, puis ouvrez un résultat de la première page. Repérez ce qui est affiché : pays, organisation réseau, port, produit éventuel et contenu de la banner.</p>
-<div class="focus"><strong>Ici, vous cherchez à comprendre l’outil.</strong><span>Ne cherchez pas encore à juger si le système est utile, sensible ou sûr.</span></div>
-<div class="question-inline"><span>Q1</span><p>À partir du résultat observé, expliquez avec vos mots <strong>ce que fait Shodan</strong>. Relevez ensuite quatre informations visibles et précisez, pour chacune, <strong>ce qu’elle permet réellement de savoir</strong>.</p></div>
+<p>Connectez-vous à <strong>Shodan</strong>, puis saisissez exactement <code>Moxa Nport</code> dans la barre de recherche. Ouvrez un résultat de la première page et prenez le temps d'identifier les différentes informations affichées sur la fiche.</p>
+<div class="tools"><a class="tool" href="https://account.shodan.io/" rel="noopener" target="_blank">Shodan ↗</a><a class="tool secondary" href="https://help.shodan.io/the-basics/search-query-fundamentals" rel="noopener" target="_blank">Aide sur les résultats Shodan ↗</a></div>
+<div class="question-inline"><span>Q1</span><p>Choisissez <strong>quatre informations visibles</strong> dans le résultat qui vous semblent utiles pour comprendre le système observé. Pour chacune, indiquez ce qu'elle signifie et ce qu'elle permet réellement de savoir. À partir de cette première exploration, expliquez en deux ou trois phrases ce que fait Shodan.</p></div>
 
-<h3>1.2 · Mesurer la diversité des systèmes visibles</h3>
-<p>Effectuez les recherches textuelles suivantes. Restez sur la première page et observez quelques résultats ainsi que les catégories proposées dans la colonne de gauche. N’ajoutez pas de filtre.</p>
-<div class="query-grid">
-<div><code>webcamXP</code><span>Caméras et vidéosurveillance</span></div>
-<div><code>BACnet</code><span>Automatisation et gestion technique de bâtiment</span></div>
-<div><code>solar inverter</code><span>Production photovoltaïque et énergie</span></div>
-<div><code>Siemens S7</code><span>Automates et systèmes industriels</span></div>
-<div><code>OctoPrint</code><span>Imprimantes 3D pilotées à distance</span></div>
+<h3>1.2 · Explorer des systèmes très différents</h3>
+<p>Effectuez successivement les recherches textuelles suivantes. Pour chacune, observez plusieurs résultats de la première page ainsi que les catégories proposées par Shodan. Si le nom recherché ne vous est pas familier, utilisez le contenu des résultats et, si nécessaire, une documentation publique pour comprendre de quoi il s'agit.</p>
+<div class="query-grid simple">
+<div><code>webcamXP</code></div>
+<div><code>BACnet</code></div>
+<div><code>solar inverter</code></div>
+<div><code>Siemens S7</code></div>
+<div><code>OctoPrint</code></div>
 </div>
-<div class="focus"><strong>Ici, vous cherchez un panorama.</strong><span>Le but n’est pas encore d’analyser un risque : identifiez simplement ce que sont ces systèmes et les informations que Shodan révèle sur eux.</span></div>
-<div class="question-inline"><span>Q2</span><p>Présentez les cinq recherches dans un tableau court : <strong>type de système / exemple d’information observée / usage possible</strong>. Quel résultat élargit le plus votre idée de ce que peut être un « environnement connecté » ? Justifiez en une ou deux phrases.</p></div>
+<div class="question-inline"><span>Q2</span><p>Pour chacune des cinq recherches, indiquez <strong>à quelle famille de système ou de service elle semble correspondre</strong> et donnez un indice concret ayant permis de l'identifier. Ajoutez un exemple d'information technique que Shodan rend visible. Quelle recherche vous a le plus surpris ?</p></div>
 
-<h3>1.3 · Passer du système technique à l’usage métier</h3>
-<p>Choisissez <strong>deux familles différentes</strong> parmi BACnet, solar inverter, Siemens S7 et OctoPrint. Pour chacune, partez d’un résultat réel et demandez-vous quel processus physique ou opérationnel peut se cacher derrière ce service.</p>
-<div class="focus"><strong>Changement de question.</strong><span>En Q2, vous décriviez ce qui est visible. Ici, vous devez relier un système technique à un <strong>usage concret</strong> dans un bâtiment, un chantier ou son exploitation.</span></div>
-<div class="question-inline"><span>Q3</span><p>Pour les deux familles choisies, indiquez : <strong>ce qui pourrait être mesuré ou commandé</strong>, <strong>qui pourrait utiliser cette information</strong> et <strong>une décision métier que le système pourrait aider à prendre</strong>. Signalez clairement ce qui vient du résultat Shodan et ce qui relève de votre interprétation.</p></div>
+<h3>1.3 · Relier un service technique à un usage du bâtiment ou du chantier</h3>
+<p>Choisissez maintenant <strong>deux</strong> des cinq familles explorées. À partir d'un résultat réel et d'une documentation publique lorsque c'est utile, cherchez quel processus physique ou opérationnel peut être associé à ce système.</p>
+<div class="question-inline"><span>Q3</span><p>Pour chacune des deux familles choisies, expliquez <strong>ce que le système peut mesurer, superviser ou commander</strong>, <strong>qui pourrait utiliser cette information</strong> et donnez <strong>un exemple de décision ou d'action métier</strong> qu'il peut soutenir. Distinguez clairement ce qui est visible dans Shodan de ce que vous avez appris dans une autre source.</p></div>
 
-<h3>1.4 · Cas caméra : quelle information un tiers peut-il apprendre ?</h3>
-<p>Revenez à <code>webcamXP</code> et parcourez plusieurs résultats. Observez uniquement les informations fournies par Shodan : produit, localisation approximative, organisation, titre, banner et éventuelle capture affichée dans l’interface. N’ouvrez jamais directement l’adresse du système.</p>
-<div class="focus"><strong>Attention : ici, on ne cherche pas une vulnérabilité.</strong><span>La question porte sur <strong>l’information exposée</strong> et sur ce qu’un observateur extérieur pourrait éventuellement déduire d’un contexte de chantier ou de bâtiment.</span></div>
-<div class="question-inline"><span>Q4</span><p>À partir d’un résultat suffisamment renseigné, distinguez trois colonnes : <strong>faits visibles dans Shodan</strong> / <strong>informations que l’on pourrait raisonnablement supposer</strong> / <strong>informations impossibles à connaître sans contexte supplémentaire</strong>. Donnez ensuite un exemple où une information apparemment banale pourrait malgré tout être sensible pour l’exploitation d’un chantier ou d’un bâtiment.</p></div>
+<h3>1.4 · Cas caméra : ce qu'un tiers peut apprendre</h3>
+<p>Revenez à <code>webcamXP</code> et parcourez plusieurs résultats. Choisissez une fiche suffisamment renseignée. Cette étape ne cherche pas à déterminer si la caméra présente une vulnérabilité : elle porte uniquement sur les informations qu'un observateur extérieur peut recueillir ou déduire.</p>
+<div class="question-inline"><span>Q4</span><p>Construisez trois colonnes : <strong>informations directement visibles dans Shodan</strong> / <strong>informations que l'on peut raisonnablement supposer</strong> / <strong>informations qu'il est impossible de connaître sans contexte supplémentaire</strong>. À partir de votre cas, expliquez ensuite pourquoi certaines informations apparemment banales pourraient avoir une valeur opérationnelle pour un tiers.</p></div>
 
-<h3>1.5 · Cas Metasys : un avis de sécurité s’applique-t-il au système observé ?</h3>
-<p>Recherchez <code>Metasys</code> dans Shodan et choisissez un résultat suffisamment renseigné. Notez exactement le produit et la version lorsqu’elle est visible. Ouvrez ensuite l’avis officiel ci-dessous et repérez les produits et versions qu’il déclare concernés.</p>
+<h3>1.5 · Cas Metasys : vérifier si un avis de sécurité concerne le système observé</h3>
+<p>Recherchez <code>Metasys</code> dans Shodan et choisissez un résultat suffisamment renseigné. Ouvrez ensuite l'avis officiel ci-dessous. Un <strong>avis de sécurité</strong> décrit un problème connu et précise les produits ou versions concernés : votre travail consiste uniquement à comparer ce que vous voyez dans Shodan avec ce que dit l'avis.</p>
 <div class="tools"><a class="tool" href="https://www.cyber.gc.ca/fr/alertes-avis/systemes-controle-bulletin-securite-johnson-controls-av26-837" rel="noopener" target="_blank">Avis officiel · Metasys ↗</a><a class="tool secondary" href="https://www.johnsoncontrols.com/trust-center/cybersecurity/security-advisories" rel="noopener" target="_blank">Johnson Controls · Security Advisories ↗</a></div>
-<div class="focus"><strong>Ce n’est pas la même question que Q4.</strong><span>Q4 concernait les informations visibles et leurs conséquences possibles. Ici, vous vérifiez uniquement si un <strong>problème technique documenté</strong> peut être relié au produit et à la version observés.</span></div>
-<div class="question-inline"><span>Q5</span><p>Comparez le résultat Shodan et l’avis officiel. Classez votre conclusion dans l’un des trois cas : <strong>l’avis s’applique clairement / l’avis ne s’applique clairement pas / impossible de conclure avec les informations disponibles</strong>. Justifiez uniquement avec les éléments observés. Si vous ne pouvez pas conclure, indiquez précisément <strong>quelle information manque</strong>.</p></div>
+<div class="question-inline"><span>Q5</span><p>Relevez le <strong>produit</strong> et la <strong>version</strong> lorsqu'ils sont disponibles dans votre résultat, puis les produits et versions concernés dans l'avis. Concluez par l'une des trois réponses suivantes : <strong>l'avis s'applique clairement / l'avis ne s'applique clairement pas / les informations disponibles ne permettent pas de conclure</strong>. Justifiez votre choix et, dans le troisième cas, indiquez précisément l'information manquante.</p></div>
 
-<h3>1.6 · Transformer un constat technique en décision prudente</h3>
-<p>On ne demande plus ici de déterminer si l’avis s’applique : utilisez simplement les trois situations ci-dessous comme des cas de décision.</p>
+<h3>1.6 · Décider quoi vérifier ensuite</h3>
+<p>Vous êtes maintenant dans la position d'un responsable d'exploitation qui reçoit l'information précédente. Trois situations sont possibles :</p>
 <div class="scenario-grid">
-<div><b>Cas A</b><span>La version observée est explicitement concernée par l’avis.</span></div>
-<div><b>Cas B</b><span>La version observée n’est pas indiquée dans l’avis.</span></div>
-<div><b>Cas C</b><span>La version n’est pas visible dans Shodan.</span></div>
+<div><b>Cas A</b><span>Le produit et la version observés figurent explicitement dans l'avis.</span></div>
+<div><b>Cas B</b><span>Le produit est identifié, mais la version observée n'est pas concernée par l'avis.</span></div>
+<div><b>Cas C</b><span>Le produit semble correspondre, mais la version n'est pas connue.</span></div>
 </div>
-<div class="focus"><strong>Encore un changement de question.</strong><span>Q5 vérifiait une correspondance technique. Q6 demande maintenant : <strong>quelle est la prochaine action raisonnable pour un exploitant ?</strong></span></div>
-<div class="question-inline"><span>Q6</span><p>Pour chacun des trois cas A, B et C, proposez <strong>la première vérification ou action</strong> que vous recommanderiez au responsable du système. Expliquez pourquoi la même réaction ne convient pas aux trois situations.</p></div>
+<p>Les actions possibles ne sont pas forcément les mêmes : vérifier l'inventaire réel de l'équipement, consulter la mesure corrective du constructeur, ouvrir une action de maintenance, demander une confirmation à l'exploitant, ou ne pas engager de remédiation liée à cet avis tant que l'information manque.</p>
+<div class="question-inline"><span>Q6</span><p>Pour les cas A, B et C, indiquez <strong>la première action que vous mèneriez</strong> et <strong>l'information dont vous avez besoin avant d'aller plus loin</strong>. Justifiez en une phrase pourquoi votre réaction diffère entre les trois cas.</p></div>
 </section>
 
 <section class="shell section" id="dossier2">
-<div class="section-head"><div class="numb">02</div><div><div class="eyebrow">DOSSIER 2 · VISION ET INTELLIGENCE ARTIFICIELLE</div><h2>Une IA qui fonctionne sur quelques images est-elle prête pour un chantier ?</h2><p class="goal">L’objectif n’est pas d’apprendre à construire un système d’IA complexe. Vous allez comprendre trois choses : ce qu’un modèle de vision produit réellement, pourquoi un test convaincant peut être trompeur, et ce qu’il faudrait vérifier avant de s’appuyer sur ce modèle dans une décision réelle.</p></div></div>
-<div class="primer"><h3>Le fil du dossier</h3><p><strong>Imaginer une tâche → observer ce que fait réellement un modèle → construire une petite expérience → changer les données → décider jusqu’où faire confiance au résultat.</strong> Chaque étape répond donc à une question différente.</p></div>
+<div class="section-head"><div class="numb">02</div><div><div class="eyebrow">DOSSIER 2 · VISION ET INTELLIGENCE ARTIFICIELLE</div><h2>Une IA qui fonctionne sur quelques images est-elle prête pour un chantier ?</h2><p class="goal">Les inspections, smartphones, caméras fixes et drones produisent de nombreuses images de bâtiments et de chantiers. Des modèles de vision peuvent aider à repérer des défauts, des équipements ou des situations particulières et ainsi réduire une partie du tri manuel. Mais un résultat convaincant sur quelques images ne garantit pas que le système restera fiable lorsque le matériau, l'éclairage, le cadrage ou le site changent.</p></div></div>
+<div class="primer"><h3>Le problème étudié</h3><p>Vous allez d'abord formuler ce que l'on peut demander à une analyse d'image, puis tester deux modèles existants. Vous construirez ensuite un petit classifieur afin d'observer directement la différence entre <strong>réussir sur des images familières</strong> et <strong>généraliser à de nouvelles images</strong>. La dernière étape consiste à décider jusqu'où un tel outil pourrait être utilisé dans une situation réelle.</p></div>
 <div class="terms">
-<div><b>Entrée</b><span>L’image fournie au modèle.</span></div>
-<div><b>Sortie</b><span>Ce que le modèle renvoie : classe, objet, zone détectée, score…</span></div>
+<div><b>Entrée</b><span>L'image fournie au modèle.</span></div>
+<div><b>Sortie</b><span>Le résultat produit : catégorie, objet, zone détectée, score…</span></div>
 <div><b>Jeu de test</b><span>Images gardées à part pour évaluer le modèle sur des exemples non appris.</span></div>
 <div><b>Généralisation</b><span>Capacité à rester pertinent lorsque les images ou le contexte changent.</span></div>
 </div>
 
-<h3>2.1 · Avant l’outil : transformer une image en problème mesurable</h3>
-<p>Observez les quatre images ci-dessous sans ouvrir d’outil d’IA. Ne cherchez pas « la bonne réponse » : plusieurs tâches automatiques peuvent être pertinentes à partir d’une même image.</p>
+<h3>2.1 · À partir d'une image, quelle information serait réellement utile ?</h3>
+<p>Observez les quatre images ci-dessous. Pour chaque scène, placez-vous du point de vue d'une personne qui doit inspecter, suivre ou organiser un chantier : quelle information pourrait être utile si elle pouvait être extraite automatiquement ?</p>
 <div class="image-grid">
-<figure><img alt="Image A" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Concrete_wall_cracking_as_its_steel_reinforcing_cracks_and_swells_9061.jpg/960px-Concrete_wall_cracking_as_its_steel_reinforcing_cracks_and_swells_9061.jpg"/><figcaption><b>Image A</b></figcaption></figure>
-<figure><img alt="Image B" src="materials/vision/apercu-jeu-test.jpg"/><figcaption><b>Image B</b></figcaption></figure>
-<figure><img alt="Image C" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/Construction_site_excavator_and_truck.jpg/960px-Construction_site_excavator_and_truck.jpg"/><figcaption><b>Image C</b></figcaption></figure>
-<figure><img alt="Image D" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Crane_001.jpg/960px-Crane_001.jpg"/><figcaption><b>Image D</b></figcaption></figure>
+<figure><a href="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Concrete_wall_cracking_as_its_steel_reinforcing_cracks_and_swells_9061.jpg/960px-Concrete_wall_cracking_as_its_steel_reinforcing_cracks_and_swells_9061.jpg" rel="noopener" target="_blank"><img alt="Image A" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Concrete_wall_cracking_as_its_steel_reinforcing_cracks_and_swells_9061.jpg/960px-Concrete_wall_cracking_as_its_steel_reinforcing_cracks_and_swells_9061.jpg"/></a><figcaption><b>Image A</b> · <a href="https://commons.wikimedia.org/wiki/File:Concrete_wall_cracking_as_its_steel_reinforcing_cracks_and_swells_9061.jpg" rel="noopener" target="_blank">source ↗</a></figcaption></figure>
+<figure><a href="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Saw_Cut_Control_Joint_in_Concrete.jpg/960px-Saw_Cut_Control_Joint_in_Concrete.jpg" rel="noopener" target="_blank"><img alt="Image B" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Saw_Cut_Control_Joint_in_Concrete.jpg/960px-Saw_Cut_Control_Joint_in_Concrete.jpg"/></a><figcaption><b>Image B</b> · <a href="https://commons.wikimedia.org/wiki/File:Saw_Cut_Control_Joint_in_Concrete.jpg" rel="noopener" target="_blank">source ↗</a></figcaption></figure>
+<figure><a href="https://thumb.wikimedia.org/wikipedia/commons/thumb/0/03/Caterpillar_330_Excavator.jpg/960px-Caterpillar_330_Excavator.jpg" rel="noopener" target="_blank"><img alt="Image C" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/0/03/Caterpillar_330_Excavator.jpg/960px-Caterpillar_330_Excavator.jpg"/></a><figcaption><b>Image C</b> · <a href="https://commons.wikimedia.org/wiki/File:Caterpillar_330_Excavator.jpg" rel="noopener" target="_blank">source ↗</a></figcaption></figure>
+<figure><a href="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/GMK3050_All_Terrain_Crane.jpg/960px-GMK3050_All_Terrain_Crane.jpg" rel="noopener" target="_blank"><img alt="Image D" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/GMK3050_All_Terrain_Crane.jpg/960px-GMK3050_All_Terrain_Crane.jpg"/></a><figcaption><b>Image D</b> · <a href="https://commons.wikimedia.org/wiki/File:GMK3050_All_Terrain_Crane.jpg" rel="noopener" target="_blank">source ↗</a></figcaption></figure>
 </div>
-<div class="focus"><strong>Ici, vous définissez le problème.</strong><span>Ne dites pas encore si l’IA saura le faire. Décrivez ce que vous voudriez obtenir <strong>en sortie</strong> à partir de l’image.</span></div>
-<div class="question-inline"><span>Q7</span><p>Pour chaque image, proposez une tâche automatique utile et précisez <strong>la sortie attendue</strong>. Par exemple, une réponse comme « surveiller le chantier » est trop vague : indiquez ce que le système devrait réellement renvoyer pour que cette surveillance devienne exploitable.</p></div>
+<div class="question-inline"><span>Q7</span><p>Pour chaque image, proposez <strong>une tâche automatique utile</strong> et décrivez précisément <strong>le résultat que le système devrait renvoyer</strong> pour que cette tâche soit exploitable. Évitez des formulations générales comme « surveiller le chantier » : précisez l'information attendue.</p></div>
 
-<h3>2.2 · Observer ce que deux modèles existants savent réellement produire</h3>
-<p>Ouvrez les deux démonstrations Roboflow ci-dessous et examinez d’abord les exemples et résultats déjà présentés dans les pages. Vous n’avez pas besoin de télécharger les quatre images précédentes ni de créer un compte.</p>
-<div class="tools"><a class="tool" href="https://universe.roboflow.com/use-cases/concrete-crack-detection" rel="noopener" target="_blank">Détection de fissures ↗</a><a class="tool secondary" href="https://universe.roboflow.com/use-cases/construction-progress-monitoring" rel="noopener" target="_blank">Suivi de chantier ↗</a></div>
-<div class="focus"><strong>Ici, vous confrontez votre idée à un outil réel.</strong><span>La question n’est plus « qu’aimerais-je obtenir ? », mais « que produit effectivement ce modèle ? ».</span></div>
-<div class="question-inline"><span>Q8</span><p>Pour chacun des deux modèles, identifiez <strong>son entrée, sa sortie et ce que cette sortie permet réellement de mesurer</strong>. Revenez ensuite à Q7 : quelles tâches que vous aviez imaginées sont couvertes, partiellement couvertes ou pas couvertes du tout ?</p></div>
+<h3>2.2 · Tester deux modèles existants</h3>
+<p>Ouvrez les deux démonstrations Roboflow ci-dessous et descendez jusqu'à <strong>Run on custom image</strong>. Commencez par tester les exemples proposés par le site. Testez ensuite au moins <strong>une image de défaut</strong> parmi A ou B et <strong>une image de chantier</strong> parmi C ou D. Les images A à D sont cliquables : ouvrez l'image choisie, enregistrez-la puis déposez-la dans Roboflow.</p>
+<div class="tools"><a class="tool" href="https://universe.roboflow.com/use-cases/concrete-crack-detection" rel="noopener" target="_blank">Détection de fissures ↗</a><a class="tool secondary" href="https://universe.roboflow.com/use-cases/construction-progress-monitoring" rel="noopener" target="_blank">Analyse de scène de chantier ↗</a></div>
+<div class="question-inline"><span>Q8</span><p>Pour chaque modèle, notez <strong>ce qu'il détecte correctement</strong>, <strong>ce qu'il manque</strong> et, s'il y en a, <strong>les détections discutables</strong>. Comparez ensuite ces sorties aux tâches proposées en Q7 : lesquelles sont réellement couvertes, lesquelles ne le sont que partiellement et lesquelles demanderaient un autre modèle ou d'autres données ?</p></div>
 
-<h3>2.3 · Construire volontairement une expérience simple</h3>
-<p>Vous allez maintenant créer un petit classifieur uniquement pour comprendre comment on peut se tromper en l’évaluant. Ouvrez Teachable Machine avec Chrome et choisissez <strong>Image Project → Standard image model</strong>. Téléchargez puis décompressez le jeu d’apprentissage. Renommez les deux classes <strong>fissure</strong> et <strong>sans fissure</strong>, puis utilisez <strong>Upload</strong> pour ajouter toutes les images correspondantes. Cliquez sur <strong>Train Model</strong>.</p>
-<div class="tools"><a class="tool" href="https://teachablemachine.withgoogle.com/train/image" rel="noopener" target="_blank">Teachable Machine ↗</a><a class="tool secondary" href="materials/vision/jeu-apprentissage.zip">Jeu d’apprentissage ↓</a></div>
-<div class="note"><strong>Après l’entraînement :</strong> dans le panneau <b>Preview</b> à droite, ouvrez <b>Input</b>, choisissez <b>File</b>, puis chargez une image. Les barres affichées pour les deux classes correspondent aux prédictions du modèle. Utilisez cette même zone pour tous les tests suivants.</div>
-<div class="focus"><strong>Ici, le but n’est pas d’optimiser le modèle.</strong><span>Vous cherchez seulement à établir un premier résultat de référence sur des images qu’il connaît déjà.</span></div>
-<div class="question-inline"><span>Q9</span><p>Testez au moins six images issues du jeu d’apprentissage dans <b>Preview → Input → File</b>. Notez pour chacune la classe attendue et la prédiction. Le résultat vous paraît-il bon ? <strong>Quelle seule chose ce test permet-il de vérifier avec certitude ?</strong></p></div>
+<h3>2.3 · Construire un classifieur simple</h3>
+<p>Ouvrez Teachable Machine avec Chrome et choisissez <strong>Image Project → Standard image model</strong>. Téléchargez puis décompressez le jeu d'apprentissage. Renommez les deux classes <strong>fissure</strong> et <strong>sans fissure</strong>, utilisez <strong>Upload</strong> pour ajouter les images correspondantes, puis cliquez sur <strong>Train Model</strong>.</p>
+<div class="tools"><a class="tool" href="https://teachablemachine.withgoogle.com/train/image" rel="noopener" target="_blank">Teachable Machine ↗</a><a class="tool secondary" href="materials/vision/jeu-apprentissage.zip">Jeu d'apprentissage ↓</a></div>
+<div class="note"><strong>Tester le modèle après l'entraînement.</strong> Dans le panneau <b>Preview</b> à droite, ouvrez <b>Input</b>, choisissez <b>File</b>, puis sélectionnez une image. Les deux barres indiquent les prédictions pour vos classes <b>fissure</b> et <b>sans fissure</b>. Utilisez ce même panneau pour les étapes suivantes.</div>
+<div class="question-inline"><span>Q9</span><p>Testez au moins six images appartenant au jeu d'apprentissage. Pour chacune, notez la classe attendue et la prédiction obtenue. Combien sont correctement classées ? Expliquez ensuite ce que ce résultat permet de vérifier et pourquoi il ne suffit pas à juger le modèle pour des images provenant d'un autre contexte.</p></div>
 
-<h3>2.4 · Changer les données sans changer le modèle</h3>
-<p>Téléchargez puis décompressez le <strong>jeu de test indépendant</strong>. Ne l’ajoutez pas à l’apprentissage. Testez toutes ses images dans la même zone <b>Preview</b> et comptez les prédictions correctes et incorrectes.</p>
+<h3>2.4 · Tester sur des images que le modèle n'a pas apprises</h3>
+<p>Téléchargez puis décompressez le <strong>jeu de test indépendant</strong>. Ne l'ajoutez pas aux classes d'apprentissage. Chargez toutes ses images dans le panneau <b>Preview</b> et comptez les prédictions correctes et incorrectes.</p>
 <div class="tools"><a class="tool secondary" href="materials/vision/jeu-test-independant.zip">Jeu de test indépendant ↓</a></div>
-<div class="focus"><strong>Ici, vous testez la généralisation.</strong><span>Le modèle est exactement le même qu’en Q9 ; seule la provenance des images change.</span></div>
-<div class="question-inline"><span>Q10</span><p>Comparez vos résultats Q9 et Q10. Combien d’images sont correctement classées dans chaque cas ? Si les performances changent, proposez <strong>deux explications possibles liées aux données</strong>, pas au hasard.</p></div>
+<div class="question-inline"><span>Q10</span><p>Comparez le nombre de bonnes classifications obtenu avec le jeu d'apprentissage et avec le jeu indépendant. Si les résultats diffèrent, proposez <strong>deux causes possibles liées aux images ou au jeu d'apprentissage</strong>.</p></div>
 
-<h3>2.5 · Chercher ce que le modèle a pu apprendre « par facilité »</h3>
-<p>Placez côte à côte quelques images <strong>fissure</strong> et <strong>sans fissure</strong> du jeu d’apprentissage. Cherchez ce qui diffère entre les deux groupes <strong>en dehors de la présence d’une fissure</strong> : fond, luminosité, contraste, texture, cadrage, etc.</p>
-<div class="focus"><strong>Ici, vous cherchez une cause.</strong><span>Vous ne devez pas expliquer le fonctionnement interne du réseau de neurones ; cherchez simplement un indice visuel qui aurait pu servir de raccourci.</span></div>
-<div class="question-inline"><span>Q11</span><p>Identifiez au moins une régularité parasite plausible dans le jeu d’apprentissage. Expliquez comment elle pourrait conduire à de bonnes réponses sur Q9 mais à de mauvaises réponses sur Q10.</p></div>
+<h3>2.5 · Chercher un raccourci dans les données</h3>
+<p>Placez côte à côte plusieurs images <strong>fissure</strong> et <strong>sans fissure</strong> du jeu d'apprentissage. Cherchez ce qui différencie les deux groupes en dehors de la fissure elle-même : luminosité, fond, texture, contraste, cadrage ou autre régularité visuelle.</p>
+<div class="question-inline"><span>Q11</span><p>Identifiez au moins <strong>une régularité parasite plausible</strong>. Expliquez comment un modèle pourrait s'en servir pour réussir sur les images d'apprentissage tout en échouant sur des images nouvelles.</p></div>
 
-<h3>2.6 · Modifier les données puis refaire exactement le même test</h3>
-<p>Téléchargez les images complémentaires. Ajoutez à l’apprentissage celles qui vous semblent utiles pour casser le raccourci identifié en Q11, réentraînez le modèle, puis retestez <strong>le même jeu indépendant qu’en Q10</strong>.</p>
+<h3>2.6 · Modifier les données et retester</h3>
+<p>Téléchargez les images complémentaires. Ajoutez à l'apprentissage celles qui vous semblent utiles pour réduire la régularité identifiée en Q11, réentraînez le modèle, puis retestez <strong>exactement le même jeu indépendant</strong>.</p>
 <div class="tools"><a class="tool secondary" href="materials/vision/images-complementaires.zip">Images complémentaires ↓</a></div>
-<div class="focus"><strong>Ici, vous testez votre hypothèse.</strong><span>Pour comparer avant et après, ne changez pas le jeu de test.</span></div>
-<div class="question-inline"><span>Q12</span><p>Présentez le nombre de bonnes et mauvaises classifications <strong>avant / après</strong>. L’évolution va-t-elle dans le sens de votre hypothèse de Q11 ? Si non, quelle autre explication envisageriez-vous ?</p></div>
+<div class="question-inline"><span>Q12</span><p>Comparez les résultats <strong>avant et après</strong> la modification de l'apprentissage. L'évolution confirme-t-elle votre hypothèse de Q11 ? Si ce n'est pas le cas, proposez une autre explication possible.</p></div>
 
-<h3>2.7 · Passer d’un score de modèle à une décision de chantier</h3>
-<p>Considérez maintenant trois usages possibles d’un système de vision : <strong>A · trier les images à examiner par un humain</strong>, <strong>B · déclencher une alerte à vérifier</strong>, <strong>C · prendre automatiquement une décision opérationnelle sans validation humaine</strong>.</p>
-<div class="focus"><strong>Dernier changement de niveau.</strong><span>Vous ne testez plus le modèle : vous décidez <strong>jusqu’où vous accepteriez de l’utiliser</strong> compte tenu de ce que vous venez d’observer.</span></div>
-<div class="question-inline"><span>Q13</span><p>Pour les usages A, B et C, indiquez <strong>acceptable maintenant / acceptable sous conditions / non acceptable avec les essais réalisés</strong>. Justifiez chaque choix et indiquez la validation supplémentaire la plus importante que vous demanderiez avant un déploiement réel.</p></div>
+<h3>2.7 · Jusqu'où utiliser le résultat ?</h3>
+<p>Considérez trois usages : <strong>A · trier automatiquement des images pour qu'un humain examine en priorité les cas suspects</strong> ; <strong>B · déclencher une alerte qui devra être vérifiée</strong> ; <strong>C · prendre automatiquement une décision opérationnelle sans validation humaine</strong>.</p>
+<div class="question-inline"><span>Q13</span><p>Pour A, B et C, indiquez si les essais réalisés vous paraissent <strong>suffisants / insuffisants mais prometteurs / clairement insuffisants</strong>. Pour chaque usage, donnez la principale validation supplémentaire que vous demanderiez avant un déploiement sur plusieurs chantiers.</p></div>
 </section>
 
 <section class="shell section" id="dossier3">
-<div class="section-head"><div class="numb">03</div><div><div class="eyebrow">DOSSIER 3 · ENGINS, REMORQUES ET OUTILS CONNECTÉS</div><h2>Comment concevoir un suivi réaliste d’un parc de chantier ?</h2><p class="goal">Cette fois, vous ne vous contentez plus d’observer un outil. Vous allez progressivement choisir des technologies, placer une infrastructure, exploiter des données de télématique puis concevoir une solution sous contrainte de budget et de niveau de service.</p></div></div>
-<div class="primer"><h3>Le problème d’ingénierie</h3><p>Un petit outil, une remorque et une pelle mécanique n’ont ni la même valeur, ni la même alimentation électrique, ni le même besoin de localisation. Le bon système dépend donc de <strong>ce que l’on veut savoir, à quelle fréquence, où, avec quelle infrastructure et pour quel coût</strong>.</p></div>
+<div class="section-head"><div class="numb">03</div><div><div class="eyebrow">DOSSIER 3 · ENGINS, REMORQUES ET OUTILS CONNECTÉS</div><h2>Comment concevoir un suivi réaliste d'un parc de chantier ?</h2><p class="goal">Un parc de chantier est dispersé entre dépôts, véhicules et sites temporaires. Retrouver un outil, savoir où se trouve une remorque, limiter les pertes, planifier la maintenance d'un engin ou comprendre son niveau d'utilisation relèvent tous de la traçabilité, mais ne demandent ni les mêmes données ni les mêmes technologies. Vous allez partir d'un suivi GPS simple, comparer plusieurs mécanismes de suivi, puis concevoir un déploiement sous contraintes techniques et économiques.</p></div></div>
+<div class="primer"><h3>Un même mot, plusieurs technologies</h3><p>Le <strong>tracking</strong> peut désigner un GPS autonome, un petit tag détecté à proximité, une gateway placée sur un site ou dans un véhicule, ou encore la télématique intégrée à une machine. Le choix dépend de l'actif, de son alimentation, de la zone à couvrir, de la fraîcheur d'information recherchée et du coût acceptable.</p></div>
 
-<h3>3.1 · Partir de ce qu’un suivi GPS permet déjà de voir</h3>
-<p>Ouvrez la démonstration publique MTS. Aucun compte n’est nécessaire. Cliquez sur <strong>Open Full Demo → Objects</strong>, choisissez un véhicule puis utilisez la carte et le replay pour observer ses déplacements.</p>
-<div class="tools"><a class="tool" href="https://www.mtsltd.com/map.html" rel="noopener" target="_blank">MTS · Live GPS Tracking Demo ↗</a></div>
-<div class="focus"><strong>Ici, vous distinguez donnée brute et information utile.</strong><span>Une position unique, un trajet reconstruit et une décision d’exploitation ne sont pas la même chose.</span></div>
-<div class="question-inline"><span>Q14</span><p>Relevez trois informations différentes visibles ou reconstructibles dans l’interface. Pour chacune, indiquez si elle provient <strong>d’une position instantanée</strong>, <strong>d’un historique de positions</strong> ou <strong>d’une interprétation destinée à l’exploitation</strong>. Donnez ensuite une décision que cette information pourrait aider à préparer.</p></div>
+<h3>3.1 · Ce qu'un suivi GPS permet déjà de voir</h3>
+<p>Ouvrez la démonstration MTS. Cliquez sur <strong>Open Full Demo → Objects</strong>, choisissez un véhicule puis observez sa position, les informations disponibles et le replay d'un trajet.</p>
+<div class="tools"><a class="tool" href="https://www.mtsltd.com/map.html" rel="noopener" target="_blank">MTS · GPS Tracking Demo ↗</a></div>
+<div class="question-inline"><span>Q14</span><p>Relevez trois informations différentes que vous pouvez obtenir ou reconstruire à partir de l'interface. Pour chacune, indiquez <strong>la donnée de départ</strong> et donnez <strong>une décision d'exploitation</strong> qu'elle pourrait aider à préparer.</p></div>
 
-<h3>3.2 · Comprendre les briques avant de choisir</h3>
-<p>Les solutions de suivi ne reposent pas toutes sur un GPS individuel. Utilisez les quatre repères ci-dessous puis consultez les documentations Hilti pour voir comment ces principes sont utilisés en pratique.</p>
+<h3>3.2 · Comprendre trois mécanismes de suivi</h3>
+<p>Consultez les documentations Hilti ci-dessous. Vous allez y rencontrer trois mécanismes différents :</p>
 <div class="tech-grid">
-<div><b>Tag Bluetooth</b><p>Petit dispositif fixé à un outil. Il signale sa présence à courte portée mais ne connaît pas seul sa position mondiale.</p></div>
-<div><b>Gateway</b><p>Relais placé sur un site, dans un véhicule ou sur un équipement. Il détecte les tags proches puis transmet cette observation à la plateforme via Internet.</p></div>
-<div><b>Traceur autonome</b><p>Dispositif avec sa propre alimentation et sa propre connectivité, adapté à des actifs non alimentés comme une remorque ou un conteneur. Les mises à jour peuvent être espacées pour préserver la batterie.</p></div>
-<div><b>Télématique engin</b><p>Un engin alimenté peut transmettre sa localisation mais aussi des données provenant directement de la machine.</p></div>
+<div><b>Tag Bluetooth</b><p>Un petit dispositif attaché à un actif émet un signal à courte portée. Sa présence peut être détectée lorsqu'un téléphone ou une gateway passe à proximité.</p></div>
+<div><b>Gateway</b><p>Un relais installé sur un site, dans un véhicule ou sur un équipement détecte les tags proches et transmet cette observation à la plateforme.</p></div>
+<div><b>Traceur autonome</b><p>Un dispositif possède sa propre alimentation et sa propre connectivité pour transmettre périodiquement sa localisation.</p></div>
+<div><b>Télématique engin</b><p>Un engin alimenté peut transmettre sa position ainsi que des données produites par la machine elle-même.</p></div>
 </div>
 <div class="flow"><span>outil + tag</span><i>→ proximité →</i><span>gateway</span><i>→ Internet →</i><span>plateforme</span></div>
 <div class="tools"><a class="tool" href="https://help.ontrack3.hilti.com/hc/en-us/articles/34399873327121-How-to-activate-and-add-a-sensor-tag-to-an-asset" rel="noopener" target="_blank">Hilti · Sensor Tag ↗</a><a class="tool secondary" href="https://help.ontrack3.hilti.com/hc/en-us/articles/34399800118289-What-is-a-Geo-tag" rel="noopener" target="_blank">Hilti · Geo Tag ↗</a><a class="tool secondary" href="https://help.ontrack3.hilti.com/hc/en-us/articles/34399852984081-How-to-use-Proactive-Asset-Tracking-PAT" rel="noopener" target="_blank">Hilti · Proactive Asset Tracking ↗</a></div>
-<div class="focus"><strong>Ici, vous choisissez un mécanisme.</strong><span>Ne cherchez pas encore à concevoir toute l’entreprise. Demandez-vous seulement quel principe est cohérent avec chaque type d’actif.</span></div>
-<div class="question-inline"><span>Q15</span><p>Choisissez une solution principale pour <strong>un perforateur électroportatif</strong>, <strong>une remorque</strong> et <strong>une pelle mécanique</strong>. Pour chaque actif, précisez : <strong>ce que vous pourriez savoir / ce que vous ne pourriez pas savoir / l’infrastructure nécessaire</strong>. Justifiez pourquoi les trois actifs ne méritent pas nécessairement le même suivi.</p></div>
+<p>Dans les documentations, comparez trois façons d'obtenir une information de localisation : <strong>un Sensor Tag détecté ponctuellement par l'application mobile</strong>, <strong>un Sensor Tag détecté automatiquement par une gateway</strong> et <strong>un Geo Tag autonome</strong>. Cherchez systématiquement comment la détection ou la localisation est obtenue, ce qui doit être disponible autour de l'actif, quand l'information peut être mise à jour et les types d'actifs cités en exemple.</p>
+<div class="question-inline"><span>Q15</span><p>Construisez un tableau comparant ces <strong>trois modes de suivi</strong>. Pour chacun, indiquez <strong>comment la localisation est obtenue</strong>, <strong>ce dont le dispositif dépend pour remonter l'information</strong>, <strong>la manière dont elle se met à jour</strong> et <strong>une limite importante</strong>. Terminez en donnant un exemple d'actif pour lequel ce mode vous paraît cohérent.</p></div>
 
-<h3>3.3 · Où placer les gateways ?</h3>
-<p>Considérez l’entreprise fictive suivante :</p>
+<h3>3.3 · Placer une infrastructure de détection</h3>
+<p>Une entreprise travaille avec le dispositif suivant :</p>
 <div class="scenario-grid wide">
-<div><b>Dépôt</b><span>Alimentation et Internet disponibles. Les outils reviennent régulièrement au dépôt.</span></div>
-<div><b>Chantier A</b><span>Chantier de longue durée avec base vie, alimentation et connexion Internet.</span></div>
-<div><b>Chantier B</b><span>Chantier mobile de courte durée, sans réseau fixe. Deux véhicules de service y passent quotidiennement.</span></div>
-<div><b>Mobilité</b><span>Les outils circulent entre dépôt, véhicules et chantiers.</span></div>
+<div><b>Dépôt</b><span>Les petits outils y reviennent régulièrement. Alimentation et accès Internet sont disponibles.</span></div>
+<div><b>Chantier A</b><span>Site de longue durée avec base vie, alimentation et connexion Internet.</span></div>
+<div><b>Chantier B</b><span>Site mobile sans réseau fixe. Deux véhicules de service y passent régulièrement.</span></div>
+<div><b>Mobilité</b><span>Les outils circulent entre le dépôt, les véhicules et les deux chantiers.</span></div>
 </div>
-<div class="focus"><strong>Ici, la gateway devient une décision de déploiement.</strong><span>Une gateway ne « suit » pas magiquement un outil partout : elle permet de savoir qu’un tag a été vu <strong>à proximité de l’endroit où elle se trouve</strong>.</span></div>
-<div class="question-inline"><span>Q16</span><p>Où installeriez-vous des gateways fixes ou embarquées pour suivre au mieux les petits outils dans ce scénario ? Pour chaque emplacement proposé, indiquez <strong>ce que la détection permettrait de conclure</strong> et <strong>ce qu’elle ne permettrait toujours pas de savoir</strong>.</p></div>
+<p>Une gateway ne fournit pas une position GPS propre à chaque outil : elle indique qu'un tag a été vu à proximité du lieu ou du véhicule où la gateway se trouve.</p>
+<div class="question-inline"><span>Q16</span><p>Proposez les emplacements de gateways qui vous paraissent les plus utiles pour suivre les petits outils. Pour chaque emplacement, indiquez <strong>quelle information nouvelle il apporte</strong> et <strong>quelle zone d'ombre subsiste</strong>. Vous n'êtes pas obligé d'équiper tous les emplacements.</p></div>
 
-<h3>3.4 · Une pelle peut fournir beaucoup plus qu’une position</h3>
-<p>Ouvrez VisionLink de Caterpillar et cherchez quelles informations de gestion de flotte sont disponibles <strong>en plus de la localisation</strong>. Ne vous limitez pas au premier écran : consultez les fonctions de gestion, utilisation ou productivité.</p>
+<h3>3.4 · La position d'une pelle ne suffit pas à gérer son exploitation</h3>
+<p>Ouvrez VisionLink de Caterpillar et recherchez les informations de gestion de flotte disponibles en plus de la localisation : explorez les pages relatives à l'utilisation, à l'état des machines, à la maintenance ou à la productivité.</p>
 <div class="tools"><a class="tool" href="https://www.cat.com/fr_FR/by-industry/construction-industry-resources/technology/visionlink.html" rel="noopener" target="_blank">Caterpillar · VisionLink ↗</a><a class="tool secondary" href="https://www.cat.com/en_US/products/new/technology/visionlink/visionlink/132082.html" rel="noopener" target="_blank">VisionLink · fonctions détaillées ↗</a></div>
-<div class="focus"><strong>Ici, cherchez vous-mêmes les données.</strong><span>La page ne vous donne volontairement pas leur liste : identifiez celles qui pourraient modifier une décision d’exploitation.</span></div>
-<div class="question-inline"><span>Q17</span><p>Identifiez au moins <strong>quatre informations autres que la position</strong> disponibles dans VisionLink. Pour chacune, proposez une décision d’exploitation qu’elle peut éclairer et expliquez pourquoi une simple position GPS serait insuffisante pour cette décision.</p></div>
+<div class="question-inline"><span>Q17</span><p>Identifiez au moins <strong>quatre données autres que la position</strong> proposées par VisionLink. Pour chacune, expliquez <strong>quelle décision d'exploitation</strong> elle peut éclairer et pourquoi la position seule ne suffirait pas.</p></div>
 
-<h3>3.5 · Traduire un besoin métier en exigence de suivi</h3>
-<p>Pour chaque situation ci-dessous, commencez par formuler <strong>ce qu’il faut réellement savoir</strong> avant de choisir une technologie.</p>
+<h3>3.5 · Définir le niveau de service avant de choisir la technologie</h3>
+<p>Considérez quatre besoins de l'entreprise :</p>
 <div class="scenario-grid wide">
-<div><b>Petit outil</b><span>Éviter qu’un perforateur reste oublié sur le mauvais chantier.</span></div>
-<div><b>Remorque</b><span>Savoir sur quel site elle se trouve et repérer un déplacement inhabituel.</span></div>
-<div><b>Pelle</b><span>Mesurer si elle est disponible et réellement utilisée pendant la journée.</span></div>
-<div><b>Groupe électrogène</b><span>Le retrouver entre plusieurs sites et anticiper une intervention de maintenance.</span></div>
+<div><b>Petit outil</b><span>Savoir avant un départ d'équipe si un perforateur est resté sur le mauvais site.</span></div>
+<div><b>Remorque</b><span>Savoir sur quel chantier elle se trouve pour organiser son prochain déplacement.</span></div>
+<div><b>Pelle</b><span>Comparer son utilisation réelle entre plusieurs chantiers.</span></div>
+<div><b>Groupe électrogène</b><span>Le localiser et disposer des informations nécessaires pour anticiper une intervention de maintenance.</span></div>
 </div>
-<div class="focus"><strong>Ici, partez du besoin, pas du produit.</strong><span>Une fréquence de localisation élevée n’a de valeur que si le besoin métier l’exige.</span></div>
-<div class="question-inline"><span>Q18</span><p>Pour les quatre situations, indiquez <strong>l’information nécessaire</strong>, <strong>la fréquence ou fraîcheur utile</strong> (ponctuelle, périodique, fréquente, événementielle…), puis <strong>le mécanisme de suivi</strong> que vous retiendriez. Justifiez chaque choix.</p></div>
+<div class="question-inline"><span>Q18</span><p>Sans choisir encore de produit, définissez pour chaque besoin : <strong>l'information minimale à obtenir</strong>, <strong>la fraîcheur maximale acceptable</strong> de cette information (quelques minutes, quelques heures, une journée, événement ponctuel…) et <strong>la zone dans laquelle cette information doit rester disponible</strong>. Justifiez les différences entre les quatre besoins.</p></div>
 
-<h3>3.6 · Concevoir sous contrainte de coût</h3>
-<p>On suppose maintenant les coûts pédagogiques suivants. <strong>Ce sont des hypothèses pour l’exercice, pas des tarifs constructeurs.</strong></p>
-<table class="cost-table"><thead><tr><th>Équipement</th><th>Coût hypothétique</th></tr></thead><tbody>
+<h3>3.6 · Concevoir le déploiement sous contrainte de budget</h3>
+<p>Pour cette étude de cas, utilisez le barème de dimensionnement suivant :</p>
+<table class="cost-table"><thead><tr><th>Équipement</th><th>Barème unitaire</th></tr></thead><tbody>
 <tr><td>Tag Bluetooth</td><td>25 € / actif</td></tr>
 <tr><td>Traceur autonome</td><td>180 € / actif</td></tr>
 <tr><td>Gateway fixe</td><td>600 € / emplacement</td></tr>
 <tr><td>Gateway véhicule</td><td>450 € / véhicule</td></tr>
 <tr><td>Module télématique engin</td><td>700 € / engin</td></tr>
 </tbody></table>
-<p>L’entreprise possède <strong>6 pelles/chargeuses, 12 remorques ou conteneurs, 80 petits outils et 4 véhicules de service</strong>. Elle exploite les deux chantiers A et B ainsi que le dépôt décrits précédemment. Votre budget initial est de <strong>8 000 €</strong>.</p>
-<div class="focus"><strong>Ici, il n’est pas nécessaire de tout connecter.</strong><span>Votre travail consiste à choisir où l’argent crée réellement de la valeur.</span></div>
-<div class="question-inline"><span>Q19</span><p>Proposez un premier plan d’équipement respectant le budget de 8 000 €. Indiquez <strong>quantités, technologies, emplacement des gateways et coût total</strong>. Vous pouvez laisser certains actifs non équipés si vous le justifiez.</p></div>
-<div class="question-inline"><span>Q20</span><p>Expliquez vos <strong>trois priorités d’investissement</strong> et au moins <strong>un compromis</strong> que votre budget vous oblige à accepter. Quel actif ou quel besoin financeriez-vous en premier si 2 000 € supplémentaires devenaient disponibles ?</p></div>
+<p>Le parc comprend <strong>6 pelles ou chargeuses, 12 remorques ou conteneurs, 80 petits outils et 4 véhicules de service</strong>. Les sites sont ceux décrits en 3.3. Le budget disponible pour le premier déploiement est de <strong>8 000 €</strong>.</p>
+<div class="question-inline"><span>Q19</span><p>Proposez un plan d'équipement respectant le budget. Indiquez <strong>les quantités</strong>, <strong>les technologies retenues</strong>, <strong>l'emplacement des gateways</strong> et <strong>le coût total</strong>. Votre proposition doit répondre en priorité aux besoins définis en Q18 ; vous pouvez laisser certains actifs non équipés si vous le justifiez.</p></div>
+<div class="question-inline"><span>Q20</span><p>Identifiez <strong>trois priorités</strong> qui ont guidé votre investissement et <strong>deux compromis</strong> imposés par le budget. Si 2 000 € supplémentaires étaient disponibles, quelle amélioration apporteriez-vous en premier et pourquoi ?</p></div>
 
-<h3>3.7 · Une nouvelle exigence peut invalider une architecture</h3>
-<p>Le responsable logistique ajoute maintenant l’exigence suivante : <strong>« si une remorque quitte une zone autorisée, je veux être alerté suffisamment vite pour pouvoir réagir »</strong>.</p>
-<div class="focus"><strong>Ici, vous testez votre architecture contre une nouvelle exigence.</strong><span>Ne supposez pas qu’un dispositif choisi pour connaître périodiquement la position satisfait automatiquement une exigence d’alerte rapide.</span></div>
-<div class="question-inline"><span>Q21</span><p>Votre proposition de Q19 répond-elle à cette nouvelle exigence ? Identifiez l’hypothèse de votre architecture qu’il faut vérifier en priorité. Si nécessaire, proposez une modification et expliquez <strong>ce qu’elle améliore et ce qu’elle coûte</strong>.</p></div>
+<h3>3.7 · Modifier l'architecture lorsqu'une exigence change</h3>
+<p>Le responsable logistique ajoute une nouvelle exigence : <strong>une remorque qui quitte une zone autorisée doit être signalée suffisamment rapidement pour permettre une réaction opérationnelle.</strong></p>
+<div class="question-inline"><span>Q21</span><p>Votre architecture de Q19 satisfait-elle cette exigence ? À partir de ce que vous avez appris sur les mécanismes de mise à jour, identifiez <strong>le point technique à vérifier en priorité</strong>. Modifiez votre proposition si nécessaire et calculez l'impact sur le budget.</p></div>
 
-<h3>3.8 · Une absence de donnée n’est pas une preuve de panne ou de vol</h3>
-<p>Considérez trois événements : <strong>A</strong> une pelle cesse de transmettre ; <strong>B</strong> un outil attendu sur le chantier A n’est plus vu par la gateway ; <strong>C</strong> une remorque apparaît sur un site inattendu.</p>
-<div class="focus"><strong>Ici, vous interprétez une alerte.</strong><span>Le système vous donne un indice. Il ne donne pas automatiquement la cause réelle.</span></div>
-<div class="question-inline"><span>Q22</span><p>Pour A, B et C, donnez <strong>au moins deux explications possibles</strong>, puis la <strong>première vérification</strong> que vous feriez avant de déclarer une panne, une perte ou un vol.</p></div>
+<h3>3.8 · Interpréter une alerte avant d'agir</h3>
+<p>Trois événements remontent dans la plateforme : <strong>A</strong> une pelle cesse de transmettre ; <strong>B</strong> un outil attendu sur le chantier A n'est plus vu par la gateway ; <strong>C</strong> une remorque apparaît sur un site inattendu.</p>
+<div class="question-inline"><span>Q22</span><p>Pour A, B et C, donnez <strong>au moins deux explications possibles</strong>, puis la <strong>première vérification</strong> que vous effectueriez avant de conclure à une panne, une perte ou un vol.</p></div>
 
-<h3>3.9 · Le suivi des actifs peut aussi devenir un suivi des personnes</h3>
-<p>Un véhicule de service équipé d’une gateway est attribué à un salarié. La plateforme peut donc indirectement révéler où se trouve le véhicule et quels outils l’accompagnent, y compris en dehors des heures d’activité.</p>
-<div class="focus"><strong>Dernière question : la proportionnalité.</strong><span>Une donnée techniquement disponible n’a pas nécessairement besoin d’être collectée, conservée ou montrée à tout le monde.</span></div>
-<div class="question-inline"><span>Q23</span><p>Proposez <strong>trois règles de conception ou d’usage</strong> permettant de conserver l’intérêt opérationnel du système tout en limitant un suivi excessif des personnes. Pour chaque règle, indiquez ce qu’elle protège sans supprimer la fonction métier recherchée.</p></div>
+<h3>3.9 · Lorsque le suivi des actifs permet aussi de suivre des personnes</h3>
+<p>Un véhicule de service équipé d'une gateway est attribué à un salarié. Les données peuvent donc révéler indirectement les déplacements du véhicule et les outils qui l'accompagnent.</p>
+<div class="question-inline"><span>Q23</span><p>Proposez <strong>trois règles de conception ou d'usage</strong> permettant de conserver l'intérêt opérationnel du système tout en évitant un suivi disproportionné des personnes. Pour chacune, expliquez quelle fonction métier reste assurée.</p></div>
 </section>
 
 </main>

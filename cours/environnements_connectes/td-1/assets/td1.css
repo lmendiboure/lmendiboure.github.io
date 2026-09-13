@@ -47,7 +47,7 @@ h2{font-size:1.75rem;line-height:1.15;margin:0 0 7px}h3{font-size:1.04rem;margin
 .image-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0 18px;max-width:94ch}.image-grid figure{margin:0;background:var(--paper);border:1px solid var(--line);padding:9px;display:flex;flex-direction:column}.image-grid img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:#ddd}.image-grid figcaption{font-size:.72rem;color:var(--muted);padding:7px 2px 2px}.image-grid figcaption b{color:var(--ink)}@media(max-width:700px){.image-grid{grid-template-columns:1fr}}
 .plain-list{max-width:94ch;margin:10px 0 14px;padding-left:22px}.plain-list li{margin:6px 0;color:#354047}.plain-list strong{color:var(--ink)}
 
-/* v1.47: guidage explicite et scénarios d'ingénierie */
+/* scénarios et outils du TD */
 .focus{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;background:#eef3ff;border-left:4px solid var(--blue);padding:10px 13px;max-width:94ch;margin:12px 0}
 .focus strong{font-size:.78rem;color:#173b88}.focus span{font-size:.79rem;color:#46515a}
 .scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;max-width:94ch;margin:12px 0 16px}.scenario-grid.wide{grid-template-columns:repeat(2,1fr)}
@@ -56,3 +56,5 @@ h2{font-size:1.75rem;line-height:1.15;margin:0 0 7px}h3{font-size:1.04rem;margin
 .flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;max-width:94ch;margin:12px 0;background:#171c21;color:#eef2f5;padding:12px 14px;font:.72rem ui-monospace,monospace}.flow span{border:1px solid #5f6b76;padding:7px 9px}.flow i{font-style:normal;color:#aeb9c2}
 .cost-table{border-collapse:collapse;width:min(700px,94ch);background:var(--paper);margin:12px 0 16px}.cost-table th,.cost-table td{border:1px solid var(--line);padding:8px 10px;text-align:left;font-size:.8rem}.cost-table th{background:var(--blue-soft);color:#173b88}
 @media(max-width:700px){.scenario-grid,.scenario-grid.wide,.tech-grid{grid-template-columns:1fr}}
+
+.query-grid.simple>div{display:grid;place-items:center;min-height:54px}.query-grid.simple code{margin:0;font-size:.86rem}
