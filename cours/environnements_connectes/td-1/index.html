@@ -9,14 +9,14 @@
 <body>
 <header class="topbar"><div class="shell topbar-inner">
 <a class="brand" href="../"><div class="mark">EC</div><div><strong>Environnements connectés</strong><span>TD1 · exploration et évaluation</span></div></a>
-<div class="topmeta">travail autonome · navigateur</div>
+<div class="topmeta">TD1 · outils réels</div>
 </div></header>
 <main>
 <section class="shell hero">
 <div class="eyebrow">TD1 · EXPLORER, TESTER, DÉCIDER</div>
 <h1>Du bâtiment au chantier : jusqu’où peut aller un environnement connecté ?</h1>
 <p class="lead">Vous allez explorer des systèmes réellement visibles sur Internet, mettre à l’épreuve des outils de vision par intelligence artificielle et observer comment des véhicules ou engins peuvent être suivis à distance. L’objectif n’est pas d’apprendre trois logiciels : il est de comprendre ce qu’ils rendent possible, ce qu’ils ne prouvent pas et quelles précautions sont nécessaires avant de s’appuyer sur eux.</p>
-<div class="brief"><div><span>Parcours</span><strong>3 dossiers</strong></div><div><span>Questions</span><strong>18 étapes</strong></div><div><span>Approche</span><strong>outils réels</strong></div></div>
+<div class="brief"><div><span>Explorer</span><strong>des systèmes réels</strong></div><div><span>Tester</span><strong>des outils actuels</strong></div><div><span>Analyser</span><strong>leurs limites</strong></div></div>
 </section>
 <nav aria-label="Navigation du TD" class="shell nav">
 <a href="#dossier1">1 · Internet</a><a href="#dossier2">2 · Vision &amp; IA</a><a href="#dossier3">3 · Engins connectés</a>
@@ -33,10 +33,10 @@
 <div><b>Avis de sécurité</b><span>Publication d’un constructeur ou d’une autorité décrivant un problème connu et les produits concernés.</span></div>
 </div>
 <div class="safety"><strong>Règle impérative.</strong> Votre travail s’arrête aux informations affichées par Shodan et aux documentations publiques. Ne vous connectez à aucun équipement trouvé, ne lancez aucun scan, ne testez aucun mot de passe ni aucune vulnérabilité, et ne ciblez pas une organisation précise.</div>
-<div class="tools"><a class="tool" href="https://www.shodan.io/" rel="noopener" target="_blank">Ouvrir Shodan ↗</a><a class="tool secondary" href="https://help.shodan.io/the-basics/search-query-fundamentals" rel="noopener" target="_blank">Aide Shodan ↗</a></div>
-
-<h3>1.1 · Première recherche</h3>
-<p>Une fois connecté, saisissez exactement <code>Moxa Nport</code> dans la barre de recherche, lancez la recherche puis ouvrez un résultat de la première page. Repérez le pays, l’organisation réseau, le port et le contenu de la banner. Regardez également les informations présentées autour du résultat : elles ne proviennent pas toutes nécessairement du même mécanisme.</p>
+<h3>1.1 · Prendre en main Shodan</h3>
+<p><strong>Commencez par vous connecter à Shodan.</strong> Si vous n’avez pas encore de compte, créez un compte gratuit et validez votre adresse e-mail. Aucun abonnement payant ni Academic Membership n’est nécessaire pour ce TD.</p>
+<div class="tools"><a class="tool" href="https://account.shodan.io/" rel="noopener" target="_blank">Créer un compte / se connecter ↗</a><a class="tool secondary" href="https://help.shodan.io/the-basics/search-query-fundamentals" rel="noopener" target="_blank">Aide Shodan ↗</a></div>
+<p>Une fois connecté, saisissez exactement <code>Moxa Nport</code> dans la barre de recherche puis ouvrez un résultat de la première page. Repérez notamment le pays, l’organisation réseau, le port et le contenu de la <strong>banner</strong>. Les informations affichées autour d’un résultat peuvent provenir de plusieurs sources : concentrez-vous d’abord sur ce que Shodan montre explicitement.</p>
 <div class="question-inline"><span>Q1</span><p><strong>Expliquez avec vos mots ce que fait Shodan.</strong> Relevez ensuite quatre informations observables dans le résultat choisi et indiquez, pour chacune, ce qu’elle vous apprend réellement sur le système.</p></div>
 
 <h3>1.2 · Un tour rapide du monde connecté</h3>
@@ -84,6 +84,7 @@
 <div class="question-inline"><span>Q5</span><p>Pour chaque image, proposez <strong>une information qu’un système automatique pourrait raisonnablement extraire</strong>. Distinguez ce qui relève d’une <strong>observation visuelle</strong> (présence, localisation, comptage, défaut visible…) de ce qui demanderait déjà une <strong>interprétation métier</strong> (gravité, conformité, avancement réel, décision à prendre).</p></div>
 <div class="note"><strong>Pour les essais de vision.</strong> Aucun compte Roboflow n’est nécessaire. Sur chaque page, descendez jusqu’à la zone permettant de tester le modèle avec votre propre image (<em>Run on custom image</em> ou équivalent) et importez l’image demandée. Vous n’avez pas à entraîner ni déployer le modèle.</div>
 <p>Ouvrez maintenant les deux démonstrations Roboflow. Dans chaque page, descendez jusqu’au bloc <b>Run on custom image</b>, puis déposez l’image ou cliquez pour la sélectionner. Vous n’avez pas besoin de créer un projet ni d’utiliser <b>Deploy This Model</b>. Testez les images A à D lorsque cela a du sens et observez surtout <strong>la nature de la sortie produite</strong> : classe, objets, zones, scores, etc.</p>
+<p class="tool-note"><strong>Aucun compte n’est nécessaire.</strong> Dans chaque démonstration Roboflow, utilisez la zone <em>Run on custom image</em> pour envoyer une image depuis votre ordinateur.</p>
 <div class="tools"><a class="tool" href="https://universe.roboflow.com/use-cases/concrete-crack-detection" rel="noopener" target="_blank">Détection de fissures ↗</a><a class="tool secondary" href="https://universe.roboflow.com/use-cases/construction-progress-monitoring" rel="noopener" target="_blank">Suivi de chantier ↗</a></div>
 <div class="question-inline"><span>Q6</span><p>Comparez vos attentes de Q5 avec les sorties obtenues. Que produit réellement chacun des deux systèmes ? Pour chacun, donnez <strong>une décision que sa sortie peut aider à préparer</strong> et <strong>une décision qu’elle ne permet pas de prendre seule</strong>.</p></div>
 <h3>2.2 · Tester un modèle existant sur des cas variés</h3>
@@ -123,8 +124,7 @@
 </div>
 
 <h3>3.1 · De la position à une information exploitable</h3>
-<div class="note"><strong>Pour cette partie.</strong> Aucun compte n’est nécessaire. La démonstration MTS s’ouvre directement dans le navigateur ; utilisez simplement les menus indiqués ci-dessous.</div>
-<p>Ouvrez la démonstration publique MTS. Cliquez sur <strong>Open Full Demo</strong>, puis <strong>Objects</strong>. Sélectionnez un véhicule, observez les informations disponibles et utilisez le replay pour examiner un trajet.</p>
+<p>Ouvrez la démonstration publique MTS : <strong>aucun compte n’est nécessaire</strong>. Cliquez sur <strong>Open Full Demo</strong>, puis <strong>Objects</strong>. Sélectionnez un véhicule, observez les informations disponibles et utilisez le replay pour examiner un trajet.</p>
 <div class="tools"><a class="tool" href="https://www.mtsltd.com/map.html" rel="noopener" target="_blank">MTS · Live GPS Tracking Demo ↗</a></div>
 <div class="question-inline"><span>Q13</span><p>À partir de cette interface, distinguez <strong>ce qui est une donnée de position</strong>, <strong>ce qui est reconstruit à partir de plusieurs positions</strong> et <strong>ce qui devient une information utile à l’exploitation</strong>. Donnez trois exemples de décisions qu’un responsable de chantier ou de flotte pourrait préparer avec ces informations.</p></div>
 
