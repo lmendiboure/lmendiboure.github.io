@@ -1,86 +1,50 @@
 # IoT Systems Design — Session 2
 
-**Mission:** How do things communicate?
+**Mission:** How does one useful message cross the system?
 
-## Canonical eight-activity sequence
+## Canonical seven-activity sequence
 
-1. Describe the conversation
-2. Make message order visible
-3. Separate four communication jobs
-4. Read one complete stack, then complete a partial stack
-5. Choose among MQTT, CoAP and HTTP from service behaviour
-6. Compose one end-to-end path, audit compatibility, then transfer a lower-path change
-7. Repair a data contract so the payload is understandable
-8. Defend one implementable campus exchange
+1. Describe the **service interaction**: one-way, request/response, publish/subscribe, command/acknowledgement.
+2. Build the four-responsibility communication map: **Application protocol / Transport / Network / Local connectivity**.
+3. Compare **MQTT / CoAP / HTTP** only after the Application-protocol responsibility is visible.
+4. Add **TCP / UDP / IP / IPv6** and consolidate the reference bindings only after students attempt the cases.
+5. Reconnect the upper communication path to **local connectivity**, introducing Thread over IEEE 802.15.4 only here.
+6. Add the **data contract** needed to interpret the application payload.
+7. Build one complete campus exchange from service interaction to stack + data contract.
 
-Core reasoning loop:
+Core model:
 
-**service behaviour → message order → communication responsibilities → worked stack → application protocol → composition → shared meaning → defended design**
+- **Above the stack:** Service interaction — what exchange does the service need?
+- **Communication stack:** Application protocol → Transport → Network → Local connectivity.
+- **With the application payload:** Data contract / semantics.
+
+This is a **design map**, not a replacement for the complete OSI model.
 
 ## Scope decision
 
-Session 2 deliberately stops before delivery-semantics and failure-analysis material.
+Session 2 deliberately stops before delivery-semantics and failure-analysis material. Protocol QoS, retries, duplicate effects, exactly-once claims and end-to-end failure tracing are deferred to **Session 4 — Robustness**.
 
-The following concepts are **deferred to Session 4 — Robustness**:
+## Pedagogical rule
 
-- protocol-level QoS and acknowledgement semantics;
-- at-most-once / at-least-once / exactly-once claims;
-- retry crash windows and duplicate operation effects;
-- end-to-end failure tracing;
-- physical-state confirmation as a robustness mechanism.
+The same map is kept throughout the session. New protocol names appear only after the responsibility they belong to is visible.
 
-They are important, but they create a second conceptual arc. Keeping them in Session 2 forces novices to build too many interdependent mental models in one sitting. Session 3 remains focused on device / edge / cloud placement and therefore is not the right destination for this material.
+Before each activity, students see only the information required to work. Detailed reference comparisons are shown **after** the activity in the class restitution / Projector. This prevents the Projector from pre-revealing the answer.
 
-## Design rationale
+Interactions are deliberately simple and non-blocking. Immediate feedback is used instead of gates:
 
-The session now uses three instructional moves repeatedly:
-
-1. **Problem before term.** Students first see the engineering need in ordinary language.
-2. **Worked example before independent completion.** Activity 1 and Activity 4 provide a complete example before students complete a related case.
-3. **Progressive disclosure.** Technical detail appears when it answers the current question; optional mechanisms such as 6LoWPAN are not part of the core decision set.
-
-The initial stack model contains four responsibilities only:
-
-- Application
-- Transport
-- Network
-- Local access
-
-6LoWPAN is introduced as an adaptation mechanism used under IPv6 on constrained IEEE 802.15.4 links, not as a fifth mental category students must manipulate in the core route.
-
-## Page-density rule
-
-A core activity should normally contain only:
-
-- one short problem statement;
-- one worked example or compact reference when required;
-- one main student manipulation;
-- one short takeaway / boundary.
-
-Avoid stacking stakeholder story + glossary + workflow + interaction + reflection + optional challenge on the same screen. Optional depth belongs in a `<details>` reference or instructor discussion, not in the main visual hierarchy.
-
-## Discussion rhythm
-
-Five STOPs are retained, after Activities 1, 3, 5, 7 and 8. Each STOP uses:
-
-**student artifact → one comparison/challenge question → concise “what to keep” reveal**
-
-There is no hidden answer-key gate. Students must commit to a decision, but an incorrect decision is discussion evidence rather than a progression failure.
-
-## Mission dossier
-
-Session 2 publishes only compact design state for later sessions:
-
-- interaction-pattern choices;
-- the partial worked-stack completion;
-- application-protocol choices;
-- two composed protocol paths;
-- the semantic contract elements selected;
-- the final defended exchange.
-
-Pedagogical navigation state remains local to the session.
+- green = reference / correct placement;
+- amber = plausible but context-dependent;
+- red = revisit the stated case or responsibility.
 
 
-## Visible learning thread
+## Discussion / consolidation
 
-Each student activity begins with a short `SO FAR → NOW` bridge. It states the knowledge established by the previous activity and the new question that now becomes necessary. These bridges are intentionally explanatory rather than additional tasks and must not pre-teach the answer to the activity that follows.
+The Projector is used as the shared teaching surface after student work:
+
+- A1: visual differences between the four interaction patterns;
+- A2: one familiar complete stack and the role of each responsibility;
+- A3: detailed MQTT / CoAP / HTTP comparison;
+- A4: TCP / UDP / IP roles and the reference bindings used in the course;
+- A5: complete stacks and the “compare within a job / compose across jobs” rule;
+- A6: delivery/naming versus data meaning;
+- A7: final integrated design map.

@@ -5,16 +5,16 @@
 ## Canonical seven-activity sequence
 
 1. Describe the service conversation.
-2. Build the four-row stack map: Application / Transport / Network / Local path.
-3. Place MQTT, CoAP and HTTP on the Application row and choose from service behaviour.
+2. Build the four-row communication map: Application protocol / Transport / Network / Local connectivity.
+3. Place MQTT, CoAP and HTTP in the Application-protocol responsibility and choose from the service interaction.
 4. Add Transport and Network: TCP / UDP / IP / IPv6.
-5. Reconnect the stack to the local path; introduce Thread over IEEE 802.15.4 only here.
+5. Reconnect the stack to local connectivity; introduce Thread over IEEE 802.15.4 only here.
 6. Add shared payload meaning.
 7. Build one complete end-to-end campus stack.
 
 Core reasoning loop:
 
-**service behaviour → Application → Transport → Network → Local path → Shared meaning**
+**Service interaction** sits above **Application protocol → Transport → Network → Local connectivity**; **Data contract** travels with the application payload.
 
 ## Main design rule
 
