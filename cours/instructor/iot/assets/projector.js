@@ -19,11 +19,25 @@
     }
   }
 
+
+  function stackVisual(v){
+    if(!v)return '';
+    const stacks=Array.isArray(v.stacks)?v.stacks:[];
+    const conversation=v.conversation||null;
+    return `<section class="projector-stack-visual">
+      <div class="stack-visual-head"><div><span class="panel-kicker">${esc(v.kicker||'THE MAP WE ARE BUILDING')}</span><h2>${esc(v.title||'')}</h2></div>${v.note?`<p>${esc(v.note)}</p>`:''}</div>
+      ${conversation?`<div class="stack-conversation ${esc(conversation.tone||'known')}"><span>${esc(conversation.label||'Service behaviour')}</span><strong>${esc(conversation.value||'')}</strong>${conversation.detail?`<small>${esc(conversation.detail)}</small>`:''}</div>`:''}
+      ${stacks.length?`<div class="projector-stacks ${stacks.length>1?'multiple':''}">${stacks.map(s=>`<article class="projector-stack"><div class="projector-stack-title">${esc(s.label||'Reference stack')}</div>${(s.rows||[]).map(r=>`<div class="projector-stack-row ${esc(r.tone||'known')}"><span>${esc(r.name||'')}</span><strong>${esc(r.value||'—')}</strong>${r.detail?`<small>${esc(r.detail)}</small>`:''}</div>`).join('')}</article>`).join('')}</div>`:''}
+      ${v.callout?`<div class="stack-visual-callout">${esc(v.callout)}</div>`:''}
+    </section>`;
+  }
+
   function work(a){
     return `
       <span class="mode">YOUR TASK</span>
       <div class="question">${esc(a.work.question)}</div>
       <p class="support">${esc(a.work.support)}</p>
+      ${stackVisual(a.work.visual)}
       <section class="task-panel">
         <div class="panel-kicker">Your group should produce</div>
         <div class="produce">${a.work.produce.map((x,n)=>`<div><b>${n+1}</b><span>${esc(x)}</span></div>`).join('')}</div>
@@ -36,6 +50,7 @@
     return `
       <span class="mode">CLASS DISCUSSION</span>
       <div class="question">${esc(s.question)}</div>
+      ${stackVisual(s.visual)}
       <button class="flip-card" type="button" data-flip aria-pressed="false" aria-label="Turn the discussion card">
         <span class="flip-inner">
           <span class="flip-face flip-front">

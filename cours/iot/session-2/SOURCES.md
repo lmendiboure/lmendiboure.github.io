@@ -1,58 +1,55 @@
 # Session 2 — Official technical sources
 
-These links support the technical facts used in the student workspace, Projector reality checks and instructor notes.
-
-- **Thread Group — What is Thread? / Overview**  
-  https://threadgroup.org/what-Is-thread/overview  
-  Thread is a secure, low-power IPv6-based mesh networking protocol built on IEEE 802.15.4.
-
-- **Thread Group — Thread 1.4 resources**  
-  https://threadgroup.org/resources  
-  Current Thread resources and specification information.
-
-- **Thread Group — Why Thread chose IPv6**  
-  https://threadgroup.org/Newsroom/Blog/why-thread-chose-ipv6  
-  Explains the 802.15.4 + 6LoWPAN + IPv6 foundation and layered design.
+These sources support the simplified reference stacks used in the session.
 
 - **OASIS — MQTT Version 5.0**  
   https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html  
-  MQTT is a client/server publish-subscribe messaging protocol. It requires an ordered, lossless, bidirectional underlying transport; TCP is a common choice.
+  MQTT is a client/server publish-subscribe messaging protocol. It requires an underlying ordered, lossless, bidirectional byte stream; TCP is the reference transport used in this course.
 
 - **RFC 7252 — Constrained Application Protocol (CoAP)**  
   https://www.rfc-editor.org/rfc/rfc7252.html  
-  CoAP is a RESTful application protocol for constrained nodes and networks, canonically using datagram transport such as UDP with optional message-layer reliability.
+  CoAP is a resource-oriented application protocol for constrained nodes and networks. The base specification carries CoAP messages over UDP datagrams.
 
 - **RFC 7641 — Observing Resources in CoAP**  
   https://www.rfc-editor.org/rfc/rfc7641.html  
-  Defines CoAP Observe for keeping a resource representation updated over time.
+  Defines CoAP Observe, used here only to explain why CoAP can also support update-style interactions in some designs.
+
+- **RFC 9112 — HTTP/1.1**  
+  https://www.rfc-editor.org/rfc/rfc9112.html  
+  The Session 2 reference HTTP stack uses HTTP/1.1 over TCP/IP. This is deliberately version-specific: later HTTP versions can use different transports.
 
 - **RFC 9293 — Transmission Control Protocol (TCP)**  
   https://www.rfc-editor.org/rfc/rfc9293.html  
-  Current TCP Internet Standard specification.
+  Current TCP Internet Standard.
 
 - **RFC 768 — User Datagram Protocol (UDP)**  
   https://www.rfc-editor.org/rfc/rfc768.html  
-  UDP offers datagram communication with minimal mechanism; delivery and duplicate protection are not guaranteed.
+  UDP provides datagram transport with minimal mechanism; UDP itself does not guarantee delivery or ordering.
 
-- **RFC 9110 — HTTP Semantics**  
-  https://www.rfc-editor.org/rfc/rfc9110.html  
-  HTTP is an application-level request/response protocol; transport differs across HTTP versions.
+- **Thread Group — What is Thread?**  
+  https://threadgroup.org/what-Is-thread/overview  
+  Thread is an IPv6-based, low-power networking protocol built on IEEE 802.15.4 MAC/PHY.
 
+- **Thread Group — Why Thread chose IPv6**  
+  https://threadgroup.org/Newsroom/Blog/why-thread-chose-ipv6  
+  Explains Thread's IPv6 + 6LoWPAN + IEEE 802.15.4 foundation.
 
-## Interoperability and semantic step-further references
+- **Thread Group — IPv6-based Thread networks in an IPv4 enterprise network**  
+  https://threadgroup.org/Newsroom/Blog/ipv6-based-thread-networks-in-an-ipv4-based-enterprise-network  
+  Describes the 6LoWPAN adaptation between IPv6 and IEEE 802.15.4 and the role of Thread Border Routers.
+
+- **IEEE 802.11-2024**  
+  https://standards.ieee.org/ieee/802.11/10548/  
+  IEEE 802.11 specifies WLAN MAC and PHY functions; this supports the course placement of Wi-Fi in the local connectivity part of the stack.
+
+## Semantic-interoperability references
 
 - **RFC 8428 — Sensor Measurement Lists (SenML)**  
-  https://www.rfc-editor.org/rfc/rfc8428.html  
-  A standard model and encodings for sensor measurements and parameters.
+  https://www.rfc-editor.org/rfc/rfc8428.html
 
-- **RFC 6690 — Constrained RESTful Environments (CoRE) Link Format**  
-  https://www.rfc-editor.org/rfc/rfc6690.html  
-  Resource discovery for constrained RESTful environments, including the `/.well-known/core` convention.
-
-- **W3C — Web of Things (WoT) Thing Description 1.1**  
-  https://www.w3.org/TR/wot-thing-description11/  
-  W3C Recommendation describing metadata and interfaces of Things, including Properties, Actions and Events.
+- **W3C — Web of Things Thing Description 1.1**  
+  https://www.w3.org/TR/wot-thing-description11/
 
 ## Scope note
 
-Delivery-semantics, QoS, retry and exactly-once/failure-boundary sources are intentionally deferred to Session 4 — Robustness in the focused Session 2 design.
+The four-row stack is a teaching model based on communication responsibilities. It is intentionally not a claim that every real-world technology suite maps to exactly one OSI layer. Thread, LoRaWAN and cellular systems can span multiple lower-layer/network responsibilities. Session 2 uses the model to prevent category errors, not to erase those implementation details.

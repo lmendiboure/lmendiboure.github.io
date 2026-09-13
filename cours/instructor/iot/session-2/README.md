@@ -1,91 +1,51 @@
 # IoT Systems Design — Session 2
 
-**Mission:** How do things communicate?
+**Mission:** How does one useful message cross the system?
 
-## Canonical eight-activity sequence
+## Canonical seven-activity sequence
 
-1. Describe the conversation
-2. Make message order visible
-3. Separate four communication jobs
-4. Read one complete stack, then complete a partial stack without choosing the application-protocol name
-5. Choose among MQTT, CoAP and HTTP from service behaviour
-6. Compose one protocol path, audit compatibility, then transfer one lower-layer change
-7. Repair a data contract so the payload is understandable
-8. Defend one implementable campus exchange
+1. Describe the service conversation.
+2. Build the four-row stack map: Application / Transport / Network / Local path.
+3. Place MQTT, CoAP and HTTP on the Application row and choose from service behaviour.
+4. Add Transport and Network: TCP / UDP / IP / IPv6.
+5. Reconnect the stack to the local path; introduce Thread over IEEE 802.15.4 only here.
+6. Add shared payload meaning.
+7. Build one complete end-to-end campus stack.
 
 Core reasoning loop:
 
-**service behaviour → message order → communication responsibilities → worked stack → application protocol → composition → shared meaning → defended design**
+**service behaviour → Application → Transport → Network → Local path → Shared meaning**
 
-## Scope decision
+## Main design rule
 
-Session 2 deliberately stops before delivery-semantics and failure-analysis material.
+The Projector and Student workspace use the same stack map throughout the session. New protocol names are introduced only after the responsibility they belong to is visible.
 
-The following concepts are **deferred to Session 4 — Robustness**:
+- MQTT / CoAP / HTTP are compared at **Application**.
+- TCP / UDP are compared at **Transport**.
+- IP / IPv6 occupy **Network**.
+- Wi-Fi and constrained paths such as **Thread over IEEE 802.15.4** are discussed as local connectivity paths.
+- Real suites can span more than one conceptual row; the rows are responsibilities, not a claim that every named technology maps perfectly to one OSI layer. Some Session 1 access families can also introduce gateway/network-service infrastructure instead of exposing this exact reference stack end-to-end.
 
-- protocol-level QoS and acknowledgement semantics;
-- at-most-once / at-least-once / exactly-once claims;
-- retry crash windows and duplicate operation effects;
-- end-to-end failure tracing;
-- physical-state confirmation as a robustness mechanism.
+## Thread / 6LoWPAN timing
 
-They are important, but they create a second conceptual arc. Keeping them in Session 2 forces novices to build too many interdependent mental models in one sitting. Session 3 remains focused on device / edge / cloud placement and therefore is not the right destination for this material.
+Do not mention Thread before Activity 5. Activity 5 gives one student-facing definition before using it:
 
-## Design rationale
+- Thread: an IPv6-based low-power mesh networking stack using IEEE 802.15.4 radios.
 
-The session now uses three instructional moves repeatedly:
+6LoWPAN is **not core student content in this session**. Keep it as an instructor-side technical clarification only if a student asks how IPv6 is carried efficiently over constrained 802.15.4 links.
 
-1. **Problem before term.** Students first see the engineering need in ordinary language.
-2. **Worked example before independent completion.** Activity 1 and Activity 4 provide a complete example before students complete a related case.
-3. **Progressive disclosure.** Technical detail appears when it answers the current question; optional mechanisms such as 6LoWPAN are not part of the core decision set.
+## Non-blocking interaction rule
 
-The initial stack model contains four responsibilities only:
+Every activity is reachable from the stepper. Continue buttons are always enabled. Immediate feedback is used instead of gates:
 
-- Application
-- Transport
-- Network
-- Local access
+- green = reference / correct placement;
+- amber = plausible but context-dependent;
+- red = revisit the conceptual row or stated case.
 
-6LoWPAN is introduced as an adaptation mechanism used under IPv6 on constrained IEEE 802.15.4 links, not as a fifth mental category students must manipulate in the core route.
+## Scope boundary
 
-## Page-density rule
+Session 2 deliberately excludes protocol QoS, retry semantics, exactly-once claims and failure tracing. These belong to Session 4 — Robustness.
 
-A core activity should normally contain only:
+## Projector role
 
-- one short problem statement;
-- one worked example or compact reference when required;
-- one main student manipulation;
-- one short takeaway / boundary.
-
-Avoid stacking stakeholder story + glossary + workflow + interaction + reflection + optional challenge on the same screen. Optional depth belongs in a `<details>` reference or instructor discussion, not in the main visual hierarchy.
-
-## Discussion rhythm
-
-Five STOPs are retained, after Activities 1, 3, 5, 7 and 8. Each STOP uses:
-
-**student artifact → one comparison/challenge question → concise “what to keep” reveal**
-
-Navigation is fully non-blocking. Students can open any activity and continue at any time. Objective questions use immediate green/red feedback; genuinely debatable design choices use neutral/amber feedback instead of pretending there is one correct answer.
-
-## Mission dossier
-
-Session 2 publishes only compact design state for later sessions:
-
-- interaction-pattern choices;
-- the partial worked-stack completion (application behaviour + transport, before application-protocol naming);
-- application-protocol choices;
-- one composed path plus a compatibility audit and a lower-path transfer test;
-- the semantic contract elements selected;
-- the final defended exchange.
-
-Pedagogical navigation state remains local to the session.
-
-## Projector grammar (v1.42)
-
-Both sessions use the same deliberately minimal public sequence: **ACTIVITY → RESTITUTION QUESTION → ONE PROBE CARD → FLIP → NEXT**, followed once by a **static session conclusion** after the final restitution. WORK shows one question, short context and the expected artefact. A RESTITUTION shows one student-facing restitution question and one full-width card. The card front deepens the discussion with one or two concrete prompts; the back contains at most 2–3 essential complementary points not already established by students. Follow-up prompts, references, metrics, counterexamples and optional depth stay in `notes.html`, not on the Projector.
-
-
-
-## Session conclusion
-
-After the final restitution, the Projector ends on one static, student-facing synthesis screen: **three takeaways maximum → one visual model → one transition question to the next session**. It has no flip, reveal, board or extra interaction. It is a closure screen, not an additional canonical activity, so activity counts remain unchanged.
+The Projector is not only a restitution screen. It progressively builds the shared stack model so students can see where each newly introduced protocol belongs. The same map should remain recognisable from Activity 2 through the final synthesis.
