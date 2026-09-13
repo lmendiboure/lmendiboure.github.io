@@ -37,3 +37,22 @@
 .recap-focus span{font:900 .68rem ui-monospace,monospace;letter-spacing:.08em;color:var(--green)}
 .recap-focus strong{font-size:clamp(1rem,1.35vw,1.22rem);line-height:1.35;color:#2c4b3d}
 @media(max-width:900px){.recap-grid{grid-template-columns:1fr}.recap-card{padding:15px}.recap-focus{grid-template-columns:1fr;gap:5px}}
+
+
+.recap-definition,.recap-usecases,.recap-architecture,.recap-responsibilities,.recap-grid,.recap-chain-projector,.recap-focus{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 18px 40px rgba(24,40,72,.08)}
+.recap-definition h2{margin:.25rem 0 .5rem;font-size:1.5rem;color:#0f172a}
+.recap-definition p,.recap-note,.recap-responsibilities p{color:#475569;line-height:1.55}
+.chip-cloud{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.chip-cloud span{padding:10px 14px;border-radius:999px;border:1px solid #cbd5e1;background:#f8fafc;font-weight:700;color:#1e293b}
+.arch-columns{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:start;margin-top:14px}
+.arch-col{background:#f8fafc;border:1px solid #dbe4f0;border-radius:20px;padding:16px;min-height:100%}
+.arch-col h3{margin:.35rem 0 .5rem;font-size:1.02rem;color:#0f172a}
+.arch-col p{margin:.25rem 0 .6rem;color:#475569}
+.arch-col ul{margin:.25rem 0 0 1.1rem;padding:0;color:#334155}
+.arch-step{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:999px;background:#eaf0ff;color:#1e3a8a;font-weight:800}
+.arch-arrow{display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#94a3b8}
+.recap-responsibilities .responsibility-table{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.recap-responsibilities article{background:#f8fafc;border:1px solid #dbe4f0;border-radius:18px;padding:14px}
+.recap-responsibilities h3{margin:0 0 .35rem;font-size:1rem;color:#0f172a}
+@media (max-width:1100px){.arch-columns{grid-template-columns:1fr 40px 1fr}.arch-arrow:nth-of-type(2){display:none}}
+@media (max-width:900px){.arch-columns{grid-template-columns:1fr}.arch-arrow{display:none}.recap-responsibilities .responsibility-table{grid-template-columns:1fr}}

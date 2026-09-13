@@ -18,7 +18,7 @@ The former stress-test/revision activity is intentionally relocated to Session 4
 
 ## Split-class resumption
 
-The next class should resume with the dedicated **Projector recap**, then continue directly at **Activity 5**. The recap gives the prior learning explicitly; it does not quiz students on what they remember.
+The next class should resume with the dedicated **Projector recap**, then continue directly at **Activity 5**. The recap gives the prior learning explicitly, including a reference architecture and equipment roles; it does not quiz students on what they remember.
 
 - Student: `../../../iot/session-1/?activity=5` or click Activity 5 in the always-open activity bar.
 - Projector recap: open `?recap=1` or press `R`; its Next button goes directly to Activity 5.

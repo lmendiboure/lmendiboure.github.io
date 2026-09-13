@@ -58,6 +58,9 @@
     const blocks=Array.isArray(r.blocks)?r.blocks:[];
     const chain=Array.isArray(r.chain)?r.chain:[];
     const resume=Number(r.resumeActivity)||1;
+    const useCases=Array.isArray(r.useCases)?r.useCases:[];
+    const architecture=Array.isArray(r.architecture)?r.architecture:[];
+    const responsibilityRows=Array.isArray(r.responsibilityRows)?r.responsibilityRows:[];
     return `
       <div class="shell recap-head">
         <div class="eyebrow">Before we continue · Session ${esc(D.session)}</div>
@@ -65,6 +68,10 @@
         <p>${esc(r.subtitle||'')}</p>
       </div>
       <div class="shell recap-stage">
+        ${r.definition?`<section class="recap-definition"><div><span class="panel-kicker">WHAT WE MEAN BY IOT HERE</span><h2>${esc(r.definition.title||'')}</h2><p>${esc(r.definition.text||'')}</p></div></section>`:''}
+        ${useCases.length?`<section class="recap-usecases"><div class="panel-kicker">TYPICAL IOT USE CASES</div><div class="chip-cloud">${useCases.map(x=>`<span>${esc(x)}</span>`).join('')}</div></section>`:''}
+        ${architecture.length?`<section class="recap-architecture"><div class="panel-kicker">A REFERENCE ARCHITECTURE TO THINK WITH</div><div class="arch-columns">${architecture.map((x,n)=>`<article class="arch-col"><div class="arch-step">${n+1}</div><h3>${esc(x.level||'')}</h3>${x.equipment?`<p><b>Typical equipment:</b> ${esc(x.equipment)}</p>`:''}${Array.isArray(x.roles)&&x.roles.length?`<ul>${x.roles.map(v=>`<li>${esc(v)}</li>`).join('')}</ul>`:''}</article>${n<architecture.length-1?'<div class="arch-arrow" aria-hidden="true">→</div>':''}`).join('')}</div>${r.architectureNote?`<p class="recap-note">${esc(r.architectureNote)}</p>`:''}</section>`:''}
+        ${responsibilityRows.length?`<section class="recap-responsibilities"><div class="panel-kicker">RESPONSIBILITIES CAN MOVE</div><div class="responsibility-table">${responsibilityRows.map(x=>`<article><h3>${esc(x.label||'')}</h3><p>${esc(x.text||'')}</p></article>`).join('')}</div></section>`:''}
         <section class="recap-grid" aria-label="Key ideas from the previous class">
           ${blocks.map(b=>`<article class="recap-card"><span>${esc(b.label||'')}</span><h2>${esc(b.title||'')}</h2>${Array.isArray(b.points)&&b.points.length?`<ul>${b.points.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}</article>`).join('')}
         </section>
