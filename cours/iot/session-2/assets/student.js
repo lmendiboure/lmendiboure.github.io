@@ -5,7 +5,7 @@ const MISSION_KEY='iot-systems-design-campus-mission-v1';
 const activities=['Interaction','Stack map','Application','Transport + IP','Local connectivity','Data contract','Complete stack'];
 const SCREEN_TO_ACTIVITY=[0,0,1,1,2,2,3,4,4,5,5,6,6,6];
 const ACTIVITY_ENTRY=[0,2,4,6,7,9,11];
-const defaultState=()=>({screen:0,patterns:{},jobs:{},appChoices:{},transportChoices:{},stackChecks:{},semantic:[],final:{service:'',pattern:'',app:'',transport:'',network:'',local:''}});
+const defaultState=()=>({screen:0,frontier:0,completed:false,patterns:{},jobs:{},appChoices:{},transportChoices:{},stackChecks:{},semantic:[],final:{service:'',pattern:'',app:'',transport:'',network:'',local:''}});
 function migrateOld(o){if(!o||typeof o!=='object')return defaultState();return {...defaultState(),screen:Math.min(Number(o.screen)||0,13),patterns:{...(o.patterns||{})},jobs:{...(o.jobs||{})},appChoices:{...(o.appChoices||{})},semantic:[...(o.semantic||[])],final:{...defaultState().final,...(o.final||{})}}}
 function load(){try{const cur=localStorage.getItem(KEY);if(cur)return {...defaultState(),...JSON.parse(cur)};const old=localStorage.getItem(OLD_KEY);return old?migrateOld(JSON.parse(old)):defaultState()}catch{return defaultState()}}
 let state=load();
@@ -19,7 +19,7 @@ function save(){try{localStorage.setItem(KEY,JSON.stringify(state));publishMissi
 function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1300)}
 function activityForScreen(n){return SCREEN_TO_ACTIVITY[n]??6}
 function renderStepper(){const cur=activityForScreen(state.screen);stepper.innerHTML=activities.map((x,i)=>`<button class="step-dot ${i===cur?'active':''}" data-jump="${ACTIVITY_ENTRY[i]}"><b>${String(i+1).padStart(2,'0')}</b><span>${x}</span></button>`).join('');stepper.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>show(+b.dataset.jump,false))}
-function show(n,scroll=true){n=Math.max(0,Math.min(screens.length-1,Number(n)||0));state.screen=n;screens.forEach((s,i)=>s.hidden=i!==n);renderStepper();renderSnapshots();save();if(scroll)window.scrollTo({top:0,behavior:'smooth'})}
+function show(n,scroll=true){n=Math.max(0,Math.min(screens.length-1,Number(n)||0));state.screen=n;state.frontier=Math.max(Number(state.frontier)||0,activityForScreen(n));if(n===screens.length-1)state.completed=true;screens.forEach((s,i)=>s.hidden=i!==n);renderStepper();renderSnapshots();save();if(scroll)window.scrollTo({top:0,behavior:'smooth'})}
 $$('[data-next]').forEach(b=>b.onclick=()=>show(+b.dataset.next));
 function renderMissionHandover(){const host=$('#missionHandover'),s1=loadMission().session1||{};const arch=s1.architectureClass?.label,req=(s1.priorityRequirements||[]).map(x=>x.label).filter(Boolean);host.innerHTML=arch?`<span>SESSION 1 HANDOVER · DOSSIER LOADED</span><div><strong>Current defended communication path: ${esc(arch)}.</strong><p>${req.length?`Dominant requirements: ${esc(req.join(' · '))}. `:''}Today we zoom into one message exchange and place communication responsibilities on a common map and attach a data contract to the application payload.</p></div><b>INTERACTION → STACK + DATA CONTRACT</b>`:`<span>SESSION 1 HANDOVER</span><div><strong>Session 1 made access choices visible.</strong><p>Today we do not compare radios again; we zoom into one message exchange and build the communication map inside it.</p></div><b>INTERACTION → STACK + DATA CONTRACT</b>`}
 

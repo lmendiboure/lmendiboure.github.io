@@ -25,8 +25,10 @@
     if(!snap) return;
     const s1 = dossier?.session1 || {};
     const s2 = dossier?.session2 || {};
-    const hasS1 = Object.values(s1).some(v=>Array.isArray(v)?v.length:Boolean(v));
-    const hasS2 = Object.values(s2).some(v=>Array.isArray(v)?v.length:Boolean(v));
+    const meaningful=v=>Array.isArray(v)?v.some(meaningful):(v&&typeof v==='object'?Object.values(v).some(meaningful):Boolean(v));
+    const hasRecord=obj=>Object.entries(obj||{}).some(([k,v])=>k!=='updatedAt'&&meaningful(v));
+    const hasS1 = hasRecord(s1);
+    const hasS2 = hasRecord(s2);
     if(!hasS1 && !hasS2){
       if(topNote) topNote.textContent='Mission dossier · no decisions filed yet';
       return;
@@ -40,16 +42,18 @@
     push('Access strategy',s1.accessStrategy);
     push('Open uncertainty',s1.keyUncertainty);
     if(hasS2){
-      push('Application strategy',s2.applicationStrategy);
-      push('Incident tested',s2.incident);
+      const f=s2.finalDesign||{};
+      const stack=[f.app,f.transport,f.network,f.local].filter(Boolean).join(' → ');
+      if(stack) facts.push(['Exchange stack',stack]);
+      if(Array.isArray(s2.semanticContract)&&s2.semanticContract.length) facts.push(['Data contract',s2.semanticContract.join(' · ')]);
     }
     snap.innerHTML=`<div class="dossier-live-head"><span>MISSION DOSSIER</span><b>${status}</b></div>
-      ${facts.length?`<div class="dossier-facts">${facts.slice(0,4).map(([l,v])=>`<div class="dossier-fact"><small>${l}</small><strong>${v}</strong></div>`).join('')}</div>`:''}
+      ${facts.length?`<div class="dossier-facts">${facts.slice(0,6).map(([l,v])=>`<div class="dossier-fact"><small>${l}</small><strong>${v}</strong></div>`).join('')}</div>`:''}
       <p>${hasS2?'Your campus design now carries decisions from the first two missions.':'Mission 02 will reopen this design record rather than start from a blank system.'}</p>`;
   }
 
-  const screenToStep = [0,0,1,1,2,2,3,4,5,5,6,6];
-  const stepNames = ['Landscape','Architecture','Requirements','Discover','Investigate','Choose','Stress-test'];
+  const screenToStep = [0,0,1,1,2,2,3,3,4,4,5,5,5];
+  const stepNames = ['IoT boundary','Architecture','Control loop','Requirements','Technology comparison','Campus decision'];
 
   function localProgress(session){
     if (!session.storageKey) return null;
@@ -66,8 +70,8 @@
         return {pct,label:`In progress · ${labels[frontier]||`Activity ${frontier+1}`}`,action:'Continue mission'};
       }
       const frontier = Math.max(Number(state.maxUnlockedScreen)||0, Number(state.screen)||0);
-      const pct = Math.max(0, Math.min(100, Math.round(frontier / 11 * 100)));
-      if(frontier >= 11) return {pct:100,label:'Final debrief reached on this device',action:'Review mission'};
+      const pct = Math.max(0, Math.min(100, Math.round(frontier / 12 * 100)));
+      if(frontier >= 12) return {pct:100,label:'Session completed on this device',action:'Review mission'};
       const step = stepNames[screenToStep[frontier] ?? 0];
       return {pct,label:`In progress · ${step}`,action:'Continue mission'};
     }catch(_){return {pct:0,label:'Local progress unavailable',action:'Enter mission'};}

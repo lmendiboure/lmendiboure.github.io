@@ -689,11 +689,11 @@
   function renderFamilyMapStrip(){const host=$('#familyMapStrip');if(!host)return;host.innerHTML=discoveryFamilies.map(f=>`<div><span>${f.icon}</span><strong>${f.name}</strong><small>${f.title}</small></div>`).join('');}
 
   const shapeChallengeCases=[
-    {id:'phone',title:'A tiny sensor talks to a phone carried by the same person.',answer:'Nearby peer',why:'The defining architectural fact is the nearby peer already carried by the user.'},
-    {id:'private',title:'Hundreds of low-rate sensors cover a private site and a few gateways may be installed.',answer:'Gateway-based wide area',why:'The long-distance, low-rate private deployment naturally points first to a gateway-based wide-area shape.'},
-    {id:'fleet',title:'Meters are spread across a region; the team does not want to maintain local access infrastructure and operator service is available.',answer:'Operator-managed wide area',why:'The key decision is to rely on wide-area infrastructure provided as a service rather than deploy local gateways.'}
+    {id:'phone',title:'A tiny sensor talks to a phone carried by the same person.',answer:'Bluetooth LE',why:'The defining deployment fact is the nearby low-energy peer already carried by the user.'},
+    {id:'private',title:'Hundreds of low-rate sensors cover a private site and a few gateways may be installed.',answer:'LoRaWAN',why:'Small infrequent traffic over a wider private site, with gateways acceptable, is a strong reference fit for LoRaWAN.'},
+    {id:'fleet',title:'Meters are spread across a region; the team does not want to maintain local access infrastructure and operator service is available.',answer:'Cellular IoT',why:'The defining fact is the decision to rely on operator-provided wide-area infrastructure rather than deploy local gateways.'}
   ];
-  function renderShapeChallenge(){const host=$('#shapeChallenge');if(!host)return;const opts=discoveryFamilies.map(x=>x.title);host.innerHTML=`<p class="challenge-copy">Do not name a standard. Choose only the <b>network shape</b> that you would investigate first.</p><div class="micro-game-grid">${shapeChallengeCases.map(c=>{const choice=state.shapeChallenge?.[c.id];return `<div class="micro-game-card"><strong>${c.title}</strong><div class="micro-options">${opts.map(o=>`<button type="button" class="micro-option ${choice===o?'active':''}" data-shape-case="${c.id}" data-choice="${o}">${o}</button>`).join('')}</div>${choice?`<div class="micro-feedback"><b>${choice===c.answer?'Good first filter.':'Revisit the architecture before the name.'}</b>${c.why}</div>`:''}</div>`}).join('')}</div>`;host.querySelectorAll('[data-shape-case]').forEach(b=>b.addEventListener('click',()=>{state.shapeChallenge={...(state.shapeChallenge||{}),[b.dataset.shapeCase]:b.dataset.choice};markChallenge('discover');renderShapeChallenge();}));}
+  function renderShapeChallenge(){const host=$('#shapeChallenge');if(!host)return;const opts=discoveryFamilies.map(x=>x.name);host.innerHTML=`<p class="challenge-copy">Choose the communication family you would investigate first from the deployment facts.</p><div class="micro-game-grid">${shapeChallengeCases.map(c=>{const choice=state.shapeChallenge?.[c.id];return `<div class="micro-game-card"><strong>${c.title}</strong><div class="micro-options">${opts.map(o=>`<button type="button" class="micro-option ${choice===o?'active':''}" data-shape-case="${c.id}" data-choice="${o}">${o}</button>`).join('')}</div>${choice?`<div class="micro-feedback"><b>${choice===c.answer?'Strong reference fit.':'Revisit the deployment facts.'}</b>${c.why}</div>`:''}</div>`}).join('')}</div>`;host.querySelectorAll('[data-shape-case]').forEach(b=>b.addEventListener('click',()=>{state.shapeChallenge={...(state.shapeChallenge||{}),[b.dataset.shapeCase]:b.dataset.choice};markChallenge('discover');renderShapeChallenge();}));}
 
   /* ---------- Mystery technology ---------- */
   const mysteryTechs = [
@@ -753,7 +753,7 @@
     panel.innerHTML=`
       <div class="tech-title-row"><div><div class="eyebrow">Guided technology card</div><h2>${t.name}</h2><p class="section-copy">${t.brief}</p></div><span class="tech-icon large">${t.icon}</span></div>
       <div class="tech-essential"><span class="eyebrow">1 · Essential</span><div class="tech-columns"><div><h4>Often credible when…</h4><ul class="clean">${t.good.map(x=>`<li>${x}</li>`).join('')}</ul></div><div><h4>Be careful when…</h4><ul class="clean">${t.care.map(x=>`<li>${x}</li>`).join('')}</ul></div></div></div>
-      <div class="tech-architecture"><span class="eyebrow">2 · Network shape</span><div class="arch-chain mini-chain">${t.architecture.map((x,i)=>`${i?'<span class="arch-arrow">→</span>':''}<span class="arch-box">${x}</span>`).join('')}</div></div>
+      <div class="tech-architecture"><span class="eyebrow">2 · Typical architecture</span><div class="arch-chain mini-chain">${t.architecture.map((x,i)=>`${i?'<span class="arch-arrow">→</span>':''}<span class="arch-box">${x}</span>`).join('')}</div></div>
       <details class="tech-terms"><summary>3 · Technical vocabulary — only if useful</summary><p>The technical labels below describe the same ideas more precisely. You do not need to memorise them on first contact.</p><div class="deep-fact-grid">${t.deeper.slice(0,2).map(([a,b])=>`<div><strong>${a}</strong><span>${b}</span></div>`).join('')}</div></details>
       <details class="tech-deep"><summary>4 · Go further / discussion</summary><div class="deep-fact-grid">${t.deeper.slice(2).map(([a,b])=>`<div><strong>${a}</strong><span>${b}</span></div>`).join('')}</div></details>
       <div class="source-list"><strong>Verify / learn more:</strong> ${t.links.map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n} ↗</a>`).join(' · ')}</div>`;
@@ -990,11 +990,11 @@
     const priorities=requirementDefs.filter(([id])=>state.requirements[id]===2).map(([,icon,name])=>name);
     const selected=requirementDefs.filter(([id])=>state.requirements[id]).map(([,icon,name])=>name);
     const tech=state.lastTechnology&&technologies[state.lastTechnology]?technologies[state.lastTechnology].name:null;
-    const committed=Object.values(state.scenarios||{}).filter(v=>v&&v.committed).length;
+    const compared=technologyPracticeCases.filter(c=>state.shapeChallenge?.[c.id]).length;
     const cp=state.campusDecision?.position?campusDecisionPositions.find(x=>x[0]===state.campusDecision.position):null;
     const baseline=state.defendedBaseline||currentArchitectureModel();
     const dossier=loadMissionDossier(), hand=dossier.session1||{}, arch=handoverArchitectureChoices.find(x=>x[0]===state.handoverArchitecture);
-    host.innerHTML=`<section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Mission handover</strong><span class="design-stat">shared with S2</span></div><div class="drawer-mission-facts"><span>Architecture: ${esc(arch?.[1]||'not classified yet')}</span><span>Top constraints: ${esc(hand.priorityRequirements?.map(x=>x.label).join(' · ')||'not fixed yet')}</span><span>Key uncertainty: ${esc(hand.keyUncertainty?.label||'not fixed yet')}</span></div></section><section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Campus mission</strong><span class="design-stat">30 points</span></div><div class="drawer-mission-facts"><span>Buildings + outdoor</span><span>Temperature · humidity · CO₂ · noise</span><span>History + alerts</span></div>${cp?`<div class="drawer-flow">Current connectivity stance: <strong>${esc(cp[1])}</strong></div>`:''}</section><section class="design-section"><div class="design-section-head"><strong>${state.defendedBaseline?'Defended baseline':'Working design'}</strong><span class="design-stat">${baseline.components.length} components · ${baseline.flows.length} flows</span></div>${miniGraphMarkupFor(baseline)}${state.baselineAssumption?`<div class="drawer-flow" style="margin-top:8px">Open assumption: <strong>${esc(baselineAssumptionOptions.find(([id])=>id===state.baselineAssumption)?.[1]||state.baselineAssumption)}</strong></div>`:''}</section><section class="design-section"><div class="design-section-head"><strong>Requirements</strong><span class="design-stat">${selected.length} selected</span></div>${priorities.length?`<div class="chip-row">${priorities.map(x=>`<span class="chip priority">★ ${esc(x)}</span>`).join('')}</div>`:'<p class="drawer-empty">No top-three priorities yet.</p>'}</section><section class="design-section"><div class="design-section-head"><strong>Current investigation</strong></div>${tech?`<div class="drawer-flow">Last technology opened: <strong>${esc(tech)}</strong></div>`:'<p class="drawer-empty">No technology card opened yet.</p>'}<div class="drawer-flow" style="margin-top:6px">Committed transfer decisions: <strong>${committed}</strong></div></section>`;
+    host.innerHTML=`<section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Mission handover</strong><span class="design-stat">shared with S2</span></div><div class="drawer-mission-facts"><span>Architecture: ${esc(arch?.[1]||'not classified yet')}</span><span>Top constraints: ${esc(hand.priorityRequirements?.map(x=>x.label).join(' · ')||'not fixed yet')}</span><span>Key uncertainty: ${esc(hand.keyUncertainty?.label||'not fixed yet')}</span></div></section><section class="design-section mission-drawer-section"><div class="design-section-head"><strong>Campus mission</strong><span class="design-stat">30 measurement points</span></div><div class="drawer-mission-facts"><span>Buildings + outdoor</span><span>Temperature · humidity · CO₂ · noise</span><span>History + alerts</span></div>${cp?`<div class="drawer-flow">Current connectivity stance: <strong>${esc(cp[1])}</strong></div>`:''}</section><section class="design-section"><div class="design-section-head"><strong>${state.defendedBaseline?'Defended baseline':'Working design'}</strong><span class="design-stat">${baseline.components.length} components · ${baseline.flows.length} flows</span></div>${miniGraphMarkupFor(baseline)}${state.baselineAssumption?`<div class="drawer-flow" style="margin-top:8px">Open assumption: <strong>${esc(baselineAssumptionOptions.find(([id])=>id===state.baselineAssumption)?.[1]||state.baselineAssumption)}</strong></div>`:''}</section><section class="design-section"><div class="design-section-head"><strong>Requirements</strong><span class="design-stat">${selected.length} selected</span></div>${priorities.length?`<div class="chip-row">${priorities.map(x=>`<span class="chip priority">★ ${esc(x)}</span>`).join('')}</div>`:'<p class="drawer-empty">No top-three priorities yet.</p>'}</section><section class="design-section"><div class="design-section-head"><strong>Current investigation</strong></div>${tech?`<div class="drawer-flow">Last technology opened: <strong>${esc(tech)}</strong></div>`:'<p class="drawer-empty">No technology card opened yet.</p>'}<div class="drawer-flow" style="margin-top:6px">Deployment cases compared: <strong>${compared}</strong></div></section>`;
   }
 
   function openDesign(){renderDesignDrawer();$('#designDrawer').classList.add('open');$('#designDrawer').setAttribute('aria-hidden','false');$('#designScrim').hidden=false;}
@@ -1038,14 +1038,14 @@
     },
     discover:{
       host:'#depthDiscover',
-      title:'Design the network shape before naming a technology.',
-      problem:'150 outdoor nodes send a 20-byte report every 5 minutes. They are battery powered, spread over about 1.5 km, and the university may install a small amount of infrastructure. Propose a communication shape without using any technology name.',
+      title:'Compare communication families from deployment facts.',
+      problem:'150 outdoor nodes send a 20-byte report every 5 minutes. They are battery powered, spread over about 1.5 km, and the university may install a small amount of infrastructure. Which communication family would you investigate first, and what deployment fact drives that choice?',
       supports:[
-        'Classify the problem first: local vs wide area, tiny vs heavy traffic, constrained vs powered devices.',
-        'Decide whether devices should reach a nearby peer, local access point, gateway, or operator infrastructure.',
-        'Only after the shape is clear, ask which technology families could plausibly implement it.'
+        'Compare the same dimensions as Activity 5: distance/context, traffic, device budget and infrastructure.',
+        'Separate a technology that needs local infrastructure from one that relies on gateways or operator coverage.',
+        'Name the missing fact that could still change your first choice.'
       ],
-      placeholder:'Device → … → … → application. Why this shape? Which assumptions make it plausible?'
+      placeholder:'I would investigate … first because … . The missing fact that could change this is …' 
     },
     stress:{
       host:'#depthStress',
@@ -1118,7 +1118,7 @@
   /* ---------- Retrieval checkpoint ---------- */
   const recallPrompts = [
     {id:'beforetech', q:'Before choosing a communication technology, what should you make explicit first?', a:'The application need, architecture/flows, and the requirements or constraints that matter for those flows.'},
-    {id:'operator', q:'Which network shape makes operator coverage an explicit design assumption?', a:'Operator-managed wide-area / cellular IoT: the device relies on cellular base stations and an operator network.'},
+    {id:'operator', q:'Which communication family makes operator coverage an explicit design assumption?', a:'Cellular IoT: the device relies on cellular base stations and an operator network.'},
     {id:'scope', q:'Why is IEEE 802.15.4 not the same kind of object as LoRaWAN?', a:'802.15.4 provides lower-level local radio/link building blocks; LoRaWAN defines a wider network architecture around devices, gateways and network services.'},
     {id:'feedback', q:'Why does an acknowledged command not prove that the physical action succeeded?', a:'An acknowledgement can confirm message or controller handling, while the actuator or physical process may still fail. Closed-loop control needs evidence of the resulting physical state.'},
     {id:'transfer', q:'Tomorrow one CO₂ sensor is replaced by a camera sending frequent images. Which part of your reasoning should you revisit first?', a:'Revisit the requirements of that flow first — especially data volume/throughput, and potentially energy/latency — then re-evaluate the communication path and technology choice.'}
@@ -1160,13 +1160,10 @@
     renderClosedLoop();
     renderRequirements();
     renderTechDiscovery();
-    renderShapeChallenge();
     renderMysteries();
     renderTechnologyLibrary();
-    renderScenarios();
     renderCampusDecision();
-    renderStress();
-    renderAdaptiveDepth(); renderResearchTrails(); renderStopSnapshots(); renderExpertProgress(); renderMemoryLock(); renderStopRitual(); renderFieldGuide(); renderRevisionStudio(); renderHandoverArchitecture(); renderDesignEvolution();
+    renderAdaptiveDepth(); renderStopSnapshots(); renderExpertProgress(); renderMemoryLock(); renderStopRitual(); renderFieldGuide(); renderHandoverArchitecture(); renderDesignEvolution();
     renderStepper(); renderHistoryNav();
   }
 

@@ -38,8 +38,8 @@ window.IOT_COURSE_CONFIG = {
       kicker: "FOUNDATIONS",
       title: "How do things connect?",
       question: "What must a connected system do before we can defend a communication choice?",
-      summary: "Map the IoT landscape, build and close the loop of a campus architecture, expose per-flow requirements, then move from network shape to a defended communication-family choice.",
-      objectives: ["architecture & flows", "per-flow requirements", "network shape & technology fit"],
+      summary: "Map the IoT landscape, build and close the loop of a campus architecture, expose per-flow requirements, compare communication families on deployment facts, then defend a conditional campus choice.",
+      objectives: ["architecture & flows", "per-flow requirements", "technology fit & conditional choice"],
       storageKey: "iot-systems-design-session1-v20",
       progressKind: "screen-frontier"
     },
@@ -49,11 +49,11 @@ window.IOT_COURSE_CONFIG = {
       kicker: "INFORMATION EXCHANGE",
       title: "How do things communicate?",
       question: "Once connectivity exists, how should devices and services exchange information?",
-      summary: "Describe service conversations, make message order explicit, build protocol paths from four communication responsibilities, compare MQTT/CoAP/HTTP, and make exchanged data understandable across systems.",
-      objectives: ["interaction & choreography", "protocol stacks & composition", "shared data meaning"],
-      storageKey: "iot-systems-design-session2-v4",
+      summary: "Describe the service interaction, build a four-responsibility communication map, compare MQTT/CoAP/HTTP, place transport and network mechanisms, reconnect local connectivity, add a data contract, then integrate one complete exchange.",
+      objectives: ["service interaction", "protocol responsibilities & composition", "data contract & integration"],
+      storageKey: "iot-systems-design-session2-v6",
       progressKind: "activity-frontier",
-      progressLabels: ["Conversation","Message order","Stack jobs","Worked stack","Application protocols","Compose paths","Shared meaning","Defend design"]
+      progressLabels: ["Interaction","Stack map","Application","Transport + IP","Local connectivity","Data contract","Complete stack"]
     },
     {
       id: 3,

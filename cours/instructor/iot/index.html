@@ -43,12 +43,12 @@
   </section>
 
   <section class="shell teacher-pacing-section">
-    <div class="section-head"><div><div class="eyebrow">Run of show</div><h2>Core first. Depth when time allows.</h2><p>The current notes contain a full-depth envelope and a strict 90-minute route. The 90-minute route keeps the conceptual spine and every essential restitution; it compresses work and discussion rather than deleting the learning sequence.</p></div></div>
+    <div class="section-head"><div><div class="eyebrow">Teaching spine</div><h2>One canonical sequence across Student, Projector and Notes.</h2><p>Use the Projector to consolidate the idea after student work, not to pre-reveal the answer. Optional depth remains secondary to the common conceptual path.</p></div></div>
     <div class="teacher-pacing-grid">
-      <article><span>CORE RUN</span><strong id="coreRun">90 min</strong><p>Use the per-activity Core caps in the facilitation notes.</p></article>
-      <article><span>FULL DEPTH</span><strong id="fullRun">—</strong><p>Use when the timetable allows longer discussion and optional depth.</p></article>
       <article><span>ACTIVITIES</span><strong id="activityCount">—</strong><p>Canonical Student / Projector / Notes sequence.</p></article>
-      <article><span>RESTITUTIONS</span><strong id="stopCount">—</strong><p>Do not skip the named institutionalisation points in the Core route.</p></article>
+      <article><span>PROJECTOR CONSOLIDATIONS</span><strong id="stopCount">—</strong><p>Shared reference screens used after the corresponding student work.</p></article>
+      <article><span>PROJECTOR ROLE</span><strong>Build the model</strong><p>Necessary scaffolding before work; disciplinary reference and comparison after work.</p></article>
+      <article><span>NAVIGATION</span><strong>Open</strong><p>Activities remain reachable; answers and reference material are revealed at the appropriate point.</p></article>
     </div>
   </section>
 
@@ -93,22 +93,22 @@
   const currentId=released || 1;
   const current=cfg.sessions.find(s=>s.id===currentId) || cfg.sessions[0];
   const teacherMeta={
-    1:{full:'101–122 min',activities:'8',stops:'6',must:[
-      'Architecture is a set of responsibilities and flows, not a list of products.',
-      'Communication requirements are stated before technologies are selected.',
-      'A changed assumption can force a visible architecture revision.'
+    1:{activities:'6',stops:'6',must:[
+      'Architecture is expressed through responsibilities and information flows before products.',
+      'Communication requirements are attached to real flows before technologies are compared.',
+      'The final communication choice is conditional on deployment facts and explicit missing evidence.'
     ]},
-    2:{full:'90 min',activities:'8',stops:'5',must:[
-      'Service behaviour is described before an application protocol is selected.',
-      'Students separate application, transport, network and local-access responsibilities.',
-      'A delivered message is not automatically meaningful to another system.'
+    2:{activities:'7',stops:'7',must:[
+      'Service interaction is separated from the protocol stack.',
+      'MQTT / CoAP / HTTP, TCP / UDP, IP / IPv6 and local connectivity are placed in distinct responsibilities.',
+      'A delivered payload still needs an application data contract to be interpretable.'
     ]},
-    3:{full:'90 min',activities:'8',stops:'5',must:[
+    3:{activities:'8',stops:'5',must:[
       'Students place functions from explicit constraints rather than choosing edge/cloud as a default.',
       'Students distinguish data movement, response budget and resource feasibility as separate placement drivers.',
       'A split pipeline states what crosses each placement boundary and why the cut is defensible.'
     ]},
-    4:{full:'TBD',activities:'TBD',stops:'TBD',must:['Define the non-negotiable outcomes when Mission 04 is authored.']}
+    4:{activities:'TBD',stops:'TBD',must:['Define the non-negotiable outcomes when Mission 04 is authored.']}
   };
   const meta=teacherMeta[current.id]||teacherMeta[3];
   document.querySelector('#currentMissionNumber').textContent=`MISSION ${current.number}`;
@@ -117,7 +117,6 @@
   document.querySelector('#currentMissionQuestion').textContent=current.question;
   document.querySelector('#currentMissionMeta').innerHTML=current.objectives.map(o=>`<span>${o}</span>`).join('');
   document.querySelector('#currentMustLeave').innerHTML=meta.must.map(x=>`<li>${x}</li>`).join('');
-  document.querySelector('#fullRun').textContent=meta.full;
   document.querySelector('#activityCount').textContent=meta.activities;
   document.querySelector('#stopCount').textContent=meta.stops;
   const published=current.id<=released;

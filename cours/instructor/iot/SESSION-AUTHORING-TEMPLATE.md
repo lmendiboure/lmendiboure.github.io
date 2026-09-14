@@ -111,7 +111,7 @@ Repeat for each STOP.
 
 Checklist:
 - [ ] Completed stages are reviewable.
-- [ ] Future stages remain locked.
+- [ ] Future reference answers remain hidden, while canonical activity navigation stays open.
 - [ ] Review mode is visually explicit.
 - [ ] There is a one-click return to the current frontier.
 - [ ] Commit-before-reveal answers are preserved.
@@ -186,7 +186,7 @@ Every game mechanic must have a learning function.
 - [ ] At least one transfer task changes surface features.
 - [ ] A changed assumption forces revision of an earlier artifact.
 - [ ] Retrieval occurs before the final summary.
-- [ ] Students can revisit previously unlocked stages without exposing future content.
+- [ ] Students can revisit or jump between canonical activities without exposing future reference answers.
 - [ ] Historically meaningful commitments are frozen or versioned rather than overwritten.
 - [ ] Core interactions work on phone without drag-and-drop.
 - [ ] Color is not the only state indicator.

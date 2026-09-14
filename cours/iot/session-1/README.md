@@ -31,13 +31,13 @@ The student site uses no backend or database. Work is saved in browser `localSto
 3. move from monitoring to control by separating command acknowledgement, physical-state evidence and operator authority;
 4. derive communication requirements at system level and for one concrete flow;
 5. **technology comparison:** read the five named families through the same four criteria, then apply the comparison to concrete deployment cases;
-6. test one technology fit after changing one important deployment fact, return to campus, and defend a one-family / mixed / insufficient-evidence stance together with the missing fact that could reverse it.
+6. return to the campus case, defend a one-family / mixed / insufficient-evidence stance, and name the missing deployment fact that could still change that position.
 
 The former Session-1 stress-test/revision activity has moved to **Session 4 — Robustness**, where failures, retries, degraded behaviour, connectivity loss and architecture revision form one coherent arc.
 
 ### Returning after a split class
 
-Session 1 is deliberately resumable. The activity bar is always open; unfinished earlier work never blocks a direct jump to a later activity. For a class resuming at the technology comparison, open `?activity=5`. Activity 5 begins with a compact reconstruction of the reasoning chain from the previous class.
+Session 1 is deliberately resumable. The activity bar is always open; unfinished earlier work never blocks a direct jump to a later activity. For a class resuming at the technology comparison, use the dedicated Projector recap first, then open `?activity=5`. Activity 5 itself starts directly with the five-family comparison rather than repeating the recap.
 
 ## Navigation model
 
