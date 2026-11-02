@@ -1,282 +1,298 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-      <link rel="icon" type="image/png" href="assets/imgs/logo.png"/>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Personal WebSite.">
-    <meta name="author" content="Léo Mendiboure">
-    <title>Léo Mendiboure - Personal Website</title>
-    <!-- font icons -->
-    <link rel="stylesheet" href="assets/vendors/themify-icons/css/themify-icons.css">
-    <!-- Bootstrap + Meyawo main styles -->
-	<link rel="stylesheet" href="assets/css/meyawo.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Léo Mendiboure is an Associate Professor in Computer Science at Université de Pau et des Pays de l'Adour (LIUPPA). Research on resource orchestration in the edge-cloud continuum, programmable network architectures and trust in distributed systems.">
+  <meta name="author" content="Léo Mendiboure">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Léo Mendiboure, Associate Professor in Computer Science">
+  <meta property="og:description" content="Resource orchestration in the edge-cloud continuum, programmable network architectures and trust in distributed systems. UPPA / LIUPPA.">
+  <meta property="og:url" content="https://lmendiboure.github.io/">
+  <meta property="og:image" content="https://lmendiboure.github.io/assets/imgs/lmendiboure.png">
+  <link rel="canonical" href="https://lmendiboure.github.io/">
+  <link rel="icon" href="assets/imgs/logo.png" type="image/png">
+  <title>Léo Mendiboure | Associate Professor, UPPA / LIUPPA</title>
+  <style>
+    :root{
+      color-scheme:light;
+      --ink:#152e35;        /* headings */
+      --text:#33474e;       /* body text */
+      --muted:#55686e;      /* secondary text */
+      --line:#dde6e3;       /* rules and borders */
+      --accent:#176953;     /* green: links, buttons */
+      --accent-dark:#125541;
+      --paper:#ffffff;
+      --surface:#f5f8f6;    /* alternate section background */
+      --max:1100px;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    [hidden]{display:none!important}
+    html{scroll-behavior:smooth;scroll-padding-top:88px}
+    body{margin:0;background:var(--paper);color:var(--text);font:16px/1.7 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline;text-underline-offset:4px}
+    a:focus-visible{outline:3px solid #58a38f;outline-offset:3px;border-radius:3px}
+    h1,h2,h3,p{margin-top:0}
+    h1,h2,h3{color:var(--ink)}
+    ul,ol{margin:0;padding:0;list-style:none}
+    .wrap{width:min(var(--max),calc(100% - 72px));margin-inline:auto}
+    .skip{position:absolute;left:-9999px;top:12px;z-index:20;background:var(--ink);color:#fff;padding:8px 12px;border-radius:6px}
+    .skip:focus{left:12px}
+
+    /* Navigation */
+    .topbar{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:72px}
+    .brand{display:flex;align-items:center;gap:12px;font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--ink);white-space:nowrap}
+    .brand:hover{text-decoration:none}
+    .brand-mark{display:grid;place-items:center;width:34px;height:34px;background:var(--ink);color:#fff;border-radius:8px;font-size:12px;font-weight:700}
+    .nav-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px 26px;font-size:14px;font-weight:600}
+    .nav-links a{color:#485a60}
+    .nav-links a:hover{color:var(--accent)}
+
+    /* Hero */
+    .hero{padding:84px 0 76px;background:linear-gradient(180deg,#f5f8f6 0%,#fff 100%)}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:clamp(40px,6vw,90px);align-items:center}
+    h1{font-size:clamp(42px,5vw,58px);line-height:1.08;letter-spacing:-.035em;font-weight:750;margin-bottom:12px}
+    .role{font-size:clamp(19px,2vw,22px);line-height:1.35;font-weight:600;color:var(--text);margin-bottom:24px}
+    .intro{font-size:17px;line-height:1.75;max-width:640px;margin-bottom:16px}
+    .background-note{font-size:14px;color:var(--muted);margin-bottom:28px}
+    .actions{display:flex;flex-wrap:wrap;gap:12px}
+    .btn{display:inline-flex;align-items:center;padding:11px 20px;border-radius:8px;font-weight:650;font-size:14px}
+    .btn:hover{text-decoration:none}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-primary:hover{background:var(--accent-dark)}
+    .btn-outline{border:1px solid #bdcfca;background:#fff;color:var(--ink)}
+    .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+    .portrait{margin:0;border-radius:12px;overflow:hidden;background:#e4ece8;aspect-ratio:299/385}
+    .portrait img{display:block;width:100%;height:100%;object-fit:cover}
+    .fallback{height:100%;display:grid;place-items:center;font:700 64px/1 Georgia,serif;color:#3b685a}
+
+    /* Sections */
+    .section{padding:84px 0}
+    .section-alt{background:var(--surface)}
+    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:34px}
+    h2{font-size:clamp(28px,3vw,36px);letter-spacing:-.03em;line-height:1.2;margin:0;font-weight:720}
+    .section-description{color:var(--muted);max-width:560px;font-size:15px;margin:10px 0 0}
+    .text-link{font-size:14px;font-weight:650;white-space:nowrap}
+
+    /* Research */
+    .research-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+    .research-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:28px}
+    .research-card h3{font-size:19px;letter-spacing:-.02em;line-height:1.3;margin-bottom:12px}
+    .research-card p{font-size:15px;line-height:1.7;margin:0}
+    .domains{display:grid;grid-template-columns:190px minmax(0,1fr);gap:24px;margin-top:36px;padding-top:28px;border-top:1px solid var(--line)}
+    .domains h3{font-size:16px;margin:0}
+    .domain-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+    .domain-list strong{display:block;font-size:15px;color:var(--ink);margin-bottom:2px}
+    .domain-list span{display:block;font-size:14px;line-height:1.6;color:var(--muted)}
+
+    /* Publications */
+    .publications{border-top:1px solid var(--line)}
+    .publication{display:grid;grid-template-columns:72px minmax(0,1fr);gap:22px;padding:24px 0;border-bottom:1px solid var(--line);align-items:baseline}
+    .year{color:var(--muted);font-size:15px;font-weight:650;font-variant-numeric:tabular-nums}
+    .publication h3{font-size:17px;font-weight:650;line-height:1.45;letter-spacing:-.01em;margin:0 0 4px}
+    .publication h3 a{color:var(--ink);text-decoration:underline;text-decoration-color:#b9cfc8;text-decoration-thickness:1px;text-underline-offset:4px}
+    .publication h3 a:hover{color:var(--accent);text-decoration-color:currentColor}
+    .venue{font-size:14px;color:var(--muted);margin:0}
+    .status{color:var(--accent);font-weight:650}
+
+    /* Projects */
+    .project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .project{border:1px solid var(--line);background:#fff;border-radius:12px;padding:26px 28px;display:flex;flex-direction:column}
+    .project h3{font-size:19px;letter-spacing:-.02em;margin:0 0 2px}
+    .project-meta{font-size:14px;color:var(--muted);margin:0 0 12px}
+    .project p{font-size:15px;line-height:1.7;margin:0 0 14px;flex:1}
+    .project .text-link{align-self:flex-start}
+
+    /* Teaching */
+    .teaching{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:56px}
+    .teaching-lead{font-size:16px;line-height:1.8;max-width:470px;margin:20px 0 16px}
+    .note{font-size:15px;color:var(--muted);margin:0}
+    .course-list{border-top:1px solid var(--line)}
+    .course{padding:16px 0;border-bottom:1px solid var(--line)}
+    .course strong{display:block;font-size:16px;color:var(--ink);margin-bottom:2px}
+    .course span{display:block;font-size:14px;line-height:1.6;color:var(--muted)}
+
+    /* Contact and footer */
+    .contact-section{background:var(--ink);color:#c9d6d8;padding:68px 0}
+    .contact-grid{display:flex;justify-content:space-between;gap:36px;align-items:center}
+    .contact-section h2{color:#fff;margin-bottom:10px}
+    .contact-section p{font-size:15px;max-width:560px;margin:0}
+    .contact-actions{display:flex;flex-wrap:wrap;gap:12px}
+    .contact-actions .btn-primary{background:#bce1d2;color:#143d30}
+    .contact-actions .btn-primary:hover{background:#d3ece2}
+    .contact-actions .btn-outline{background:transparent;border-color:#63817d;color:#fff}
+    footer{padding:22px 0;background:#10272e;color:#b9c9cb}
+    .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:13px}
+    .footer-links{display:flex;flex-wrap:wrap;gap:22px}
+    .footer-links a{color:#d3dee0}
+
+    @media(max-width:950px){
+      .nav-inner{flex-wrap:wrap;justify-content:center;gap:8px;padding:12px 0}
+      .nav-links{width:100%;justify-content:center}
+      .hero-grid{grid-template-columns:minmax(0,1fr) 220px;gap:32px}
+      .research-grid{grid-template-columns:1fr}
+      .domains{grid-template-columns:1fr;gap:14px}
+      .contact-grid{flex-direction:column;align-items:flex-start}
+    }
+    @media(max-width:700px){
+      .wrap{width:min(100% - 36px,var(--max))}
+      .topbar{position:relative}
+      .nav-inner{justify-content:flex-start}
+      .brand{width:100%}
+      .nav-links{justify-content:flex-start;font-size:13px;gap:6px 16px}
+      .hero{padding:44px 0 52px}
+      .hero-grid{grid-template-columns:1fr;gap:28px}
+      .hero-portrait{order:-1;width:140px}
+      .intro{font-size:16px}
+      .section{padding:60px 0}
+      .section-head{display:block}
+      .section-head .text-link{display:inline-block;margin-top:14px}
+      .domain-list,.project-grid,.teaching{grid-template-columns:1fr}
+      .domain-list{gap:14px}
+      .publication{grid-template-columns:1fr;gap:4px}
+      .teaching{gap:12px}
+      .contact-section{padding:56px 0}
+      .footer-inner{flex-direction:column;align-items:flex-start}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
 </head>
-<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <nav class="topbar" aria-label="Main navigation">
+    <div class="wrap nav-inner">
+      <a href="#top" class="brand" aria-label="Léo Mendiboure, home"><span class="brand-mark" aria-hidden="true">LM</span><span>Léo Mendiboure</span></a>
+      <div class="nav-links"><a href="#research">Research</a><a href="#publications">Publications</a><a href="#projects">Projects</a><a href="#teaching">Teaching</a><a href="#contact">Contact</a></div>
+    </div>
+  </nav>
 
-    <!-- Page Navbar -->
-    <nav class="custom-navbar" data-spy="affix" data-offset-top="20">
-        <div class="container">
-            <a class="logo" href="#">Home</a>         
-            <ul class="nav">
-                <li class="item">
-                    <a class="link" href="#home">Home</a>
-                </li>
-                <li class="item">
-                    <a class="link" href="#about">About</a>
-                </li>
-                 <li class="item">
-                    <a class="link" href="#interests">Interests</a>
-                </li>
-                <li class="item">
-                    <a class="link" href="#projects">Projects</a>
-                </li>
-                <li class="item">
-                    <a class="link" href="#blog">Teaching</a>
-                </li>
-                <li class="item">
-                    <a class="link" href="#contact">Contact</a>
-                </li>
-            </ul>
-            <a href="javascript:void(0)" id="nav-toggle" class="hamburger hamburger--elastic">
-                <div class="hamburger-box">
-                  <div class="hamburger-inner"></div>
-                </div>
-            </a>
-        </div>          
-    </nav><!-- End of Page Navbar -->
-
-    <!-- page header -->
-    <header id="home" class="header">
-        <div class="overlay"></div>
-        <div class="header-content container">
-            <h1 class="header-title">
-                <span class="up">HI!</span>
-                <span class="down">I am Léo Mendiboure</span>
-            </h1>
-            <p class="header-subtitle">TENURED RESEARCHER IN COMPUTER SCIENCE</p>            
-
-            <button class="btn btn-primary" onclick="location.href='#about'">About</button>
-        </div>              
-    </header><!-- end of page header -->
-
-    <!-- about section -->
-    <section class="section pt-0" id="about">
-        <!-- container -->
-        <div class="container text-center">
-            <!-- about wrapper -->
-            <div class="about">
-                <div class="about-img-holder">
-                    <img style="max-width: 200px; max-height: 400px" src="assets/imgs/lmendiboure.png" class="about-img" alt="Personal image">
-                </div>
-                <div class="about-caption">
-                    <p class="section-subtitle">Who Am I ?</p>
-                    <h2 class="section-title mb-3">About Me</h2>
-                    <p>My name is Léo Mendiboure. I received my Ph.D. degree in 2020 from the University of Bordeaux. Since 2021 I am a tenured researcher in Computer Science at Université Gustave Eiffel. I am a member of the COSYS/ERENA team (Bordeaux site). My main research areas include Cooperative and Intelligent Transport Systems, security of wireless communication networks and Quality of Service management. </p>
-                    <p>I am currently involved in the supervision of 1 engineer, 5 PhD students and 1 post-doc (+ a variable number of trainees).</p> 
-		    <p> More information on our COSYS-ERENA team can be found <a href="https://erena.univ-gustave-eiffel.fr/" target="_blank">here</a></p>.	
-		</div>              
-            </div><!-- end of about wrapper -->
-        </div><!-- end of container -->
-    </section> <!-- end of about section -->
-
-    <!-- interests section -->
-    <section class="section" id="interests">
-        <div class="container text-center">
-            <p class="section-subtitle">What am I working on?</p>
-            <h6 class="section-title mb-6">Research Interests</h6>
-            <!-- row -->
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="service-card">
-                        <div class="body">
-                            <img src="assets/imgs/wifi.png" alt="WiFi" class="icon">
-                            <h6 class="title">Network Optimization</h6>
-                            <p class="subtitle">QoS improvement using new technological solutions (Edge, SDN, Network Slicing).</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="service-card">
-                        <div class="body">
-                            <img src="assets/imgs/security.png" alt="Security" class="icon">
-                            <h6 class="title">Security</h6>
-                            <p class="subtitle">Implementation of detection and protection mechanisms against complex attacks (DDoS in particular).</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="service-card">
-                        <div class="body">
-                            <img src="assets/imgs/blockchain.png" alt="Blockchain" class="icon">
-                            <h6 class="title">Distributed Systems</h6>
-                            <p class="subtitle">Design and implementation of distributed ledgers capable of scaling up and guaranteeing low latencies.</p>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- end of row -->
+  <main id="main">
+    <header class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div>
+          <h1>Léo Mendiboure</h1>
+          <p class="role">Associate Professor in Computer Science</p>
+          <p class="intro">At Université de Pau et des Pays de l'Adour, I lead the CPSA team of the LIUPPA laboratory. I study distributed infrastructures shared by several parties: how to orchestrate their resources across the edge-cloud continuum, how to design programmable networks that connect them, and how to trust the computations they run. Railways and connected mobility are my main application domains.</p>
+          <p class="background-note">Ph.D. in Computer Science, University of Bordeaux (2020). Previously tenured researcher at Université Gustave Eiffel.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#research">Research</a>
+            <a class="btn btn-outline" href="https://scholar.google.fr/citations?user=6MPEz0YAAAAJ&amp;hl=en">Google Scholar</a>
+            <a class="btn btn-outline" href="mailto:leo.mendiboure@univ-pau.fr">Email</a>
+          </div>
         </div>
-    </section><!-- end of interests section -->
+        <figure class="portrait hero-portrait">
+          <img src="assets/imgs/lmendiboure.png" alt="Portrait of Léo Mendiboure" width="299" height="385" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+          <div class="fallback" hidden aria-hidden="true">LM</div>
+        </figure>
+      </div>
+    </header>
 
-    <!-- projects section -->
-    <section class="section" id="projects">
-        <div class="container text-center">
-            <p class="section-subtitle">What am I involved in?</p>
-            <h6 class="section-title mb-6">Project List</h6>
-            <!-- row -->
-            <div class="row">
-                <div class="col-md-4">
-                    <a href="https://5grail.eu/" class="portfolio-card">
-                        <img src="assets/imgs/5GRAIL.png" class="portfolio-card-img" alt="5GRAIL">    
-                        <span class="portfolio-card-overlay">
-                            <span class="portfolio-card-caption">
-                                <h4>5GRAIL</h5>
-                                <p class="font-weight-normal">5G for future RAILway mobile communication system</p>
-                            </span>                         
-                        </span>                     
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <a href="https://www.ccam.eu/projects/augmented-ccam/" class="portfolio-card">
-                        <img class="portfolio-card-img" src="assets/imgs/ccam.jpg" class="img-responsive rounded" alt="Augmented CCAM">
-                        <span class="portfolio-card-overlay">
-                            <span class="portfolio-card-caption">
-                                <h4>Augmented CCAM</h5>
-                                <p class="font-weight-normal">Augmenting and Evaluating the Physical and Digital Infrastructure for CCAM deployment</p>
-                            </span>                         
-                        </span>                         
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <a href="https://www.bordeaux-inp.fr/fr/dossier-28-le-projet-indid-infrastructure-digitale-de-demain" class="portfolio-card">
-                        <img class="portfolio-card-img" src="assets/imgs/InDiD.jpg" class="img-responsive rounded" alt="InDiD">    
-                        <span class="portfolio-card-overlay">
-                            <span class="portfolio-card-caption">
-                                <h4>InDiD</h5>
-                                <p class="font-weight-normal">Infrastructure Digitale de Demain</p>
-                            </span>                         
-                        </span>                     
-                    </a>
-                </div>
-            </div><!-- end of row -->
-            <div class="row">
-                <div class="col-md-4">
-                    <a href="https://ferromobile.fr/en/" class="portfolio-card">
-                        <img class="portfolio-card-img" src="assets/imgs/ferromobile.jpg" class="img-responsive rounded" alt="InDiD">    
-                        <span class="portfolio-card-overlay">
-                            <span class="portfolio-card-caption">
-                                <h4>FerroMobile</h5>
-                                <p class="font-weight-normal">A ROAD-TO-RAIL CAR</p>
-                            </span>                         
-                        </span>                     
-                    </a>
-                </div>
-            </div><!-- end of row -->
-        </div><!-- end of container -->
-    </section> <!-- end of projects section -->
+    <section class="section section-alt" id="research" aria-labelledby="research-title">
+      <div class="wrap">
+        <div class="section-head"><div><h2 id="research-title">Research</h2><p class="section-description">Three research axes on shared distributed infrastructures, each combining models and algorithms with experimentation.</p></div></div>
+        <div class="research-grid">
+          <article class="research-card">
+            <h3>Resource orchestration in the edge-cloud continuum</h3>
+            <p>Allocating computing and network resources when several operators share the same infrastructure: service placement in edge federations, task offloading, sizing of edge sites. I design mechanisms, from auctions to multi-agent reinforcement learning, that meet application requirements while remaining fair to each party, with energy and carbon as additional constraints.</p>
+          </article>
+          <article class="research-card">
+            <h3>Programmable network architectures</h3>
+            <p>Software-defined networks, slicing and multi-connectivity to let several services and technologies share one network: SDN control architectures, slicing for FRMCS, hybrid 5G and satellite links. This work relies on emulators and testbeds that I develop with my colleagues, such as Emu5GNet.</p>
+          </article>
+          <article class="research-card">
+            <h3>Trust in distributed systems</h3>
+            <p>Making it possible to trust participants that one does not control, from blockchain-based authentication and access control to verifiable and confidential computation today. I combine zero-knowledge proofs, trusted execution environments and secret sharing, with federated learning as the main use case.</p>
+          </article>
+        </div>
+        <div class="domains">
+          <h3>Application domains</h3>
+          <ul class="domain-list">
+            <li><strong>Railway communications</strong><span>FRMCS, hybrid 5G and satellite connectivity, 6G for secondary lines.</span></li>
+            <li><strong>Connected and automated mobility</strong><span>Vehicular networks, V2X and cooperative perception.</span></li>
+            <li><strong>Internet of Things</strong><span>IoT services and constrained devices at the edge.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
+    <section class="section" id="publications" aria-labelledby="pub-title">
+      <div class="wrap">
+        <div class="section-head"><div><h2 id="pub-title">Selected publications</h2><p class="section-description">Recent work across the three research axes.</p></div><a class="text-link" href="https://scholar.google.fr/citations?user=6MPEz0YAAAAJ&amp;hl=en">All publications on Google Scholar</a></div>
+        <ol class="publications">
+          <li class="publication"><span class="year">2026</span><div><h3><a href="https://doi.org/10.1109/INFOCOM59046.2026.11571181">FairMEC: Achieving Fair Resource Sharing in Multi-Access Edge Computing Federations</a></h3><p class="venue">IEEE INFOCOM 2026</p></div></li>
+          <li class="publication"><span class="year">2026</span><div><h3><a href="https://repository.uwl.ac.uk/id/eprint/15562/">Carbon-Aware UPF Placement in Geo-Distributed Telecom Networks: Measurement-Informed Reinforcement Learning</a></h3><p class="venue">IEEE GLOBECOM 2026, <span class="status">accepted</span></p></div></li>
+          <li class="publication"><span class="year">2026</span><div><h3><a href="https://doi.org/10.1109/TNSM.2026.3710830">Application-Aware Slicing for FRMCS: A Deep Reinforcement Learning Approach</a></h3><p class="venue">IEEE Transactions on Network and Service Management</p></div></li>
+          <li class="publication"><span class="year">2026</span><div><h3><a href="https://doi.org/10.1109/OJVT.2026.3748796">Confidential Federated Learning for Vehicular Perception: An Intel TDX Cost and Placement Study</a></h3><p class="venue">IEEE Open Journal of Vehicular Technology</p></div></li>
+          <li class="publication"><span class="year">2025</span><div><h3><a href="https://doi.org/10.1109/DSN-S65789.2025.00029">Trusted Federated Learning: Towards a Partial Zero-Knowledge Proof Approach</a></h3><p class="venue">IEEE/IFIP DSN 2025, Supplemental Volume</p></div></li>
+          <li class="publication"><span class="year">2024</span><div><h3><a href="https://doi.org/10.1109/ACCESS.2024.3479879">Enabling Network Technologies for Flexible Railway Connectivity</a></h3><p class="venue">IEEE Access</p></div></li>
+        </ol>
+      </div>
+    </section>
 
-    <!-- blog section -->
-    <section class="section" id="blog">
-        <!-- container -->
-        <div class="container text-center">
-            <p class="section-subtitle">What do I teach?</p>
-            <h6 class="section-title mb-6">Course List</h6>
-            <!-- blog-wrapper -->
-            <div class="blog-card">
-                <div class="blog-card-header">
-                    <img src="assets/imgs/enseirb.png" class="blog-card-img" alt="ENSEIRB-MATMECA">
-                </div>
-                <div class="blog-card-body">
-                    <h5 class="blog-card-title">EI8IT218 Information systems security</h6>
+    <section class="section section-alt" id="projects" aria-labelledby="project-title">
+      <div class="wrap">
+        <div class="section-head"><div><h2 id="project-title">Projects</h2><p class="section-description">Current projects, and earlier collaborations in railway and vehicular communications.</p></div></div>
+        <div class="project-grid">
+          <article class="project">
+            <h3>6G4RAIL</h3>
+            <p class="project-meta">ANR, since 2026</p>
+            <p>6G connectivity and safety for secondary railway lines: integrated sensing and communication, drones and distributed edge intelligence. With Université Gustave Eiffel, IMT Atlantique, XLIM, Mitsubishi Electric R&amp;D and SNCF.</p>
+          </article>
+          <article class="project">
+            <h3>BaskData</h3>
+            <p class="project-meta">Communauté d'Agglomération Pays Basque, since 2026</p>
+            <p>Project with the Communauté d'Agglomération Pays Basque (CAPB) on the data of the Basque Country territory.</p>
+          </article>
+          <article class="project">
+            <h3>S5LECT</h3>
+            <p class="project-meta">EUSPA, Horizon Europe, 2024–2026</p>
+            <p>Hybrid terrestrial and satellite communications, edge computing and cybersecurity for critical railway applications.</p>
+            <a class="text-link" href="https://cordis.europa.eu/project/id/101129493">Project on CORDIS</a>
+          </article>
+          <article class="project">
+            <h3>5GRAIL and Augmented CCAM</h3>
+            <p class="project-meta">Earlier European projects</p>
+            <p>Mobile connectivity and digital infrastructures for railways and for cooperative, connected and automated mobility.</p>
+            <a class="text-link" href="https://5grail.eu/">5GRAIL project</a>
+          </article>
+        </div>
+      </div>
+    </section>
 
-                    <p>The aim of this project is to introduce students to systems security. This 26 to 32-hour project is broken down into a series of milestones designed to enable students to discover a wide range of concepts: network attacks, Web attacks, PenTesting, etc.</p>
+    <section class="section" id="teaching" aria-labelledby="teaching-title">
+      <div class="wrap teaching">
+        <div>
+          <h2 id="teaching-title">Teaching</h2>
+          <p class="teaching-lead">I teach networks, the Internet of Things, cloud computing, cybersecurity, embedded systems and system programming at UPPA, in master's programmes and at the ISA engineering school. I also introduce master's students to research through research initiation courses and research projects. I coordinate the SIGLIS master's programme.</p>
+          <p class="note">Course material for current students is on the <a href="cours/">course pages</a>.</p>
+        </div>
+        <ul class="course-list">
+          <li class="course"><strong><a href="cours/iot/">IoT Systems Design</a></strong><span>Master 2. Designing and comparing IoT architectures from requirements and constraints.</span></li>
+          <li class="course"><strong><a href="cours/environnements_connectes/">Connected environments</a></strong><span>ISA engineering school, 5th year. Connected buildings and infrastructures, from sensors to digital services.</span></li>
+          <li class="course"><strong>Cloud computing and cybersecurity</strong><span>Virtualisation, deployment and security of distributed systems.</span></li>
+          <li class="course"><strong>Embedded systems and system programming</strong><span>Programming close to the hardware and the operating system.</span></li>
+          <li class="course"><strong>Research initiation and research projects</strong><span>Introduction to research methods and supervised research projects.</span></li>
+          <li class="course"><strong>Archived course materials</strong><span><a href="ci-cyber.html">Information systems security project</a> and <a href="https://github.com/lmendiboure/5G-Course">introduction to 5G networks</a>.</span></li>
+        </ul>
+      </div>
+    </section>
 
-                    <a href="ci-cyber.html" class="blog-card-link">Go to project description<i class="ti-angle-double-right"></i></a>
-                </div>
-            </div><!-- end of blog wrapper -->
+    <section class="contact-section" id="contact" aria-labelledby="contact-title">
+      <div class="wrap contact-grid">
+        <div><h2 id="contact-title">Contact</h2><p>For research collaborations, PhD applications and academic inquiries, write to me at leo.mendiboure@univ-pau.fr.</p></div>
+        <div class="contact-actions"><a href="mailto:leo.mendiboure@univ-pau.fr" class="btn btn-primary">Email</a><a href="https://www.linkedin.com/in/l%C3%A9o-mendiboure-666435132/" class="btn btn-outline">LinkedIn</a></div>
+      </div>
+    </section>
+  </main>
 
-            <!-- blog-wrapper -->
-            <div class="blog-card">
-                <div class="blog-card-header">
-                    <img src="assets/imgs/up.svg" class="blog-card-img" alt="UP">
-                </div>
-                <div class="blog-card-body">
-                    <h5 class="blog-card-title">Introduction to 5G networks</h6>
-                    
-                    <p>The aim of this 30-hour module is to introduce students to 5G communications networks and future developments in these networks. This includes a theoretical presentation of the architecture and various concepts (mobility, QoS, etc.), as well as practical application of various elements using Open Source tools: Open5GS, SRSRAN, Kubernetes, etc.</p>
-
-                    <a href="https://github.com/lmendiboure/5G-Course" class="blog-card-link">Github page for this course <i class="ti-angle-double-right"></i></a>
-                </div>
-            </div><!-- end of blog wrapper -->
-           <!-- blog-wrapper -->
-            <div class="blog-card">
-                <div class="blog-card-header">
-                    <img src="assets/imgs/uppa.png" class="blog-card-img" alt="UPPA">
-                </div>
-                <div class="blog-card-body">
-                    <h5 class="blog-card-title">System programming</h6>
-
-                    <p>Through almost 70 hours of lessons, the idea is to train students in system programming (beginner and advanced).</p>
-
-                    <a href="https://formation.univ-pau.fr/fr/catalogue/sciences-technologies-sante-STS/licence-XA/licence-informatique-L3VENPWZ/l1-l2-et-l3-parcours-informatique-L3VEOQMB.html" class="blog-card-link">More information on the course <i class="ti-angle-double-right"></i></a>
-                </div>
-            </div><!-- end of blog wrapper -->
-            
-            <p>Note that in addition to these main courses, I'm also involved in various teaching activities at ENSEIRB-MATMECA: Java programming project, introduction to SDN, introduction to system, introduction to network programming and introduction to mobile networks. Most of them are available on my GitHub page. I'm also responsible for two teaching modules at this school.</p>
-
-        </div><!-- end of container -->
-
-    </section><!-- end of blog section -->
-
-    <!-- contact section -->
-    <section class="section" id="contact">
-        <div class="container text-center">
-            <p class="section-subtitle">How can you communicate?</p>
-            <h6 class="section-title mb-5">Contact Form</h6>
-            <!-- contact form -->
-            <form action="mailto:leo.mendiboure@univ-eiffel.fr" class="contact-form col-md-10 col-lg-8 m-auto">
-                <div class="form-row">
-                    <div class="form-group col-sm-6">
-                        <input type="text" size="50" class="form-control" placeholder="Your Name" required>                 
-                    </div>
-                    <div class="form-group col-sm-6">
-                        <input type="email" class="form-control" placeholder="Enter Email"requried>                 
-                    </div>
-                    <div class="form-group col-sm-12">
-                        <textarea name="comment" id="comment" rows="6"   class="form-control" placeholder="Write Something"></textarea>
-                    </div>
-                    <div class="form-group col-sm-12 mt-3">
-                        <input type="submit" value="Send Message" class="btn btn-outline-primary rounded">                  
-                    </div>
-                </div>  
-            </form><!-- end of contact form -->
-            <p>You can also find me at ENSEIRB-MATMECA - 1 Avenue du Dr Albert Schweitzer, 33400 Talence, France </p>
-
-        </div><!-- end of container -->
-        
-    </section><!-- end of contact section -->
-
-    <!-- footer -->
-    <div class="container">
-        <footer class="footer">       
-            <div class="social-links text-right m-auto ml-sm-auto">
-                <a href="https://www.linkedin.com/in/l%C3%A9o-mendiboure-666435132/" class="link"><i class="ti-linkedin"></i></a>
-                <a href="https://scholar.google.fr/citations?user=6MPEz0YAAAAJ&hl=fr" class="link"><i class="ti-google"></i></a>
-                <a href="https://github.com/lmendiboure/" class="link"><i class="ti-github"></i></a>
-            </div>
-        </footer>
-    </div> <!-- end of page footer -->
-	
-	<!-- core  -->
-    <script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
-    <script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
-
-    <!-- bootstrap 3 affix -->
-	<script src="assets/vendors/bootstrap/bootstrap.affix.js"></script>
-
-    <!-- Meyawo js -->
-    <script src="assets/js/meyawo.js"></script>
-
+  <footer>
+    <div class="wrap footer-inner">
+      <span>© 2026 Léo Mendiboure, UPPA / LIUPPA</span>
+      <div class="footer-links"><a href="https://scholar.google.fr/citations?user=6MPEz0YAAAAJ&amp;hl=en">Google Scholar</a><a href="https://dblp.org/pid/230/1948.html">DBLP</a><a href="https://github.com/lmendiboure">GitHub</a><a href="https://www.linkedin.com/in/l%C3%A9o-mendiboure-666435132/">LinkedIn</a></div>
+    </div>
+  </footer>
 </body>
 </html>
