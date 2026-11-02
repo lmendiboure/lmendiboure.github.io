@@ -26,6 +26,9 @@
       --paper:#ffffff;
       --surface:#f5f8f6;    /* alternate section background */
       --max:1100px;
+      --a1:#176953; --a1-bg:#e3f0ea;   /* axis 1: orchestration (green) */
+      --a2:#2a5d8f; --a2-bg:#e4ecf5;   /* axis 2: networks (blue) */
+      --a3:#a3561b; --a3-bg:#f6eadd;   /* axis 3: trust (amber) */
     }
     *,*::before,*::after{box-sizing:border-box}
     [hidden]{display:none!important}
@@ -85,8 +88,9 @@
     .domains{display:grid;grid-template-columns:190px minmax(0,1fr);gap:24px;margin-top:36px;padding-top:28px;border-top:1px solid var(--line)}
     .domains h3{font-size:16px;margin:0}
     .domain-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+    .domain-list li{display:flex;gap:12px;align-items:flex-start}
     .domain-list strong{display:block;font-size:15px;color:var(--ink);margin-bottom:2px}
-    .domain-list span{display:block;font-size:14px;line-height:1.6;color:var(--muted)}
+    .domain-list div>span{display:block;font-size:14px;line-height:1.6;color:var(--muted)}
 
     /* Publications */
     .publications{border-top:1px solid var(--line)}
@@ -102,7 +106,7 @@
     .project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
     .project{border:1px solid var(--line);background:#fff;border-radius:12px;padding:26px 28px;display:flex;flex-direction:column}
     .project h3{font-size:19px;letter-spacing:-.02em;margin:0 0 2px}
-    .project-meta{font-size:14px;color:var(--muted);margin:0 0 12px}
+    .project .project-meta{font-size:14px;color:var(--muted);margin:0 0 12px;flex:none}
     .project p{font-size:15px;line-height:1.7;margin:0 0 14px;flex:1}
     .project .text-link{align-self:flex-start}
 
@@ -111,9 +115,9 @@
     .teaching-lead{font-size:16px;line-height:1.8;max-width:470px;margin:20px 0 16px}
     .note{font-size:15px;color:var(--muted);margin:0}
     .course-list{border-top:1px solid var(--line)}
-    .course{padding:16px 0;border-bottom:1px solid var(--line)}
+    .course{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
     .course strong{display:block;font-size:16px;color:var(--ink);margin-bottom:2px}
-    .course span{display:block;font-size:14px;line-height:1.6;color:var(--muted)}
+    .course div>span{display:block;font-size:14px;line-height:1.6;color:var(--muted)}
 
     /* Contact and footer */
     .contact-section{background:var(--ink);color:#c9d6d8;padding:68px 0}
@@ -128,6 +132,20 @@
     .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:13px}
     .footer-links{display:flex;flex-wrap:wrap;gap:22px}
     .footer-links a{color:#d3dee0}
+
+    /* Icons (inline SVG, no external files) */
+    .icon{display:grid;place-items:center;width:42px;height:42px;border-radius:10px;background:#e6f1ec;color:var(--accent);margin-bottom:16px}
+    .icon svg{width:22px;height:22px}
+    .icon-sm{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:8px;background:#e6f1ec;color:var(--accent);flex-shrink:0}
+    .icon-sm svg{width:17px;height:17px}
+
+    /* One colour per research axis, reused in publications and projects */
+    .ax1{--c:var(--a1);--c-bg:var(--a1-bg)}
+    .ax2{--c:var(--a2);--c-bg:var(--a2-bg)}
+    .ax3{--c:var(--a3);--c-bg:var(--a3-bg)}
+    .research-card[class*="ax"]{border-top:3px solid var(--c)}
+    [class*="ax"] > .icon{background:var(--c-bg);color:var(--c)}
+    .tag{display:inline-block;font-size:12.5px;font-weight:650;line-height:1;padding:5px 9px;border-radius:999px;background:var(--c-bg);color:var(--c);margin-left:8px;vertical-align:1px;white-space:nowrap}
 
     @media(max-width:950px){
       .nav-inner{flex-wrap:wrap;justify-content:center;gap:8px;padding:12px 0}
@@ -194,15 +212,18 @@
       <div class="wrap">
         <div class="section-head"><div><h2 id="research-title">Research</h2><p class="section-description">Three research axes on shared distributed infrastructures, each combining models and algorithms with experimentation.</p></div></div>
         <div class="research-grid">
-          <article class="research-card">
+          <article class="research-card ax1">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01M11 7h6M11 17h6"/></svg></span>
             <h3>Resource orchestration in the edge-cloud continuum</h3>
             <p>Allocating computing and network resources when several operators share the same infrastructure: service placement in edge federations, task offloading, sizing of edge sites. I design mechanisms, from auctions to multi-agent reinforcement learning, that meet application requirements while remaining fair to each party, with energy and carbon as additional constraints.</p>
           </article>
-          <article class="research-card">
+          <article class="research-card ax2">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5 6.8 17.2M12 11.5l5.2 5.7"/></svg></span>
             <h3>Programmable network architectures</h3>
             <p>Software-defined networks, slicing and multi-connectivity to let several services and technologies share one network: SDN control architectures, slicing for FRMCS, hybrid 5G and satellite links. This work relies on emulators and testbeds that I develop with my colleagues, such as Emu5GNet.</p>
           </article>
-          <article class="research-card">
+          <article class="research-card ax3">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
             <h3>Trust in distributed systems</h3>
             <p>Making it possible to trust participants that one does not control, from blockchain-based authentication and access control to verifiable and confidential computation today. I combine zero-knowledge proofs, trusted execution environments and secret sharing, with federated learning as the main use case.</p>
           </article>
@@ -210,9 +231,9 @@
         <div class="domains">
           <h3>Application domains</h3>
           <ul class="domain-list">
-            <li><strong>Railway communications</strong><span>FRMCS, hybrid 5G and satellite connectivity, 6G for secondary lines.</span></li>
-            <li><strong>Connected and automated mobility</strong><span>Vehicular networks, V2X and cooperative perception.</span></li>
-            <li><strong>Internet of Things</strong><span>IoT services and constrained devices at the edge.</span></li>
+            <li><span class="icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 10h14M9 21l-2-4M15 21l2-4M9 13.5h.01M15 13.5h.01"/></svg></span><div><strong>Railway communications</strong><span>FRMCS, hybrid 5G and satellite connectivity, 6G for secondary lines.</span></div></li>
+            <li><span class="icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3l2-5h12l2 5v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M4 12h16"/><circle cx="8" cy="19" r="1.6"/><circle cx="16" cy="19" r="1.6"/></svg></span><div><strong>Connected and automated mobility</strong><span>Vehicular networks, V2X and cooperative perception.</span></div></li>
+            <li><span class="icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg></span><div><strong>Internet of Things</strong><span>IoT services and constrained devices at the edge.</span></div></li>
           </ul>
         </div>
       </div>
@@ -222,12 +243,12 @@
       <div class="wrap">
         <div class="section-head"><div><h2 id="pub-title">Selected publications</h2><p class="section-description">Recent work across the three research axes.</p></div><a class="text-link" href="https://scholar.google.fr/citations?user=6MPEz0YAAAAJ&amp;hl=en">All publications on Google Scholar</a></div>
         <ol class="publications">
-          <li class="publication"><span class="year">2026</span><div><h3><a href="https://doi.org/10.1109/INFOCOM59046.2026.11571181">FairMEC: Achieving Fair Resource Sharing in Multi-Access Edge Computing Federations</a></h3><p class="venue">IEEE INFOCOM 2026</p></div></li>
-          <li class="publication"><span class="year">2026</span><div><h3><a href="https://repository.uwl.ac.uk/id/eprint/15562/">Carbon-Aware UPF Placement in Geo-Distributed Telecom Networks: Measurement-Informed Reinforcement Learning</a></h3><p class="venue">IEEE GLOBECOM 2026, <span class="status">accepted</span></p></div></li>
-          <li class="publication"><span class="year">2026</span><div><h3><a href="https://doi.org/10.1109/TNSM.2026.3710830">Application-Aware Slicing for FRMCS: A Deep Reinforcement Learning Approach</a></h3><p class="venue">IEEE Transactions on Network and Service Management</p></div></li>
-          <li class="publication"><span class="year">2026</span><div><h3><a href="https://doi.org/10.1109/OJVT.2026.3748796">Confidential Federated Learning for Vehicular Perception: An Intel TDX Cost and Placement Study</a></h3><p class="venue">IEEE Open Journal of Vehicular Technology</p></div></li>
-          <li class="publication"><span class="year">2025</span><div><h3><a href="https://doi.org/10.1109/DSN-S65789.2025.00029">Trusted Federated Learning: Towards a Partial Zero-Knowledge Proof Approach</a></h3><p class="venue">IEEE/IFIP DSN 2025, Supplemental Volume</p></div></li>
-          <li class="publication"><span class="year">2024</span><div><h3><a href="https://doi.org/10.1109/ACCESS.2024.3479879">Enabling Network Technologies for Flexible Railway Connectivity</a></h3><p class="venue">IEEE Access</p></div></li>
+          <li class="publication"><span class="year">2026</span><div><h3><a href="https://doi.org/10.1109/INFOCOM59046.2026.11571181">FairMEC: Achieving Fair Resource Sharing in Multi-Access Edge Computing Federations</a></h3><p class="venue">IEEE INFOCOM 2026 <span class="tag ax1">Orchestration</span></p></div></li>
+          <li class="publication"><span class="year">2026</span><div><h3><a href="https://repository.uwl.ac.uk/id/eprint/15562/">Carbon-Aware UPF Placement in Geo-Distributed Telecom Networks: Measurement-Informed Reinforcement Learning</a></h3><p class="venue">IEEE GLOBECOM 2026, <span class="status">accepted</span> <span class="tag ax1">Orchestration</span></p></div></li>
+          <li class="publication"><span class="year">2026</span><div><h3><a href="https://doi.org/10.1109/TNSM.2026.3710830">Application-Aware Slicing for FRMCS: A Deep Reinforcement Learning Approach</a></h3><p class="venue">IEEE Transactions on Network and Service Management <span class="tag ax2">Networks</span></p></div></li>
+          <li class="publication"><span class="year">2026</span><div><h3><a href="https://doi.org/10.1109/OJVT.2026.3748796">Confidential Federated Learning for Vehicular Perception: An Intel TDX Cost and Placement Study</a></h3><p class="venue">IEEE Open Journal of Vehicular Technology <span class="tag ax3">Trust</span></p></div></li>
+          <li class="publication"><span class="year">2025</span><div><h3><a href="https://doi.org/10.1109/DSN-S65789.2025.00029">Trusted Federated Learning: Towards a Partial Zero-Knowledge Proof Approach</a></h3><p class="venue">IEEE/IFIP DSN 2025, Supplemental Volume <span class="tag ax3">Trust</span></p></div></li>
+          <li class="publication"><span class="year">2024</span><div><h3><a href="https://doi.org/10.1109/ACCESS.2024.3479879">Enabling Network Technologies for Flexible Railway Connectivity</a></h3><p class="venue">IEEE Access <span class="tag ax2">Networks</span></p></div></li>
         </ol>
       </div>
     </section>
@@ -236,23 +257,27 @@
       <div class="wrap">
         <div class="section-head"><div><h2 id="project-title">Projects</h2><p class="section-description">Current projects, and earlier collaborations in railway and vehicular communications.</p></div></div>
         <div class="project-grid">
-          <article class="project">
+          <article class="project ax2">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 10v11M9 21h6"/><circle cx="12" cy="8" r="2"/><path d="M8.5 4.5a5 5 0 0 0 0 7M15.5 4.5a5 5 0 0 1 0 7M5.6 2a9 9 0 0 0 0 12M18.4 2a9 9 0 0 1 0 12"/></svg></span>
             <h3>6G4RAIL</h3>
             <p class="project-meta">ANR, since 2026</p>
             <p>6G connectivity and safety for secondary railway lines: integrated sensing and communication, drones and distributed edge intelligence. With Université Gustave Eiffel, IMT Atlantique, XLIM, Mitsubishi Electric R&amp;D and SNCF.</p>
           </article>
-          <article class="project">
+          <article class="project ax1">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
             <h3>BaskData</h3>
             <p class="project-meta">Communauté d'Agglomération Pays Basque, since 2026</p>
             <p>Project with the Communauté d'Agglomération Pays Basque (CAPB) on the data of the Basque Country territory.</p>
           </article>
-          <article class="project">
+          <article class="project ax2">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-25 12 12)"/><circle cx="21" cy="7.8" r="1.4" fill="currentColor" stroke="none"/></svg></span>
             <h3>S5LECT</h3>
             <p class="project-meta">EUSPA, Horizon Europe, 2024–2026</p>
             <p>Hybrid terrestrial and satellite communications, edge computing and cybersecurity for critical railway applications.</p>
             <a class="text-link" href="https://cordis.europa.eu/project/id/101129493">Project on CORDIS</a>
           </article>
           <article class="project">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
             <h3>5GRAIL and Augmented CCAM</h3>
             <p class="project-meta">Earlier European projects</p>
             <p>Mobile connectivity and digital infrastructures for railways and for cooperative, connected and automated mobility.</p>
@@ -270,12 +295,12 @@
           <p class="note">Course material for current students is on the <a href="cours/">course pages</a>.</p>
         </div>
         <ul class="course-list">
-          <li class="course"><strong><a href="cours/iot/">IoT Systems Design</a></strong><span>Master 2. Designing and comparing IoT architectures from requirements and constraints.</span></li>
-          <li class="course"><strong><a href="cours/environnements_connectes/">Connected environments</a></strong><span>ISA engineering school, 5th year. Connected buildings and infrastructures, from sensors to digital services.</span></li>
-          <li class="course"><strong>Cloud computing and cybersecurity</strong><span>Virtualisation, deployment and security of distributed systems.</span></li>
-          <li class="course"><strong>Embedded systems and system programming</strong><span>Programming close to the hardware and the operating system.</span></li>
-          <li class="course"><strong>Research initiation and research projects</strong><span>Introduction to research methods and supervised research projects.</span></li>
-          <li class="course"><strong>Archived course materials</strong><span><a href="ci-cyber.html">Information systems security project</a> and <a href="https://github.com/lmendiboure/5G-Course">introduction to 5G networks</a>.</span></li>
+          <li class="course"><span class="icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg></span><div><strong><a href="cours/iot/">IoT Systems Design</a></strong><span>Master 2. Designing and comparing IoT architectures from requirements and constraints.</span></div></li>
+          <li class="course"><span class="icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M11 21v-3h2v3"/></svg></span><div><strong><a href="cours/environnements_connectes/">Connected environments</a></strong><span>ISA engineering school, 5th year. Connected buildings and infrastructures, from sensors to digital services.</span></div></li>
+          <li class="course"><span class="icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6 9.5 4.25 4.25 0 0 0 7 18z"/></svg></span><div><strong>Cloud computing and cybersecurity</strong><span>Virtualisation, deployment and security of distributed systems.</span></div></li>
+          <li class="course"><span class="icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M12 15h5"/></svg></span><div><strong>Embedded systems and system programming</strong><span>Programming close to the hardware and the operating system.</span></div></li>
+          <li class="course"><span class="icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3M7.5 14h9"/></svg></span><div><strong>Research initiation and research projects</strong><span>Introduction to research methods and supervised research projects.</span></div></li>
+          <li class="course"><span class="icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M10 12h4"/></svg></span><div><strong>Archived course materials</strong><span><a href="ci-cyber.html">Information systems security project</a> and <a href="https://github.com/lmendiboure/5G-Course">introduction to 5G networks</a>.</span></div></li>
         </ul>
       </div>
     </section>
