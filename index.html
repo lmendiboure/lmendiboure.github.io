@@ -62,11 +62,12 @@
     .intro{font-size:17px;line-height:1.75;max-width:640px;margin-bottom:16px}
     .background-note{font-size:14px;color:var(--muted);margin-bottom:28px}
     .actions{display:flex;flex-wrap:wrap;gap:12px}
+    .quick-links{display:flex;flex-wrap:wrap;gap:6px 22px;margin:18px 0 0;font-size:14px;font-weight:600}
     .btn{display:inline-flex;align-items:center;padding:11px 20px;border-radius:8px;font-weight:650;font-size:14px}
     .btn:hover{text-decoration:none}
     .btn-primary{background:var(--accent);color:#fff}
     .btn-primary:hover{background:var(--accent-dark)}
-    .btn-outline{border:1px solid #bdcfca;background:#fff;color:var(--ink)}
+    .btn-outline{border:1px solid #bdcfca;background:#fff;color:var(--ink);min-width:118px;justify-content:center}
     .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
     .portrait{margin:0;border-radius:12px;overflow:hidden;background:#e4ece8;aspect-ratio:299/385}
     .portrait img{display:block;width:100%;height:100%;object-fit:cover}
@@ -114,6 +115,9 @@
     .teaching{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:56px}
     .teaching-lead{font-size:16px;line-height:1.8;max-width:470px;margin:20px 0 16px}
     .note{font-size:15px;color:var(--muted);margin:0}
+    .responsibility{border-left:3px solid var(--accent);background:var(--surface);border-radius:0 10px 10px 0;padding:14px 18px;margin:0 0 18px;max-width:470px}
+    .responsibility strong{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
+    .responsibility span{display:block;font-size:14px;line-height:1.6;color:var(--muted)}
     .course-list{border-top:1px solid var(--line)}
     .course{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
     .course strong{display:block;font-size:16px;color:var(--ink);margin-bottom:2px}
@@ -193,13 +197,14 @@
         <div>
           <h1>Léo Mendiboure</h1>
           <p class="role">Associate Professor in Computer Science</p>
-          <p class="intro">At Université de Pau et des Pays de l'Adour, I lead the CPSA team of the LIUPPA laboratory. I study distributed infrastructures shared by several parties: how to orchestrate their resources across the edge-cloud continuum, how to design programmable networks that connect them, and how to trust the computations they run. Railways and connected mobility are my main application domains.</p>
+          <p class="intro">At Université de Pau et des Pays de l'Adour, I lead the CPSA team of the LIUPPA laboratory and coordinate the second year (M2) of the SIGLIS master's programme. My research looks at distributed infrastructures shared by several parties: orchestrating their resources across the edge-cloud continuum, designing the programmable networks that connect them, and trusting the computations they run. I teach networks, the Internet of Things, cloud computing, cybersecurity and embedded systems.</p>
           <p class="background-note">Ph.D. in Computer Science, University of Bordeaux (2020). Previously tenured researcher at Université Gustave Eiffel.</p>
           <div class="actions">
-            <a class="btn btn-primary" href="#research">Research</a>
-            <a class="btn btn-outline" href="https://scholar.google.fr/citations?user=6MPEz0YAAAAJ&amp;hl=en">Google Scholar</a>
-            <a class="btn btn-outline" href="mailto:leo.mendiboure@univ-pau.fr">Email</a>
+            <a class="btn btn-outline" href="#research">Research</a>
+            <a class="btn btn-outline" href="#teaching">Teaching</a>
+            <a class="btn btn-outline" href="#projects">Projects</a>
           </div>
+          <p class="quick-links"><a href="https://scholar.google.fr/citations?user=6MPEz0YAAAAJ&amp;hl=en">Google Scholar</a><a href="https://dblp.org/pid/230/1948.html">DBLP</a><a href="mailto:leo.mendiboure@univ-pau.fr">leo.mendiboure@univ-pau.fr</a></p>
         </div>
         <figure class="portrait hero-portrait">
           <img src="assets/imgs/lmendiboure.png" alt="Portrait of Léo Mendiboure" width="299" height="385" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
@@ -291,7 +296,8 @@
       <div class="wrap teaching">
         <div>
           <h2 id="teaching-title">Teaching</h2>
-          <p class="teaching-lead">I teach networks, the Internet of Things, cloud computing, cybersecurity, embedded systems and system programming at UPPA, in master's programmes and at the ISA engineering school. I also introduce master's students to research through research initiation courses and research projects. I coordinate the SIGLIS master's programme.</p>
+          <p class="teaching-lead">I teach networks, the Internet of Things, cloud computing, cybersecurity, embedded systems and system programming at UPPA, in master's programmes and at the ISA engineering school. I also introduce master's students to research through research initiation courses and research projects.</p>
+          <div class="responsibility"><strong>Programme coordination</strong><span>Coordinator of the second year (M2) of the SIGLIS master's programme, computer systems for industrial logistics and services, Anglet campus.</span></div>
           <p class="note">Course material for current students is on the <a href="cours/">course pages</a>.</p>
         </div>
         <ul class="course-list">
